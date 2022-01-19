@@ -83,6 +83,18 @@ namespace Application.Profiles
                     trainingCenter.Company.Address.BusinessAddressPostalCode))
                 .ForMember(vm => vm.BusinessAddressCountry, options => options.MapFrom(trainingCenter =>
                     trainingCenter.Company.Address.BusinessAddressCountry));
+
+            CreateMap<TrainingCenter, TrainingCenterEditViewModel>()
+                .ForMember(vm => vm.EncryptedID, options => options.MapFrom(trainingCenter =>
+                    _protector.Protect(trainingCenter.ID.ToString())))
+                .ForMember(vm => vm.CompanyContactID, options => options.MapFrom(trainingCenter =>
+                    trainingCenter.ListTrainingCenter.CompanyContactID));
+
+            CreateMap<TrainingCenterEditViewModel, TrainingCenter>()
+                .ForMember(trainingCenter => trainingCenter.ID, options => options.MapFrom(vm =>
+                    _protector.Unprotect(vm.EncryptedID)));
+
+            CreateMap<TrainingCenterCreateViewModel, TrainingCenter>();
         }
     }
 }

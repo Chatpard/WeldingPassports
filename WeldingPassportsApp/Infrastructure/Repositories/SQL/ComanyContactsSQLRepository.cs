@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -103,6 +104,48 @@ namespace Infrastructure.Repositories.SQL
             }
 
             return await SaveAsync(token);
+        }
+
+        public async Task<CompanyContact> GetCompanyContactById(int id)
+        {
+            return await _context.CompanyContacts.FindAsync(id);
+        }
+
+        public SelectList CompanyContactSelectList(string? encryptedTrainingCenterID, int? companyContactID)
+        {
+            var companyContactsIQ = _context.CompanyContacts.Where(x => true);
+
+            if(encryptedTrainingCenterID != null)
+            {
+                int trainingCenterID = Convert.ToInt32(_protector.Unprotect(encryptedTrainingCenterID));
+                companyContactsIQ = companyContactsIQ
+                    .Where(companyContacts =>
+                           companyContacts.Company.TrainingCenter.ID == trainingCenterID);   //of the same Company
+                if(companyContactID != null)
+                {
+                    companyContactsIQ = companyContactsIQ
+                        .Where(companyContacts =>
+                            companyContacts.ListTrainingCenter == null ||                               //not listed in ListTrainingCenter
+                            companyContacts.ListTrainingCenter.CompanyContactID == companyContactID);   //actual 
+                }
+                else
+                {
+                    companyContactsIQ = companyContactsIQ
+                    .Where(companyContacts =>
+                        companyContacts.ListTrainingCenter == null); //not listed in ListTrainingCenter
+                };
+            }
+
+            var companyContacts = companyContactsIQ
+                .OrderBy(companyContact => companyContact.Contact.LastName).ThenBy(companyContact => companyContact.Contact.FirstName)
+                .Select(companyContact => new {
+                    ID = companyContact.ID,
+                    NameEmail = (companyContact.Contact.FirstName??"") + (((companyContact.Contact.FirstName != null) && (companyContact.Contact.LastName != null))?" ":"") + 
+                                (companyContact.Contact.LastName??"") + (((companyContact.Contact.LastName != null) && (companyContact.Email != null)) ? " " : "") + 
+                                (companyContact.Email??"")
+                });
+
+            return new SelectList(companyContacts, nameof(CompanyContact.ID), "NameEmail");
         }
 
         private static IQueryable<CompanyContactIndexViewModel> SortContactIndex(IQueryable<CompanyContactIndexViewModel> contactsQuery, string sortOrder)

@@ -24,11 +24,13 @@ namespace Application.Interfaces.Repositories.SQL
             
         Task<CompanyEditViewModel> GetCompanyEditAsync(string encryptedID);
 
-        EntityEntry<Company> PostCompanyContactEdit(Company companyChanges);
+        EntityEntry<Company> PostCompanyEdit(Company companyChanges);
 
         Task<int> DeleteCompanyByEncryptedIDAsync(string encryptedID, CancellationToken token);
 
         SelectList CompanySelectList();
+
+        SelectList CompanyNoTrainingCentersSelectList(int? companyID = null);
 
         Task<int> SaveAsync(CancellationToken cancellationToken);
     }

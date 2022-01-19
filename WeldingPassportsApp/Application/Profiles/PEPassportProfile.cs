@@ -23,7 +23,7 @@ namespace Application.Profiles
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.PEPassport.ID.ToString())))
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
-                    group.PEPassport.AVNumber))
+                    group.PEPassport.TrainingCenter.Letter + group.PEPassport.AVNumber))
                 .ForMember(index => index.FirstName, options => options.MapFrom(group =>
                     group.PEPassport.PEWelder.FirstName))
                 .ForMember(index => index.LastName, options => options.MapFrom(group =>
@@ -40,7 +40,7 @@ namespace Application.Profiles
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.PEPassport.ID.ToString())))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>
-                    group.PEPassport.AVNumber))
+                    group.PEPassport.TrainingCenter.Letter + group.PEPassport.AVNumber))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(group =>
                     group.PEWelder.FirstName))
                 .ForMember(vm => vm.LastName, options => options.MapFrom(group =>
@@ -53,30 +53,30 @@ namespace Application.Profiles
                     group.RegistrationUIColors));
 
             CreateMap<PEPassport, PEPassportCreateViewModel>()
+                .ForMember(vm => vm.Letter, options => options.MapFrom(passport =>
+                    passport.TrainingCenter.Letter))
                 .ForMember(vm => vm.TrainingCenterID, options => options.MapFrom(passport =>
                     passport.TrainingCenterID))
                 .ForMember(vm => vm.PEWelderID, options => options.MapFrom(passport =>
-                    passport.PEWelderID))
-                .ForMember(vm => vm.AVNumber, options => options.MapFrom(passport =>
-                    passport.AVNumber));
+                    passport.PEWelderID));
 
             CreateMap<PEPassportCreateViewModel, PEPassport>()
-                .ForMember(vm => vm.TrainingCenterID, options => options.MapFrom(group =>
-                    group.TrainingCenterID))
-                .ForMember(vm => vm.PEWelderID, options => options.MapFrom(group =>
-                    group.PEWelderID))
-                .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>
-                    group.AVNumber));
+                .ForMember(pePassport => pePassport.AVNumber, options => options.MapFrom(vm =>
+                    vm.AVNumber))
+                .ForMember(pePassport => pePassport.TrainingCenterID, options => options.MapFrom(vm =>
+                    vm.TrainingCenterID))
+                .ForMember(pePassport => pePassport.PEWelderID, options => options.MapFrom(vm =>
+                    vm.PEWelderID));
 
             CreateMap<PEPassport, PEPassportEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(passport =>
                     _protector.Protect(passport.ID.ToString())))
+                .ForMember(vm => vm.Letter, options => options.MapFrom(passport =>
+                    passport.TrainingCenter.Letter))
                 .ForMember(vm => vm.TrainingCenterID, options => options.MapFrom(passport =>
                     passport.TrainingCenterID))
                 .ForMember(vm => vm.PEWelderID, options => options.MapFrom(passport =>
-                    passport.PEWelderID))
-                .ForMember(vm => vm.AVNumber, options => options.MapFrom(passport =>
-                    passport.AVNumber));
+                    passport.PEWelderID));
 
             CreateMap<PEPassportEditViewModel, PEPassport>()
                 .ForMember(passport => passport.ID, options => options.MapFrom(vm =>

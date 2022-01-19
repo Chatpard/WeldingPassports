@@ -1,0 +1,69 @@
+﻿@model TrainingCenterEditViewModel
+
+@{
+    ViewData["Title"] = "Training Center Edit";
+    string returnUrl = ViewBag.ReturnUrl;
+    string currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Edit Training Center"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="@nameof(TrainingCentersController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
+            <input asp-for="EncryptedID" hidden />
+            <div class="form-group row">
+                <label asp-for="Letter" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Letter" class="form-control" readonly placeholder="@Localizer["Set a capital letter"]" />
+                </div>
+                <span asp-validation-for="Letter" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="IsActive" class="col-sm-2 col-form-label"></label>
+                <div class="input-group col-sm-10">
+                    <input asp-for="IsActive" class="form-check-input" style="margin-left : 0" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
+                <div class="input-group col-sm-10">
+                    <select asp-for="CompanyID" class="form-control" asp-items="@Model.CompanySelectList">
+                        <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
+                    </select>
+                    <div class="input-group-append">
+                        <a class="btn btn-primary" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                    </div>
+                </div>
+                <span asp-validation-for="CompanyID" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CompanyContactID" class="col-sm-2 col-form-label"></label>
+                <div class="input-group col-sm-10">
+                    <select asp-for="CompanyContactID" class="form-control" asp-items="@Model.CompanyContactSelectList">
+                        <option value="0">@if (Model.CompanyContactID == 0)
+                        {@Localizer["Choose a Contact"]}
+                    else
+                    { @Localizer["No Contact"]}</option>
+                    </select>
+                    <div class="input-group-append">
+                        <a class="btn btn-primary" type="button" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                    </div>
+                </div>
+                <span asp-validation-for="CompanyContactID" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+                    <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/TrainingCenters/GetCompanyContactsFromCompanyID.js"></script>
+
+}

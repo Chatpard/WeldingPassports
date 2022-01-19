@@ -31,10 +31,12 @@ namespace Application.Requests.Welders
             if (request.Controller.ModelState.IsValid)
             {
                 PEWelder peWelder = _mapper.Map<PEWelder>(request.PEWelderVM);
+
                 await _repository.PostPEWelderCreateAsync(peWelder);
                 await _repository.SaveAsync(cancellationToken);
+                PEWelderEditViewModel newPEWelder = _mapper.Map<PEWelderEditViewModel>(peWelder);
                 
-                return request.Controller.LocalRedirect(request.ReturnUrl);
+                return request.Controller.RedirectToAction(request.NameOfDetailsAction, new { id = newPEWelder.EncryptedID, returnUrl = request.ReturnUrl });
             }
 
             return request.Controller.View();

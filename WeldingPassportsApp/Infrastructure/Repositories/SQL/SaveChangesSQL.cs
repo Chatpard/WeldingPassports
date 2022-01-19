@@ -1,3 +1,4 @@
+using Application.Interfaces;
 using Application.Interfaces.Repositories.SQL;
 using Infrastructure.Services.Persistence;
 using System;
@@ -10,9 +11,9 @@ namespace Infrastructure.Repositories.SQL
 {
     public abstract class SaveChangesSQL
     {
-        private readonly AppDbContext _context;
+        private readonly IAppDbContext _context;
 
-        public SaveChangesSQL(AppDbContext context)
+        public SaveChangesSQL(IAppDbContext context)
         {
             _context = context;
         }

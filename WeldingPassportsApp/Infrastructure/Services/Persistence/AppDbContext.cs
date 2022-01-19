@@ -49,6 +49,8 @@ namespace Infrastructure.Services.Persistence
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
 
+            modelBuilder.Entity<TrainingCenter>().HasIndex(trainingCenter => trainingCenter.Letter).IsUnique();
+                                   
             modelBuilder.Seed(_env);
         }
 

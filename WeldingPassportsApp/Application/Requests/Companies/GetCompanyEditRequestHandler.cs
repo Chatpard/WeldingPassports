@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.Companies
 {
-    public class GetCompanyContactEditRequestHandler : IRequestHandler<GetCompanyEditRequest, IActionResult>
+    public class GetCompanyEditRequestHandler : IRequestHandler<GetCompanyEditRequest, IActionResult>
     {
         private readonly ICompaniesSQLRepository _repository;
         private readonly IAddressesSQLRepository _addressesSQLRepository;
 
-        public GetCompanyContactEditRequestHandler(ICompaniesSQLRepository repository, IAddressesSQLRepository addressesSQLRepository)
+        public GetCompanyEditRequestHandler(ICompaniesSQLRepository repository, IAddressesSQLRepository addressesSQLRepository)
         {
             _repository = repository;
             _addressesSQLRepository = addressesSQLRepository;

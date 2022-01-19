@@ -3,14 +3,13 @@
 @model PEPassportDetailsViewModel
 
 @{
-    ViewData["Title"] = Localizer["PEpassport Details"];
+    ViewData["Title"] = Localizer["PE Passport Details"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
 }
 
 <h1>@Localizer["PE Passport Details"]</h1>
 <hr />
-<br />
 <dl class="row">
     <dt class="col-sm-3">
         @Html.DisplayNameFor(model => model.AVNumber)

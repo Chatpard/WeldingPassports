@@ -21,11 +21,11 @@ namespace Application.Profiles
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(companyContact =>
                     _protector.Protect(companyContact.ID.ToString())));
 
+            CreateMap<ContactCreateViewModel, Contact>();
+
             CreateMap<Contact, ContactDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.ID.ToString())));
-
-            CreateMap<ContactCreateViewModel, Contact>();
 
             CreateMap<Contact, ContactEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>

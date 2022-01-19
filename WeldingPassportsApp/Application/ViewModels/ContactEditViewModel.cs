@@ -34,8 +34,5 @@ namespace Application.ViewModels
                     birthday = null;
             }
         }
-
-        // Navigation Properties
-        //public ICollection<CompanyContact> CompanyContacts { get; set; }
     }
 }

@@ -68,7 +68,7 @@ namespace Infrastructure.SeedData
                     ID = 1,
                     RegistrationID = 5,
                     CompanyContactID = 4,
-                    RevokeDay = new DateTime(2021, 6, 12),
+                    RevokeDate = new DateTime(2021, 6, 12),
                     Comment = "Inappropriate welding technique."
                 }
             };

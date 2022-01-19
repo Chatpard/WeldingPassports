@@ -3,7 +3,7 @@
 @model ExaminationDetailsViewModel
 
 @{
-    ViewData["Title"] = "Examination Details";
+    ViewData["Title"] = @Localizer["Examination Details"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
 }
@@ -42,6 +42,13 @@
 </div>
 <br />
 <h2>@Localizer["PE Certificates"]</h2>
+    
+<p>
+    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Create)"
+        asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl">
+        @Localizer["Create New"]
+    </a>
+</p>
 
 <table class="table">
     <thead>
@@ -90,9 +97,12 @@
                     @Html.DisplayFor(modelItem => certification.HasPassed)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
+                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a> |
+                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
+                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
+                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Delete)"
+                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
                 </td>
             </tr>
         }

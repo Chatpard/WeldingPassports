@@ -19,7 +19,7 @@ namespace Application.Interfaces.Repositories.SQL
         
         Task<PEPassportEditViewModel> GetPEPassportEditAsync(string encryptedID);
         
-        EntityEntry<PEPassport> PutPEPassportUpdate(PEPassport pePassortChanges);
+        EntityEntry<PEPassport> PostPEPassportEditasync(PEPassport pePassortChanges);
         
         Task<int> DeletePEPassportByEncryptedIDAsync(string encryptedID, CancellationToken token);
 

@@ -22,6 +22,7 @@ namespace Application.ViewModels
         public string CompanyEmail { get; set; }
 
         [Url]
+        [Display(Name = "Web Page")]
         public string WebPage { get; set; }
 
         [Display(Name = "Address")]
@@ -35,9 +36,5 @@ namespace Application.ViewModels
 
         [Display(Name = "Country")]
         public string BusinessAddressCountry { get; set; }
-
-        // Navigation Properties
-        //public ICollection<CompanyContactIndexViewModel> CompanyContacts { get; set; }
-        //public ICollection<ExaminationIndexViewModel> Registrations { get; set; }
     }
 }

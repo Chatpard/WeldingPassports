@@ -3,14 +3,13 @@
 @model CompanyContactDetailsViewModel
 
 @{
-    ViewData["Title"] = "DetailsView";
+    ViewData["Title"] = @Localizer["Contact Details"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
 }
 
 <h1>@Localizer["Contact Details"]</h1>
 <hr />
-<br />
 <div>
     <dl class="row">
         <dt class="col-sm-2">

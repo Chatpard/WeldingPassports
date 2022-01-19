@@ -103,11 +103,11 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(PEWelderEditViewModel peWelderEditViewModel, string returnUrl)
+        public async Task<IActionResult> Edit(PEWelderEditViewModel peWelderChanges, string returnUrl)
         {
             try
             {
-                var request = new PostPEWelderEditRequest(peWelderEditViewModel, nameof(Details), returnUrl, this);
+                var request = new PostPEWelderEditRequest(peWelderChanges, nameof(Details), returnUrl, this);
                 return await _mediator.Send(request);
             }
             catch (Exception e)

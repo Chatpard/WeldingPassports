@@ -1,6 +1,8 @@
-﻿using Application.Requests.PEPassports;
+﻿using Application.Requests;
+using Application.Requests.PEPassports;
 using Application.Requests.TrainingCenters;
 using Application.Requests.Welders;
+using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -42,16 +44,33 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
-        public async Task<IActionResult> Create()
+        [HttpGet]
+        public async Task<IActionResult> Create(string returnUrl)
         {
             try
             {
-                throw new NotImplementedException();
+                var query = new GetTrainingCenterCreateRequest(returnUrl, this);
+                return await _mediator.Send(query);
             }
             catch (Exception e)
             {
                 await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in GetTrainingCentersCreate");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(TrainingCenterCreateViewModel trainingCenterCreateVM, string returnUrl)
+        {
+            try
+            {
+                var query = new PostTrainingCenterCreateRequest(trainingCenterCreateVM, nameof(Details), returnUrl, this);
+                return await _mediator.Send(query);
+            }
+            catch (Exception e)
+            {
+                await Task.CompletedTask;
+                return Utilities.ErrorView(_env, this, e, "Error in PostTrainingCentersCreate");
             }
         }
 
@@ -70,11 +89,28 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(string id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
             {
-                throw new NotImplementedException();
+                var query = new GetTrainingCenterEditRequest(id, returnUrl, this);
+                return await _mediator.Send(query);
+            }
+            catch (Exception e)
+            {
+                await Task.CompletedTask;
+                return Utilities.ErrorView(_env, this, e, "Error in GetTrainingCentersEdit");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(TrainingCenterEditViewModel trainingCenterChanges, string returnUrl)
+        {
+            try
+            {
+                var query = new PostTrainingCenterEditRequest(trainingCenterChanges, returnUrl, this);
+                return await _mediator.Send(query);
             }
             catch (Exception e)
             {
@@ -88,7 +124,6 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new GetTrainingCenterDeleteRequest(id, returnUrl, this);
-
                 return await _mediator.Send(query);
             }
             catch (Exception e)

@@ -18,9 +18,5 @@ namespace Application.ViewModels
 
         [Display(Name = "Country")]
         public string BusinessAddressCountry { get; set; }
-
-        // Navigation Properties
-        //public ICollection<Company> Companies { get; set; }
-        //public ICollection<CompanyContact> CompanyContacts { get; set; }
     }
 }

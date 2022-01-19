@@ -24,6 +24,7 @@ namespace Application.ViewModels
         public string CompanyEmail { get; set; }
 
         [Url]
+        [Display(Name = "Web Page")]
         public string WebPage { get; set; }
 
         // Navigation Properties

@@ -16,10 +16,10 @@ namespace Application.Requests.Companies
 {
     public class PostCompanyContactEditRequestHandler : IRequestHandler<PostCompanyEditRequest, IActionResult>
     {
-        private readonly ICompanyContactsSQLRepository _repository;
+        private readonly ICompaniesSQLRepository _repository;
         private readonly IMapper _mapper;
 
-        public PostCompanyContactEditRequestHandler(ICompanyContactsSQLRepository repository, IMapper mapper)
+        public PostCompanyContactEditRequestHandler(ICompaniesSQLRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -32,8 +32,8 @@ namespace Application.Requests.Companies
                 if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
-                CompanyContact company = _mapper.Map<CompanyContact>(request.CompanyChanges);
-                _repository.PostCompanyContactEdit(company);
+                Company company = _mapper.Map<Company>(request.CompanyChanges);
+                _repository.PostCompanyEdit(company);
                 await _repository.SaveAsync(cancellationToken);
                 
                 return request.Controller.LocalRedirect(request.ReturnUrl);

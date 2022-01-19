@@ -594,7 +594,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RegistrationID = table.Column<int>(nullable: false),
                     CompanyContactID = table.Column<int>(nullable: false),
-                    RevokeDay = table.Column<DateTime>(nullable: true),
+                    RevokeDate = table.Column<DateTime>(nullable: true),
                     Comment = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -891,7 +891,7 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Revokes",
-                columns: new[] { "ID", "Comment", "CompanyContactID", "RegistrationID", "RevokeDay" },
+                columns: new[] { "ID", "Comment", "CompanyContactID", "RegistrationID", "RevokeDate" },
                 values: new object[] { 1, "Inappropriate welding technique.", 4, 5, new DateTime(2021, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
@@ -1063,6 +1063,12 @@ namespace Infrastructure.Migrations
                 name: "IX_TrainingCenters_CompanyID",
                 table: "TrainingCenters",
                 column: "CompanyID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainingCenters_Letter",
+                table: "TrainingCenters",
+                column: "Letter",
                 unique: true);
         }
 

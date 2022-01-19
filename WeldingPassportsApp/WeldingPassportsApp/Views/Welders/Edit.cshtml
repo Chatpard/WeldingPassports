@@ -3,7 +3,7 @@
 @model Application.ViewModels.PEWelderEditViewModel
 
 @{
-    ViewData["Title"] = "PE Welder Edit";
+    ViewData["Title"] = Localizer["Edit PE Welder"];
     string returnUrl = ViewBag.ReturnUrl;
 }
 
@@ -51,10 +51,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="@nameof(WeldersController.Index)">Back to List</a>
 </div>
 
 @section Scripts {

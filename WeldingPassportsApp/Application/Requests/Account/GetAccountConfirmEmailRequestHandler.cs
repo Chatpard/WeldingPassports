@@ -18,11 +18,14 @@ namespace Application.Requests.Account
     {
         private readonly IUserToApproveRepository _repository;
         private readonly IConfiguration _config;
+        private readonly IStringLocalizer<PostAccountRegisterRequestHandler> _localizer;
 
-        public GetAccountConfirmEmailRequestHandler(IUserToApproveRepository repository, IConfiguration config)
+        public GetAccountConfirmEmailRequestHandler(IUserToApproveRepository repository, IConfiguration config,
+            IStringLocalizer<PostAccountRegisterRequestHandler> localizer)
         {
             _repository = repository;
             _config = config;
+            _localizer = localizer;
         }
 
         public async Task<IActionResult> Handle(GetAccountConfirmEmailRequest request, CancellationToken cancellationToken)
@@ -63,7 +66,7 @@ namespace Application.Requests.Account
                     controller.ControllerContext.ActionDescriptor.ControllerName);
             }
 
-            controller.ViewBag.ErrorTitle = "Email cannot be confirmed";
+            controller.ViewBag.ErrorTitle = _localizer["Email cannot be confirmed"];
             return controller.View("Error");
         }
     }

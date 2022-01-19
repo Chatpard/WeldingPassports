@@ -2,40 +2,49 @@
 @inject IViewLocalizer Localizer
 @model PEPassportCreateViewModel
 @{
-    ViewData["Title"] = Localizer["PEpassport Create"];
+    ViewData["Title"] = Localizer["Create PE Passport"];
     var returnUrl = ViewBag.ReturnUrl;
+    var currentUrl = ViewBag.CurrentUrl;
 }
 <h1>@Localizer["Create PE Passport"]</h1>
 <hr />
-<br />
 <div class="row">
     <div class="col-md-12">
         <form enctype="multipart/form-data" asp-controller="@typeof(PEPassportsController).GetNameOfController()"
               asp-action="@nameof(PEPassportsController.Create)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3">
             <div class="form-group row">
                 <label asp-for="AVNumber" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 input-group">
+                    <div class="input-group-prepend">
+                        <span id="Letter" class="input-group-text">@Model.Letter</span>
+                    </div>
                     <input asp-for="AVNumber" class="form-control" placeholder="AV number">
-                    <span asp-validation-for="AVNumber" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="AVNumber" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 input-group">
                     <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList">
-                        <option value="">@Localizer["Choose training center"]</option>
+                        <option value="" selected disabled hidden>@Localizer["Choose Training Center"]</option>
                     </select>
-                    <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+                    <div class=" input-group-append">
+                        <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                    </div>
                 </div>
+                <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <label asp-for="PEWelderID" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 input-group">
                     <select asp-for="PEWelderID" class="form-control" asp-items="@Model.PEWelderSelectList">
-                        <option value="">@Localizer["Choose PE Welder"]</option>
+                        <option value="" selected disabled hidden>@Localizer["Choose PE Welder"]</option>
                     </select>
-                    <span asp-validation-for="PEWelderID" class="text-danger"></span>
+                    <div class=" input-group-append">
+                        <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                    </div>
                 </div>
+                <span asp-validation-for="PEWelderID" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <div class="col-sm-10">
@@ -48,10 +57,9 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="@nameof(PEPassportsController.Index)">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/PEPassports/GetTrainingCenterLetterByTrainingCenterID.js"></script>
+    <script src="~/js/PEPassports/GetPEPassportMaxAVNumber.js"></script>
 }

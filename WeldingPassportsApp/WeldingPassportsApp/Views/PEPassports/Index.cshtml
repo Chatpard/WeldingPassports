@@ -9,8 +9,6 @@
 
 <h1>@Localizer["PE Passports Index"]</h1>
 <hr />
-<br />
-
 <p>
     <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Create)" asp-route-returnUrl="@currentUrl">
         @Localizer["Create New"]

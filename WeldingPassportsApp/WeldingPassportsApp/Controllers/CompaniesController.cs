@@ -50,11 +50,11 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new GetCompanyCreateRequest(returnUrl, this);
+
                 return await _mediator.Send(query);
             }
             catch (Exception e)
             {
-                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in GetCompanyCreate");
             }
         }
@@ -65,11 +65,11 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new PostCompanyCreateRequest(companyVM, nameof(Details), returnUrl, this);
+
                 return await _mediator.Send(query);
             }
             catch (Exception e)
             {
-                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in PostCompanyCreate");
             }
         }
@@ -79,11 +79,11 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new GetCompanyDetailsRequest(id, returnUrl, this);
+
                 return await _mediator.Send(query);
             }
             catch (Exception e)
             {
-                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in GetCompanyDetails");
             }
         }
@@ -94,11 +94,11 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new GetCompanyEditRequest(id, returnUrl, this);
+
                 return await _mediator.Send(query);
             }
             catch (Exception e)
             {
-                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in GetCompanyEdit");
             }
         }
@@ -109,11 +109,11 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new PostCompanyEditRequest(company, nameof(Details), returnUrl, this);
+
                 return await _mediator.Send(query);
             }
             catch (Exception e)
             {
-                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in PostCompanyEdit");
             }
         }
@@ -128,7 +128,6 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
-                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in GetCompaniesDelete");
             }
         }

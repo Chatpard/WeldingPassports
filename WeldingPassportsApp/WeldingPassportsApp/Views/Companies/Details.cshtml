@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CompanyDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    var returnUrl = ViewBag.ReturnUrl;
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Company Details"]</h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyMainPhone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompanyMainPhone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyEmail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompanyEmail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WebPage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WebPage)
+        </dd>
+    </dl>
+    <h4>@Localizer["Business Address"]</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddressPostalCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddressPostalCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddressCity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddressCity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddressCountry)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddressCountry)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)"
+       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

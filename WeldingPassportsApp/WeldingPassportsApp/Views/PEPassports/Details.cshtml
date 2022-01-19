@@ -1,0 +1,111 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PEPassportDetailsViewModel
+
+@{
+    ViewData["Title"] = Localizer["PEpassport Details"];
+    var returnUrl = ViewBag.ReturnUrl;
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["PE Passport Details"]</h1>
+<hr />
+<br />
+<dl class="row">
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.AVNumber)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.AVNumber)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.FirstName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.FirstName)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.LastName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.LastName)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.NationalNumber)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.NationalNumber)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.IdNumber)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.IdNumber)
+    </dd>
+</dl>
+<div>
+    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Edit)"
+       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>
+<br />
+<h2>@Localizer["PE Certificates"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().ExpiryDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().ExamDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().ProcessName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().RegistrationTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().HasPassed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var certification in Model.Certifications)
+        {
+            <tr class="@certification.Color">
+                <td>
+                    @Html.DisplayFor(modelItem => certification.ExpiryDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.ExamDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.ProcessName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.RegistrationTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.HasPassed)
+                </td>
+                <td>
+                    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
+                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
+                    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)"
+                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

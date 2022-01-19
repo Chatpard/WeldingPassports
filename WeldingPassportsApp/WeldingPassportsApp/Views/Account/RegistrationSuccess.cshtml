@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = @Localizer["Registration Successful"];
+}
+
+<h1 class="text-success">@Localizer["Registration Successful"]</h1>
+<h6 class="text-success">
+    @Localizer["Before you can login, please confirm your email," +
+    " by clicking on the confirmation link we have emailed you." +
+    " Be sure to check the spam folder in case you didn't receive the email."]
+</h6>

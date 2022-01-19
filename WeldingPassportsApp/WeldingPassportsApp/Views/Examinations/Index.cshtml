@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<ExaminationIndexViewModel>
+
+@{
+    ViewData["Title"] = Localizer["Examinations Index"];
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Examinations Index"]</h1>
+<hr />
+<br />
+
+<p>
+    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Create)" asp-route-returnUrl="@currentUrl">
+        @Localizer["Create New"]
+    </a>
+</p>
+
+<form asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)" method="get">
+    <div class="form-actions no-color">
+        <p>
+            @Localizer["Find Examination:"] <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value=@Localizer["Search"] class="btn btn-light" /> |
+            <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)">@Localizer["Back to Full List"]</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
+                   asp-route-sortOrder="@ViewData["ExamDateSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().ExamDate)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "ExamDate_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "ExamDate_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
+                   asp-route-sortOrder="@ViewData["CompanyNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
+                   asp-route-sortOrder="@ViewData["NumberOfPassportsSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().NumberOfPassports)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "NumberOfPassports_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "NumberOfPassports_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var examination in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(vm => examination.ExamDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examination.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examination.NumberOfPassports)
+                </td>
+                <td>
+                    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Details)"
+                       asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
+                    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Delete)"
+                       asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @prevDisabled">
+    @Localizer["Previous"]
+</a>
+<a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @nextDisabled">
+    @Localizer["Next"]
+</a>

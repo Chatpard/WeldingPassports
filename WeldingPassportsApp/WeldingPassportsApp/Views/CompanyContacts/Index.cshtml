@@ -1,0 +1,121 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<CompanyContactIndexViewModel>
+
+@{
+    ViewData["Title"] = Localizer["Contacts Index"];
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Contacts Index"]</h1>
+<hr />
+<br />
+
+<p>
+    <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl ="@currentUrl">
+        @Localizer["Create New"]
+    </a>
+</p>
+
+<form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)" method="get">
+    <div class="form-actions no-color">
+        <p>
+            @Localizer["Find Contact:"] <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value=@Localizer["Search"] class="btn btn-light" /> |
+            <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)">@Localizer["Back to Full List"]</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
+                   asp-route-sortOrder="@ViewData["FirstName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().FirstName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "FirstName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "FirstName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
+                   asp-route-sortOrder="@ViewData["LastName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().LastName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "LastName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "LastName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
+                   asp-route-sortOrder="@ViewData["Email"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().Email)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Email_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Email_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var contact in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(vm => contact.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => contact.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => contact.Email)
+                </td>
+                <td>
+                    <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Details)"
+                       asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
+                    <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Delete)"
+                       asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @prevDisabled">
+    @Localizer["Previous"]
+</a>
+<a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @nextDisabled">
+    @Localizer["Next"]
+</a>

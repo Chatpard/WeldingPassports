@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model IEnumerable<UserToApproveIndexViewModel>
+
+@{
+    var returnUrl = ViewBag.ReturnUrl;
+}
+
+<h1>@Localizer["Users to Approve Index"]</h1>
+<hr />
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(vm => vm.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(vm => vm.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(vm => vm.LastName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(vm => user.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => user.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => user.LastName)
+                </td>
+                <td>
+                    <a asp-controller="@typeof(AdminController).GetNameOfController()" asp-action="@nameof(AdminController.UserToApproveDetails)"
+                       asp-route-id="@user.EncryptedId">@Localizer["Details"]</a> |
+                    <a asp-controller="@typeof(AdminController).GetNameOfController()" asp-action="@nameof(AdminController.DeleteUser)"
+                       asp-route-id="@user.EncryptedId" asp-route-returnUrl="@returnUrl">@Localizer["Delete"]</a>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

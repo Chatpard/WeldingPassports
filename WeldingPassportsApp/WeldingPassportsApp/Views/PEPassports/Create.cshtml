@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PEPassportCreateViewModel
+@{
+    ViewData["Title"] = Localizer["PEpassport Create"];
+    var returnUrl = ViewBag.ReturnUrl;
+}
+<h1>@Localizer["Create PE Passport"]</h1>
+<hr />
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <form enctype="multipart/form-data" asp-controller="@typeof(PEPassportsController).GetNameOfController()"
+              asp-action="@nameof(PEPassportsController.Create)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3">
+            <div class="form-group row">
+                <label asp-for="AVNumber" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="AVNumber" class="form-control" placeholder="AV number">
+                    <span asp-validation-for="AVNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList">
+                        <option value="">@Localizer["Choose training center"]</option>
+                    </select>
+                    <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PEWelderID" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <select asp-for="PEWelderID" class="form-control" asp-items="@Model.PEWelderSelectList">
+                        <option value="">@Localizer["Choose PE Welder"]</option>
+                    </select>
+                    <span asp-validation-for="PEWelderID" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+                    <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="@nameof(PEPassportsController.Index)">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,156 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<PEPassportIndexViewModel>
+
+@{
+    ViewData["Title"] = Localizer["PE Passports Index"];
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["PE Passports Index"]</h1>
+<hr />
+<br />
+
+<p>
+    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Create)" asp-route-returnUrl="@currentUrl">
+        @Localizer["Create New"]
+    </a>
+</p>
+
+<form asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)" method="get">
+    <div class="form-actions no-color">
+        <p>
+            @Localizer["Find Passport:"] <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value=@Localizer["Search"] class="btn btn-light" /> |
+            <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)">
+                @Localizer["Back to Full List"]
+            </a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+                   asp-route-sortOrder="@ViewData["AVNumberSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().AVNumber)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "AVNumber_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "AVNumber_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+                   asp-route-sortOrder="@ViewData["FirstNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().FirstName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "FirstName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "FirstName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+                   asp-route-sortOrder="@ViewData["LastNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().LastName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "LastName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "LastName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+                   asp-route-sortOrder="@ViewData["CompanyNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+                   asp-route-sortOrder="@ViewData["ExpiryDateSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().ExpiryDate)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "ExpiryDate_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "ExpiryDate_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var passport in Model)
+        {
+        <tr class="@passport.Color">
+            <td>
+                @Html.DisplayFor(vm => passport.AVNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => passport.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => passport.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => passport.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => passport.ExpiryDate)
+            </td>
+            <td>
+                <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
+                   asp-route-id="@passport.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
+                <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)"
+                   asp-route-id="@passport.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @prevDisabled">
+    @Localizer["Previous"]
+</a>
+<a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @nextDisabled">
+    @Localizer["Next"]
+</a>

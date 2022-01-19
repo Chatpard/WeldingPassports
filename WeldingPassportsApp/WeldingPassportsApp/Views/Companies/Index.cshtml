@@ -1,0 +1,140 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PaginatedList<CompanyIndexViewModel>
+
+@{
+    ViewData["Title"] = Localizer["Companies Index"];
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Companies Index"]</h1>
+<hr />
+<br />
+
+<p>
+    <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">
+        @Localizer["Create New"]
+    </a>
+</p>
+
+<form asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)" method="get">
+    <div class="form-actions no-color">
+        <p>
+            @Localizer["Find Company:"] <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value=@Localizer["Search"] class="btn btn-light" /> |
+            <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)">
+                @Localizer["Back to Full List"]
+            </a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)"
+                   asp-route-sortOrder="@ViewData["CompanyName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)"
+                   asp-route-sortOrder="@ViewData["CompanyMainPhone"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyMainPhone)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyMainPhone_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyMainPhone_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)"
+                   asp-route-sortOrder="@ViewData["CompanyEmail"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyEmail)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyEmail_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyEmail_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)"
+                   asp-route-sortOrder="@ViewData["WebPage"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().WebPage)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "WebPage_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "WebPage_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var company in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(vm => company.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => company.CompanyMainPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => company.CompanyEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => company.WebPage)
+            </td>
+            <td>
+                <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Details)"
+                   asp-route-id="@company.EncryptedID"  asp-route-returnUrl = "@currentUrl">@Localizer["Details"]</a> |
+                <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Delete)"
+                   asp-route-id="@company.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+            </td>
+        </tr>
+
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @prevDisabled">
+    @Localizer["Previous"]
+</a>
+<a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @nextDisabled">
+    @Localizer["Next"]
+</a>

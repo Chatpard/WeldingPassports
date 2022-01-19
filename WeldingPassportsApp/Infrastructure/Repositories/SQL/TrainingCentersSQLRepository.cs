@@ -1,0 +1,143 @@
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories.SQL;
+using Application.Security;
+using Application.ViewModels;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Domain.Models;
+using Infrastructure.Services.Persistence;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Repositories.SQL
+{
+    public class TrainingCentersSQLRepository : SaveChangesSQL, ITrainingCentersSQLRepository
+    {
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IAppSettingsSQLRepository _appSettingsSQLRepository;
+        private readonly IDataProtector _protector;
+
+        public TrainingCentersSQLRepository(AppDbContext context, IMapper mapper, IAppSettingsSQLRepository appSettingsSQLRepository,
+            IDataProtectionProvider dataProtectionProvider, IDataProtectionPurposeStrings dataProtectionPurposeStrings) : base(context)
+        {
+            _context = context;
+            _mapper = mapper;
+            _appSettingsSQLRepository = appSettingsSQLRepository;
+            _protector = dataProtectionProvider
+                .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
+        }
+
+        public IQueryable<TrainingCenterIndexViewModel> GetTrainingCentersIndex()
+        {
+            return _context.TrainingCenters.ProjectTo<TrainingCenterIndexViewModel>(_mapper.ConfigurationProvider);
+        }
+
+        public async Task<TrainingCenterDetailsViewModel> GetTrainingCenterDetailsAsync(string encryptedID)
+        {
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
+
+            IQueryable<TrainingCenter> query = _context.TrainingCenters.Where(trainingCenter => trainingCenter.ID == decryptedID);
+
+            return await query.ProjectTo<TrainingCenterDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+
+        public async Task<int> DeleteTrainingCenterByEncryptedIDAsync(string encryptedID, CancellationToken token)
+        {
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            _context.TrainingCenters.Remove(new TrainingCenter { ID = decryptedID });
+            return await SaveAsync(token);
+        }
+
+        public SelectList TrainingCenterSelectList()
+        {
+            var trainingCenters = _context.TrainingCenters
+                .OrderBy(trainingCenter => trainingCenter.Company.CompanyName)
+                .Select(trainingCenter => new {
+                    ID = trainingCenter.ID,
+                    CompanyName = trainingCenter.Company.CompanyName
+                });
+
+            return new SelectList(trainingCenters, nameof(TrainingCenter.ID), nameof(TrainingCenter.Company.CompanyName));
+        }
+
+        public async Task<IPaginatedList<TrainingCenterIndexViewModel>> GetTrainingCentersIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder)
+        {
+            var trainingCentersQuery = GetTrainingCentersIndex();
+
+            trainingCentersQuery = SearchTrainingCenterIndex(trainingCentersQuery, searchString);
+
+            trainingCentersQuery = SortTrainingCenterIndex(trainingCentersQuery, sortOrder);
+
+            return await PaginatedList<TrainingCenterIndexViewModel>.CreateAsync(trainingCentersQuery.AsNoTracking(), pageIndex, pageSize);
+        }
+
+        private static IQueryable<TrainingCenterIndexViewModel> SortTrainingCenterIndex(IQueryable<TrainingCenterIndexViewModel> trainingCentersQuery, string sortOrder)
+        {
+            switch (sortOrder)
+            {
+                case "CompanyName_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.CompanyName);
+                    return trainingCentersQuery;
+                case "CompanyName_asc":
+                case null:
+                case "":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.CompanyName);
+                    return trainingCentersQuery;
+                case "BusinessAddressPostalCode_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.BusinessAddressPostalCode);
+                    return trainingCentersQuery;
+                case "BusinessAddressPostalCode_asc":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.BusinessAddressPostalCode);
+                    return trainingCentersQuery;
+                case "BusinessAddressCity_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.BusinessAddressCity);
+                    return trainingCentersQuery;
+                case "BusinessAddressCity_asc":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.BusinessAddressCity);
+                    return trainingCentersQuery;
+                case "Contact_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.Contact);
+                    return trainingCentersQuery;
+                case "Contact_asc":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.Contact);
+                    return trainingCentersQuery;
+                case "Email_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.Email);
+                    return trainingCentersQuery;
+                case "Email_asc":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.Email);
+                    return trainingCentersQuery;
+                case "MobilePhone_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.MobilePhone);
+                    return trainingCentersQuery;
+                case "MobilePhone_asc":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.MobilePhone);
+                    return trainingCentersQuery;
+
+                default:
+                    throw new InvalidOperationException("SortOrder nout found.");
+            }
+        }
+
+        private static IQueryable<TrainingCenterIndexViewModel> SearchTrainingCenterIndex(IQueryable<TrainingCenterIndexViewModel> trainingCentersQuery, string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                trainingCentersQuery = trainingCentersQuery.Where(trainingCenter => trainingCenter.CompanyName.ToLower().Contains(searchString.ToLower())
+                    || trainingCenter.BusinessAddressPostalCode.ToLower().Contains(searchString.ToLower())
+                    || trainingCenter.BusinessAddressCity.ToLower().Contains(searchString.ToLower())
+                    || trainingCenter.Contact.ToLower().Contains(searchString.ToLower())
+                    || trainingCenter.Email.ToLower().Contains(searchString.ToLower()));
+            }
+
+            return trainingCentersQuery;
+        }
+    }
+}

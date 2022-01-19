@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model ExaminationEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    var returnUrl = ViewBag.ReturnUrl;
+}
+
+<h1>@Localizer["Edit Examination"]</h1>
+<hr />
+<br />
+<form asp-controller="@typeof(ExaminationsController).GetNameOfController()"
+    asp-action="@nameof(ExaminationsController.Edit)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3">
+    <input type="hidden" asp-for="EncryptedID" />
+    <div class="form-group row">
+        <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="ExamDate" class="form-control" />
+        </div>
+        <span asp-validation-for="ExamDate" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="ExamCenterID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="ExamCenterID" class="form-control" asp-items="Model.ExamCenterItems"></select>
+            <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems"></select>
+            <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+            <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+</form>

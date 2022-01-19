@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model AddressDetailsViewModel
+
+@{
+    ViewData["Title"] = "Address Details";
+    string returnUrl = ViewBag.ReturnUrl;
+    string currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Address Details"]</h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddressPostalCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddressPostalCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddressCity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddressCity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BusinessAddressCountry)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BusinessAddressCountry)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Edit)"
+       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

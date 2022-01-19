@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model ExaminationDetailsViewModel
+
+@{
+    ViewData["Title"] = "Examination Details";
+    var returnUrl = ViewBag.ReturnUrl;
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Examination Details"]</h1>
+<hr />
+<br />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExamDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExamDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExamCenterName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExamCenterName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TrainingCenterName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrainingCenterName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Edit)"
+       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>
+<br />
+<h2>@Localizer["PE Certificates"]</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().AVNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().ProcessName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().RegistrationTypeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().HasPassed)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var certification in Model.Certifications)
+        {
+            <tr class="@certification.Color">
+                <td>
+                    @Html.DisplayFor(modelItem => certification.AVNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.ProcessName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.RegistrationTypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => certification.HasPassed)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

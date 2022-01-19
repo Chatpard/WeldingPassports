@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = @Localizer["Not found"];
+}
+
+<h1 class="text-danger">@Localizer["Page Not Found"]</h1>
+<br />
+<a href="/">
+    @Localizer["Click here to navigate to the home page"]
+</a>

@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model AppSettingsViewModel
+@{
+    ViewData["Title"] = Localizer["App Settings"];
+}
+<h1>@Localizer["App Settings"]</h1>
+<hr />
+<br />
+<dl class="row">
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.MaxExpiryDays)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.MaxExpiryDays)
+    </dd>
+    <dt class="col-sm-3 dict-margin">
+        @Html.DisplayNameFor(model => model.MaxExtensionDays)
+    </dt>
+    <dd class="col-sm-9 dict-margin">
+        @Html.DisplayFor(model => model.MaxExtensionDays)
+    </dd>
+    <dt class="col-sm-3 dict-margin">
+        @Html.DisplayNameFor(model => model.MaxInAdvanceDays)
+    </dt>
+    <dd class="col-sm-9 dict-margin">
+        @Html.DisplayFor(model => model.MaxInAdvanceDays)
+    </dd>
+</dl>
+<div>
+    <a asp-controller="@typeof(AdminController).GetNameOfController()" asp-action="@nameof(AdminController.AppSettingsEdit)"
+       asp-route-id="@Model.ID" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+</div>

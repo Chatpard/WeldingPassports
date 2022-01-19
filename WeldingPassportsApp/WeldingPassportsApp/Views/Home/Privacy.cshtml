@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Privacy Policy"];
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    @Localizer["We use required cookies to perform essential website functions. " +
+    "For example, they're used to log you in, " +
+    "save your language preferences, " +
+    "improve performance, " +
+    "route traffic between web servers, " +
+    "detect the size of your screen, " +
+    "determine page load times, " +
+    "improve user experience, " +
+    "and for audience measurement. " +
+    "These cookies are necessary for our websites to work."]
+</p>

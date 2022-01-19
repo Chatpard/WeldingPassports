@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-@model CompanyContactEditViewModel
+﻿@model CompanyContactEditViewModel
 
 @{
     ViewData["Title"] = "Contact Edit";
@@ -10,11 +8,10 @@
 
 <h1>@Localizer["Edit Contact"]</h1>
 <hr />
-<br />
 <div class="row">
     <div class="col-md-12">
         <form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(WeldersController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
-            <input hidden asp-for="EncryptedID" />
+            <input asp-for="EncryptedID" hidden />
             <div class="form-group row">
                 <label asp-for="ContactID" class="col-sm-2 col-form-label"></label>
                 <div class="input-group col-sm-10">

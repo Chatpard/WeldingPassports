@@ -34,7 +34,7 @@ namespace Application.Requests.Admin
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
                 PEPassport pePassport = _mapper.Map<PEPassport>(request.PEPassportChanges);
-                _repository.PutPEPassportUpdate(pePassport);
+                _repository.PostPEPassportEditasync(pePassport);
                 await _repository.SaveAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);

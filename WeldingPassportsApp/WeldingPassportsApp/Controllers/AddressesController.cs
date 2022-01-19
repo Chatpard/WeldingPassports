@@ -51,7 +51,7 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit()
+        public IActionResult Edit()
         {
             return View();
         }

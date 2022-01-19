@@ -27,25 +27,23 @@ namespace Application.Profiles
                 .ForMember(index => index.LastName, options => options.MapFrom(group =>
                     group.PEWelder.LastName))
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
-                    group.Registration.PEPassport.AVNumber))
+                    group.Registration.PEPassport.TrainingCenter.Letter + group.Registration.PEPassport.AVNumber))
                 .ForMember(index => index.Color, options => options.MapFrom(group =>
                     group.UIColor.Color));
 
-            CreateMap<PEWelder, PEWelderCreateViewModel>()
-                .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.ID.ToString())));
+            CreateMap<PEPassportRegistrationUIColorGroup, PEWelderDetailsPEPassportsIndexViewModel>()
+                .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
+                    _protector.Protect(group.PEPassport.ID.ToString())))
+                .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
+                    group.PEPassport == null ? String.Empty : group.PEPassport.TrainingCenter.Letter + group.PEPassport.AVNumber))
+                .ForMember(index => index.CompanyName, options => options.MapFrom(group =>
+                    group.Registration == null ? String.Empty : group.Registration.Company.CompanyName))
+                .ForMember(index => index.ExpiryDate, options => options.MapFrom(group =>
+                    group.Registration == null ? null : group.Registration.ExpiryDate))
+                .ForMember(index => index.Color, options => options.MapFrom(group =>
+                    group.UIColor.Color));
 
-            CreateMap<PEWelderCreateViewModel, PEWelder>()
-                .ForMember(vm => vm.ID, options => options.MapFrom(group =>
-                    _protector.Unprotect(group.EncryptedID)));
-
-            CreateMap<PEWelder, PEWelderEditViewModel>()
-                .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.ID.ToString())));
-
-            CreateMap<PEWelderEditViewModel, PEWelder>()
-                .ForMember(vm => vm.ID, options => options.MapFrom(group =>
-                    _protector.Unprotect(group.EncryptedID)));
+            CreateMap<PEWelderCreateViewModel, PEWelder>();
 
             CreateMap<PEWelderListRegistrationUIColorGroup, PEWelderDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
@@ -61,17 +59,13 @@ namespace Application.Profiles
                 .ForMember(vm => vm.PEPassports, options => options.MapFrom(group =>
                     group.PEPassportRegistrationUIColorGroupList));
 
-            CreateMap<PEPassportRegistrationUIColorGroup, PEWelderDetailsPEPassportsIndexViewModel>()
-                .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.PEPassport.ID.ToString())))
-                .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
-                    group.PEPassport == null ? String.Empty : group.PEPassport.AVNumber))
-                .ForMember(index => index.CompanyName, options => options.MapFrom(group =>
-                    group.Registration == null ? String.Empty : group.Registration.Company.CompanyName))
-                .ForMember(index => index.ExpiryDate, options => options.MapFrom(group =>
-                    group.Registration == null ? null : group.Registration.ExpiryDate))
-                .ForMember(index => index.Color, options => options.MapFrom(group =>
-                    group.UIColor.Color));
+            CreateMap<PEWelder, PEWelderEditViewModel>()
+                .ForMember(vm => vm.EncryptedID, options => options.MapFrom(peWelder =>
+                    _protector.Protect(peWelder.ID.ToString())));
+
+            CreateMap<PEWelderEditViewModel, PEWelder>()
+                .ForMember(peWelder => peWelder.ID, options => options.MapFrom(vm =>
+                    _protector.Unprotect(vm.EncryptedID)));
         }
     }
 }

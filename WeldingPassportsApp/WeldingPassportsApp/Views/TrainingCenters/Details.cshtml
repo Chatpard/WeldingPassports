@@ -141,7 +141,7 @@
 </dl>
 <div>
     <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Edit)"
-       asp-route-id="@Model.EncryptedID" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
     <a class="btn btn-primary" style="width:auto" href="@returnUrl">
         @Localizer["Back"]
     </a>

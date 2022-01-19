@@ -41,7 +41,6 @@ namespace Application.Requests.PEPassports
                 PEWelderSelectList = _peWeldersSQLRepository.PEWelderSelectList()
             };
 
-
             return request.Controller.View(vm);
         }
     }

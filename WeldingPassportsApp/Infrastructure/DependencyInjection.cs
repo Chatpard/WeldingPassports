@@ -1,5 +1,7 @@
 ﻿using Application.Interfaces;
+using Application.Interfaces.Repositories.API;
 using Application.Interfaces.Repositories.SQL;
+using Infrastructure.Repositories.API;
 using Infrastructure.Repositories.SQL;
 using Infrastructure.Services;
 using Infrastructure.Services.Persistence;
@@ -43,6 +45,8 @@ namespace Infrastructure
 
             services.AddSQLRepositoriesToServices();
 
+            services.AddAPIRepositoriesToServices();
+
             return services;
         }
 
@@ -60,6 +64,14 @@ namespace Infrastructure
             services.AddScoped<ICompanyContactsSQLRepository, CompanyContactsSQLRepository>();
             services.AddScoped<IAddressesSQLRepository, AddressesSQLRepository>();
             services.AddScoped<IExamCentersSQLRepository, ExamCentersSQLRepository>();
+            services.AddScoped<IListTrainingCentersSQLRepository, ListTrainingCentersSQLRepository>();
+        }
+
+        private static void AddAPIRepositoriesToServices(this IServiceCollection services)
+        {
+            services.AddScoped<ITrainingCentersAPIRepository, TrainingCentersAPIRepository>();
+            services.AddScoped<IPEPassportsAPIRepository, PEPassportsAPIRepository>();
+            services.AddScoped<ICompanyContactsAPIRepository, CompanyContactsAPIRepository>();
         }
     }
 }

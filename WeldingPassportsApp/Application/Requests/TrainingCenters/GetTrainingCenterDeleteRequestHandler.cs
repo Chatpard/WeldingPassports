@@ -21,12 +21,12 @@ namespace Application.Requests.TrainingCenters
 
         public async Task<IActionResult> Handle(GetTrainingCenterDeleteRequest request, CancellationToken cancellationToken)
         {
-            try
-            {
+            //try
+            //{
                 await _repository.DeleteTrainingCenterByEncryptedIDAsync(request.EncryptedID, cancellationToken);
-            }
-            catch (DbUpdateException)
-            { }
+            //}
+            //catch (DbUpdateException)
+            //{ }
 
             return request.Controller.LocalRedirect(request.ReturnUrl);
         }

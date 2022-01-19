@@ -67,6 +67,8 @@ namespace WeldingPassportsApp
                 options.SupportedUICultures = supportedCultures;
             });
 
+            services.AddCors();
+
             IMvcBuilder mvcBuilder = services.AddControllersWithViews(options => 
                 {
                     var policy = new AuthorizationPolicyBuilder()
@@ -122,6 +124,8 @@ namespace WeldingPassportsApp
 
             app.UseRouting();
 
+            app.UseCors(options => options.AllowAnyOrigin());
+
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(options.Value);
 
@@ -133,6 +137,12 @@ namespace WeldingPassportsApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=PEPassports}/{action=Index}/{id?}");
+
+
+                endpoints.MapControllerRoute(
+                    name: "api",
+                    pattern: "{controller}/{id?}");
+
             });
         }
     }

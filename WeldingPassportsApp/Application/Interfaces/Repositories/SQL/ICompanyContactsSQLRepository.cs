@@ -25,6 +25,10 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<int> DeleteCompanyContactByEncryptedIDAsync(string encryptedID, CancellationToken token);
 
+        Task<CompanyContact> GetCompanyContactById(int id);
+
+        public SelectList CompanyContactSelectList(string? encryptedCompanyID, int? companyContactID);
+
         Task<int> SaveAsync(CancellationToken cancellationToken);
     }
 }

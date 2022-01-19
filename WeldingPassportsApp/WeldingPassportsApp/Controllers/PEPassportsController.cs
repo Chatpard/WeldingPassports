@@ -64,11 +64,11 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(PEPassportCreateViewModel pePassport, string returnUrl)
+        public async Task<IActionResult> Create(PEPassportCreateViewModel pePassportCreateVM, string returnUrl)
         {
             try
             {
-                var query = new PostPEPassportCreateRequest(pePassport, nameof(Details), returnUrl, this);
+                var query = new PostPEPassportCreateRequest(pePassportCreateVM, nameof(Details), returnUrl, this);
 
                 return await _mediator.Send(query);
             }
@@ -118,7 +118,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new PostPEPassportEditRequest(pepassportChanges, nameof(Details), returnUrl, this);
+                var query = new PostPEPassportEditRequest(pepassportChanges, returnUrl, this);
                 
                 return await _mediator.Send(query);
             }

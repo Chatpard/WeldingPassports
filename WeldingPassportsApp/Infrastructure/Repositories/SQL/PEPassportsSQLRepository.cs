@@ -150,7 +150,7 @@ namespace Infrastructure.Repositories.SQL
             return await query.ProjectTo<PEPassportEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
-        public EntityEntry<PEPassport> PutPEPassportUpdate(PEPassport pePassortChanges)
+        public EntityEntry<PEPassport> PostPEPassportEditasync(PEPassport pePassortChanges)
         {
             EntityEntry<PEPassport> pePassport = _context.Entry<PEPassport>(pePassortChanges);
             pePassport.State = EntityState.Modified;
@@ -163,6 +163,7 @@ namespace Infrastructure.Repositories.SQL
             _context.PEPassports.Remove(new PEPassport { ID = decryptedID });
             return await SaveAsync(token);
         }
+
         public SelectList PEPassportSelectList()
         {
             return new SelectList(_context.PEPassports);

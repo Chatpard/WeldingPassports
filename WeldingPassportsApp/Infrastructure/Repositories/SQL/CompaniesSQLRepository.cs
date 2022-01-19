@@ -86,7 +86,7 @@ namespace Infrastructure.Repositories.SQL
             return await query.ProjectTo<CompanyEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
-        public EntityEntry<Company> PostCompanyContactEdit(Company companyChanges)
+        public EntityEntry<Company> PostCompanyEdit(Company companyChanges)
         {
             EntityEntry<Company> company = _context.Entry(companyChanges);
             company.State = EntityState.Modified;
@@ -103,6 +103,24 @@ namespace Infrastructure.Repositories.SQL
         public SelectList CompanySelectList()
         {
             var company = _context.Companies
+                .OrderBy(contact => contact.CompanyName)
+                .Select(contact => contact);https://localhost:44315/Companies
+
+            return new SelectList(company, nameof(Company.ID), nameof(Company.CompanyName));
+        }
+
+        public SelectList CompanyNoTrainingCentersSelectList(int? companyID = null)
+        {
+            var company = _context.Companies.Where(company => true);
+            if (companyID == null)
+            {
+                company = company.Where(company => company.TrainingCenter == null);
+            }
+            else
+            {
+                company = company.Where(company => company.TrainingCenter == null || company.ID == companyID);
+            };
+            company = company                
                 .OrderBy(contact => contact.CompanyName)
                 .Select(contact => contact);
 

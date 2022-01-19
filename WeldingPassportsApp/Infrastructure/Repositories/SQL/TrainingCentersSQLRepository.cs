@@ -9,7 +9,9 @@ using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,23 +37,49 @@ namespace Infrastructure.Repositories.SQL
 
         public IQueryable<TrainingCenterIndexViewModel> GetTrainingCentersIndex()
         {
-            return _context.TrainingCenters.ProjectTo<TrainingCenterIndexViewModel>(_mapper.ConfigurationProvider);
+            IQueryable<TrainingCenter> query = _context.TrainingCenters;
+
+            return query.ProjectTo<TrainingCenterIndexViewModel>(_mapper.ConfigurationProvider);
         }
 
         public async Task<TrainingCenterDetailsViewModel> GetTrainingCenterDetailsAsync(string encryptedID)
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
-            AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
             IQueryable<TrainingCenter> query = _context.TrainingCenters.Where(trainingCenter => trainingCenter.ID == decryptedID);
 
             return await query.ProjectTo<TrainingCenterDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
+        public async Task<TrainingCenterEditViewModel> GetTrainingCenterEditAsync(string encryptedID)
+        {
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+
+            IQueryable<TrainingCenter> query = _context.TrainingCenters.Where(trainingCenter => trainingCenter.ID == decryptedID);
+
+            return await query.ProjectTo<TrainingCenterEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+
+        public async Task<EntityEntry<TrainingCenter>> PostTrainingCenterCreateAsync(TrainingCenter trainingCenterChanges)
+        {
+            EntityEntry<TrainingCenter> trainingCenter = await _context.TrainingCenters.AddAsync(trainingCenterChanges);
+            trainingCenter.State = EntityState.Added;
+            return trainingCenter;
+        }
+
+        public EntityEntry<TrainingCenter> PostTrainingCenterEditAsync(TrainingCenter trainingCenterChanges)
+        {
+            EntityEntry<TrainingCenter> trainingCenter = _context.TrainingCenters.Update(trainingCenterChanges);
+            trainingCenter.State = EntityState.Modified;
+            return trainingCenter;
+        }
+
         public async Task<int> DeleteTrainingCenterByEncryptedIDAsync(string encryptedID, CancellationToken token)
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+
             _context.TrainingCenters.Remove(new TrainingCenter { ID = decryptedID });
+
             return await SaveAsync(token);
         }
 
@@ -65,6 +93,19 @@ namespace Infrastructure.Repositories.SQL
                 });
 
             return new SelectList(trainingCenters, nameof(TrainingCenter.ID), nameof(TrainingCenter.Company.CompanyName));
+        }
+
+        public Dictionary<int, char> LetterDictionary()
+        {
+            Dictionary<int, char> letterDictionary = new Dictionary<int, char>();
+
+            List<TrainingCenter> trainingCentersList = _context.TrainingCenters.ToList();
+            foreach (TrainingCenter trainingCenter in trainingCentersList)
+            {
+                letterDictionary.Add(trainingCenter.ID, trainingCenter.Letter);
+            }
+
+            return letterDictionary;
         }
 
         public async Task<IPaginatedList<TrainingCenterIndexViewModel>> GetTrainingCentersIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder)

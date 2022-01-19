@@ -3,7 +3,7 @@
 @model Application.ViewModels.ExaminationCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = @Localizer["Create Examination"];
     var returnUrl = ViewBag.ReturnUrl;
 }
 
@@ -22,7 +22,7 @@
         <label asp-for="ExamCenterID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <select asp-for="ExamCenterID" class="form-control" asp-items="Model.ExamCenterItems">
-                <option value="" selected disabled hidden>@Localizer["Choose exam center"]</option>
+                <option value="" selected disabled hidden>@Localizer["Choose Exam Center"]</option>
             </select>
             <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
         </div>
@@ -31,7 +31,7 @@
         <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems">
-                <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
+                <option value="" selected disabled hidden>@Localizer["Choose Training Center"]</option>
             </select>
             <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
         </div>

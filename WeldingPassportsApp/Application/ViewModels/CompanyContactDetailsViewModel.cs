@@ -5,8 +5,6 @@ namespace Application.ViewModels
 {
     public class CompanyContactDetailsViewModel
     {
-        private DateTime? birthday;
-
         public string EncryptedID { get; set; }
 
         [Display(Name = "First Name")]
@@ -18,6 +16,7 @@ namespace Application.ViewModels
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
 
+        private DateTime? birthday;
         [DataType(DataType.Date)]
         [Display(Name = "Birthday")]
         public DateTime? Birthday

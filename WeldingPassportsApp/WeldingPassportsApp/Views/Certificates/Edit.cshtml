@@ -1,0 +1,189 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CertificateEditViewModel
+
+@{
+    ViewData["Title"] = Localizer["Edit Certificate"];
+    var returnUrl = ViewBag.ReturnUrl;
+}
+
+<h1>@Localizer["Edit Certificate"]</h1>
+<hr />
+<br />
+<form enctype="multipart/form-data" asp-controller="@typeof(CertificatesController).GetNameOfController()"
+      asp-action="@nameof(CertificatesController.Edit)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3">
+    <input hidden asp-for="EncryptedID" />
+    <div class="form-group row">
+        <label asp-for="AVNumber" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="AVNumber" class="form-control" placeholder="AV number" readonly>
+            <span asp-validation-for="AVNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="FirstName" class="form-control" placeholder="First Name" readonly>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="LastName" class="form-control" placeholder="Last Name" readonly>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="TrainingCenterName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="TrainingCenterName" class="form-control" readonly>
+            <span asp-validation-for="TrainingCenterName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems"></select>
+            <span asp-validation-for="ProcessID" class="text-danger"></span>
+        </div>
+    </div>
+
+    <h2>@Localizer["Current Certificate"]</h2>
+    <hr />
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateCompanyID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="CurrentCertificateCompanyID" class="form-control" asp-items="Model.CompanyNameItems"></select>
+            <span asp-validation-for="CurrentCertificateCompanyID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateExamDate" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="CurrentCertificateExamDate" class="form-control" placeholder="Examination Date" readonly>
+            <span asp-validation-for="CurrentCertificateExamDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateExpiryDate" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="CurrentCertificateExpiryDate" class="form-control" placeholder="Expiry Date" readonly>
+            <span asp-validation-for="CurrentCertificateExpiryDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateRegistrationTypeID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="CurrentCertificateRegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems"></select>
+            <span asp-validation-for="CurrentCertificateRegistrationTypeID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateHasPassed" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            @Html.DropDownListFor(m => m.CurrentCertificateHasPassed, new SelectList(new[]
+            {
+            new SelectListItem { Value = null, Text = "Not set" },
+            new SelectListItem { Value = "False", Text = "False" },
+            new SelectListItem { Value = "True", Text = "True" },
+            },
+            "Value",
+            "Text"
+            ),
+            new { @class = "form-control" })
+            <span asp-validation-for="CurrentCertificateHasPassed" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateExamCenterName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="CurrentCertificateExamCenterName" class="form-control" readonly>
+            <span asp-validation-for="CurrentCertificateExamCenterName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateRevokeDate" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="CurrentCertificateRevokeDate" class="form-control">
+            <span asp-validation-for="CurrentCertificateRevokeDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateRevokedByCompanyContactID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems">
+                <option value="0">Not Revoked</option>
+            </select>
+            <span asp-validation-for="CurrentCertificateRevokedByCompanyContactID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CurrentCertificateRevokeComment" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment">
+            <span asp-validation-for="CurrentCertificateRevokeComment" class="text-danger"></span>
+        </div>
+    </div>
+    @if (Model.PreviousCertificateExpiryDate != null)
+    {
+        <h2>@Localizer["Previous Certificate"]</h2>
+        <hr />
+        <div class="form-group row">
+            <label asp-for="PreviousCertificateExpiryDate" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <input asp-for="PreviousCertificateExpiryDate" class="form-control" readonly>
+                <span asp-validation-for="PreviousCertificateExpiryDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="PreviousCertificateHasPassed" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                @if (Model.PreviousCertificateHasPassed == null)
+                {
+                    <input value="Not Set" class="form-control" readonly>
+                }
+                @if (Model.PreviousCertificateHasPassed == false)
+                {
+                    <input value="Not Passed" class="form-control" readonly>
+                }
+                @if (Model.PreviousCertificateHasPassed == true)
+                {
+                    <input value="Passed" class="form-control" readonly>
+                }
+                <span asp-validation-for="PreviousCertificateHasPassed" class="text-danger"></span>
+            </div>
+        </div>
+        @if (Model.PreviousCertificateRevokeDate != null)
+        {
+            <div class="form-group row">
+                <label asp-for="PreviousCertificateRevokeDate" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="PreviousCertificateRevokeDate" class="form-control" readonly>
+                    <span asp-validation-for="PreviousCertificateRevokeDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PreviousCertificateRevokedBy" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="PreviousCertificateRevokedBy" class="form-control" readonly>
+                    <span asp-validation-for="PreviousCertificateRevokedBy" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="PreviousCertificateRevokeComment" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="PreviousCertificateRevokeComment" class="form-control" placeholder="Revoke Comment" readonly>
+                    <span asp-validation-for="PreviousCertificateRevokeComment" class="text-danger"></span>
+                </div>
+            </div>
+        }
+    }
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+            <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+</form>

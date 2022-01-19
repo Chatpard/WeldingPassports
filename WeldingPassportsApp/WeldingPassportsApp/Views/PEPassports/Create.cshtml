@@ -2,7 +2,7 @@
 @inject IViewLocalizer Localizer
 @model PEPassportCreateViewModel
 @{
-    ViewData["Title"] = Localizer["PEpassport Create"];
+    ViewData["Title"] = Localizer["Create PE Passport"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
 }
@@ -26,7 +26,7 @@
                 <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10 input-group">
                     <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList">
-                        <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
+                        <option value="" selected disabled hidden>@Localizer["Choose Training Center"]</option>
                     </select>
                     <div class=" input-group-append">
                         <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>

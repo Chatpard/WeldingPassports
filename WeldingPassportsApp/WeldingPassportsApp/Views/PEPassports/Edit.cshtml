@@ -1,9 +1,8 @@
 ﻿@model PEPassportEditViewModel
 
 @{
-    ViewData["Title"] = Localizer["PEpassport Edit"];
+    ViewData["Title"] = Localizer["Edit PE Passport"];
     var returnUrl = ViewBag.ReturnUrl;
-    var currentUrl = ViewBag.CurrentUrl;
 }
 
 <h1>@Localizer["Edit PE Passport"]</h1>
@@ -56,7 +55,32 @@
             </div>
         </form>
     </div>
-</div>
+    <div class="form-group row">
+        <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList">
+                <option value="">@Localizer["Choose Training Center"]</option>
+            </select>
+            <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="PEWelderID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="PEWelderID" class="form-control" asp-items="@Model.PEWelderSelectList">
+                <option value="">@Localizer["Choose PE Welder"]</option>
+            </select>
+            <span asp-validation-for="PEWelderID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+            <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

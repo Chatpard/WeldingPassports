@@ -39,6 +39,8 @@ namespace Application
                     provider.GetService<IDataProtectionPurposeStrings>()));
                 config.AddProfile(new TrainingCenterProfile(provider.GetService<IDataProtectionProvider>(),
                     provider.GetService<IDataProtectionPurposeStrings>()));
+                config.AddProfile(new RegistrationProfile(provider.GetService<IDataProtectionProvider>(),
+                    provider.GetService<IDataProtectionPurposeStrings>()));
             }).CreateMapper());
 
             services.AddSingleton<IDataProtectionPurposeStrings, DataProtectionPurposeStrings>();

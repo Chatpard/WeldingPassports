@@ -1,0 +1,169 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model CertificateDetailsViewModel
+
+@{
+    ViewData["Title"] = Localizer["Certificate Details"];
+    var returnUrl = ViewBag.ReturnUrl;
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["Certificate Details"]</h1>
+<hr />
+<br />
+<dl class="row">
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.AVNumber)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.AVNumber)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.FirstName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.FirstName)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.LastName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.LastName)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.TrainingCenterName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.TrainingCenterName)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.ProcessName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.ProcessName)
+    </dd>
+</dl>
+
+<h2>@Localizer["Current Certificate"]</h2>
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.CurrentCertificateCompanyName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.CurrentCertificateCompanyName)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.CurrentCertificateExamDate)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.CurrentCertificateExamDate)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.CurrentCertificateExpiryDate)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.CurrentCertificateExpiryDate)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.CurrentCertificateRegistrationTypeName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.CurrentCertificateRegistrationTypeName)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.CurrentCertificateHasPassed)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.CurrentCertificateHasPassed)
+    </dd>
+    <dt class="col-sm-3">
+        @Html.DisplayNameFor(model => model.CurrentCertificateExamCenterName)
+    </dt>
+    <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.CurrentCertificateExamCenterName)
+    </dd>
+    @if (Model.CurrentCertificateRevokeDate != null)
+    {
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CurrentCertificateRevokeDate)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CurrentCertificateRevokeDate)
+        </dd>
+    }
+    @if (Model.CurrentCertificateRevokedBy != null)
+    {
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CurrentCertificateRevokedBy)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CurrentCertificateRevokedBy)
+        </dd>
+    }
+    @if (Model.CurrentCertificateRevokeComment != null)
+    {
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CurrentCertificateRevokeComment)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CurrentCertificateRevokeComment)
+        </dd>
+    }
+</dl>
+
+
+@if (Model.PreviousCertificateExpiryDate != null)
+{
+    <h2>@Localizer["Previous Certificate"]</h2>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.PreviousCertificateExpiryDate)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PreviousCertificateExpiryDate)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.PreviousCertificateHasPassed)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.PreviousCertificateHasPassed)
+        </dd>
+        
+        @if (Model.PreviousCertificateRevokeDate != null)
+        {
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.PreviousCertificateRevokeDate)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.PreviousCertificateRevokeDate)
+            </dd>
+        }
+        @if (Model.PreviousCertificateRevokedBy != null)
+        {
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.PreviousCertificateRevokedBy)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.PreviousCertificateRevokedBy)
+            </dd>
+        }
+        @if (Model.PreviousCertificateRevokeComment != null)
+        {
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.PreviousCertificateRevokeComment)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.PreviousCertificateRevokeComment)
+            </dd>
+        }
+    </dl>
+}
+    <div>
+        <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
+           asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+        <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+            @Localizer["Back"]
+        </a>
+    </div>

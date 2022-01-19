@@ -97,55 +97,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Address" xml:space="preserve">
-    <value>Adresse</value>
+  <data name="Expiry Date" xml:space="preserve">
+    <value></value>
   </data>
-  <data name="Approve" xml:space="preserve">
-    <value>Approuver</value>
+  <data name="Exam Date" xml:space="preserve">
+    <value></value>
   </data>
-  <data name="Birthday" xml:space="preserve">
-    <value>Anniversaire</value>
+  <data name="Company" xml:space="preserve">
+    <value></value>
   </data>
-  <data name="Business Phone" xml:space="preserve">
-    <value>Téléphone Professionnel</value>
+  <data name="Process" xml:space="preserve">
+    <value></value>
   </data>
-  <data name="City" xml:space="preserve">
-    <value>Ville</value>
+  <data name="Registration Type" xml:space="preserve">
+    <value></value>
   </data>
-  <data name="Country" xml:space="preserve">
-    <value>Pays</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email</value>
-  </data>
-  <data name="First Name" xml:space="preserve">
-    <value>Prénom</value>
-  </data>
-  <data name="Incorrect phone number." xml:space="preserve">
-    <value>Numéro de téléphone incorrect.</value>
-  </data>
-  <data name="Incorrect postal code." xml:space="preserve">
-    <value>Code postal erroné.</value>
-  </data>
-  <data name="Job Title" xml:space="preserve">
-    <value>Titre du Poste</value>
-  </data>
-  <data name="Last Name" xml:space="preserve">
-    <value>Nom de Famille</value>
-  </data>
-  <data name="Mobile Phone" xml:space="preserve">
-    <value>Téléphone Portable</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Nom</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>Téléphone</value>
-  </data>
-  <data name="Postal Code" xml:space="preserve">
-    <value>Code Postal</value>
-  </data>
-  <data name="Web Page" xml:space="preserve">
-    <value>Page Web</value>
+  <data name="Passed" xml:space="preserve">
+    <value></value>
   </data>
 </root>

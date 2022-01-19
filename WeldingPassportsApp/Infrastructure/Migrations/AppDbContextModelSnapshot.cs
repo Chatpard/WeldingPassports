@@ -1529,7 +1529,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("RegistrationID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("RevokeDay")
+                    b.Property<DateTime?>("RevokeDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
@@ -1548,7 +1548,7 @@ namespace Infrastructure.Migrations
                             Comment = "Inappropriate welding technique.",
                             CompanyContactID = 4,
                             RegistrationID = 5,
-                            RevokeDay = new DateTime(2021, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RevokeDate = new DateTime(2021, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

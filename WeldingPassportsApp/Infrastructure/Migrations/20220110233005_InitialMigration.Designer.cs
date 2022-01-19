@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211218232237_InitialMigration")]
+    [Migration("20220110233005_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1531,7 +1531,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("RegistrationID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("RevokeDay")
+                    b.Property<DateTime?>("RevokeDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
@@ -1550,7 +1550,7 @@ namespace Infrastructure.Migrations
                             Comment = "Inappropriate welding technique.",
                             CompanyContactID = 4,
                             RegistrationID = 5,
-                            RevokeDay = new DateTime(2021, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            RevokeDate = new DateTime(2021, 6, 12, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

@@ -1574,6 +1574,9 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CompanyID")
                         .IsUnique();
 
+                    b.HasIndex("Letter")
+                        .IsUnique();
+
                     b.ToTable("TrainingCenters");
 
                     b.HasData(

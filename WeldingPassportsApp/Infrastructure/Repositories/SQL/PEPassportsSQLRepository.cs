@@ -146,7 +146,7 @@ namespace Infrastructure.Repositories.SQL
 
             IQueryable<PEPassport> query =
                 _context.PEPassports.Where(passport => passport.ID == decryptedID);
-
+    
             return await query.ProjectTo<PEPassportEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 

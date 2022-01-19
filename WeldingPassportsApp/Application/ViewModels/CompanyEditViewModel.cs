@@ -26,10 +26,7 @@ namespace Application.ViewModels
         public string CompanyEmail { get; set; }
 
         [Url]
+        [Display(Name = "Web Page")]
         public string WebPage { get; set; }
-
-        // Navigation Properties
-        //public ICollection<CompanyContactIndexViewModel> CompanyContacts { get; set; }
-        //public ICollection<ExaminationIndexViewModel> Registrations { get; set; }
     }
 }

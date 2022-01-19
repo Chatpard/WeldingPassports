@@ -3,9 +3,8 @@
 @model PEPassportEditViewModel
 
 @{
-    ViewData["Title"] = Localizer["PEpassport Edit"];
+    ViewData["Title"] = Localizer["Edit PE Passport"];
     var returnUrl = ViewBag.ReturnUrl;
-
 }
 
 <h1>@Localizer["Edit PE Passport"]</h1>
@@ -25,7 +24,7 @@
         <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList">
-                <option value="">@Localizer["Choose training center"]</option>
+                <option value="">@Localizer["Choose Training Center"]</option>
             </select>
             <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
         </div>

@@ -60,6 +60,7 @@ namespace Infrastructure
             services.AddScoped<ICompanyContactsSQLRepository, CompanyContactsSQLRepository>();
             services.AddScoped<IAddressesSQLRepository, AddressesSQLRepository>();
             services.AddScoped<IExamCentersSQLRepository, ExamCentersSQLRepository>();
+            services.AddScoped<ICertificatesSQLRepository, CertificatesSQLRepository>();
         }
     }
 }

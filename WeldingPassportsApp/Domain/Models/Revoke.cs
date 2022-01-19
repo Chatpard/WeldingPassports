@@ -9,22 +9,22 @@ namespace Domain.Models
         public int ID { get; set; }
         public int RegistrationID { get; set; }
         public int CompanyContactID { get; set; }
-        private DateTime? revokeDay;
-        public DateTime? RevokeDay
+        private DateTime? revokeDate;
+        public DateTime? RevokeDate
         {
             get
             {
-                if (revokeDay != null)
-                    return revokeDay.Value.Date;
+                if (revokeDate != null)
+                    return revokeDate.Value.Date;
                 else
                     return null;
             }
             set
             {
                 if (value != null)
-                    revokeDay = value.Value.Date;
+                    revokeDate = value.Value.Date;
                 else
-                    revokeDay = null;
+                    revokeDate = null;
             }
         }
         public string Comment { get; set; }

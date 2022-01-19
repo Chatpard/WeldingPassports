@@ -11,10 +11,13 @@ namespace Application.ViewModels
     {
         public string EncryptedID { get; set; }
 
+        [Display(Name = "AV Number")]
         public string AVNumber { get; set; }
-        
+
+        [Display(Name = "Training Center")]
         public int TrainingCenterID { get; set; }
-        
+
+        [Display(Name = "Welder")]
         public int PEWelderID { get; set; }
         
         public SelectList TrainingCenterSelectList { get; set; }

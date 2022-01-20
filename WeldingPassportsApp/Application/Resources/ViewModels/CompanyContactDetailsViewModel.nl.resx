@@ -109,4 +109,28 @@
   <data name="City" xml:space="preserve">
     <value>Stad</value>
   </data>
+  <data name="Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="First Name" xml:space="preserve">
+    <value>Voornaam</value>
+  </data>
+  <data name="Job Title" xml:space="preserve">
+    <value>Functie</value>
+  </data>
+  <data name="Last Name" xml:space="preserve">
+    <value>Achternaam</value>
+  </data>
+  <data name="Mobile Phone" xml:space="preserve">
+    <value>Mobiele Telefoon</value>
+  </data>
+  <data name="Postal Code" xml:space="preserve">
+    <value>Postcode</value>
+  </data>
+  <data name="Company Name" xml:space="preserve">
+    <value>Bedrijfsnaam</value>
+  </data>
 </root>

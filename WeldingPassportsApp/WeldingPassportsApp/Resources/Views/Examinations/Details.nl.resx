@@ -100,4 +100,22 @@
   <data name="Back" xml:space="preserve">
     <value>Terug</value>
   </data>
+  <data name="Create New" xml:space="preserve">
+    <value>Nieuw Aanmaken</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Verwijderen</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bewerken</value>
+  </data>
+  <data name="Examination Details" xml:space="preserve">
+    <value>Examendetails</value>
+  </data>
+  <data name="PE Certificates" xml:space="preserve">
+    <value>PE-Certificaten</value>
+  </data>
 </root>

@@ -98,22 +98,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Create Certificate" xml:space="preserve">
-    <value></value>
+    <value>Créer un Certificat</value>
   </data>
   <data name="Choose Company" xml:space="preserve">
-    <value></value>
+    <value>Choisissez une Adresse</value>
   </data>
   <data name="Choose PE Passport" xml:space="preserve">
-    <value></value>
+    <value>Choisissez un Passeport PE</value>
   </data>
   <data name="Choose Process" xml:space="preserve">
-    <value></value>
+    <value>Choisissez un Processus</value>
   </data>
   <data name="Choose Registration Type" xml:space="preserve">
-    <value></value>
+    <value>Choisissez un Type d'Enregistrement</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value></value>
+    <value>Sauvegarder</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>

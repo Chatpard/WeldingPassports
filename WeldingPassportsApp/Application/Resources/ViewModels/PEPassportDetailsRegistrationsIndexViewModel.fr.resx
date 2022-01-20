@@ -98,21 +98,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Expiry Date" xml:space="preserve">
-    <value></value>
+    <value>Date d'Expiration</value>
   </data>
   <data name="Exam Date" xml:space="preserve">
-    <value></value>
+    <value>Date de l'Examen</value>
   </data>
   <data name="Company" xml:space="preserve">
-    <value></value>
+    <value>Entreprise</value>
   </data>
   <data name="Process" xml:space="preserve">
-    <value></value>
+    <value>Processus</value>
   </data>
   <data name="Registration Type" xml:space="preserve">
-    <value></value>
+    <value>Type d'Enregistrement</value>
   </data>
   <data name="Passed" xml:space="preserve">
-    <value></value>
+    <value>Passé</value>
   </data>
 </root>

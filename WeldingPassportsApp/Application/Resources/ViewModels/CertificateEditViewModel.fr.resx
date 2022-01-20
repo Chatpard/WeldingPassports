@@ -98,45 +98,45 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AV Number" xml:space="preserve">
-    <value></value>
+    <value>Numéro AV</value>
   </data>
   <data name="First Name" xml:space="preserve">
-    <value></value>
+    <value>Prénom</value>
   </data>
   <data name="Last Name" xml:space="preserve">
-    <value></value>
+    <value>Nom de Famille</value>
   </data>
   <data name="Training Center" xml:space="preserve">
-    <value></value>
+    <value>Centre de Formation</value>
   </data>
   <data name="Process" xml:space="preserve">
-    <value></value>
+    <value>Processus</value>
   </data>
   <data name="Company" xml:space="preserve">
-    <value></value>
+    <value>Entreprise</value>
   </data>
   <data name="Examination Date" xml:space="preserve">
-    <value></value>
+    <value>Date de l'Examen</value>
   </data>
   <data name="Expiry Date" xml:space="preserve">
-    <value></value>
+    <value>Date d'Expiration</value>
   </data>
   <data name="Registration Type" xml:space="preserve">
-    <value></value>
+    <value>Type d'Enregistrement</value>
   </data>
   <data name="Passed" xml:space="preserve">
-    <value></value>
+    <value>Passé</value>
   </data>
   <data name="Exam Center" xml:space="preserve">
-    <value></value>
+    <value>Centre d'Examen</value>
   </data>
   <data name="Revoke Date" xml:space="preserve">
-    <value></value>
+    <value>Date de Révocation</value>
   </data>
   <data name="Revoked By" xml:space="preserve">
-    <value></value>
+    <value>Révoqué par</value>
   </data>
   <data name="Revoke Comment" xml:space="preserve">
-    <value></value>
+    <value>Commentaire de Révocation</value>
   </data>
 </root>

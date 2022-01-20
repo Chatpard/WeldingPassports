@@ -100,4 +100,10 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuleren</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Edit Examination" xml:space="preserve">
+    <value>Examen Bewerken</value>
+  </data>
 </root>

@@ -98,24 +98,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Contact Name" xml:space="preserve">
-    <value></value>
+    <value>Nom du Contact</value>
   </data>
   <data name="Company Name" xml:space="preserve">
-    <value></value>
+    <value>Nom de la Société</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>Adresse</value>
   </data>
   <data name="Job Title" xml:space="preserve">
-    <value></value>
+    <value>Titre du Poste</value>
   </data>
   <data name="Business Phone" xml:space="preserve">
     <value>Téléphone Professionnel</value>
   </data>
   <data name="Mobile Phone" xml:space="preserve">
-    <value></value>
+    <value>Téléphone Portable</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value></value>
+    <value>Email</value>
   </data>
 </root>

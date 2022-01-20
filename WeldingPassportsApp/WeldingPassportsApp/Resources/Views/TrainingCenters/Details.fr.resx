@@ -98,10 +98,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Training Center Details" xml:space="preserve">
-    <value></value>
+    <value>Détails du Centre de Formation</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value></value>
+    <value>Modifier</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Retour</value>

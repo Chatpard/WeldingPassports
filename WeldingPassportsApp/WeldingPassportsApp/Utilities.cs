@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WeldingPassportsApp.Controllers;
 
@@ -98,7 +99,12 @@ namespace WeldingPassportsApp
         private static async Task AddRolesAsync(RoleManager<IdentityRole> roleManager)
         {
             foreach (var role in RolesStore.Roles)
-                await roleManager.CreateAsync(new IdentityRole { Name = role });
+            {
+                var identityRole = new IdentityRole { Name = role };
+                await roleManager.CreateAsync(identityRole);
+                // TODO
+                //await roleManager.AddClaimAsync(identityRole, new Claim("permission", "permission"));
+            }
         }
     }
 }

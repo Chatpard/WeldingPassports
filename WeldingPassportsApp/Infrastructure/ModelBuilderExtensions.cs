@@ -23,7 +23,7 @@ namespace Infrastructure
 
             modelBuilder.Entity<UIColor>().HasData(SeedDataStore.GetSeedData<UIColor>());
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsStaging())
             {
                 modelBuilder.Entity<UserToApprove>().HasData(SeedDataStore.GetSeedData<UserToApprove>());
 

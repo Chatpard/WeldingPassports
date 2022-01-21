@@ -49,7 +49,7 @@ namespace WeldingPassportsApp
             {
                 IWebHostEnvironment env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
                 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                if (env.IsDevelopment())
+                if (env.IsDevelopment() || env.IsStaging())
                     await context.Database.EnsureDeletedAsync();
                 await context.Database.MigrateAsync();
 
@@ -65,7 +65,7 @@ namespace WeldingPassportsApp
         private static async Task AddTestUsersAsync(UserManager<IdentityUser> userManager,
             IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsStaging())
             {
                 // Admin
                 await AddUserWithRoleAsync("it.synergrid@outlook.com", RolesStore.Admin, userManager);

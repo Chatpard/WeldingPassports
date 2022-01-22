@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Application.Interfaces.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,6 +14,7 @@ namespace Application.ViewModels
         [Required]
         [Display(Name = "Company Letter")]
         [RegularExpression(@"([A-Z])$", ErrorMessage = "Incorrect Company Letter.")]
+        [Remote(action: nameof(ITrainingCentersApiController.IsLetterInUse), controller: "TrainingCentersApi", areaName: "API", ErrorMessage = "This letter is already in use.")]
         public char? Letter { get; set; }
         
         [Display(Name = "Active")]

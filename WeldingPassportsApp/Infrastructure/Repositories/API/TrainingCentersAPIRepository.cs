@@ -1,9 +1,9 @@
 ﻿using Application.Interfaces.Repositories.API;
 using Domain.Models;
 using Infrastructure.Services.Persistence;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.API
@@ -28,6 +28,19 @@ namespace Infrastructure.Repositories.API
             }
 
             return trainingCenter.Letter;
+        }
+
+        public bool IsLetterInUse(char letter)
+        {
+            TrainingCenter trainingCenter = _context.TrainingCenters.FirstOrDefault(trainingCenter => trainingCenter.Letter == letter);
+            if (trainingCenter == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

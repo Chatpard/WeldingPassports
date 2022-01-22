@@ -1,4 +1,6 @@
-﻿using Application.Requests.TrainingCenters;
+﻿using Application.Interfaces.Controllers;
+using Application.Requests.API.TrainingCentersAPI;
+using Application.Requests.TrainingCenters;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,13 +16,20 @@ namespace WeldingPassportsApp.Controllers
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
-    public class TrainingCentersApiController : ControllerBase
+    public class TrainingCentersApiController : ControllerBase, ITrainingCentersApiController
     {
         private readonly IMediator _mediator;
 
         public TrainingCentersApiController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet(nameof(IsLetterInUse))]
+        public async Task<JsonResult> IsLetterInUse(char letter)
+        {
+            var query = new IsLetterInUseRequest(letter);
+            return await _mediator.Send(query);
         }
 
         [HttpGet(nameof(GetLetterByTrainingCenterId))]

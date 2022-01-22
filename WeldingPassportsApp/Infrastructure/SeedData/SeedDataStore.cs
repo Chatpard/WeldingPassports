@@ -300,94 +300,94 @@ namespace Infrastructure.SeedData
                     ID = 1,
                     TrainingCenterID = 1, // V
                     PEWelderID = 1, // Nancy Pelosi
-                    AVNumber = "V00469"
+                    AVNumber = "00469"
                 },
                 new PEPassport()
                 {
                     ID = 2,
                     TrainingCenterID = 4, // S
                     PEWelderID = 2, // Hillary Clinton
-                    AVNumber = "S00470"
+                    AVNumber = "00470"
                 },
                 new PEPassport()
                 {
                     ID = 3,
                     TrainingCenterID = 3, // T
                     PEWelderID = 3, // Donald Trump
-                    AVNumber = "T00471"
+                    AVNumber = "00471"
                 },
                 new PEPassport()
                 {
                     ID = 4,
                     TrainingCenterID = 4, // S
                     PEWelderID = 4, // Mike ¨Pence
-                    AVNumber = "S00472"
+                    AVNumber = "00472"
                 },
                 new PEPassport()
                 {
                     ID = 5,
                     TrainingCenterID = 3, // T
                     PEWelderID = 5, // Sarah Palin
-                    AVNumber = "T00473"
+                    AVNumber = "00473"
                 },
                 new PEPassport()
                 {
                     ID = 6,
                     TrainingCenterID = 1, // V
                     PEWelderID = 6, // Ted Cruz
-                    AVNumber = "V00474"
+                    AVNumber = "00474"
                 }, new PEPassport()
                 {
                     ID = 7,
                     TrainingCenterID = 5, // K
                     PEWelderID = 7, // Elizabeth Warren
-                    AVNumber = "K00475"
+                    AVNumber = "00475"
                 },
                 new PEPassport()
                 {
                     ID = 8,
                     TrainingCenterID = 3, // T
                     PEWelderID = 8, // Bernie Sanders
-                    AVNumber = "T00476"
+                    AVNumber = "00476"
                 }, new PEPassport()
                 {
                     ID = 9,
                     TrainingCenterID = 1,
                     PEWelderID = 9, // Kamala Harris
-                    AVNumber = "V00477"
+                    AVNumber = "00477"
                 },
                 new PEPassport()
                 {
                     ID = 10,
                     TrainingCenterID = 4,
                     PEWelderID = 10, // Mitt Romney
-                    AVNumber = "S00478"
+                    AVNumber = "00478"
                 }, new PEPassport()
                 {
                     ID = 11,
                     TrainingCenterID = 3, // T
                     PEWelderID = 11, // Barack Obama
-                    AVNumber = "T00479"
+                    AVNumber = "00479"
                 },
                 new PEPassport()
                 {
                     ID = 12,
                     TrainingCenterID = 5, // K
                     PEWelderID = 12, // Andrew Yang
-                    AVNumber = "K00480"
+                    AVNumber = "00480"
                 }, new PEPassport()
                 {
                     ID = 13,
                     TrainingCenterID = 3, // T
                     PEWelderID = 13, // Joe Biden
-                    AVNumber = "T00481"
+                    AVNumber = "00481"
                 },
                 new PEPassport()
                 {
                     ID = 14,
                     TrainingCenterID = 3, // T
                     PEWelderID = 14, // Tulsi Gabbard
-                    AVNumber = "T00482"
+                    AVNumber = "00482"
                 }
             };
         }

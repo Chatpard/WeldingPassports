@@ -8,6 +8,7 @@ namespace Application.ViewModels
 {
     public class PEPassportDetailsViewModel
     {
+        [Display(Name = "AV Number")]
         public string EncryptedID { get; set; }
 
         public string AVNumber { get; set; }

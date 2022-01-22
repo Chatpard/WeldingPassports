@@ -13,6 +13,7 @@ namespace Application.ViewModels
 
         public char Letter { get; set; }
         
+        [Required]
         [Display(Name = "AV Number")]
         public string AVNumber { get; set; }
 

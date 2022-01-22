@@ -50,9 +50,9 @@ namespace WeldingPassportsApp
             {
                 var supportedCultures = new[]
                 {
-                    new CultureInfo("en"),
-                    new CultureInfo("fr"),
-                    new CultureInfo("nl")
+                    new CultureInfo("en") { DateTimeFormat = { ShortDatePattern = "MM/dd/yyyy" }},
+                    new CultureInfo("fr") { DateTimeFormat = { ShortDatePattern = "dd/MM/yyyy" }},
+                    new CultureInfo("nl") { DateTimeFormat = { ShortDatePattern = "dd/MM/yyyy" }}
                 };
 
                 // State what the default culture for your application is. This will be used if no specific culture

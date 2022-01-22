@@ -1071,98 +1071,98 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ID = 1,
-                            AVNumber = "V00469",
+                            AVNumber = "00469",
                             PEWelderID = 1,
                             TrainingCenterID = 1
                         },
                         new
                         {
                             ID = 2,
-                            AVNumber = "S00470",
+                            AVNumber = "00470",
                             PEWelderID = 2,
                             TrainingCenterID = 4
                         },
                         new
                         {
                             ID = 3,
-                            AVNumber = "T00471",
+                            AVNumber = "00471",
                             PEWelderID = 3,
                             TrainingCenterID = 3
                         },
                         new
                         {
                             ID = 4,
-                            AVNumber = "S00472",
+                            AVNumber = "00472",
                             PEWelderID = 4,
                             TrainingCenterID = 4
                         },
                         new
                         {
                             ID = 5,
-                            AVNumber = "T00473",
+                            AVNumber = "00473",
                             PEWelderID = 5,
                             TrainingCenterID = 3
                         },
                         new
                         {
                             ID = 6,
-                            AVNumber = "V00474",
+                            AVNumber = "00474",
                             PEWelderID = 6,
                             TrainingCenterID = 1
                         },
                         new
                         {
                             ID = 7,
-                            AVNumber = "K00475",
+                            AVNumber = "00475",
                             PEWelderID = 7,
                             TrainingCenterID = 5
                         },
                         new
                         {
                             ID = 8,
-                            AVNumber = "T00476",
+                            AVNumber = "00476",
                             PEWelderID = 8,
                             TrainingCenterID = 3
                         },
                         new
                         {
                             ID = 9,
-                            AVNumber = "V00477",
+                            AVNumber = "00477",
                             PEWelderID = 9,
                             TrainingCenterID = 1
                         },
                         new
                         {
                             ID = 10,
-                            AVNumber = "S00478",
+                            AVNumber = "00478",
                             PEWelderID = 10,
                             TrainingCenterID = 4
                         },
                         new
                         {
                             ID = 11,
-                            AVNumber = "T00479",
+                            AVNumber = "00479",
                             PEWelderID = 11,
                             TrainingCenterID = 3
                         },
                         new
                         {
                             ID = 12,
-                            AVNumber = "K00480",
+                            AVNumber = "00480",
                             PEWelderID = 12,
                             TrainingCenterID = 5
                         },
                         new
                         {
                             ID = 13,
-                            AVNumber = "T00481",
+                            AVNumber = "00481",
                             PEWelderID = 13,
                             TrainingCenterID = 3
                         },
                         new
                         {
                             ID = 14,
-                            AVNumber = "T00482",
+                            AVNumber = "00482",
                             PEWelderID = 14,
                             TrainingCenterID = 3
                         });

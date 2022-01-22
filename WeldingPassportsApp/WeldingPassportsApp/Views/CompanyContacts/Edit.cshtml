@@ -19,7 +19,13 @@
                         <option value="" selected disabled hidden>@Localizer["Choose a Contact"]</option>
                     </select>
                     <div class="input-group-append">
-                        <a class="btn btn-primary" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            @Localizer["Action"]
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
+                            <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.ContactID">@Localizer["Edit"]</a>
+                        </div>
                     </div>
                 </div>
                 <span asp-validation-for="ContactID" class="text-danger"></span>
@@ -31,7 +37,13 @@
                         <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
                     </select>
                     <div class="input-group-append">
-                        <a class="btn btn-primary" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            @Localizer["Action"]
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
+                            <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.CompanyID">@Localizer["Edit"]</a>
+                        </div>
                     </div>
                 </div>
                 <span asp-validation-for="CompanyID" class="text-danger"></span>

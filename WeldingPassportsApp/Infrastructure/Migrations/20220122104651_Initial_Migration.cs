@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -851,20 +851,20 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ID", "AVNumber", "PEWelderID", "TrainingCenterID" },
                 values: new object[,]
                 {
-                    { 2, "S00470", 2, 4 },
-                    { 13, "T00481", 13, 3 },
-                    { 10, "S00478", 10, 4 },
-                    { 7, "K00475", 7, 5 },
-                    { 12, "K00480", 12, 5 },
-                    { 11, "T00479", 11, 3 },
-                    { 8, "T00476", 8, 3 },
-                    { 5, "T00473", 5, 3 },
-                    { 3, "T00471", 3, 3 },
-                    { 9, "V00477", 9, 1 },
-                    { 6, "V00474", 6, 1 },
-                    { 1, "V00469", 1, 1 },
-                    { 14, "T00482", 14, 3 },
-                    { 4, "S00472", 4, 4 }
+                    { 2, "00470", 2, 4 },
+                    { 13, "00481", 13, 3 },
+                    { 10, "00478", 10, 4 },
+                    { 7, "00475", 7, 5 },
+                    { 12, "00480", 12, 5 },
+                    { 11, "00479", 11, 3 },
+                    { 8, "00476", 8, 3 },
+                    { 5, "00473", 5, 3 },
+                    { 3, "00471", 3, 3 },
+                    { 9, "00477", 9, 1 },
+                    { 6, "00474", 6, 1 },
+                    { 1, "00469", 1, 1 },
+                    { 14, "00482", 14, 3 },
+                    { 4, "00472", 4, 4 }
                 });
 
             migrationBuilder.InsertData(

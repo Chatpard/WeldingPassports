@@ -62,7 +62,7 @@ namespace Application.Profiles
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.Registration.ID.ToString())))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>
-                    group.Registration.PEPassport.AVNumber))
+                    group.Registration.PEPassport.TrainingCenter.Letter + group.Registration.PEPassport.AVNumber))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(group =>
                     group.Registration.PEPassport.PEWelder.FirstName))
                 .ForMember(vm => vm.LastName, options => options.MapFrom(group =>

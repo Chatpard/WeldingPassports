@@ -9,12 +9,13 @@ namespace Application.ViewModels
 {
     public class PEPassportEditViewModel
     {
+        [Required]
         public string EncryptedID { get; set; }
 
         public char Letter { get; set; }
         
         [Display(Name = "AV Number")]
-        public string AVNumber { get; set; }
+        public int AVNumber { get; set; }
 
         [Display(Name = "Training Center")]
         public int TrainingCenterID { get; set; }

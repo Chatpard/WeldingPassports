@@ -9,7 +9,7 @@ namespace Domain.Models
         public int ID { get; set; }
         public int TrainingCenterID { get; set; }
         public int PEWelderID { get; set; }
-        public string AVNumber { get; set; }
+        public int AVNumber { get; set; }
 
         // Navigation Properties
         public TrainingCenter TrainingCenter { get; set; }

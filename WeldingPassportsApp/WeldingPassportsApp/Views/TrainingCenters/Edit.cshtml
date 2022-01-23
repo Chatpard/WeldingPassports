@@ -41,29 +41,32 @@
                 <label asp-for="CompanyContactID" class="col-sm-2 col-form-label"></label>
                 <div class="input-group col-sm-10">
                     <select asp-for="CompanyContactID" class="form-control" asp-items="@Model.CompanyContactSelectList">
-                        <option value="0">@if (Model.CompanyContactID == 0)
-                        {@Localizer["Choose a Contact"]}
-                    else
-                    { @Localizer["No Contact"]}</option>
-                    </select>
-                    <div class="input-group-append">
-                        <a class="btn btn-primary" type="button" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
-                    </div>
+                        <option value="0">
+                            @if (Model.CompanyContactID == 0)
+                            {@Localizer["Choose a Contact"]}
+                        else
+                        { @Localizer["No Contact"]}
+                    </option>
+                </select>
+                <div class="input-group-append">
+                    <a class="btn btn-primary" type="button" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
                 </div>
-                <span asp-validation-for="CompanyContactID" class="text-danger"></span>
             </div>
-            <div class="form-group row">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
-                    <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
-                </div>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span asp-validation-for="CompanyContactID" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+                <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
             </div>
-        </form>
-    </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+    </form>
+</div>
 </div>
 
 @section Scripts {
+
     <script src="~/js/TrainingCenters/GetCompanyContactsFromCompanyID.js"></script>
 
 }

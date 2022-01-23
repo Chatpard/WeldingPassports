@@ -8,18 +8,28 @@ namespace Application.ViewModels
     public class ExaminationDetailsCertificationsIndexViewModel
     {
         public string EncryptedID { get; set; }
+
+        public char Letter { get; set; }
+
         [Display(Name = "AV Number")]
-        public string AVNumber { get; set; }
+        [DisplayFormat(DataFormatString = "{0:D5}")]
+        public int AVNumber { get; set; }
+
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
         [Display(Name = "Process")] 
         public string ProcessName { get; set; }
+
         [Display(Name = "Registration Type")] 
         public string RegistrationTypeName { get; set; }
+
         [Display(Name = "Passed")] 
         public bool? HasPassed { get; set; }
+
         public string Color { get; set; }
 
     }

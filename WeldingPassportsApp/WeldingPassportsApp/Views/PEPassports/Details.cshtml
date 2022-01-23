@@ -15,6 +15,7 @@
         @Html.DisplayNameFor(model => model.AVNumber)
     </dt>
     <dd class="col-sm-9">
+        @Html.DisplayFor(model => model.Letter)
         @Html.DisplayFor(model => model.AVNumber)
     </dd>
     <dt class="col-sm-3">
@@ -99,9 +100,9 @@
                     @Html.DisplayFor(modelItem => certification.HasPassed)
                 </td>
                 <td>
-                    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
+                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
                        asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
-                    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)"
+                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)"
                        asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
                 </td>
             </tr>

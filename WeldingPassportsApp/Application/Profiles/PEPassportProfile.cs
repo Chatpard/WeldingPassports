@@ -22,8 +22,10 @@ namespace Application.Profiles
             CreateMap<PEPassportRegistrationUIColorGroup, PEPassportIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.PEPassport.ID.ToString())))
+                .ForMember(index => index.Letter, options => options.MapFrom(group =>
+                    group.PEPassport.TrainingCenter.Letter))
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
-                    group.PEPassport.TrainingCenter.Letter + group.PEPassport.AVNumber))
+                    group.PEPassport.AVNumber))
                 .ForMember(index => index.FirstName, options => options.MapFrom(group =>
                     group.PEPassport.PEWelder.FirstName))
                 .ForMember(index => index.LastName, options => options.MapFrom(group =>
@@ -39,8 +41,10 @@ namespace Application.Profiles
             CreateMap<PEPassportPEWelderRegistrationUIColorsGroup, PEPassportDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.PEPassport.ID.ToString())))
+                .ForMember(vm => vm.Letter, options => options.MapFrom(group =>
+                    group.PEPassport.TrainingCenter.Letter))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>
-                    group.PEPassport.TrainingCenter.Letter + group.PEPassport.AVNumber))
+                    group.PEPassport.AVNumber))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(group =>
                     group.PEWelder.FirstName))
                 .ForMember(vm => vm.LastName, options => options.MapFrom(group =>

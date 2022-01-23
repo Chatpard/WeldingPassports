@@ -16,11 +16,22 @@ namespace Infrastructure.Repositories.API
             _context = context;
         }
 
-        public string? GetMaxAVNumber(int trainingCenterID)
+        public int GetMaxAVNumber(int trainingCenterID)
         {
-            return _context.PEPassports
-                .Where(pePassport => pePassport.TrainingCenterID == trainingCenterID)
-                .Max(pePassport => pePassport.AVNumber);
+            int maxAVNumber;
+
+            try
+            {
+                maxAVNumber = _context.PEPassports
+                    .Where(pePassport => pePassport.TrainingCenterID == trainingCenterID)
+                    .Max(pePassport => pePassport.AVNumber);
+            }
+            catch(Exception e)
+            {
+                maxAVNumber = 0;
+            }
+
+            return maxAVNumber;
         }
     }
 }

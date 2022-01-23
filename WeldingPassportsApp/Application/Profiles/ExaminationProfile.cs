@@ -2,6 +2,7 @@
 using Application.SQLModels;
 using Application.ViewModels;
 using AutoMapper;
+using Domain;
 using Domain.Models;
 using Microsoft.AspNetCore.DataProtection;
 using System;
@@ -61,6 +62,8 @@ namespace Application.Profiles
             CreateMap<RegistrationUIColorGroup, ExaminationDetailsCertificationsIndexViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.Registration.ID.ToString())))
+                .ForMember(vm => vm.Letter, options => options.MapFrom(group =>
+                    group.Registration.PEPassport.TrainingCenter.Letter))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>
                     group.Registration.PEPassport.AVNumber))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(group =>

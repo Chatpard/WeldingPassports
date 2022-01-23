@@ -4,9 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Synergrid</title>
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -41,7 +38,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="@typeof(PEPassportsController).GetNameOfController()"
-                                    asp-action="@nameof(PEPassportsController.Index)">@Localizer["PE Passports"]</a>
+                                   asp-action="@nameof(PEPassportsController.Index)">@Localizer["PE Passports"]</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="@typeof(WeldersController).GetNameOfController()"
@@ -93,13 +90,16 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @Localizer["2021 - PE Synergrid"] - 
+            &copy; @Localizer["2021 - PE Synergrid"] -
             <a asp-area="" asp-controller="@typeof(HomeController).GetNameOfController()" asp-action="@nameof(HomeController.Privacy)">
                 @Localizer["Privacy"]
             </a>
         </div>
     </footer>
+    <script src="~/lib/jquery/jquery.js" type="application/json" charset="utf-8"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)

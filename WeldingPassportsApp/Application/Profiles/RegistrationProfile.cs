@@ -30,6 +30,8 @@ namespace Application.Profiles
                     vm.RegistrationTypeID));
 
             CreateMap<Registration, CertificateEditViewModel>()
+                .ForMember(vm => vm.Letter, options => options.MapFrom(registration =>
+                    registration.PEPassport.TrainingCenter.Letter))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(registration =>
                     registration.PEPassport.AVNumber))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(registration =>
@@ -73,6 +75,8 @@ namespace Application.Profiles
                     registration.PreviousRegistration.Revoke.Comment));
 
             CreateMap<Registration, CertificateDetailsViewModel>()
+                .ForMember(vm => vm.Letter, options => options.MapFrom(registration =>
+                    registration.PEPassport.TrainingCenter.Letter))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(registration =>
                     registration.PEPassport.AVNumber))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(registration =>

@@ -79,6 +79,7 @@
         {
             <tr class="@certification.Color">
                 <td>
+                    @Html.DisplayFor(modelItem => certification.Letter)
                     @Html.DisplayFor(modelItem => certification.AVNumber)
                 </td>
                 <td>
@@ -97,7 +98,7 @@
                     @Html.DisplayFor(modelItem => certification.HasPassed)
                 </td>
                 <td>
-                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
+                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
                        asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a> |
                     <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
                        asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |

@@ -26,16 +26,20 @@ namespace Application.Profiles
                     group.PEWelder.FirstName))
                 .ForMember(index => index.LastName, options => options.MapFrom(group =>
                     group.PEWelder.LastName))
+                .ForMember(index => index.Letter, options => options.MapFrom(group =>
+                    group.Registration.PEPassport == null ? null : (char?) group.Registration.PEPassport.TrainingCenter.Letter))
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
-                    group.Registration.PEPassport.TrainingCenter.Letter + group.Registration.PEPassport.AVNumber))
+                    group.Registration.PEPassport == null ? null : (int?) group.Registration.PEPassport.AVNumber))
                 .ForMember(index => index.Color, options => options.MapFrom(group =>
                     group.UIColor.Color));
 
             CreateMap<PEPassportRegistrationUIColorGroup, PEWelderDetailsPEPassportsIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.PEPassport.ID.ToString())))
+                .ForMember(index => index.Letter, options => options.MapFrom(group =>
+                    group.PEPassport == null ? ' ' : group.PEPassport.TrainingCenter.Letter))
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
-                    group.PEPassport == null ? String.Empty : group.PEPassport.TrainingCenter.Letter + group.PEPassport.AVNumber))
+                    group.PEPassport == null ? 0 : group.PEPassport.AVNumber))
                 .ForMember(index => index.CompanyName, options => options.MapFrom(group =>
                     group.Registration == null ? String.Empty : group.Registration.Company.CompanyName))
                 .ForMember(index => index.ExpiryDate, options => options.MapFrom(group =>

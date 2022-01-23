@@ -10,7 +10,12 @@ namespace Application.ViewModels
     {
         public string EncryptedID { get; set; }
 
-        public string AVNumber { get; set; }
+        [Display(Name = "Letter")]
+        public char Letter { get; set; }
+
+        [Display(Name = "AV Number")]
+        [DisplayFormat(DataFormatString = "{0:D5}")]
+        public int AVNumber { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

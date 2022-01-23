@@ -86,7 +86,7 @@ namespace Infrastructure.Repositories.SQL
                 .OrderBy(passport => passport.AVNumber)
                 .Select(passport => new {
                     ID = passport.ID,
-                    AVNumber = $"{passport.AVNumber} ({passport.PEWelder.FirstName} {passport.PEWelder.LastName})"
+                    AVNumber = $"{passport.TrainingCenter.Letter} {passport.AVNumber.ToString("D5")} ({passport.PEWelder.FirstName} {passport.PEWelder.LastName})"
                 }).ToListAsync();
             vm.PEPassportAVNumberItems = new SelectList(passports, nameof(PEPassport.ID), nameof(PEPassport.AVNumber));
 

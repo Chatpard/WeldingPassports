@@ -103,4 +103,10 @@
   <data name="City" xml:space="preserve">
     <value>Stad</value>
   </data>
+  <data name="Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="Postalcode" xml:space="preserve">
+    <value>Postcode</value>
+  </data>
 </root>

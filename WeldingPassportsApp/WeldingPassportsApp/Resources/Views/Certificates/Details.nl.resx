@@ -100,4 +100,16 @@
   <data name="Back" xml:space="preserve">
     <value>Terug</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bewerken</value>
+  </data>
+  <data name="Certificate Details" xml:space="preserve">
+    <value>Certificaat Details</value>
+  </data>
+  <data name="Previous Certificate" xml:space="preserve">
+    <value>Vorig Certificaat</value>
+  </data>
+  <data name="Current Certificate" xml:space="preserve">
+    <value>Huidig Certificaat</value>
+  </data>
 </root>

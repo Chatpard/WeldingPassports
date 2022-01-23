@@ -100,4 +100,28 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuleren</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Web Page" xml:space="preserve">
+    <value>Webpagina</value>
+  </data>
+  <data name="Business Address" xml:space="preserve">
+    <value>Zakelijk Adres</value>
+  </data>
+  <data name="Company Name" xml:space="preserve">
+    <value>Bedrijfsnaam</value>
+  </data>
+  <data name="Company Main Phone" xml:space="preserve">
+    <value>Telefoonnummer Bedrijf</value>
+  </data>
+  <data name="Choose Address" xml:space="preserve">
+    <value>Kies een adres</value>
+  </data>
+  <data name="Company Email" xml:space="preserve">
+    <value>Bedrijf Email</value>
+  </data>
+  <data name="Edit Company" xml:space="preserve">
+    <value>Bedrijf Bewerken</value>
+  </data>
 </root>

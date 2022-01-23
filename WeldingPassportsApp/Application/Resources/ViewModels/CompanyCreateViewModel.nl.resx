@@ -100,4 +100,16 @@
   <data name="Address" xml:space="preserve">
     <value>Adres</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Web Page" xml:space="preserve">
+    <value>Webpagina</value>
+  </data>
+  <data name="Company Name" xml:space="preserve">
+    <value>Bedrijfsnaam</value>
+  </data>
+  <data name="Company Main Phone" xml:space="preserve">
+    <value>Telefoonnummer Bedrijf</value>
+  </data>
 </root>

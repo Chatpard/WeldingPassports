@@ -100,4 +100,10 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuleren</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Create PE Welder" xml:space="preserve">
+    <value>PE Lasser Aanmaken</value>
+  </data>
 </root>

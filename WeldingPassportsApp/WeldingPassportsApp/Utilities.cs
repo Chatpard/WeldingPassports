@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using WeldingPassportsApp.Controllers;
 
@@ -48,7 +49,7 @@ namespace WeldingPassportsApp
             {
                 IWebHostEnvironment env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
                 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                if (env.IsDevelopment())
+                if (env.IsDevelopment() || env.IsStaging())
                     await context.Database.EnsureDeletedAsync();
                 await context.Database.MigrateAsync();
 
@@ -64,7 +65,7 @@ namespace WeldingPassportsApp
         private static async Task AddTestUsersAsync(UserManager<IdentityUser> userManager,
             IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsStaging())
             {
                 // Admin
                 await AddUserWithRoleAsync("it.synergrid@outlook.com", RolesStore.Admin, userManager);
@@ -98,7 +99,12 @@ namespace WeldingPassportsApp
         private static async Task AddRolesAsync(RoleManager<IdentityRole> roleManager)
         {
             foreach (var role in RolesStore.Roles)
-                await roleManager.CreateAsync(new IdentityRole { Name = role });
+            {
+                var identityRole = new IdentityRole { Name = role };
+                await roleManager.CreateAsync(identityRole);
+                // TODO
+                //await roleManager.AddClaimAsync(identityRole, new Claim("permission", "permission"));
+            }
         }
     }
 }

@@ -100,4 +100,13 @@
   <data name="Back" xml:space="preserve">
     <value>Terug</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Bewerken</value>
+  </data>
+  <data name="Business Address" xml:space="preserve">
+    <value>Zakelijk Adres</value>
+  </data>
+  <data name="Company Details" xml:space="preserve">
+    <value>Bedrijf Details</value>
+  </data>
 </root>

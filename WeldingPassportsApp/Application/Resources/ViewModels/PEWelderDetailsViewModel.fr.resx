@@ -98,15 +98,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="First Name" xml:space="preserve">
-    <value></value>
+    <value>Prénom</value>
   </data>
   <data name="Last Name" xml:space="preserve">
-    <value></value>
+    <value>Nom de Famille</value>
   </data>
   <data name="National Number" xml:space="preserve">
-    <value></value>
+    <value>Numéro National</value>
   </data>
   <data name="ID Number" xml:space="preserve">
-    <value></value>
+    <value>Numéro d'Identification</value>
   </data>
 </root>

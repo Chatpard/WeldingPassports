@@ -100,4 +100,19 @@
   <data name="City" xml:space="preserve">
     <value>Stad</value>
   </data>
+  <data name="Company" xml:space="preserve">
+    <value>Bedrijf</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefoon</value>
+  </data>
+  <data name="Postal Code" xml:space="preserve">
+    <value>Postcode</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
 </root>

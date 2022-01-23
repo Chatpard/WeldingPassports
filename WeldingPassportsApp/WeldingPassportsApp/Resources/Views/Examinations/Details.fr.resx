@@ -98,24 +98,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Examination Details" xml:space="preserve">
-    <value></value>
+    <value>Détails de l'Examen</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value></value>
+    <value>Modifier</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Retour</value>
   </data>
   <data name="PE Certificates" xml:space="preserve">
-    <value></value>
+    <value>Certificats PE</value>
   </data>
   <data name="Create New" xml:space="preserve">
-    <value></value>
+    <value>Créer un Nouveau</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value></value>
+    <value>Détails</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value></value>
+    <value>Supprimer</value>
   </data>
 </root>

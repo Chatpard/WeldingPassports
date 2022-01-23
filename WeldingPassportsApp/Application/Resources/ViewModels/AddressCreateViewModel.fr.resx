@@ -101,12 +101,12 @@
     <value>Adresse</value>
   </data>
   <data name="Postalcode" xml:space="preserve">
-    <value></value>
+    <value>Code Postal</value>
   </data>
   <data name="City" xml:space="preserve">
-    <value></value>
+    <value>Ville</value>
   </data>
   <data name="Country" xml:space="preserve">
-    <value></value>
+    <value>Pays</value>
   </data>
 </root>

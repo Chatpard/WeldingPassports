@@ -98,12 +98,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AV Number" xml:space="preserve">
-    <value></value>
+    <value>Numéro AV</value>
   </data>
   <data name="Training Center" xml:space="preserve">
-    <value></value>
+    <value>Centre de Formation</value>
   </data>
   <data name="Welder" xml:space="preserve">
-    <value></value>
+    <value>Soudeur</value>
   </data>
 </root>

@@ -100,4 +100,16 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuleren</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Previous Certificate" xml:space="preserve">
+    <value>Vorig Certificaat</value>
+  </data>
+  <data name="Edit Certificate" xml:space="preserve">
+    <value>Certificaat Bewerken</value>
+  </data>
+  <data name="Current Certificate" xml:space="preserve">
+    <value>Huidig Certificaat</value>
+  </data>
 </root>

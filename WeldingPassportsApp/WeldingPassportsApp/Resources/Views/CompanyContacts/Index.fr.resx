@@ -98,30 +98,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Contacts Index" xml:space="preserve">
-    <value></value>
+    <value>Index des Contacts</value>
   </data>
   <data name="Create New" xml:space="preserve">
-    <value></value>
+    <value>Créer un Nouveau</value>
   </data>
   <data name="Find Contact:" xml:space="preserve">
-    <value></value>
+    <value>Trouver un Contact:</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value></value>
+    <value>Rechercher</value>
   </data>
   <data name="Back to Full List" xml:space="preserve">
-    <value></value>
+    <value>Retourner à la liste complète</value>
   </data>
   <data name="Details" xml:space="preserve">
-    <value></value>
+    <value>Détails</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value></value>
+    <value>Supprimer</value>
   </data>
   <data name="Previous" xml:space="preserve">
-    <value></value>
+    <value>Précédent</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value></value>
+    <value>Suivant</value>
   </data>
 </root>

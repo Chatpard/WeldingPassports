@@ -98,28 +98,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Edit Company" xml:space="preserve">
-    <value></value>
+    <value>Modifier l'Entreprise</value>
   </data>
   <data name="Company Name" xml:space="preserve">
-    <value></value>
+    <value>Nom de la Société</value>
   </data>
   <data name="Company Main Phone" xml:space="preserve">
-    <value></value>
+    <value>Téléphone de l'Entreprise</value>
   </data>
   <data name="Company Email" xml:space="preserve">
-    <value></value>
+    <value>Courriel de l'Entreprise</value>
   </data>
   <data name="Web Page" xml:space="preserve">
-    <value></value>
+    <value>Page Web</value>
   </data>
   <data name="Business Address" xml:space="preserve">
-    <value></value>
+    <value>Adresse Professionnelle</value>
   </data>
   <data name="Choose Address" xml:space="preserve">
-    <value></value>
+    <value>Choisissez une Adresse</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value></value>
+    <value>Sauvegarder</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annuler</value>

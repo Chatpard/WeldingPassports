@@ -100,4 +100,16 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuleren</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Choose Exam Center" xml:space="preserve">
+    <value>Kies een Examencentrum</value>
+  </data>
+  <data name="Choose Training Center" xml:space="preserve">
+    <value>Kies een Opleidingscentrum</value>
+  </data>
+  <data name="Create Examination" xml:space="preserve">
+    <value>Examen maken</value>
+  </data>
 </root>

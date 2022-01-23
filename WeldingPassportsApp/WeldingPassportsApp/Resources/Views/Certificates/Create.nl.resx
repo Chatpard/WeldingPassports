@@ -100,4 +100,22 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annuleren</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Opslaan</value>
+  </data>
+  <data name="Choose Company" xml:space="preserve">
+    <value>Kies een bedrijf</value>
+  </data>
+  <data name="Choose PE Passport" xml:space="preserve">
+    <value>Kies een PE Paspoort</value>
+  </data>
+  <data name="Choose Process" xml:space="preserve">
+    <value>Kies een Proces</value>
+  </data>
+  <data name="Choose Registration Type" xml:space="preserve">
+    <value>Kies een Registratie Type</value>
+  </data>
+  <data name="Create Certificate" xml:space="preserve">
+    <value>Certificaat Aanmaken</value>
+  </data>
 </root>

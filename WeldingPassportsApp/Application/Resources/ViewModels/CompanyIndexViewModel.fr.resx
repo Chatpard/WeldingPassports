@@ -98,15 +98,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Company" xml:space="preserve">
-    <value></value>
+    <value>Entreprise</value>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value></value>
+    <value>Téléphone</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value></value>
+    <value>Email</value>
   </data>
   <data name="Web Page" xml:space="preserve">
-    <value></value>
+    <value>Page Web</value>
   </data>
 </root>

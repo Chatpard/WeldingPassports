@@ -187,12 +187,12 @@ namespace Infrastructure.Repositories.SQL
             switch (sortOrder)
             {
                 case "AVNumber_desc":
-                    passportsQuery = passportsQuery.OrderByDescending(passport => passport.Letter.ToString() + passport.AVNumber.ToString());
+                    passportsQuery = passportsQuery.OrderByDescending(passport => passport.Letter).ThenBy(passport => passport.AVNumber);
                     return passportsQuery;
                 case "AVNumber_asc":
                 case null:
                 case "":
-                    passportsQuery = passportsQuery.OrderBy(passport => passport.Letter.ToString() + passport.AVNumber.ToString());
+                    passportsQuery = passportsQuery.OrderBy(passport => passport.Letter).ThenBy(passport => passport.AVNumber);
                     return passportsQuery;
                 case "FirstName_desc":
                     passportsQuery = passportsQuery.OrderByDescending(passport => passport.FirstName);

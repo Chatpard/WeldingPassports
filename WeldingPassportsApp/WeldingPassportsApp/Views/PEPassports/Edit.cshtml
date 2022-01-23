@@ -19,7 +19,7 @@
                     <div class="input-group-prepend">
                         <span id="Letter" class="input-group-text">@Model.Letter</span>
                     </div>
-                    <input asp-for="AVNumber" class="form-control" placeholder="AV number" readonly>
+                    <input asp-for="AVNumber" asp-format="{0:D5}" class="form-control" placeholder="AV number" readonly>
                 </div>
                 <span asp-validation-for="AVNumber" class="text-danger"></span>
             </div>

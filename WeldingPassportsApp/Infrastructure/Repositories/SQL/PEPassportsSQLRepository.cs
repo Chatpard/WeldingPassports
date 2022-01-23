@@ -64,22 +64,24 @@ namespace Infrastructure.Repositories.SQL
                     .Join(
                         _context.UIColors.DefaultIfEmpty(),
                         pePassportRegistration => new
-                            {
-                                ExtendableStatus = pePassportRegistration.ExtendableStatus,
-                                HasPassed = (bool)(pePassportRegistration.Registration.HasPassed.HasValue ? pePassportRegistration.Registration.HasPassed : false)
-                            },
+                        {
+                            ExtendableStatus = pePassportRegistration.ExtendableStatus,
+                            HasPassed = (bool)(pePassportRegistration.Registration.HasPassed.HasValue ? pePassportRegistration.Registration.HasPassed : false)
+                        },
                         uiColor => new
-                            {
-                                ExtendableStatus = uiColor.ExtendableStatus,
-                                HasPassed = (bool)(uiColor.HasPassed.HasValue ? uiColor.HasPassed : false)
-                            },
+                        {
+                            ExtendableStatus = uiColor.ExtendableStatus,
+                            HasPassed = (bool)(uiColor.HasPassed.HasValue ? uiColor.HasPassed : false)
+                        },
                         (pePassportRegistration, uiColor) => new PEPassportRegistrationUIColorGroup
-                            {
-                                PEPassport = pePassportRegistration.PEPassport,
-                                Registration = pePassportRegistration.Registration,
-                                UIColor = uiColor
-                            }
-                    );
+                        {
+                            PEPassport = pePassportRegistration.PEPassport,
+                            Registration = pePassportRegistration.Registration,
+                            UIColor = uiColor
+                        }
+                    ); ;
+
+            var temp = pePassportRegistrationUIColorQuery.ProjectTo<PEPassportIndexViewModel>(_mapper.ConfigurationProvider);
 
             return pePassportRegistrationUIColorQuery.ProjectTo<PEPassportIndexViewModel>(_mapper.ConfigurationProvider);
         }
@@ -185,12 +187,12 @@ namespace Infrastructure.Repositories.SQL
             switch (sortOrder)
             {
                 case "AVNumber_desc":
-                    passportsQuery = passportsQuery.OrderByDescending(passport => passport.AVNumber);
+                    passportsQuery = passportsQuery.OrderByDescending(passport => passport.Letter.ToString() + passport.AVNumber.ToString());
                     return passportsQuery;
                 case "AVNumber_asc":
                 case null:
                 case "":
-                    passportsQuery = passportsQuery.OrderBy(passport => passport.AVNumber);
+                    passportsQuery = passportsQuery.OrderBy(passport => passport.Letter.ToString() + passport.AVNumber.ToString());
                     return passportsQuery;
                 case "FirstName_desc":
                     passportsQuery = passportsQuery.OrderByDescending(passport => passport.FirstName);
@@ -225,7 +227,8 @@ namespace Infrastructure.Repositories.SQL
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                passportsQuery = passportsQuery.Where(passport => passport.AVNumber.ToLower().Contains(searchString.ToLower())
+                passportsQuery = passportsQuery.Where(passport => passport.Letter.ToString().ToLower().Contains(searchString.ToLower())
+                    || passport.AVNumber.ToString().ToLower().Contains(searchString.ToLower())
                     || passport.FirstName.ToLower().Contains(searchString.ToLower())
                     || passport.LastName.ToLower().Contains(searchString.ToLower())
                     || passport.CompanyName.ToLower().Contains(searchString.ToLower()));

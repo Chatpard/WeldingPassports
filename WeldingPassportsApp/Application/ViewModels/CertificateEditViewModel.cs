@@ -6,13 +6,13 @@ namespace Application.ViewModels
 {
     public class CertificateEditViewModel
     {
+        [Required]
         public string EncryptedID { get; set; }
 
         public char Letter { get; set; }
 
-        [Required]
         [Display(Name = "AV Number")]
-        public string AVNumber { get; set; }
+        public int AVNumber { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

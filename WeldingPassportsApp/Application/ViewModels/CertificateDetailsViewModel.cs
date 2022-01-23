@@ -8,11 +8,14 @@ namespace Application.ViewModels
 {
     public class CertificateDetailsViewModel
     {
+        [Required]
         public string EncryptedID { get; set; }
 
-        [Required]
+        public char Letter { get; set; }
+
         [Display(Name = "AV Number")]
-        public string AVNumber { get; set; }
+        [DisplayFormat(DataFormatString = "{0:D5}")]
+        public int AVNumber { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

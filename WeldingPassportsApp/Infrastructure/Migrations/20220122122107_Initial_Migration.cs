@@ -510,7 +510,7 @@ namespace Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TrainingCenterID = table.Column<int>(nullable: false),
                     PEWelderID = table.Column<int>(nullable: false),
-                    AVNumber = table.Column<string>(nullable: true)
+                    AVNumber = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -851,20 +851,20 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ID", "AVNumber", "PEWelderID", "TrainingCenterID" },
                 values: new object[,]
                 {
-                    { 2, "00470", 2, 4 },
-                    { 13, "00481", 13, 3 },
-                    { 10, "00478", 10, 4 },
-                    { 7, "00475", 7, 5 },
-                    { 12, "00480", 12, 5 },
-                    { 11, "00479", 11, 3 },
-                    { 8, "00476", 8, 3 },
-                    { 5, "00473", 5, 3 },
-                    { 3, "00471", 3, 3 },
-                    { 9, "00477", 9, 1 },
-                    { 6, "00474", 6, 1 },
-                    { 1, "00469", 1, 1 },
-                    { 14, "00482", 14, 3 },
-                    { 4, "00472", 4, 4 }
+                    { 2, 470, 2, 4 },
+                    { 13, 481, 13, 3 },
+                    { 10, 478, 10, 4 },
+                    { 7, 475, 7, 5 },
+                    { 12, 480, 12, 5 },
+                    { 11, 479, 11, 3 },
+                    { 8, 476, 8, 3 },
+                    { 5, 473, 5, 3 },
+                    { 3, 471, 3, 3 },
+                    { 9, 477, 9, 1 },
+                    { 6, 474, 6, 1 },
+                    { 1, 469, 1, 1 },
+                    { 14, 482, 14, 3 },
+                    { 4, 472, 4, 4 }
                 });
 
             migrationBuilder.InsertData(

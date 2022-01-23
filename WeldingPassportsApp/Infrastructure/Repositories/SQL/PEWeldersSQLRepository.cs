@@ -220,7 +220,7 @@ namespace Infrastructure.Repositories.SQL
             {
                 weldersQuery = weldersQuery.Where(welder => welder.FirstName.ToLower().Contains(searchString.ToLower())
                     || welder.LastName.ToLower().Contains(searchString.ToLower())
-                    || welder.AVNumber.ToLower().Contains(searchString.ToLower()));
+                    || welder.AVNumber.ToString().ToLower().Contains(searchString.ToLower()));
             }
 
             return weldersQuery;

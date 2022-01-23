@@ -6,6 +6,6 @@ namespace Application.Interfaces.Repositories.API
 {
     public interface IPEPassportsAPIRepository
     {
-        string GetMaxAVNumber(int trainingCenterID);
+        int GetMaxAVNumber(int trainingCenterID);
     }
 }

@@ -8,6 +8,7 @@ namespace Application.ViewModels
 {
     public class PEWelderEditViewModel
     {
+        [Required]
         public string EncryptedID { get; set; }
 
         [Display(Name = "First Name")]

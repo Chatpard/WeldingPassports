@@ -10,14 +10,22 @@ namespace Application.ViewModels
     {
         [NotMapped]
         public string EncryptedID { get; set; }
+
+        public char Letter { get; set; }
+
         [Display(Name = "AV Number")]
-        public string AVNumber { get; set; }
+        [DisplayFormat(DataFormatString = "{0:D5}")]
+        public int AVNumber { get; set; }
+
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
         [Display(Name = "Company")]
         public string CompanyName { get; set; }
+
         private DateTime? expiryDate;
         [DataType(DataType.Date)]
         [Display(Name = "Expiry Date")]

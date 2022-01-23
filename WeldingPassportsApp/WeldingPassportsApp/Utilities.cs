@@ -105,8 +105,10 @@ namespace WeldingPassportsApp
             {
                 var identityRole = new IdentityRole { Name = role };
                 await roleManager.CreateAsync(identityRole);
-                // TODO
-                //await roleManager.AddClaimAsync(identityRole, new Claim("permission", "permission"));
+                foreach (var permission in ClaimsStore.Claims(role))
+                {
+                    await roleManager.AddClaimAsync(identityRole, new Claim(permission.Key, permission.Value));
+                }
             }
         }
     

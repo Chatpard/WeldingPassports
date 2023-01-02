@@ -7,10 +7,11 @@ namespace Domain
 {
     public static class RolesStore
     {
-        public static string Admin { get { return "Admin"; } }
-        public static string TC { get { return "TC"; } }
-        public static string DSO { get { return "DSO"; } }
-        public static string EC { get { return "EC"; } }
+        public const string Admin = "Admin";
+        public const string TC = "TC";
+        public const string DSO = "DSO";
+        public const string EC = "EC";
+
         public static List<string> Roles
         {
             get

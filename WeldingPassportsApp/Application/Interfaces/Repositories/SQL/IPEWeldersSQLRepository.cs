@@ -21,7 +21,7 @@ namespace Application.Interfaces.Repositories.SQL
 
         EntityEntry<PEWelder> PutPEWelderUpdate(PEWelder peWelderChanges);
 
-        Task<IPaginatedList<PEWelderIndexViewModel>> GetPEWeldersIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder);
+        Task<IPaginatedList<PEWelderIndexViewModel>> GetPEWeldersIndexPaginatedAsync(int? traingsCenterId, int pageSize, int pageIndex, string searchString, string sortOrder);
                 
         Task<int> DeletePEWelderByEncryptedIDAsync(string encryptedID, CancellationToken token);
 

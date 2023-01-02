@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,11 @@ namespace Application.ViewModels
 {
     public class PEPassportDetailsViewModel
     {
+        public PEPassportDetailsViewModel()
+        {
+            Certifications = new List<PEPassportDetailsRegistrationsIndexViewModel>();
+        }
+
         public string EncryptedID { get; set; }
 
         [Display(Name = "Letter")]

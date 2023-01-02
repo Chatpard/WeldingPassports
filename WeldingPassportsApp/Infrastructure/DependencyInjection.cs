@@ -73,6 +73,7 @@ namespace Infrastructure
             services.AddScoped<ITrainingCentersAPIRepository, TrainingCentersAPIRepository>();
             services.AddScoped<IPEPassportsAPIRepository, PEPassportsAPIRepository>();
             services.AddScoped<ICompanyContactsAPIRepository, CompanyContactsAPIRepository>();
+            services.AddScoped<ICertificationsAPIRepository, CertificatesAPIRepository>();
         }
     }
 }

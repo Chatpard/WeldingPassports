@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
 {
-    [Authorize(Policy = "AdminRolePolicy")]
+    [Authorize]
     public class CertificatesController : Controller
     {
         private readonly IMediator _mediator;

@@ -109,3 +109,10 @@
         }
     </tbody>
 </table>
+<div>
+    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Update)" 
+        asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary">@Localizer["Update"]</a>
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

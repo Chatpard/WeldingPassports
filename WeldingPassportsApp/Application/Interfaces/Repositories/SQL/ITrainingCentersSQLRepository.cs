@@ -30,7 +30,9 @@ namespace Application.Interfaces.Repositories.SQL
         Dictionary<int, char> LetterDictionary();
 
         Task<IPaginatedList<TrainingCenterIndexViewModel>> GetTrainingCentersIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder);
-        
+
+        Task<TrainingCenter> GetTrainingCenterByUserId(string userId);
+
         Task<int> SaveAsync(CancellationToken cancellationToken);
     }
 }

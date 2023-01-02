@@ -1,14 +1,8 @@
-﻿using Application.Interfaces;
-using Application.Interfaces.Repositories.API;
-using Application.Interfaces.Repositories.SQL;
-using Domain.Models;
-using Infrastructure.Repositories.SQL;
-using Infrastructure.Services.Persistence;
+﻿using Application.Interfaces.Repositories.API;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
+using Infrastructure.Services.Persistence;
 using System.Linq;
-using System.Text;
+using Domain.Models;
 
 namespace Infrastructure.Repositories.API
 {
@@ -23,13 +17,14 @@ namespace Infrastructure.Repositories.API
 
         public SelectList GetCompanyContactsFromCompanySelectList(int? companyID = null)
         {
-            var companyContactsQ = _context.CompanyContacts.Where(companyContacts => true);
+            var companyContactsQ = _context.CompanyContacts
+                .Where(companyContacts => true);
             if(companyID != null)
             {
                 companyContactsQ = companyContactsQ.Where(companyContact => companyContact.CompanyID == companyID);
             }
-            var companyContacts = companyContactsQ.Select(
-                companyContact => new {
+            var companyContacts = companyContactsQ
+                .Select(companyContact => new {
                     ID = companyContact.ID,
                     NameEmail = (companyContact.Contact.FirstName ?? "") + (((companyContact.Contact.FirstName != null) && (companyContact.Contact.LastName != null)) ? " " : "") +
                                 (companyContact.Contact.LastName ?? "") + (((companyContact.Contact.LastName != null) && (companyContact.Email != null)) ? " <" : "") +

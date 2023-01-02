@@ -1,0 +1,125 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model PEPassportUpdateViewModel
+
+@{
+    ViewData["Title"] = Localizer["PE Passport Updates"];
+    var returnUrl = ViewBag.ReturnUrl;
+    var currentUrl = ViewBag.CurrentUrl;
+}
+
+<h1>@Localizer["PE Passport Update"]</h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.AVNumber)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Letter)
+            @Html.DisplayFor(model => model.AVNumber)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NationalNumber)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.NationalNumber)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.IdNumber)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.IdNumber)
+        </dd>
+    </dl>
+</div>
+<br />
+<h2>@Localizer["PE Certificates"]</h2>
+<form enctype="multipart/form-data" asp-controller="@typeof(PEPassportsController).GetNameOfController()" 
+    asp-action="@nameof(PEPassportsController.Update)" asp-route-returnUrl="@returnUrl" method="post">
+    <div class="form-group row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="display: none">
+                        @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().EncryptedID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().ExpiryDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().ExamDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().CompanyName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().ProcessName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().RegistrationTypeName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Certifications.FirstOrDefault().HasPassed)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Certifications.Count(); i++)
+                {
+                    <tr class="@Model.Certifications[i].Color">
+                        <td style="display: none">
+                            @Html.EditorFor(modelItem => Model.Certifications[i].EncryptedID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Certifications[i].ExpiryDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Certifications[i].ExamDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Certifications[i].CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Certifications[i].ProcessName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Model.Certifications[i].RegistrationTypeName)
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(modelItem => Model.Certifications[i].HasPassed, new SelectList(new[]
+                            {
+                                new SelectListItem { Value = null, Text = "Not set"},
+                                new SelectListItem { Value = "False", Text = "False"},
+                                new SelectListItem { Value = "True", Text = "True"},
+                            },
+                            "Value",
+                            "Text"
+                            ),
+                            new { @class = "form-control"})
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+            <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+    </div>
+</form>

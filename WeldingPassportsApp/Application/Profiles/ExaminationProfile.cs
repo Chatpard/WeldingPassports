@@ -59,6 +59,18 @@ namespace Application.Profiles
                 .ForMember(vm => vm.Certifications, options => options.MapFrom(group =>
                     group.PEPassportPEWelderRegistrationUIColors));
 
+            CreateMap<ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup, ExaminationUpdateViewModel>()
+                .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
+                    _protector.Protect(group.Examination.ID.ToString())))
+                .ForMember(vm => vm.ExamDate, options => options.MapFrom(group =>
+                    group.Examination.ExamDate))
+                .ForMember(vm => vm.ExamCenterName, options => options.MapFrom(group =>
+                    group.Examination.ExamCenter.Company.CompanyName))
+                .ForMember(vm => vm.TrainingCenterName, options => options.MapFrom(group =>
+                    group.Examination.TrainingCenter.Company.CompanyName))
+                .ForMember(vm => vm.Certifications, options => options.MapFrom(group =>
+                    group.PEPassportPEWelderRegistrationUIColors));
+
             CreateMap<RegistrationUIColorGroup, ExaminationDetailsCertificationsIndexViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
                     _protector.Protect(group.Registration.ID.ToString())))

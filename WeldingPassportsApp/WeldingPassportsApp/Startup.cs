@@ -82,6 +82,12 @@ namespace WeldingPassportsApp
             if (_env.IsDevelopment())
                 mvcBuilder.AddRazorRuntimeCompilation();
 
+            /*
+             * Microsoft Account external login setup with ASP.NET Core
+             * https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-6.0
+             * The URI segment /signin-microsoft is set as the default callback of the Microsoft authentication provider.
+             */
+
             services.AddAuthentication()
                 .AddMicrosoftAccount(options =>
                 {
@@ -91,14 +97,27 @@ namespace WeldingPassportsApp
 
             services.AddAuthorization(options =>
             {
-                foreach(string roleName in RolesStore.Roles)
+                options.AddPolicy("AdminCanReadEditPolicy", policy =>
                 {
-                    options.AddPolicy(roleName+"RolePolicy", policy =>
-                    {
-                        policy.RequireRole(roleName);
-                        //policy.AddAuthenticationSchemes(IdentityConstants.ApplicationScheme);
-                    });
-                }
+                    policy.RequireRole("Admin");
+                    policy.RequireClaim("Admin", "CanRead", "CanReadEdit", "CanReadEditDelete");
+                });
+                //foreach (string claimName in ClaimsStore.Claims())
+                //{
+                //    foreach (string mainPermission in PermissionsStore.Permissions)
+                //    {
+                //        options.AddPolicy(claimName + mainPermission + "Policy", policy =>
+                //            {
+                //                foreach (string permission in PermissionsStore.Permissions)
+                //                {
+                //                    policy.RequireClaim(claimName, permission);
+                //                    if (permission == mainPermission)
+                //                        break;
+                //                }
+                //            }
+                //        );
+                //    }
+                //}
             });
         }
 

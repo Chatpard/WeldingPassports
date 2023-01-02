@@ -16,6 +16,7 @@ namespace Application.Interfaces.Repositories.SQL
         Task<ExaminationEditViewModel> GetExaminationEditAsync(string encryptedID);
         Task<EntityEntry<Examination>> PostExaminationCreateAsync(ExaminationCreateViewModel vm, CancellationToken cancellationToken);
         Task<ExaminationDetailsViewModel> GetExaminationDetailsAsync(string encrytedID);
+        Task<ExaminationUpdateViewModel> GetExaminationUpdateAsync(string encrytedID);
         Task<int> DeleteExaminationByEncryptedIDAsync(string encryptedID, CancellationToken token);
         Task<IPaginatedList<ExaminationIndexViewModel>> GetExaminationsIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder);
         Task<int> SaveAsync(CancellationToken cancellationToken);

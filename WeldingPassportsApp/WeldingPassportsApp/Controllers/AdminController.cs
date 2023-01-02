@@ -8,12 +8,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
 {
-    [Authorize(Policy = "AdminRolePolicy")]
+    [AllowAnonymous]
     public class AdminController : Controller
     {
         private readonly IMediator _mediator;
@@ -26,6 +28,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminCanReadPolicy")]
         public async Task<IActionResult> AppSettingsDetails()
         {
             try
@@ -41,6 +44,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminCanReadEditPolicy")]
         public async Task<IActionResult> AppSettingsEdit(int id)
         {
             try
@@ -74,6 +78,8 @@ namespace WeldingPassportsApp.Controllers
         [HttpGet]
         public async Task<IActionResult> UsersToApproveIndex()
         {
+            var claims = User.Claims.ToList();
+
             try
             {
                 var request = new GetAdminUsersToApproveIndexRequest(this);

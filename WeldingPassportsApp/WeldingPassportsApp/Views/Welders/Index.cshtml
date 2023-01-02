@@ -17,10 +17,11 @@
     </a>
 </p>
 
-<form asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Index)" method="get">
+<form asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Index)" method="get" id="SearchForm">
     <div class="form-actions no-color">
         <p>
-            @Localizer["Find Welder:"] <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <label for="SearchInput">@Localizer["Find Welder:"]</label>
+            <input type="search" name="SearchString" value="@ViewData["CurrentFilter"]" id="SearchInput" />
             <input type="submit" value=@Localizer["Search"] class="btn btn-light" /> |
             <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Index)">
                 @Localizer["Back to Full List"]
@@ -122,3 +123,7 @@
    class="btn btn-light @nextDisabled">
     @Localizer["Next"]
 </a>
+
+@section Scripts {
+    <script src="~/js/SearchInputClick.js"></script>
+}

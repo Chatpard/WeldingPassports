@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Models;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WeldingPassportsApp.Controllers;
@@ -59,6 +61,7 @@ namespace WeldingPassportsApp
                 await AddRolesAsync(roleManager);
                 await AddUserWithRoleAsync(adminEmail, RolesStore.Admin, userManager);
                 await AddTestUsersAsync(userManager, env);
+                await AddCompanyContactIdentityUserId(context, "leen.dezillie@v-c-l.be", "tc.trainingcenter@outlook.com");
             }
         }
 
@@ -105,6 +108,19 @@ namespace WeldingPassportsApp
                 // TODO
                 //await roleManager.AddClaimAsync(identityRole, new Claim("permission", "permission"));
             }
+        }
+    
+        private static async Task AddCompanyContactIdentityUserId(AppDbContext context, string companyContactEmail, string identityUserEmail)
+        {
+            CompanyContact companyContact = await context.CompanyContacts.Where(companyContact => companyContact.Email == companyContactEmail).FirstOrDefaultAsync();
+            if (companyContact == null) return;
+
+            IdentityUser identityUser = context.Users.Where(user => user.Email == identityUserEmail).FirstOrDefault();
+            if (identityUser == null) return;
+
+            companyContact.IdentityUserId = identityUser.Id;
+            context.Update(companyContact);
+            await context.SaveChangesAsync(new System.Threading.CancellationToken());
         }
     }
 }

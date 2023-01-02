@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -117,6 +118,18 @@ namespace Infrastructure.Repositories.SQL
             trainingCentersQuery = SortTrainingCenterIndex(trainingCentersQuery, sortOrder);
 
             return await PaginatedList<TrainingCenterIndexViewModel>.CreateAsync(trainingCentersQuery.AsNoTracking(), pageIndex, pageSize);
+        }
+
+        public async Task<TrainingCenter> GetTrainingCenterByUserId (string userId)
+        {
+            CompanyContact companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.IdentityUserId == userId).FirstOrDefaultAsync();
+            if(companyContact == null) return null;
+
+            Company company = await _context.Companies.Where(company => company.ID == companyContact.CompanyID).FirstOrDefaultAsync();
+            if(company == null) return null;
+
+            TrainingCenter trainingCenter = await _context.TrainingCenters.Where(trainingCenter => trainingCenter.CompanyID == company.ID).FirstOrDefaultAsync();
+            return trainingCenter;
         }
 
         private static IQueryable<TrainingCenterIndexViewModel> SortTrainingCenterIndex(IQueryable<TrainingCenterIndexViewModel> trainingCentersQuery, string sortOrder)

@@ -41,40 +41,52 @@
         </div>
     </div>
     <div class="form-group row">
-        <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <select asp-for="CompanyID" class="form-control" asp-items="Model.CompanyNameItems">
-                <option value="" selected disabled hidden>@Localizer["Choose Company"]</option>
-            </select>
-            <span asp-validation-for="CompanyID" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group row">
         <label asp-for="PEPassportID" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="input-group col-sm-10">
             <select asp-for="PEPassportID" class="form-control" asp-items="Model.PEPassportAVNumberItems">
                 <option value="" selected disabled hidden>@Localizer["Choose PE Passport"]</option>
             </select>
-            <span asp-validation-for="PEPassportID" class="text-danger"></span>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+            </div>
         </div>
+        <span asp-validation-for="PEPassportID" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
+        <div class="input-group col-sm-10">
+            <select asp-for="CompanyID" class="form-control" asp-items="Model.CompanyNameItems">
+                <option value="" selected disabled hidden>@Localizer["Choose Company"]</option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+            </div>
+        </div>
+        <span asp-validation-for="CompanyID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="input-group col-sm-10">
             <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems">
                 <option value="" selected disabled hidden>@Localizer["Choose Process"]</option>
             </select>
-            <span asp-validation-for="ProcessID" class="text-danger"></span>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+            </div>
         </div>
+        <span asp-validation-for="ProcessID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <label asp-for="RegistrationTypeID" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="input-group col-sm-10">
             <select asp-for="RegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems">
                 <option value="" selected disabled hidden>@Localizer["Choose Registration Type"]</option>
             </select>
-            <span asp-validation-for="RegistrationTypeID" class="text-danger"></span>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+            </div>
         </div>
+        <span asp-validation-for="RegistrationTypeID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <div class="col-sm-10">
@@ -83,3 +95,8 @@
         </div>
     </div>
 </form>
+
+@section Scripts {
+    <script src="~/js/PEPassports/GetRegistartionTypeIDsByPEPassportID.js"></script>
+    <script src="~/js/PEPassports/GetTrainingCenterLetterByTrainingCenterID.js"></script>
+}

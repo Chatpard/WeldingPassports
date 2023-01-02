@@ -107,6 +107,36 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Update(string id, string returnUrl)
+        {
+            try
+            {
+                var query = new GetExaminationUpdateRequest(id, returnUrl, this);
+                return await _mediator.Send(query);
+            }
+            catch (Exception e)
+            {
+                await Task.CompletedTask;
+                return Utilities.ErrorView(_env, this, e, "Error in GetExaminationUpdate");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(ExaminationUpdateViewModel examinationUpdates, string returnUrl )
+        {
+            try
+            {
+                var query = new PostExaminationUpdateRequest(examinationUpdates, returnUrl, this);
+                return await _mediator.Send(query);
+            }
+            catch (Exception e)
+            {
+                await Task.CompletedTask;
+                return Utilities.ErrorView(_env, this, e, "Error in PostExaminationUpdate");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Edit(ExaminationEditViewModel newExaminationVm, string returnUrl)
         {

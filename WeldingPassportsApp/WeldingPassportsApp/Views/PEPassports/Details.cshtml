@@ -101,11 +101,18 @@
                 </td>
                 <td>
                     <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
-                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
+                        asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
                     <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)"
-                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                        asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<div>
+    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Update)"
+        asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

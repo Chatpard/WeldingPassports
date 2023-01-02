@@ -35,22 +35,35 @@ namespace Infrastructure.Repositories.SQL
                 .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
         }
 
-        private async Task<IQueryable<PEWelderIndexViewModel>> GetPEWeldersIndexAsync()
+        private async Task<IQueryable<PEWelderIndexViewModel>> GetPEWeldersIndexAsync(int? trainingCenterId)
         {
             AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
-            IQueryable<PEWelderRegistrationUIColorGroup> peWelderRegistrationUIColorQuery =
-                _context.PEWelders.Select(
-                        peWelder => new
+            IQueryable<PEWelder> peWelders = null;
+            if (trainingCenterId != null)
+            {
+                peWelders =
+                    _context.PEWelders
+                        .Where(peWelder => (peWelder.PEPassports.Where(pePassport => pePassport.TrainingCenterID == trainingCenterId)).Count() > 0);
+            }
+            else
+            {
+                peWelders = _context.PEWelders;
+            }
+            IQueryable<PEWelderRegistrationGroup> peWelderRegistrationQuery =
+                peWelders.Select(
+                        peWelder => new PEWelderRegistrationGroup
                         {
                             PEWelder = peWelder,
-                            Registration = 
+                            Registration =
                                 peWelder.PEPassports.SelectMany(
                                     pePassport => pePassport.Registrations,
                                     (pePassport, registration) => registration
                                 )
                                 .OrderByDescending(registration => registration.Examination.ExamDate).FirstOrDefault(),
-                        })
+                        });
+            IQueryable<PEWelderRegistrationUIColorGroup> peWelderRegistrationUIColorQuery =
+                peWelderRegistrationQuery
                         .Select(
                             peWelderRegistration => new
                             {
@@ -174,9 +187,9 @@ namespace Infrastructure.Repositories.SQL
             return await SaveAsync(token);
         }
 
-        public async Task<IPaginatedList<PEWelderIndexViewModel>> GetPEWeldersIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder)
+        public async Task<IPaginatedList<PEWelderIndexViewModel>> GetPEWeldersIndexPaginatedAsync(int? trainingCenterId, int pageSize, int pageIndex, string searchString, string sortOrder)
         {
-            var weldersQuery = await GetPEWeldersIndexAsync();
+            var weldersQuery = await GetPEWeldersIndexAsync(trainingCenterId);
 
             weldersQuery = SearchPEWelderIndex(weldersQuery, searchString);
 
@@ -204,10 +217,10 @@ namespace Infrastructure.Repositories.SQL
                     weldersQuery = weldersQuery.OrderBy(welder => welder.LastName);
                     return weldersQuery;
                 case "AVNumber_desc":
-                    weldersQuery = weldersQuery.OrderByDescending(welder => welder.AVNumber);
+                    weldersQuery = weldersQuery.OrderByDescending(welder => welder.Letter).ThenByDescending(welder => welder.AVNumber);
                     return weldersQuery;
                 case "AVNumber_asc":
-                    weldersQuery = weldersQuery.OrderBy(welder => welder.AVNumber);
+                    weldersQuery = weldersQuery.OrderBy(welder => welder.Letter).ThenBy(welder => welder.AVNumber);
                     return weldersQuery;
                 default:
                     throw new InvalidOperationException("SortOrder nout found.");

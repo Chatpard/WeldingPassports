@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,11 +18,15 @@ namespace Application.Requests.Welders
 {
     public class GetPEWelderIndexRequestHandler : IRequestHandler<GetPEWelderIndexRequest, IActionResult>
     {
-        private readonly IPEWeldersSQLRepository _repository;
+        private readonly IPEWeldersSQLRepository _peWeldersSQLRepository;
+        private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public GetPEWelderIndexRequestHandler(IPEWeldersSQLRepository repository)
+        public GetPEWelderIndexRequestHandler(IPEWeldersSQLRepository peWeldersSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository, UserManager<IdentityUser> userManager)
         {
-            _repository = repository;
+            _peWeldersSQLRepository = peWeldersSQLRepository;
+            _trainingCentersSQLRepository = trainingCentersSQLRepository;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Handle(GetPEWelderIndexRequest request, CancellationToken cancellationToken)
@@ -36,11 +41,15 @@ namespace Application.Requests.Welders
             else
                 request.SearchString = request.CurrentFilter;
 
+            string userId = _userManager.GetUserId(request.Controller.User);
+            TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
+            int? trainingCenterId = trainingCenter?.ID;
+            
             request.Controller.ViewData["CurrentFilter"] = request.SearchString;
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetPEWeldersIndexPaginatedAsync(7, request.PageNumber ?? 1,
+            var vm = await _peWeldersSQLRepository.GetPEWeldersIndexPaginatedAsync(trainingCenterId, 7, request.PageNumber ?? 1,
                 request.SearchString, request.SortOrder);
 
             return request.Controller.View(vm);

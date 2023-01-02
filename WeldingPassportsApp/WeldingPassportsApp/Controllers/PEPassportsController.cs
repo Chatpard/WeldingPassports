@@ -4,6 +4,7 @@ using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace WeldingPassportsApp.Controllers
             catch (Exception e)
             {
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                
+
                 return Utilities.ErrorView(_env, this, e, "Error in GetPEPassportsIndex");
             }
         }
@@ -58,7 +59,7 @@ namespace WeldingPassportsApp.Controllers
             catch (Exception e)
             {
                 await Task.CompletedTask;
-                
+
                 return Utilities.ErrorView(_env, this, e, "Error in GetPEPassportCreate");
             }
         }
@@ -75,7 +76,7 @@ namespace WeldingPassportsApp.Controllers
             catch (Exception e)
             {
                 await Task.CompletedTask;
-                
+
                 return Utilities.ErrorView(_env, this, e, "Error in GetPEPassportCreate");
             }
         }
@@ -91,7 +92,7 @@ namespace WeldingPassportsApp.Controllers
             catch (Exception e)
             {
                 await Task.CompletedTask;
-                
+
                 return Utilities.ErrorView(_env, this, e, "Error in GetPEPassportsDetails");
             }
         }
@@ -102,7 +103,7 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new GetPEPassportEditRequest(id, returnUrl, this);
-                
+
                 return await _mediator.Send(query);
             }
             catch (Exception e)
@@ -119,16 +120,51 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new PostPEPassportEditRequest(pepassportChanges, returnUrl, this);
-                
+
                 return await _mediator.Send(query);
             }
             catch (Exception e)
             {
                 await Task.CompletedTask;
-                
+
                 return Utilities.ErrorView(_env, this, e, "Error in PostPEPassportEdit");
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(string id, string returnUrl)
+        {
+            try
+            {
+                var query = new GetPEPassportUpdateRequest(id, returnUrl, this);
+
+                return await _mediator.Send(query);
+            }
+            catch (Exception e)
+            {
+                await Task.CompletedTask;
+
+                return Utilities.ErrorView(_env, this, e, "Error in GetPEPassportUpdate");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(PEPassportUpdateViewModel pePassportUpdates, string returnUrl)
+        {
+            try
+            {
+                var query = new PostPEPassportUpdateRequest(pePassportUpdates, returnUrl, this);
+
+                return await _mediator.Send(query);
+            }
+            catch (Exception e)
+            {
+                await Task.CompletedTask;
+
+                return Utilities.ErrorView(_env, this, e, "Error in PostPassportUpdate");
+            }
+        }
+
 
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {

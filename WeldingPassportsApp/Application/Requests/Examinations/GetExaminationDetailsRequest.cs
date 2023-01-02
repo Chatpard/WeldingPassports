@@ -8,9 +8,9 @@ namespace Application.Requests.Examinations
 {
     public class GetExaminationDetailsRequest : IRequest<IActionResult>
     {
-        public string EncryptedID { get; set; }
-        public string ReturnUrl { get; set; }
-        public Controller Controller { get; set; }
+        public string EncryptedID { get; }
+        public string ReturnUrl { get; }
+        public Controller Controller { get; }
 
         public GetExaminationDetailsRequest(string encryptedID, string returnUrl, Controller controller)
         {

@@ -57,6 +57,11 @@ namespace Infrastructure.Repositories.SQL
 
             int examinationDecryptedID = Convert.ToInt32(_protector.Unprotect(examinationEncryptedID));
 
+            int trainingCenterID = await _context.Examinations
+                .Where(e => e.ID == examinationDecryptedID)
+                .Select(e => e.TrainingCenterID)
+                .SingleOrDefaultAsync();
+
             vm.ExamDate = await _context.Examinations
                 .Where(e => e.ID == examinationDecryptedID)
                 .Select(e => e.ExamDate)
@@ -84,6 +89,8 @@ namespace Infrastructure.Repositories.SQL
 
             var passports = await _context.PEPassports
                 .OrderBy(passport => passport.AVNumber)
+                .Where(passport => passport.TrainingCenterID == trainingCenterID)
+                .Where(passport => ! passport.Registrations.Where(registration => registration.ExaminationID == examinationDecryptedID).Any())
                 .Select(passport => new {
                     ID = passport.ID,
                     AVNumber = $"{passport.TrainingCenter.Letter} {passport.AVNumber.ToString("D5")} ({passport.PEWelder.FirstName} {passport.PEWelder.LastName})"

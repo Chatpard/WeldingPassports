@@ -31,6 +31,9 @@
                     <div class=" input-group-append">
                         <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
                     </div>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                    </div>
                 </div>
                 <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
             </div>
@@ -42,6 +45,9 @@
                     </select>
                     <div class=" input-group-append">
                         <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                    </div>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="PEWelderID" class="text-danger"></span>
@@ -62,4 +68,5 @@
 
     <script src="~/js/PEPassports/GetTrainingCenterLetterByTrainingCenterID.js"></script>
     <script src="~/js/PEPassports/GetPEPassportMaxAVNumber.js"></script>
+    <script src="~/js/PEPassports/ResetPassportCreate.js"></script>
 }

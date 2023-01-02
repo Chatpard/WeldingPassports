@@ -10,7 +10,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="@typeof(PEPassportsController).GetNameOfController()"
                    asp-action="@nameof(PEPassportsController.Index)">Synergrid</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -81,7 +81,7 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
             @RenderBody()
@@ -89,7 +89,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container-fluid">
             &copy; @Localizer["2021 - PE Synergrid"] -
             <a asp-area="" asp-controller="@typeof(HomeController).GetNameOfController()" asp-action="@nameof(HomeController.Privacy)">
                 @Localizer["Privacy"]

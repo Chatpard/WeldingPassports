@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories.SQL
 {
@@ -37,19 +38,27 @@ namespace Infrastructure.Repositories.SQL
                 .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
         }
 
-        private async Task<IQueryable<PEPassportIndexViewModel>> GetPEPassportsIndexAsync()
+        private async Task<IQueryable<PEPassportIndexViewModel>> GetPEPassportsIndexAsync(int? trainingCenterID)
         {
             AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
-            IQueryable<PEPassportRegistrationUIColorGroup> pePassportRegistrationUIColorQuery =
+            IQueryable<PEPassportRegistrationGroup> pePassportRegistrationQuery =
                 _context.PEPassports
                     .Select(
-                        pePassport => new
+                        pePassport => new PEPassportRegistrationGroup
                         {
                             PEPassport = pePassport,
                             Registration =
                                 pePassport.Registrations.OrderByDescending(registration => registration.Examination.ExamDate).FirstOrDefault()
-                        })
+                        });
+            if(trainingCenterID != null)
+            {
+                pePassportRegistrationQuery =
+                    pePassportRegistrationQuery
+                        .Where(pePassportRegistration => pePassportRegistration.PEPassport.TrainingCenterID == trainingCenterID);
+            }
+            IQueryable<PEPassportRegistrationUIColorGroup> pePassportRegistrationUIColorQuery =
+                pePassportRegistrationQuery
                     .Select(
                         pePassportRegistration => new
                         {
@@ -79,7 +88,7 @@ namespace Infrastructure.Repositories.SQL
                             Registration = pePassportRegistration.Registration,
                             UIColor = uiColor
                         }
-                    ); ;
+                    );
 
             var temp = pePassportRegistrationUIColorQuery.ProjectTo<PEPassportIndexViewModel>(_mapper.ConfigurationProvider);
 
@@ -95,50 +104,7 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<PEPassportDetailsViewModel> GetPEPassportDetailsAsync(string encryptedID)
         {
-            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
-            AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
-
-            IQueryable<PEPassportPEWelderRegistrationUIColorsGroup> query = 
-                _context.PEPassports
-                    .Where(passport => passport.ID == decryptedID)
-                    .Include(passport => passport.Registrations)
-                    .Select(
-                        passport => new PEPassportPEWelderRegistrationUIColorsGroup
-                        {
-                            PEPassport = passport,
-                            PEWelder = passport.PEWelder,
-                            RegistrationUIColors = passport.Registrations
-                                .Select(
-                                    registration => new
-                                    {
-                                        Registration = registration,
-                                        ExtendableStatus =
-                                            registration.Revoke != null ? ExtendableStatus.Revoked :
-                                            EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
-                                            (EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
-                                            ExtendableStatus.NoMoreExtendable)
-                                    })
-                                .Join(
-                                    _context.UIColors.DefaultIfEmpty(),
-                                    registrationExtendableStatus => new 
-                                    {
-                                            ExtendableStatus = registrationExtendableStatus.ExtendableStatus,
-                                            HasPassed = (bool)(registrationExtendableStatus.Registration.HasPassed.HasValue ? registrationExtendableStatus.Registration.HasPassed.HasValue : false)
-                                    },
-                                    uicolor => new 
-                                    {
-                                            ExtendableStatus = uicolor.ExtendableStatus,
-                                            HasPassed = (bool)(uicolor.HasPassed.HasValue ? uicolor.HasPassed : false)
-                                    },
-                                    (registrationExtendableStatus, uicolor) => new RegistrationUIColorGroup
-                                    {
-                                            Registration = registrationExtendableStatus.Registration,
-                                            UIColor = uicolor
-                                    }
-                                )
-                        }
-                    );
-
+            var query = await GetPEPassportPEWelderRegistrationUIColorsGroup(encryptedID);
             return await query.ProjectTo<PEPassportDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
@@ -159,6 +125,12 @@ namespace Infrastructure.Repositories.SQL
             return pePassport;
         }
 
+        public async Task<PEPassportUpdateViewModel> GetPEPassportUpdateAsync(string encryptedID)
+        {
+            var query = await GetPEPassportPEWelderRegistrationUIColorsGroup(encryptedID);
+            return await query.ProjectTo<PEPassportUpdateViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+
         public async Task<int> DeletePEPassportByEncryptedIDAsync(string encryptedID, CancellationToken token)
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
@@ -166,14 +138,64 @@ namespace Infrastructure.Repositories.SQL
             return await SaveAsync(token);
         }
 
+        private async Task<IQueryable<PEPassportPEWelderRegistrationUIColorsGroup>> GetPEPassportPEWelderRegistrationUIColorsGroup(string encryptedID)
+        {
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
+
+            IQueryable<PEPassportPEWelderRegistrationUIColorsGroup> query =
+                _context.PEPassports
+                    .Where(passport => passport.ID == decryptedID)
+                    .Include(passport => passport.Registrations)
+                    .Select(
+                        passport => new PEPassportPEWelderRegistrationUIColorsGroup
+                        {
+                            PEPassport = passport,
+                            PEWelder = passport.PEWelder,
+                            SelectedCertificationEncryptedID = "",
+                            RegistrationUIColors = passport.Registrations
+                                .Select(
+                                    registration => new
+                                    {
+                                        Registration = registration,
+                                        ExtendableStatus =
+                                            registration.Revoke != null ? ExtendableStatus.Revoked :
+                                            EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
+                                            (EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
+                                            ExtendableStatus.NoMoreExtendable)
+                                    })
+                                .Join(
+                                    _context.UIColors.DefaultIfEmpty(),
+                                    registrationExtendableStatus => new
+                                    {
+                                        ExtendableStatus = registrationExtendableStatus.ExtendableStatus,
+                                        HasPassed = (bool)(registrationExtendableStatus.Registration.HasPassed.HasValue ? registrationExtendableStatus.Registration.HasPassed.HasValue : false)
+                                    },
+                                    uicolor => new
+                                    {
+                                        ExtendableStatus = uicolor.ExtendableStatus,
+                                        HasPassed = (bool)(uicolor.HasPassed.HasValue ? uicolor.HasPassed : false)
+                                    },
+                                    (registrationExtendableStatus, uicolor) => new RegistrationUIColorGroup
+                                    {
+                                        Registration = registrationExtendableStatus.Registration,
+                                        UIColor = uicolor
+                                    }
+                                )
+                        }
+                    );
+
+            return query;
+        }
+
         public SelectList PEPassportSelectList()
         {
             return new SelectList(_context.PEPassports);
         }
 
-        public async Task<IPaginatedList<PEPassportIndexViewModel>> GetPEPassportsIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder)
+        public async Task<IPaginatedList<PEPassportIndexViewModel>> GetPEPassportsIndexPaginatedAsync(int? trainingCenterId, int pageSize, int pageIndex, string searchString, string sortOrder)
         {
-            var passportsQuery = await GetPEPassportsIndexAsync();
+            var passportsQuery = await GetPEPassportsIndexAsync(trainingCenterId);
 
             passportsQuery = SearchPEPassportIndex(passportsQuery, searchString);
 

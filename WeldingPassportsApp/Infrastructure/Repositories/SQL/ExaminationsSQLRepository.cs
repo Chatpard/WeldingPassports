@@ -61,9 +61,28 @@ namespace Infrastructure.Repositories.SQL
             return newPePassport;
         }
 
-        public async Task<ExaminationDetailsViewModel> GetExaminationDetailsAsync(string encrytedID)
+        public async Task<ExaminationDetailsViewModel> GetExaminationDetailsAsync(string encryptedID)
         {
-            int decryptedID = Convert.ToInt32(_protector.Unprotect(encrytedID));
+            var query = await ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup(encryptedID);
+            return await query.ProjectTo<ExaminationDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+        
+        public async Task<ExaminationUpdateViewModel> GetExaminationUpdateAsync(string encryptedID)
+        {
+            var query = await ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup(encryptedID);
+            return await query.ProjectTo<ExaminationUpdateViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+
+        public async Task<int> DeleteExaminationByEncryptedIDAsync(string encryptedID, CancellationToken token)
+        {
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            _context.Examinations.Remove(new Examination { ID = decryptedID });
+            return await SaveAsync(token);
+        }
+
+        public async Task<IQueryable<ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup>> ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup(string encryptedID)
+        {
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
             IQueryable<ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup> query = _context.Examinations
@@ -104,17 +123,10 @@ namespace Infrastructure.Repositories.SQL
                                 }
                             )
                     }
-                    
+
                 );
 
-            return await query.ProjectTo<ExaminationDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
-        }
-
-        public async Task<int> DeleteExaminationByEncryptedIDAsync(string encryptedID, CancellationToken token)
-        {
-            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
-            _context.Examinations.Remove(new Examination { ID = decryptedID });
-            return await SaveAsync(token);
+            return query;
         }
 
         private IQueryable<ExaminationIndexViewModel> GetExaminationsIndex()

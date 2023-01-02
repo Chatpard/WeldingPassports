@@ -1,22 +1,29 @@
 ﻿using Application.Interfaces.Repositories.SQL;
 using AutoMapper;
+using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Requests.PEPassports
 {
     public class GetPEPassportsIndexRequestHandler : IRequestHandler<GetPEPassportsIndexRequest, IActionResult>
     {
-        private readonly IPEPassportsSQLRepository _repository;
+        private readonly IPEPassportsSQLRepository _pePassportsSQLRepository;
+        private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public GetPEPassportsIndexRequestHandler(IPEPassportsSQLRepository repository, IMapper mapper)
+        public GetPEPassportsIndexRequestHandler(IPEPassportsSQLRepository pePassportsSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IMapper mapper, UserManager<IdentityUser> userManager)
         {
-            _repository = repository;
+            _pePassportsSQLRepository = pePassportsSQLRepository;
+            _trainingCentersSQLRepository = trainingCentersSQLRepository;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Handle(GetPEPassportsIndexRequest request, CancellationToken cancellationToken)
@@ -33,11 +40,15 @@ namespace Application.Requests.PEPassports
             else
                 request.SearchString = request.CurrentFilter;
 
+            string userId = _userManager.GetUserId(request.Controller.User);
+            TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
+            int? trainingCenterId = trainingCenter?.ID;
+
             request.Controller.ViewData["CurrentFilter"] = request.SearchString;
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetPEPassportsIndexPaginatedAsync(7, request.PageNumber ?? 1,
+            var vm = await _pePassportsSQLRepository.GetPEPassportsIndexPaginatedAsync(trainingCenterId, 7, request.PageNumber ?? 1,
                 request.SearchString, request.SortOrder);
 
             return request.Controller.View(vm);

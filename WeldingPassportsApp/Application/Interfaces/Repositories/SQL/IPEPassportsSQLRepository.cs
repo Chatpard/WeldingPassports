@@ -11,7 +11,7 @@ namespace Application.Interfaces.Repositories.SQL
 {
     public interface IPEPassportsSQLRepository
     {
-        Task<IPaginatedList<PEPassportIndexViewModel>> GetPEPassportsIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder);
+        Task<IPaginatedList<PEPassportIndexViewModel>> GetPEPassportsIndexPaginatedAsync(int? trainingCenterID, int pageSize, int pageIndex, string searchString, string sortOrder);
         
         Task<EntityEntry<PEPassport>> PostPEPassportCreateAsync(PEPassport pePassort);
         
@@ -20,7 +20,9 @@ namespace Application.Interfaces.Repositories.SQL
         Task<PEPassportEditViewModel> GetPEPassportEditAsync(string encryptedID);
         
         EntityEntry<PEPassport> PostPEPassportEditasync(PEPassport pePassortChanges);
-        
+
+        Task<PEPassportUpdateViewModel> GetPEPassportUpdateAsync(string encryptedID);
+
         Task<int> DeletePEPassportByEncryptedIDAsync(string encryptedID, CancellationToken token);
 
         SelectList PEPassportSelectList();

@@ -20,11 +20,11 @@ namespace Application.Requests.PEPassports
 
         public async System.Threading.Tasks.Task<ActionResult<string>> Handle(GetPEPassportGetMaxAVNumberApiRequest request, CancellationToken cancellationToken)
         {
-            int MaxAVNumber = _peWeldersAPIRepository.GetMaxAVNumber(request.TrainingCenterID);
+            int? MaxAVNumber = _peWeldersAPIRepository.GetMaxAVNumber(request.TrainingCenterID);
 
             MaxAVNumber++;
 
-            return request.Controller.Ok(MaxAVNumber.ToString("D5"));
+            return request.Controller.Ok(MaxAVNumber?.ToString("D5"));
         }
     }
 }

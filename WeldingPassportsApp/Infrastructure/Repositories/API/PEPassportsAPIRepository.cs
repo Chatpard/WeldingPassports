@@ -16,9 +16,9 @@ namespace Infrastructure.Repositories.API
             _context = context;
         }
 
-        public int GetMaxAVNumber(int trainingCenterID)
+        public int? GetMaxAVNumber(int trainingCenterID)
         {
-            int maxAVNumber;
+            int? maxAVNumber;
 
             try
             {
@@ -28,7 +28,7 @@ namespace Infrastructure.Repositories.API
             }
             catch(Exception e)
             {
-                maxAVNumber = 0;
+                maxAVNumber = null;
             }
 
             return maxAVNumber;

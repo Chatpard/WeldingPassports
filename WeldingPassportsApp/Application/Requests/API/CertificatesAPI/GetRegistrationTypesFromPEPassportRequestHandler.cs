@@ -17,7 +17,7 @@ namespace Application.Requests.API.CertificatesAPI
 
         public GetRegistrationTypesFromPEPassportRequestHandler(ICertificationsAPIRepository repository)
         {
-            _repository=repository;
+            _repository = repository;
         }
         public async Task<ActionResult<GetGetRegistrationTypesFromPEPassportReponse>> Handle(GetRegistrationTypesFromPEPassportRequest request, CancellationToken cancellationToken)
         {

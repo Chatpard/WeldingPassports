@@ -33,6 +33,9 @@
                     <div class="input-group-append">
                         <a class="btn btn-primary" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
                     </div>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                    </div>
                 </div>
                 <span asp-validation-for="CompanyID" class="text-danger"></span>
             </div>
@@ -43,10 +46,13 @@
                         <option value="0">@if (Model.CompanyContactID == 0)
                         {@Localizer["Choose a Contact"]}
                     else
-                    { @Localizer["No Contact"]}</option>
+                        { @Localizer["No Contact"]}</option>
                     </select>
                     <div class="input-group-append">
                         <a class="btn btn-primary" type="button" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                    </div>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="CompanyContactID" class="text-danger"></span>
@@ -64,4 +70,5 @@
 
 @section Scripts {
     <script src="~/js/TrainingCenters/GetTrainingCenterLetterByTrainingCenterID.js"></script>
+    <script src="~/js/ResetSelect.js"></script>
 }

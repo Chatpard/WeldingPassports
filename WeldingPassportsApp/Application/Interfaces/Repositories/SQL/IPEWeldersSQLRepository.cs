@@ -25,7 +25,7 @@ namespace Application.Interfaces.Repositories.SQL
                 
         Task<int> DeletePEWelderByEncryptedIDAsync(string encryptedID, CancellationToken token);
 
-        SelectList PEWelderSelectList();
+        SelectList PEWelderSelectList(int? trainingCenterID = null);
 
         Task<int> SaveAsync(CancellationToken cancellationToken);
     }

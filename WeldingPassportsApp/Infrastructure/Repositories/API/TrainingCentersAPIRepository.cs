@@ -17,14 +17,14 @@ namespace Infrastructure.Repositories.API
             _context = context;
         }
 
-        public async Task<char> GetLetterById(int id)
+        public async Task<char?> GetLetterById(int id)
         {
             TrainingCenter trainingCenter = new TrainingCenter();
             trainingCenter = await _context.TrainingCenters.FindAsync(id);
 
             if (trainingCenter == null)
             {
-                return '�';
+                return null;
             }
 
             return trainingCenter.Letter;

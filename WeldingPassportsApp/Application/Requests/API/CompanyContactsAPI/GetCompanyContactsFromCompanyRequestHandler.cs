@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.API.CompanyContactsAPI
 {
-    class GetCompanyContactsFromCompanyRequestHandler : IRequestHandler<GetCompanyContactsFromCompanyRequest, ActionResult<SelectList>>
+    public class GetCompanyContactsFromCompanyRequestHandler : IRequestHandler<GetCompanyContactsFromCompanyRequest, ActionResult<SelectList>>
     {
         private readonly ICompanyContactsAPIRepository _repository;
 

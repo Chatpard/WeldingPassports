@@ -18,20 +18,26 @@ namespace Infrastructure.Repositories.API
 
         public int? GetMaxAVNumber(int trainingCenterID)
         {
-            int? maxAVNumber;
-
             try
             {
-                maxAVNumber = _context.PEPassports
-                    .Where(pePassport => pePassport.TrainingCenterID == trainingCenterID)
-                    .Max(pePassport => pePassport.AVNumber);
+                if(! _context.TrainingCenters.Where(trainingCenter => trainingCenter.ID == trainingCenterID).Any())
+                {
+                    return null;
+                }
+
+                if( _context.PEPassports.Where(pePassport => pePassport.TrainingCenterID == trainingCenterID).Any())
+                {
+                    return _context.PEPassports
+                        .Where(pePassport => pePassport.TrainingCenterID == trainingCenterID)
+                        .Max(pePassport => pePassport.AVNumber);
+                }
+
+                return 0;
             }
             catch(Exception e)
             {
-                maxAVNumber = null;
+                return null;
             }
-
-            return maxAVNumber;
         }
     }
 }

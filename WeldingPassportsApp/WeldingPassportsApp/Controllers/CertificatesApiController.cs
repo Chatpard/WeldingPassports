@@ -18,7 +18,7 @@ namespace WeldingPassportsApp.Controllers
 
         public CertificatesApiController(IMediator mediator)
         {
-            _mediator=mediator;
+            _mediator = mediator;
         }
 
         [HttpGet(nameof(GetRegistrationTypesFromPEPassport))]

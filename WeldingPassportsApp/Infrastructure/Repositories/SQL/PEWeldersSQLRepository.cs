@@ -239,9 +239,19 @@ namespace Infrastructure.Repositories.SQL
             return weldersQuery;
         }
 
-        public SelectList PEWelderSelectList()
+        public SelectList PEWelderSelectList(int? trainingCenterID = null)
         {
-            var peWelders = _context.PEWelders
+            var peWelders = _context.PEWelders.Where(peWelder => true);
+            if(trainingCenterID != null)
+            {
+                peWelders = peWelders.Where(peWelder => ! peWelder.PEPassports
+                        .Where(pePassport => pePassport.TrainingCenterID == trainingCenterID)
+                        .Where(pePassport => ! pePassport.Registrations
+                            .Where(registration => registration.Revoke != null)
+                        .Any())
+                        .Any());
+            }
+            var peWeldersList = peWelders
                 .OrderBy(peWelder => peWelder.LastName).ThenBy(peWelder => peWelder.FirstName)
                 .Select(peWelder => new 
                 {
@@ -249,8 +259,7 @@ namespace Infrastructure.Repositories.SQL
                     Name =  peWelder.FirstName + " " + peWelder.LastName
                 });
 
-            var list = new SelectList(peWelders, nameof(PEWelder.ID), "Name");
-            return list;
+            return new SelectList(peWeldersList, nameof(PEWelder.ID), "Name");
         }
     }
 }

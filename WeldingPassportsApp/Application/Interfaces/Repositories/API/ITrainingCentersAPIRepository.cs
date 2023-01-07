@@ -8,7 +8,7 @@ namespace Application.Interfaces.Repositories.API
 {
     public interface ITrainingCentersAPIRepository
     {
-        Task<char> GetLetterById(int id);
+        Task<char?> GetLetterById(int id);
 
         bool IsLetterInUse(char letter);
     }

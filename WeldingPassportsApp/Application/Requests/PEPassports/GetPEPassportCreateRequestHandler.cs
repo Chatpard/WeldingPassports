@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repositories.SQL;
 using Application.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -19,17 +20,22 @@ namespace Application.Requests.PEPassports
         private readonly IPEPassportsSQLRepository _pePassportsSQLRepository;
         private readonly IPEWeldersSQLRepository _peWeldersSQLRepository;
         private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-
-        public GetPEPassportCreateRequestHandler(IPEPassportsSQLRepository pePassportsSQLRepository, IPEWeldersSQLRepository peWeldersSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository)
+        public GetPEPassportCreateRequestHandler(IPEPassportsSQLRepository pePassportsSQLRepository, IPEWeldersSQLRepository peWeldersSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository, UserManager<IdentityUser> userManager)
         {
             _pePassportsSQLRepository = pePassportsSQLRepository;
             _peWeldersSQLRepository = peWeldersSQLRepository;
             _trainingCentersSQLRepository = trainingCentersSQLRepository;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Handle(GetPEPassportCreateRequest request, CancellationToken cancellationToken)
         {
+            string userId = _userManager.GetUserId(request.Controller.User);
+            TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
+            int? trainingCenterId = trainingCenter?.ID;
+
             if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                 request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
@@ -37,7 +43,7 @@ namespace Application.Requests.PEPassports
 
             var vm = new PEPassportCreateViewModel
             {
-                TrainingCenterSelectList = _trainingCentersSQLRepository.TrainingCenterSelectList(),
+                TrainingCenterSelectList = _trainingCentersSQLRepository.TrainingCenterSelectList(trainingCenterId),
                 PEWelderSelectList = _peWeldersSQLRepository.PEWelderSelectList()
             };
 

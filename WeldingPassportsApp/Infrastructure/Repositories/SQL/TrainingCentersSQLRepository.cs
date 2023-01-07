@@ -84,16 +84,22 @@ namespace Infrastructure.Repositories.SQL
             return await SaveAsync(token);
         }
 
-        public SelectList TrainingCenterSelectList()
+        public SelectList TrainingCenterSelectList(int? trainingsCenterId = null)
         {
-            var trainingCenters = _context.TrainingCenters
+            var trainingCenters = _context.TrainingCenters.Where(traingCenter => true);
+            if (trainingsCenterId != null)
+            {
+                trainingCenters = trainingCenters
+                    .Where(trainingCenter => trainingCenter.ID == trainingsCenterId);
+            }
+            var trainingCentersList = trainingCenters
                 .OrderBy(trainingCenter => trainingCenter.Company.CompanyName)
                 .Select(trainingCenter => new {
                     ID = trainingCenter.ID,
                     CompanyName = trainingCenter.Company.CompanyName
                 });
 
-            return new SelectList(trainingCenters, nameof(TrainingCenter.ID), nameof(TrainingCenter.Company.CompanyName));
+            return new SelectList(trainingCentersList, nameof(TrainingCenter.ID), nameof(TrainingCenter.Company.CompanyName));
         }
 
         public Dictionary<int, char> LetterDictionary()

@@ -25,7 +25,7 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<int> DeleteTrainingCenterByEncryptedIDAsync(string encryptedID, CancellationToken token);
 
-        SelectList TrainingCenterSelectList();
+        SelectList TrainingCenterSelectList(int? trainingCenterId = null);
 
         Dictionary<int, char> LetterDictionary();
 

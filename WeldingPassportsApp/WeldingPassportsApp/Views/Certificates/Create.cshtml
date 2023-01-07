@@ -47,7 +47,7 @@
                 <option value="" selected disabled hidden>@Localizer["Choose PE Passport"]</option>
             </select>
             <div class="input-group-append">
-                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
             </div>
         </div>
         <span asp-validation-for="PEPassportID" class="text-danger"></span>
@@ -59,7 +59,7 @@
                 <option value="" selected disabled hidden>@Localizer["Choose Company"]</option>
             </select>
             <div class="input-group-append">
-                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
             </div>
         </div>
         <span asp-validation-for="CompanyID" class="text-danger"></span>
@@ -71,7 +71,7 @@
                 <option value="" selected disabled hidden>@Localizer["Choose Process"]</option>
             </select>
             <div class="input-group-append">
-                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
             </div>
         </div>
         <span asp-validation-for="ProcessID" class="text-danger"></span>
@@ -83,7 +83,7 @@
                 <option value="" selected disabled hidden>@Localizer["Choose Registration Type"]</option>
             </select>
             <div class="input-group-append">
-                <button class="btn btn-primary" type="reset">@Localizer["Clear"]</button>
+                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
             </div>
         </div>
         <span asp-validation-for="RegistrationTypeID" class="text-danger"></span>
@@ -97,6 +97,6 @@
 </form>
 
 @section Scripts {
-    <script src="~/js/PEPassports/GetRegistartionTypeIDsByPEPassportID.js"></script>
-    <script src="~/js/PEPassports/GetTrainingCenterLetterByTrainingCenterID.js"></script>
+    <script src="~/js/Certificates/GetRegistartionTypeIDsByPEPassportID.js"></script>
+    <script src="~/js/ResetSelect.js"></script>
 }

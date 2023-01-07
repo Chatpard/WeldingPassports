@@ -9,8 +9,6 @@
 
 <h1>@Localizer["Welders Index"]</h1>
 <hr />
-<br />
-
 <p>
     <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl">
         @Localizer["Create New"]

@@ -9,8 +9,6 @@
 
 <h1>@Localizer["Companies Index"]</h1>
 <hr />
-<br />
-
 <p>
     <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">
         @Localizer["Create New"]

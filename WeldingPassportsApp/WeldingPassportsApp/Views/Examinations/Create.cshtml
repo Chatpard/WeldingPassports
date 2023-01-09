@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = @Localizer["Create Examination"];
     var returnUrl = ViewBag.ReturnUrl;
+    var currentUrl = ViewBag.CurrentUrl;
 }
 
 <h1>@Localizer["Create Examination"]</h1>
@@ -20,21 +21,33 @@
     </div>
     <div class="form-group row">
         <label asp-for="ExamCenterID" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="col-sm-10 input-group">
             <select asp-for="ExamCenterID" class="form-control" asp-items="Model.ExamCenterItems">
                 <option value="" selected disabled hidden>@Localizer["Choose Exam Center"]</option>
             </select>
-            <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+            <div class=" input-group-append">
+                <a id="ExamCenterSelect" asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+            </div>
+            <div class="input-group-append">
+                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+            </div>
         </div>
+        <span asp-validation-for="ExamCenterID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="col-sm-10 input-group">
             <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems">
                 <option value="" selected disabled hidden>@Localizer["Choose Training Center"]</option>
             </select>
-            <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+            <div class=" input-group-append">
+                <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+            </div>
+            <div class="input-group-append">
+                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+            </div>
         </div>
+        <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <div class="col-sm-10">
@@ -43,3 +56,11 @@
         </div>
     </div>
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/ResetSelect.js"></script>
+}

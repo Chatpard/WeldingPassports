@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,12 +19,16 @@ namespace Application.Requests.Examinations
     public class GetExaminationsIndexRequestHandler : IRequestHandler<GetExaminationsIndexRequest, IActionResult>
     {
         private readonly IExaminationsSQLRepository _repository;
+        private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public GetExaminationsIndexRequestHandler(IExaminationsSQLRepository repository, IMapper mapper)
+        public GetExaminationsIndexRequestHandler(IExaminationsSQLRepository repository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _repository = repository;
+            _trainingCentersSQLRepository = trainingCentersSQLRepository;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Handle(GetExaminationsIndexRequest request, CancellationToken cancellationToken)
@@ -38,12 +43,16 @@ namespace Application.Requests.Examinations
             else
                 request.SearchString = request.CurrentFilter;
 
+            string userId = _userManager.GetUserId(request.Controller.User);
+            TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
+            int? trainingCenterId = trainingCenter?.ID;
+
             request.Controller.ViewData["CurrentFilter"] = request.SearchString;
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetExaminationsIndexPaginatedAsync(7, request.PageNumber ?? 1,
-                request.SearchString, request.SortOrder);
+            var vm = await _repository.GetExaminationsIndexPaginatedAsync(trainingCenterId, 7, request.PageNumber ?? 1,
+                request.SearchString, request.SortOrder);  ;
 
             return request.Controller.View(vm);
         }

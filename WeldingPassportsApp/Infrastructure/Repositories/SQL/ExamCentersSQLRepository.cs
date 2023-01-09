@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories.SQL
             _context = context;
         }
 
-        public SelectList ExamCenterSelectList()
+        public SelectList ExamCenterSelectList(int? trainingCenterID = null)
         {
             var examCenters = _context.ExamCenters
                 .OrderBy(examCenter => examCenter.Company.CompanyName)

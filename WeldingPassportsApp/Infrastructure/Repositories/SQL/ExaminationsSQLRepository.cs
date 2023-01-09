@@ -129,14 +129,21 @@ namespace Infrastructure.Repositories.SQL
             return query;
         }
 
-        private IQueryable<ExaminationIndexViewModel> GetExaminationsIndex()
+        private IQueryable<ExaminationIndexViewModel> GetExaminationsIndex(int? trainingCenterId)
         {
-            return _context.Examinations.ProjectTo<ExaminationIndexViewModel>(_mapper.ConfigurationProvider);
+            IQueryable<Examination> examinationsQ = _context.Examinations
+                .Where(exmainations => true);
+            if (trainingCenterId != null)
+            {
+                examinationsQ = examinationsQ
+                    .Where(examination => examination.TrainingCenterID == trainingCenterId); ;
+            }
+            return examinationsQ.ProjectTo<ExaminationIndexViewModel>(_mapper.ConfigurationProvider);
         }
 
-        public async Task<IPaginatedList<ExaminationIndexViewModel>> GetExaminationsIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder)
+        public async Task<IPaginatedList<ExaminationIndexViewModel>> GetExaminationsIndexPaginatedAsync(int? trainingCenterId, int pageSize, int pageIndex, string searchString, string sortOrder)
         {
-            var weldersQuery = GetExaminationsIndex();
+            var weldersQuery = GetExaminationsIndex(trainingCenterId);
 
             weldersQuery = SearchExaminationIndex(weldersQuery, searchString);
 

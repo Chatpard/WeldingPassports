@@ -7,6 +7,6 @@ namespace Application.Interfaces.Repositories.SQL
 {
     public interface IExamCentersSQLRepository
     {
-        SelectList ExamCenterSelectList();
+        SelectList ExamCenterSelectList(int? trainingCenterID = null);
     }
 }

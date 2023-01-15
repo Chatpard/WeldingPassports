@@ -6,6 +6,11 @@
     ViewData["Title"] = @Localizer["Examination Details"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
+    var userCanEditExaminations = User.CanEdit(ClaimsTypesStore.Examinations);
+    var userCanReadCertificates = User.CanRead(ClaimsTypesStore.Certificates);
+    var userCanCreateCertificates = User.CanCreate(ClaimsTypesStore.Certificates);
+    var userCanDeleteCertificates = User.CanDelete(ClaimsTypesStore.Certificates);
+    var userCanUpdateCertificates = User.CanUpdate(ClaimsTypesStore.Certificates);
 }
 
 <h1>@Localizer["Examination Details"]</h1>
@@ -33,21 +38,26 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Edit)"
-       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    @if (userCanEditExaminations)
+    {
+        <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Edit)"
+           asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    }
     <a class="btn btn-primary" style="width:auto" href="@returnUrl">
         @Localizer["Back"]
     </a>
 </div>
 <br />
 <h2>@Localizer["PE Certificates"]</h2>
-    
-<p>
-    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Create)"
-        asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl">
-        @Localizer["Create New"]
-    </a>
-</p>
+@if (userCanCreateCertificates)
+{
+    <p>
+        <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Create)"
+            asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl">
+            @Localizer["Create New"]
+        </a>
+    </p>
+}
 
 <table class="table">
     <thead>
@@ -97,21 +107,33 @@
                     @Html.DisplayFor(modelItem => certification.HasPassed)
                 </td>
                 <td>
-                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
-                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a> |
-                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
-                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
-                    <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Delete)"
-                       asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    @if (userCanReadCertificates)
+                    {
+                        <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
+                           asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                    }
+                    @if(userCanEditExaminations)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
+                           asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                    }
+                    @if (userCanDeleteCertificates)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Delete)"
+                           asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    }
                 </td>
             </tr>
         }
     </tbody>
 </table>
-<div>
-    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Update)" 
-        asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary">@Localizer["Update"]</a>
-    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
-        @Localizer["Back"]
-    </a>
-</div>
+@if (userCanUpdateCertificates)
+{
+    <div>
+        <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Update)" 
+            asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary">@Localizer["Update"]</a>
+        <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+            @Localizer["Back"]
+        </a>
+    </div>
+}

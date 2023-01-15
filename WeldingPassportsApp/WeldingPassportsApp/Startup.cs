@@ -1,4 +1,5 @@
 using Application;
+using Application.Security;
 using Domain;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication;
@@ -14,7 +15,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Security.Claims;
 
 namespace WeldingPassportsApp
 {
@@ -97,27 +101,16 @@ namespace WeldingPassportsApp
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminCanReadEditPolicy", policy =>
+                foreach(string claimsType in ClaimsTypesStore.ClaimsTypes())
                 {
-                    policy.RequireRole("Admin");
-                    policy.RequireClaim("Admin", "CanRead", "CanReadEdit", "CanReadEditDelete");
-                });
-                //foreach (string claimName in ClaimsStore.Claims())
-                //{
-                //    foreach (string mainPermission in PermissionsStore.Permissions)
-                //    {
-                //        options.AddPolicy(claimName + mainPermission + "Policy", policy =>
-                //            {
-                //                foreach (string permission in PermissionsStore.Permissions)
-                //                {
-                //                    policy.RequireClaim(claimName, permission);
-                //                    if (permission == mainPermission)
-                //                        break;
-                //                }
-                //            }
-                //        );
-                //    }
-                //}
+                    foreach(KeyValuePair<string, string[]> claimsGroup in ClaimsPrincipalExtensions.ClaimsGroups())
+                    {
+                        options.AddPolicy(claimsType+claimsGroup.Key+"Policy", policy =>
+                        {
+                            policy.RequireClaim(claimsType, claimsGroup.Value);
+                        });
+                    }
+                }
             });
         }
 

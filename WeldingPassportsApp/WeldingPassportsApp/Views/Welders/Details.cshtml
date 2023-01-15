@@ -6,6 +6,9 @@
     ViewData["Title"] = Localizer["Welder Details"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
+    var UserCanEditWelders = User.CanEdit(ClaimsTypesStore.Welders);
+    var UserCanReadPEPassports = User.CanRead(ClaimsTypesStore.PEPassports);
+    var UserCanDeletePEPassports = User.CanDelete(ClaimsTypesStore.PEPassports);
 }
 
 <h1>@Localizer["Welder Details"]</h1>
@@ -38,8 +41,11 @@
     </dd>
 </dl>
 <div>
-    <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Edit)"
-       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    @if(UserCanEditWelders)
+    {
+        <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Edit)"
+           asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    }
     <a class="btn btn-primary" style="width:auto" href="@returnUrl">
         @Localizer["Back"]
     </a>
@@ -77,10 +83,16 @@
                     @Html.DisplayFor(modelItem => passport.ExpiryDate)
                 </td>
                 <td>
-                    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
-                       asp-route-id="@passport.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
-                    <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)"
-                       asp-route-id="@passport.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    @if (UserCanReadPEPassports)
+                    {
+                        <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
+                           asp-route-id="@passport.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                    }
+                    @if (UserCanDeletePEPassports)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)"
+                           asp-route-id="@passport.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    }
                 </td>
             </tr>
         }

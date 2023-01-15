@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Security;
+using Domain;
 using Domain.Models;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.Hosting;
@@ -105,8 +106,10 @@ namespace WeldingPassportsApp
             {
                 var identityRole = new IdentityRole { Name = role };
                 await roleManager.CreateAsync(identityRole);
-                // TODO
-                //await roleManager.AddClaimAsync(identityRole, new Claim("permission", "permission"));
+                foreach (var permission in ClaimsTypesStore.Claims(role))
+                {
+                    await roleManager.AddClaimAsync(identityRole, new Claim(permission.Key, permission.Value));
+                }
             }
         }
     

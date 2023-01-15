@@ -6,6 +6,9 @@
     ViewData["Title"] = @Localizer["Create Contact"];
     string returnUrl = ViewBag.ReturnUrl;
     string currentUrl = ViewBag.CurrentUrl;
+    var userCanCreateContacts = User.CanCreate(ClaimsTypesStore.Contacts);
+    var userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
+    var userCanCreateAddresses = User.CanCreate(ClaimsTypesStore.Addresses);
 }
 
 <h1>@Localizer["Create Contact"]</h1>
@@ -19,8 +22,14 @@
                     <select asp-for="ContactID" class="form-control" asp-items="@Model.ContactSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose Contact"]</option>
                     </select>
-                    <div class=" input-group-append">
-                        <a asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                    @if(userCanCreateContacts)
+                    {
+                        <div class=" input-group-append">
+                            <a asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                        </div>
+                    }
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="ContactID" class="text-danger"></span>
@@ -31,8 +40,14 @@
                     <select asp-for="CompanyID" class="form-control" asp-items="@Model.CompanySelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose Company"]</option>
                     </select>
-                    <div class=" input-group-append">
-                        <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                    @if(userCanCreateCompanies)
+                    {
+                        <div class=" input-group-append">
+                            <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                        </div>
+                    }
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="CompanyID" class="text-danger"></span>
@@ -72,8 +87,14 @@
                     <select asp-for="AddressID" class="form-control" asp-items="@Model.AddressSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose Address"]</option>
                     </select>
+                    @if(userCanCreateAddresses)
+                    {
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        </div>
+                    }
                     <div class="input-group-append">
-                        <a class="btn btn-primary" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="AddressID" class="text-danger"></span>
@@ -91,4 +112,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/ResetSelect.js"></script>
 }

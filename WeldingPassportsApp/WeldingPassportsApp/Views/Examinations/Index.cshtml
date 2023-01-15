@@ -5,15 +5,22 @@
 @{
     ViewData["Title"] = Localizer["Examinations Index"];
     var currentUrl = ViewBag.CurrentUrl;
+    var userCanReadExaminations = User.CanRead(ClaimsTypesStore.Examinations);
+    var userCanEditExaminations = User.CanEdit(ClaimsTypesStore.Examinations);
+    var userCanCreateExaminations = User.CanCreate(ClaimsTypesStore.Examinations);
+    var userCanDeleteExaminations = User.CanDelete(ClaimsTypesStore.Examinations);
 }
 
 <h1>@Localizer["Examinations Index"]</h1>
 <hr />
-<p>
-    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Create)" asp-route-returnUrl="@currentUrl">
-        @Localizer["Create New"]
-    </a>
-</p>
+@if (userCanCreateExaminations)
+{
+    <p>
+        <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Create)" asp-route-returnUrl="@currentUrl">
+            @Localizer["Create New"]
+        </a>
+    </p>
+}
 
 <form asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)" method="get" id="SearchForm">
     <div class="form-actions no-color">
@@ -88,10 +95,21 @@
                     @Html.DisplayFor(vm => examination.NumberOfPassports)
                 </td>
                 <td>
-                    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Details)"
-                       asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
-                    <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Delete)"
-                       asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    @if (userCanReadExaminations)
+                    {
+                        <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Details)"
+                           asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                    }
+                    @if (userCanEditExaminations)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Edit)"
+                           asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                    }
+                    @if (userCanDeleteExaminations)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Delete)"
+                           asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    }
                 </td>
             </tr>
 

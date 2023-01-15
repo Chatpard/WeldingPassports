@@ -2,7 +2,9 @@
 using Application.Requests.PEPassports;
 using Application.Requests.TrainingCenters;
 using Application.Requests.Welders;
+using Application.Security;
 using Application.ViewModels;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
 {
+    [Authorize]
     public class TrainingCentersController : Controller
     {
         private readonly IMediator _mediator;
@@ -26,6 +29,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.TrainingCenters+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -45,6 +49,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy =ClaimsTypesStore.TrainingCenters+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(string returnUrl)
         {
             try
@@ -74,6 +79,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.TrainingCenters + ClaimsPrincipalExtensions.CanReadClaimsGroup + "Policy")]
         public async Task<IActionResult> Details(string id, string returnUrl)
         {
             try
@@ -90,6 +97,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.TrainingCenters + ClaimsPrincipalExtensions.CanEditClaimsGroup + "Policy")]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -119,6 +127,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.TrainingCenters + ClaimsPrincipalExtensions.CanDeleteClaimsGroup + "Policy")]
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {
             try

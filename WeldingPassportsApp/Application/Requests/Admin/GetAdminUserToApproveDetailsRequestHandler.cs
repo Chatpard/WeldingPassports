@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repositories.SQL;
 using Application.ViewModels;
 using AutoMapper;
-using Domain;
+using Application.Security;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

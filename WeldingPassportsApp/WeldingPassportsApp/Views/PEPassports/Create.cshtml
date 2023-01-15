@@ -5,6 +5,8 @@
     ViewData["Title"] = Localizer["Create PE Passport"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
+    bool userCanCreateTrainingCenters = User.CanCreate(ClaimsTypesStore.TrainingCenters);
+    bool userCanCreateWelders = User.CanCreate(ClaimsTypesStore.Welders);
 }
 <h1>@Localizer["Create PE Passport"]</h1>
 <hr />
@@ -28,9 +30,11 @@
                     <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose Training Center"]</option>
                     </select>
-                    <div class=" input-group-append">
-                        <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
-                    </div>
+                    @if(userCanCreateTrainingCenters){
+                        <div class=" input-group-append">
+                            <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                        </div>
+                    }
                     <div class="input-group-append">
                         <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
@@ -43,9 +47,12 @@
                     <select asp-for="PEWelderID" class="form-control" asp-items="@Model.PEWelderSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose PE Welder"]</option>
                     </select>
-                    <div class=" input-group-append">
-                        <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
-                    </div>
+                    @if(userCanCreateWelders)
+                    {
+                        <div class=" input-group-append">
+                            <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                        </div>
+                    }
                     <div class="input-group-append">
                         <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>

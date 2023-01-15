@@ -1,5 +1,6 @@
 ﻿using Application.Requests.Admin;
 using Application.ViewModels;
+using Application.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
 {
-    [AllowAnonymous]
+    [Authorize(Roles = RolesStore.Admin)]
     public class AdminController : Controller
     {
         private readonly IMediator _mediator;
@@ -76,10 +77,9 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminCanReadEdit")]
         public async Task<IActionResult> UsersToApproveIndex()
         {
-            var claims = User.Claims.ToList();
-
             try
             {
                 var request = new GetAdminUsersToApproveIndexRequest(this);
@@ -123,6 +123,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminCanReadEditDeletePolicy")]
         public async Task<IActionResult> DeleteUser(string id, string returnUrl)
         {
             try

@@ -4,6 +4,8 @@
     ViewData["Title"] = "Training Center Edit";
     string returnUrl = ViewBag.ReturnUrl;
     string currentUrl = ViewBag.CurrentUrl;
+    var userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
+    var userCanCreateCompanyContacts = User.CanCreate(ClaimsTypesStore.CompanyContacts);
 }
 
 <h1>@Localizer["Edit Training Center"]</h1>
@@ -31,8 +33,14 @@
                     <select asp-for="CompanyID" class="form-control" asp-items="@Model.CompanySelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
                     </select>
+                    @if(userCanCreateCompanies)
+                    {
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        </div>
+                    }
                     <div class="input-group-append">
-                        <a class="btn btn-primary" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="CompanyID" class="text-danger"></span>
@@ -48,8 +56,14 @@
                         { @Localizer["No Contact"]}
                     </option>
                 </select>
+                @if(userCanCreateCompanyContacts)
+                {
+                    <div class="input-group-append">
+                        <a class="btn btn-primary" type="button" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                    </div>
+                }
                 <div class="input-group-append">
-                    <a class="btn btn-primary" type="button" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                 </div>
             </div>
             <span asp-validation-for="CompanyContactID" class="text-danger"></span>
@@ -67,4 +81,5 @@
 
 @section Scripts {
     <script src="~/js/TrainingCenters/GetCompanyContactsFromCompanyID.js"></script>
+    <script src="~/js/ResetSelect.js"></script>
 }

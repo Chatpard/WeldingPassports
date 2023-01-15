@@ -5,15 +5,22 @@
 @{
     ViewData["Title"] = Localizer["Contacts Index"];
     var currentUrl = ViewBag.CurrentUrl;
+    var userCanReadCompanyContacts = User.CanRead(ClaimsTypesStore.CompanyContacts);
+    var userCanEditCompanyContacts = User.CanEdit(ClaimsTypesStore.CompanyContacts);
+    var UserCanCreateCompanyContacts = User.CanCreate(ClaimsTypesStore.CompanyContacts);
+    var UserCanDeleteCompanyContacts = User.CanDelete(ClaimsTypesStore.CompanyContacts);
 }
 
 <h1>@Localizer["Contacts Index"]</h1>
 <hr />
-<p>
-    <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl ="@currentUrl">
-        @Localizer["Create New"]
-    </a>
-</p>
+@if (UserCanCreateCompanyContacts)
+{
+    <p>
+        <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl ="@currentUrl">
+            @Localizer["Create New"]
+        </a>
+    </p>
+}
 
 <form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)" method="get" id="SearchForm">
     <div class="form-actions no-color">
@@ -88,13 +95,23 @@
                     @Html.DisplayFor(vm => contact.Email)
                 </td>
                 <td>
-                    <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Details)"
-                       asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
-                    <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Delete)"
-                       asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    @if (userCanReadCompanyContacts)
+                    {
+                        <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Details)"
+                           asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                    }
+                    @if (userCanEditCompanyContacts)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Edit)"
+                           asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                    }
+                    @if (UserCanDeleteCompanyContacts)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Delete)"
+                           asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    }
                 </td>
             </tr>
-
         }
     </tbody>
 </table>

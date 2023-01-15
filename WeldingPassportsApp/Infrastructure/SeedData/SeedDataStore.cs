@@ -466,7 +466,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "VCL",
                     CompanyMainPhone = "+32 2 520 56 58",
                     CompanyEmail = "info@v-c-l.be",
-                    WebPage = "v-c-l.be"
+                    WebPage = "https://v-c-l.be"
                 },
                 new Company()
                 {
@@ -475,7 +475,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "TCZ",
                     CompanyMainPhone = "+32 2 564 52 87",
                     CompanyEmail = "info@tcz.be",
-                    WebPage = "tcz.be"
+                    WebPage = "https://tcz.be"
                 },
                 new Company()
                 {
@@ -484,7 +484,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Technifutur",
                     CompanyMainPhone = "+32 4 382 45 72",
                     CompanyEmail = "info@technifutur.be",
-                    WebPage = "technifutur.be"
+                    WebPage = "https://technifutur.be"
                 },
                 new Company()
                 {
@@ -493,7 +493,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Sibelga Academy",
                     CompanyMainPhone = "+32 2 856 45 82",
                     CompanyEmail = "info@sibelga.be",
-                    WebPage = "academy.sibelga.be"
+                    WebPage = "https://academy.sibelga.be"
                 },
                 new Company()
                 {
@@ -502,7 +502,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Technocampus",
                     CompanyMainPhone = "+32 2 754 83 19",
                     CompanyEmail = "info@technocampus.be",
-                    WebPage = "technocampus.be"
+                    WebPage = "https://technocampus.be"
                 },
                 new Company()
                 {
@@ -511,7 +511,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Polygone de l'eau",
                     CompanyMainPhone = "+32 8 778 93 30",
                     CompanyEmail = "info@formation-polygone-eau.be",
-                    WebPage = "formation-polygone-eau.be"
+                    WebPage = "https://formation-polygone-eau.be"
                 },
                 new Company()
                 {
@@ -520,7 +520,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Kwalificatiecentrum Brugge bvba",
                     CompanyMainPhone = "+32 5 069 63 74",
                     CompanyEmail = "info@kcbrugge.be",
-                    WebPage = "kcbrugge.be"
+                    WebPage = "https://kcbrugge.be"
                 },
                 new Company()
                 {
@@ -529,7 +529,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Ores",
                     CompanyMainPhone = "+32 2 683 57 32",
                     CompanyEmail = "info@ores.be",
-                    WebPage = "ores.be"
+                    WebPage = "https://ores.be"
                 },
                 new Company()
                 {
@@ -538,7 +538,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Vinçotte",
                     CompanyMainPhone = "+32 2 364 87 54",
                     CompanyEmail = "info@vinçotte.be",
-                    WebPage = "vinçotte.be"
+                    WebPage = "https://vinçotte.be"
                 },
                 new Company()
                 {
@@ -547,7 +547,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "De Nestor",
                     CompanyMainPhone = "+32 9 375 31 69",
                     CompanyEmail = "info@denestor.be",
-                    WebPage = "denestor.be"
+                    WebPage = "https://denestor.be"
                 },
                 new Company()
                 {
@@ -556,7 +556,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Lascentrum",
                     CompanyMainPhone = "+32 2 954 74 85",
                     CompanyEmail = "info@lascentrum.be",
-                    WebPage = "lascentrum.be"
+                    WebPage = "https://lascentrum.be"
                 },
                 new Company()
                 {
@@ -565,7 +565,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Hydrogaz",
                     CompanyMainPhone = "+32 2 456 81 37",
                     CompanyEmail = "info@hydrogaz.be",
-                    WebPage = "hydrogaz.be"
+                    WebPage = "https://hydrogaz.be"
                 },
                 new Company()
                 {
@@ -574,7 +574,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Fabricom",
                     CompanyMainPhone = "+32 2 793 98 07",
                     CompanyEmail = "info@fabricom.be",
-                    WebPage = "fabricom.be"
+                    WebPage = "https://fabricom.be"
                 },
                 new Company()
                 {
@@ -583,7 +583,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "LTC",
                     CompanyMainPhone = "+32 2 951 72 19",
                     CompanyEmail = "info@ltc.be",
-                    WebPage = "ltc.be"
+                    WebPage = "https://ltc.be"
                 },
                 new Company()
                 {
@@ -592,7 +592,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Verhoeven",
                     CompanyMainPhone = "+32 2 837 49 27",
                     CompanyEmail = "info@verhoeven.be",
-                    WebPage = "verhoeven.be"
+                    WebPage = "https://verhoeven.be"
                 },
                 new Company()
                 {
@@ -601,7 +601,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Alkabel",
                     CompanyMainPhone = "+32 2 864 92 47",
                     CompanyEmail = "info@alkabel.be",
-                    WebPage = "alkabel.be"
+                    WebPage = "https://alkabel.be"
                 },
                 new Company()
                 {
@@ -610,7 +610,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Vindevogel",
                     CompanyMainPhone = "+32 2 482 24 35",
                     CompanyEmail = "info@vindevogel.be",
-                    WebPage = "vindevogel.be"
+                    WebPage = "https://vindevogel.be"
                 },
                 new Company()
                 {
@@ -619,7 +619,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Canalco",
                     CompanyMainPhone = "+32 2 507 74 19",
                     CompanyEmail = "info@canalco.be",
-                    WebPage = "canalco.be"
+                    WebPage = "https://canalco.be"
                 },
                 new Company()
                 {
@@ -628,7 +628,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Verschueren",
                     CompanyMainPhone = "+32 2 864 75 05",
                     CompanyEmail = "info@verschueren.be",
-                    WebPage = "verschueren.be"
+                    WebPage = "https://verschueren.be"
                 },
                 new Company()
                 {
@@ -637,7 +637,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "APC",
                     CompanyMainPhone = "+32 2 791 43 01",
                     CompanyEmail = "info@apc.be",
-                    WebPage = "apc.be"
+                    WebPage = "https://apc.be"
                 },
                 new Company()
                 {
@@ -646,7 +646,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Fluvius",
                     CompanyMainPhone = "+32 2 907 43 67",
                     CompanyEmail = "info@fluvius.be",
-                    WebPage = "fluvius.be"
+                    WebPage = "https://fluvius.be"
                 },
                 new Company()
                 {
@@ -655,7 +655,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Infra",
                     CompanyMainPhone = "+32 2 703 09 84",
                     CompanyEmail = "info@infra.be",
-                    WebPage = "infra.be"
+                    WebPage = "https://infra.be"
                 },
                 new Company()
                 {
@@ -664,7 +664,7 @@ namespace Infrastructure.SeedData
                     CompanyName = "Dalcom",
                     CompanyMainPhone = "+32 2 378 50 04",
                     CompanyEmail = "info@dalcom.be",
-                    WebPage = "dalcom.be"
+                    WebPage = "https://dalcom.be"
                 }
             };
         }

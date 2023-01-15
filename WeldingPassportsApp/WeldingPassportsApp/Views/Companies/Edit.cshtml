@@ -6,6 +6,7 @@
     ViewData["Title"] = @Localizer["Edit Company"];
     string returnUrl = ViewBag.ReturnUrl;
     string currentUrl = ViewBag.CurrentUrl;
+    var userCanCreateAddresses = User.CanCreate(ClaimsTypesStore.Addresses);
 }
 
 <h1>@Localizer["Edit Company"]</h1>
@@ -49,8 +50,14 @@
                     <Select asp-for="AddressID" class="form-control" asp-items="@Model.AddressSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose Address"]</option>
                     </Select>
+                    @if(userCanCreateAddresses)
+                    {
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        </div>
+                    }
                     <div class="input-group-append">
-                        <a class="btn btn-primary" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="AddressID" class="text-danger"></span>
@@ -68,4 +75,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/ResetSelect.js"></script>
 }

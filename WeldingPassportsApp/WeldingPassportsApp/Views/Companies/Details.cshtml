@@ -6,6 +6,7 @@
     ViewData["Title"] = @Localizer["Company Details"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
+    var userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);
 }
 
 <h1>@Localizer["Company Details"]</h1>
@@ -66,8 +67,11 @@
     </dl>
 </div>
 <div>
-    <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)"
-       asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    @if (userCanEditCompanies)
+    {
+        <a asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)"
+           asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    }
     <a class="btn btn-primary" style="width:auto" href="@returnUrl">
         @Localizer["Back"]
     </a>

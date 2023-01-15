@@ -5,15 +5,22 @@
 @{
     ViewData["Title"] = Localizer["Welders Index"];
     var currentUrl = ViewBag.CurrentUrl;
+    bool userCanReadWelders = User.CanRead(ClaimsTypesStore.Welders);
+    bool userCanEditWelders = User.CanEdit(ClaimsTypesStore.Welders);
+    bool userCanCreateWelders = User.CanCreate(ClaimsTypesStore.Welders);
+    bool userCanDeleteWelders = User.CanDelete(ClaimsTypesStore.Welders);
 }
 
 <h1>@Localizer["Welders Index"]</h1>
 <hr />
-<p>
-    <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl">
-        @Localizer["Create New"]
-    </a>
-</p>
+@if (userCanCreateWelders)
+{
+    <p>
+        <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl">
+            @Localizer["Create New"]
+        </a>
+    </p>
+}
 
 <form asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Index)" method="get" id="SearchForm">
     <div class="form-actions no-color">
@@ -91,10 +98,21 @@
                     @Html.DisplayFor(vm => welder.AVNumber)
                 </td>
                 <td>
-                    <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Details)"
-                        asp-route-id="@welder.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a> |
-                    <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Delete)"
+                    @if (userCanReadWelders)
+                    {
+                        <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Details)"
+                            asp-route-id="@welder.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                    }
+                    @if (userCanEditWelders)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Edit)" 
+                        asp-route-id="@welder.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                    }
+                    @if (userCanDeleteWelders)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Delete)" 
                         asp-route-id="@welder.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    }
                 </td>
             </tr>
 

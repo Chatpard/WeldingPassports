@@ -4,6 +4,12 @@
     ViewData["Title"] = @Localizer["Edit Contact"];
     string returnUrl = ViewBag.ReturnUrl;
     string currentUrl = ViewBag.CurrentUrl;
+    var userCanEditContacts = User.CanEdit(ClaimsTypesStore.Contacts);
+    var userCanCreateContacts = User.CanCreate(ClaimsTypesStore.Contacts);
+    var userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);
+    var userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
+    var userCanEditAddresses = User.CanEdit(ClaimsTypesStore.Addresses);
+    var userCanCreateAddresses = User.CanCreate(ClaimsTypesStore.Addresses);
 }
 
 <h1>@Localizer["Edit Contact"]</h1>
@@ -23,9 +29,18 @@
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
-                            <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.ContactID">@Localizer["Edit"]</a>
+                            @if (userCanEditContacts)
+                            {
+                                <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.ContactID">@Localizer["Edit"]</a>
+                            }
+                            @if (userCanCreateContacts)
+                            {
+                                <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
+                            }
                         </div>
+                    </div>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="ContactID" class="text-danger"></span>
@@ -41,9 +56,18 @@
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
-                            <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.CompanyID">@Localizer["Edit"]</a>
+                            @if(userCanEditCompanies)
+                            {
+                                <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.CompanyID">@Localizer["Edit"]</a>
+                            }
+                            @if (userCanCreateCompanies)
+                            {
+                                <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
+                            }
                         </div>
+                    </div>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="CompanyID" class="text-danger"></span>
@@ -84,7 +108,22 @@
                         <option value="" selected disabled hidden>@Localizer["Choose an Address"]</option>
                     </select>
                     <div class="input-group-append">
-                        <a class="btn btn-primary" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            @Localizer["Action"]
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            @if(userCanEditAddresses)
+                            {
+                                <a class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.AddressID">@Localizer["Edit"]</a>
+                            }
+                            @if(userCanCreateAddresses)
+                            {
+                                <a class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="input-group-append">
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="AddressID" class="text-danger"></span>
@@ -102,4 +141,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/ResetSelect.js"></script>
 }

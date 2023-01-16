@@ -1,4 +1,4 @@
-using Domain;
+using Application.Security;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

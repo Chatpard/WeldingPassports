@@ -1,0 +1,50 @@
+﻿@model ContactEditViewModel
+
+@{
+    ViewData["Title"] = Localizer["Edit Contact"];
+    var returnUrl = ViewBag.returnUrl;
+}
+
+<h1>@Localizer["Edit Contact"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
+            <input asp-for="EncryptedID" hidden />
+            <div class="form-group row">
+                <label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+                <div class="input-group col-sm-10">
+                    <input asp-for="FirstName" class="form-control" asp-items="@Model.FirstName" />
+                </div>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+                <div class="input-group col-sm-10">
+                    <input asp-for="LastName" class="form-control" asp-items="@Model.LastName" />
+                </div>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Birthday" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Birthday" class="form-control" placeholder=@Localizer["Birthday"] />
+                </div>
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+                    <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

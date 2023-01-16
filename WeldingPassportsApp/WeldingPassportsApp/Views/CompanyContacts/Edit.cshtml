@@ -16,22 +16,22 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(WeldersController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
-            <input asp-for="EncryptedID" hidden />
+        <form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
+            <input asp-for="EncryptedID" title="EncryptedID" placeholder="EncryptedID" hidden />
             <div class="form-group row">
                 <label asp-for="ContactID" class="col-sm-2 col-form-label"></label>
-                <div class="input-group col-sm-10">
-                    <select asp-for="ContactID" class="form-control" asp-items="@Model.ContactSelectList">
+                <div class="input-group col-sm-10 align-self-center">
+                    <select asp-for="ContactID" class="form-control align-self-center" asp-items="@Model.ContactSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose a Contact"]</option>
                     </select>
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button id="ContactIDAction" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('ContactID')">
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             @if (userCanEditContacts)
                             {
-                                <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.ContactID">@Localizer["Edit"]</a>
+                                <a id="ContactIDEdit" class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="0" onclick="ActionEditHref2ID('ContactID')">@Localizer["Edit"]</a>
                             }
                             @if (userCanCreateContacts)
                             {
@@ -47,18 +47,18 @@
             </div>
             <div class="form-group row">
                 <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
-                <div class="input-group col-sm-10">
-                    <select asp-for="CompanyID" class="form-control" asp-items="@Model.CompanySelectList">
+                <div class="input-group col-sm-10 align-self-center">
+                    <select asp-for="CompanyID" class="form-control align-self-center" asp-items="@Model.CompanySelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
                     </select>
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button id="CompanyIDAction" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('CompanyID')">
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             @if(userCanEditCompanies)
                             {
-                                <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.CompanyID">@Localizer["Edit"]</a>
+                                <a id="CompanyIDEdit" class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="0" onclick="ActionEditHref2ID('CompanyID')">@Localizer["Edit"]</a>
                             }
                             @if (userCanCreateCompanies)
                             {
@@ -74,28 +74,28 @@
             </div>
             <div class="form-group row">
                 <label asp-for="JobTitle" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 align-self-center">
                     <input asp-for="JobTitle" class="form-control" placeholder=@Localizer["Job Title"] />
                 </div>
                 <span asp-validation-for="JobTitle" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <label asp-for="BusinessPhone" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 align-self-center">
                     <input asp-for="BusinessPhone" class="form-control" placeholder=@Localizer["Business Phone"] />
                 </div>
                 <span asp-validation-for="BusinessPhone" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <label asp-for="MobilePhone" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 align-self-center">
                     <input asp-for="MobilePhone" class="form-control" placeholder=@Localizer["Mobile Phone"] />
                 </div>
                 <span asp-validation-for="MobilePhone" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <label asp-for="Email" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
+                <div class="col-sm-10 align-self-center">
                     <input asp-for="Email" class="form-control" placeholder=@Localizer["Email"] />
                 </div>
                 <span asp-validation-for="Email" class="text-danger"></span>
@@ -103,18 +103,18 @@
             <h4>@Localizer["Business Address"]</h4>
             <div class="form-group row">
                 <label asp-for="AddressID" class="col-sm-2 col-form-label"></label>
-                <div class="input-group col-sm-10">
+                <div class="input-group col-sm-10 align-self-center">
                     <select asp-for="AddressID" class="form-control" asp-items="@Model.AddressSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose an Address"]</option>
                     </select>
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <button id="AddressIDAction" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('AddressID')">
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             @if(userCanEditAddresses)
                             {
-                                <a class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="@Model.AddressID">@Localizer["Edit"]</a>
+                                <a id="AddressIDEdit" class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="0" onclick="ActionEditHref2ID('AddressID')">@Localizer["Edit"]</a>
                             }
                             @if(userCanCreateAddresses)
                             {
@@ -141,5 +141,18 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/ActionEditHref2ID.js"></script>
     <script src="~/js/ResetSelect.js"></script>
+    <script>
+        $(function () {
+            $("#AddressIDAction").on("click", function () {
+                if ($("#AddressID").val() == null) {
+                    $("#AddressIDEdit").addClass("disabled");
+                }
+                else {
+                    $("#AddressIDEdit").removeClass("disabled");
+                };
+            })
+        })
+    </script>
 }

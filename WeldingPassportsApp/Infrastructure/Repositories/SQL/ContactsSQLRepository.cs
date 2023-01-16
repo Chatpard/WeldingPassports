@@ -68,14 +68,17 @@ namespace Infrastructure.Repositories.SQL
             return await query.ProjectTo<CompanyContactDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
-        public async Task<CompanyContactEditViewModel> GetContactEditAsync(string encryptedID)
+        public async Task<ContactEditViewModel> GetContactEditAsync(string encryptedID)
         {
-            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            if (!int.TryParse(encryptedID, out int decryptedID))
+            {
+                decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            }
 
             IQueryable<Contact> query = _context.Contacts
                 .Where(contact => contact.ID == decryptedID);
 
-            return await query.ProjectTo<CompanyContactEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+            return await query.ProjectTo<ContactEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
         public EntityEntry<Contact> PostContactEdit(Contact contactChanges)

@@ -15,6 +15,7 @@ using Application.Security;
 using System.Threading;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Application.SQLModels;
 
 namespace Infrastructure.Repositories.SQL
 {
@@ -78,7 +79,10 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<CompanyEditViewModel> GetCompanyEditAsync(string encryptedID)
         {
-            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            if (!int.TryParse(encryptedID, out int decryptedID))
+            {
+                decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            }
 
             IQueryable<Company> query = _context.Companies
                 .Where(company => company.ID == decryptedID);
@@ -103,8 +107,11 @@ namespace Infrastructure.Repositories.SQL
         public SelectList CompanySelectList()
         {
             var company = _context.Companies
-                .OrderBy(contact => contact.CompanyName)
-                .Select(contact => contact);https://localhost:44315/Companies
+                .OrderBy(company => company.CompanyName)
+                .Select(contact => new {
+                    ID = contact.ID.ToString(),
+                    CompanyName = contact.CompanyName,
+                });https://localhost:44315/Companies
 
             return new SelectList(company, nameof(Company.ID), nameof(Company.CompanyName));
         }

@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Application.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;

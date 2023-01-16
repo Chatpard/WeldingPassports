@@ -23,6 +23,11 @@ namespace Application.Requests.Companies
 
         public async Task<IActionResult> Handle(GetCompanyEditRequest request, CancellationToken cancellationToken)
         {
+            if (request.EncryptedID == "null")
+            {
+                return request.Controller.LocalRedirect(request.ReturnUrl);
+            }
+
             if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                 request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 

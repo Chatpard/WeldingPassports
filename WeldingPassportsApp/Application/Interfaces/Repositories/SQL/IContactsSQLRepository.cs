@@ -19,7 +19,7 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<CompanyContactDetailsViewModel> GetContactDetailsAsync(string encryptedID);
 
-        Task<CompanyContactEditViewModel> GetContactEditAsync(string encryptedID);
+        Task<ContactEditViewModel> GetContactEditAsync(string encryptedID);
 
         EntityEntry<Contact> PostContactEdit(Contact contactChanges);
 

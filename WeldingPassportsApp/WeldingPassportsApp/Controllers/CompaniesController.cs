@@ -103,7 +103,6 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
-        [HttpPost]
         public async Task<IActionResult> Edit(CompanyEditViewModel company, string returnUrl)
         {
             try

@@ -1,15 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Requests.CompanyContacts
+namespace Application.Requests.Contacts
 {
-    public class GetCompanyContactEditRequest : IRequest<IActionResult>
+    public class GetContactEditRequest : IRequest<IActionResult>
     {
         public string EncryptedID { get; }
         public string ReturnUrl { get; }
         public Controller Controller { get; }
 
-        public GetCompanyContactEditRequest(string encryptedID, string returnUrl, Controller controller)
+        public GetContactEditRequest(string encryptedID, string returnUrl, Controller controller)
         {
             EncryptedID = encryptedID;
             ReturnUrl = returnUrl;

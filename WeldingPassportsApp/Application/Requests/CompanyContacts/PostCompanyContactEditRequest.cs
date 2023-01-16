@@ -9,8 +9,8 @@ namespace Application.Requests.CompanyContacts
 {
     public class PostCompanyContactEditRequest : IRequest<IActionResult>
     {
-        public CompanyContactEditViewModel ContactChanges { get; set; }
-        public string NameOfDetailsAction { get; set; }
+        public CompanyContactEditViewModel ContactChanges { get; }
+        public string NameOfDetailsAction { get; }
         public string ReturnUrl { get; }
         public Controller Controller { get; }
 

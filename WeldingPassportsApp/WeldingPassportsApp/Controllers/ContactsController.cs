@@ -93,7 +93,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var request = new GetCompanyContactEditRequest(id, returnUrl, this);
+                var request = new GetContactEditRequest(id, returnUrl, this);
                 return await _mediator.Send(request);
             }
             catch (Exception e)
@@ -104,11 +104,11 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(CompanyContactEditViewModel contactEditViewModel, string returnUrl)
+        public async Task<IActionResult> Edit(ContactEditViewModel contactEditViewModel, string returnUrl)
         {
             try
             {
-                var request = new PostCompanyContactEditRequest(contactEditViewModel, nameof(Details), returnUrl, this);
+                var request = new PostContactEditRequest(contactEditViewModel, nameof(Details), returnUrl, this);
                 return await _mediator.Send(request);
             }
             catch (Exception e)

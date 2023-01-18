@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Repositories.SQL;
 using Application.Security;
+using Application.SQLModels;
 using Application.ViewModels;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -112,12 +113,13 @@ namespace Infrastructure.Repositories.SQL
         {
             var contacts = _context.Contacts
                 .OrderBy(contact => contact.LastName).ThenBy(contact => contact.FirstName)
-                .Select(contact => new {
+                .Select(contact => new ContactSelectListSQLModel
+                {
                     ID = contact.ID,
                     Name = contact.FirstName + " " + contact.LastName
                 });
 
-            return new SelectList(contacts, nameof(Contact.ID), "Name");
+            return new SelectList(contacts, nameof(ContactSelectListSQLModel.ID), nameof(ContactSelectListSQLModel.Name));
         }
 
         private static IQueryable<CompanyContactIndexViewModel> SortContactIndex(IQueryable<CompanyContactIndexViewModel> contactsQuery, string sortOrder)

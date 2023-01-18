@@ -1,37 +1,36 @@
 ﻿using Application.Interfaces.Repositories.SQL;
-using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Requests.Contacts
+namespace Application.Requests.Addresses
 {
-    internal class PostContactEditRequestHandler : MediatR.IRequestHandler<PostContactEditRequest, IActionResult>
+    internal class PostAddressEditRequestHandler : IRequestHandler<PostAddressEditRequest, IActionResult>
     {
-        private readonly IContactsSQLRepository _repository;
+        private readonly IAddressesSQLRepository _repository;
         private readonly IMapper _mapper;
 
-        public PostContactEditRequestHandler(IContactsSQLRepository repository, IMapper mapper)
+        public PostAddressEditRequestHandler(IAddressesSQLRepository repository, IMapper mapper)
         {
             _repository=repository;
             _mapper=mapper;
         }
-        public async Task<IActionResult> Handle(PostContactEditRequest request, CancellationToken cancellationToken)
+
+        public async Task<IActionResult> Handle(PostAddressEditRequest request, CancellationToken cancellationToken)
         {
-            if (request.Controller.ModelState.IsValid)
+            if(request.Controller.ModelState.IsValid)
             {
                 if(request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
-                Contact contact = _mapper.Map<Contact>(request.ContactChanges);
-                _repository.PostContactEdit(contact);
+                Address address = _mapper.Map<Address>(request.AddressChanges);
+                _repository.PostAddressEdit(address);
                 await _repository.SaveAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
@@ -39,6 +38,5 @@ namespace Application.Requests.Contacts
 
             return request.Controller.View();
         }
-
     }
 }

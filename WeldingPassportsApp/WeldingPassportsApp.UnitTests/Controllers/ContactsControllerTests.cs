@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,8 @@ namespace WeldingPassportsApp.UnitTests.Controllers
             // Arrange
             var mediator = new Mock<IMediator>();
             var env = new Mock<IWebHostEnvironment>();
-            var controller = new CompanyContactsController(mediator.Object, env.Object);
+            var mapper = new Mock<IMapper>();
+            var controller = new CompanyContactsController(mediator.Object, env.Object, mapper.Object);
             string sortOrder = String.Empty;
             string currentFilter = string.Empty;
             string searchString = string.Empty;

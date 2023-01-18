@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace Application.Requests.Companies
                 Company company = _mapper.Map<Company>(request.CompanyChanges);
                 _repository.PostCompanyEdit(company);
                 await _repository.SaveAsync(cancellationToken);
-                
+
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }
 

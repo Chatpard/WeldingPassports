@@ -108,12 +108,13 @@ namespace Infrastructure.Repositories.SQL
         {
             var company = _context.Companies
                 .OrderBy(company => company.CompanyName)
-                .Select(contact => new {
-                    ID = contact.ID.ToString(),
-                    CompanyName = contact.CompanyName,
+                .Select(contact => new CompanySelectListSQLModel
+                {
+                    ID = contact.ID,
+                    Name = contact.CompanyName,
                 });https://localhost:44315/Companies
 
-            return new SelectList(company, nameof(Company.ID), nameof(Company.CompanyName));
+            return new SelectList(company, nameof(CompanySelectListSQLModel.ID), nameof(CompanySelectListSQLModel.Name));
         }
 
         public SelectList CompanyNoTrainingCentersSelectList(int? companyID = null)

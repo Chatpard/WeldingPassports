@@ -13,6 +13,10 @@ namespace Application.Interfaces.Repositories.SQL
 {
     public interface IAddressesSQLRepository
     {
+        Task<AddressEditViewModel> GetAddressEditAsync(string encryptedID);
+
+        EntityEntry<Address> PostAddressEdit(Address addressChanges);
+
         Task<EntityEntry<Address>> PostAddressCreateAsync(Address address);
 
         SelectList AddressSelectList();

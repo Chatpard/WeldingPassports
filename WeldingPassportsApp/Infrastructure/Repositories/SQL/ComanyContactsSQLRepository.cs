@@ -76,7 +76,9 @@ namespace Infrastructure.Repositories.SQL
             IQueryable<CompanyContact> query = _context.CompanyContacts
                 .Where(companyContact => companyContact.ID == decryptedID);
 
-            return await query.ProjectTo<CompanyContactEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+            CompanyContactEditViewModel companyContactEditViewModel = await query.ProjectTo<CompanyContactEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+
+            return companyContactEditViewModel;
         }
 
         public EntityEntry<CompanyContact> PostCompanyContactEdit(CompanyContact contactChanges)

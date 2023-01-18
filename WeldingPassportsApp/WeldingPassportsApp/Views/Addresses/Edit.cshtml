@@ -1,0 +1,54 @@
+﻿@model AddressEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Address";
+    var returnUrl = ViewBag.returnUrl;
+}
+
+<h1>@Localizer["Edit Address"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
+            <input asp-for="EncryptedID" title="EncryptedID" placeholder="EncryptedID" hidden />
+            <div class="form-group row">
+                <label asp-for="BusinessAddress" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10 align-self-center">
+                    <input asp-for="BusinessAddress" class="form-control" placeholder="@Localizer["Business address"]" />
+                </div>
+                <span asp-validation-for="BusinessAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessAddressPostalCode" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10 align-self-center">
+                    <input asp-for="BusinessAddressPostalCode" class="form-control" placeholder="@Localizer["Business address Postalcode"]" />
+                </div>
+                <span asp-validation-for="BusinessAddressPostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessAddressCity" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10 align-self-center">
+                    <input asp-for="BusinessAddressCity" class="form-control" placeholder="@Localizer["Business Address City"]" />
+                </div>
+                <span asp-validation-for="BusinessAddressCity" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="BusinessAddressCountry" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10 align-self-center">
+                    <input asp-for="BusinessAddressCountry" class="form-control" placeholder="@Localizer["Business Address Country"]" />
+                </div>
+                <span asp-validation-for="BusinessAddressCountry" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+                    <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Back"]</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

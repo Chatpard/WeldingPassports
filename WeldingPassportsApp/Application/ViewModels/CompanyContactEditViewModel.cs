@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Application.SQLModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,23 +10,35 @@ using System.Text;
 
 namespace Application.ViewModels
 {
+    [SaveTempData]
     public class CompanyContactEditViewModel
     {
+        public CompanyContactEditViewModel()
+        {
+            ContactSelectList = new SelectList(new List<ContactSelectListSQLModel>());
+            CompanySelectList = new SelectList(new List<CompanySelectListSQLModel>());
+            AddressSelectList = new SelectList(new List<AddressSelectListSQLModel>());
+        }
+
         public string EncryptedID { get; set; }
 
+        [TempData]
         [Display(Name = "Contact Name")]
         public int ContactID { get; set; }
 
+        [JsonIgnore]
         public SelectList ContactSelectList { get; set; }
 
         [Display(Name = "Company Name")]
         public int? CompanyID { get; set; }
 
+        [JsonIgnore]
         public SelectList CompanySelectList { get; set; }
 
         [Display(Name = "Address")]
         public int? AddressID { get; set; }
 
+        [JsonIgnore]
         public SelectList AddressSelectList { get; set; }
 
         [Display(Name = "Job Title")]

@@ -18,11 +18,20 @@ namespace Application.Profiles
             _protector = dataProtectionProvider
                 .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
 
-            CreateMap<AddressCreateViewModel, Address>();
+            CreateMap<AddressCreateViewModel, Address>()
+                .ReverseMap();
 
             CreateMap<Address, AddressDetailsViewModel>()
                 .ForMember(details => details.EncryptedID, address => address.MapFrom(address => 
                     _protector.Protect(address.ID.ToString())));
+
+            CreateMap<Address, AddressEditViewModel>()
+                .ForMember(vm => vm.EncryptedID, address => address.MapFrom(address =>
+                    _protector.Protect(address.ID.ToString())));
+
+            CreateMap<AddressEditViewModel, Address>()
+                .ForMember(address => address.ID, vm => vm.MapFrom(vm =>
+                    _protector.Unprotect(vm.EncryptedID.ToString())));
         }
     }
 }

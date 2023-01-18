@@ -1,8 +1,10 @@
 ﻿using Application.Interfaces.Repositories.SQL;
+using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +28,9 @@ namespace Application.Requests.CompanyContacts
                 Company company = _mapper.Map<Company>(request.ContactCreateVM);
                 await _repository.PostCompanyCreateAsync(company);
                 await _repository.SaveAsync(cancellationToken);
-                
+
+                request.Controller.TempData[nameof(CompanyContactEditViewModel.CompanyID)] = company.ID;
+
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }
 

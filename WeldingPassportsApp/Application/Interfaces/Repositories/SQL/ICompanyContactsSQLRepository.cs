@@ -27,7 +27,7 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<CompanyContact> GetCompanyContactById(int id);
 
-        public SelectList CompanyContactSelectList(string? encryptedCompanyID, int? companyContactID);
+        SelectList CompanyContactSelectList(string? encryptedCompanyID, int? companyContactID);
 
         Task<int> SaveAsync(CancellationToken cancellationToken);
     }

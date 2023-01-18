@@ -45,6 +45,8 @@ namespace Application.Requests.CompanyContacts
             var vm = await _repository.GetContactsIndexPaginatedAsync(7, request.PageNumber ?? 1,
                 request.SearchString, request.SortOrder);
 
+            request.Controller.TempData.Clear();
+
             return request.Controller.View(vm);
         }
     }

@@ -1,22 +1,61 @@
-﻿@model CompanyContactEditViewModel
+﻿@using System.Text.Json
+@using WeldingPassportsApp.Stores;
+@model CompanyContactEditViewModel
 
 @{
     ViewData["Title"] = @Localizer["Edit Contact"];
     string returnUrl = ViewBag.ReturnUrl;
     string currentUrl = ViewBag.CurrentUrl;
-    var userCanEditContacts = User.CanEdit(ClaimsTypesStore.Contacts);
-    var userCanCreateContacts = User.CanCreate(ClaimsTypesStore.Contacts);
-    var userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);
-    var userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
-    var userCanEditAddresses = User.CanEdit(ClaimsTypesStore.Addresses);
-    var userCanCreateAddresses = User.CanCreate(ClaimsTypesStore.Addresses);
+
+    //Todo: deserialize TempData
+    //if(TempData.ContainsKey(nameof(CompanyContactEditViewModel)))
+    //{
+    //    CompanyContactEditViewModel viewData = JsonSerializer.Deserialize<CompanyContactEditViewModel>(TempData[nameof(CompanyContactEditViewModel)].ToString());
+
+    //    Model.ContactID = viewData.ContactID;
+    //    Model.CompanyID = viewData.CompanyID;
+    //    Model.JobTitle = viewData.JobTitle;
+    //    Model.BusinessPhone = viewData.BusinessPhone;
+    //    Model.MobilePhone = viewData.MobilePhone;
+    //    Model.Email = viewData.Email;
+    //    Model.AddressID = viewData.AddressID;
+    //}
+
+    if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.ContactID)))
+        if (TempData[nameof(CompanyContactEditViewModel.ContactID)] != null)
+            Model.ContactID = (int) TempData[nameof(CompanyContactEditViewModel.ContactID)];
+
+    if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.CompanyID)))
+        Model.CompanyID = (int?) TempData[nameof(CompanyContactEditViewModel.CompanyID)];
+
+    if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.JobTitle)))
+        Model.JobTitle = (string) TempData[nameof(CompanyContactEditViewModel.JobTitle)];
+
+    if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.BusinessPhone)))
+        Model.BusinessPhone = (string) TempData[nameof(CompanyContactEditViewModel.BusinessPhone)];
+
+    if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.MobilePhone)))
+        Model.MobilePhone = (string) TempData[nameof(CompanyContactEditViewModel.MobilePhone)];
+
+    if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.Email)))
+        Model.Email = (string) TempData[nameof(CompanyContactEditViewModel.Email)];
+
+    if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.AddressID)))
+        Model.AddressID = (int?)TempData[nameof(CompanyContactEditViewModel.AddressID)];
+
+    bool userCanEditContacts = User.CanEdit(ClaimsTypesStore.Contacts);
+    bool userCanCreateContacts = User.CanCreate(ClaimsTypesStore.Contacts);
+    bool userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);
+    bool userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
+    bool userCanEditAddresses = User.CanEdit(ClaimsTypesStore.Addresses);
+    bool userCanCreateAddresses = User.CanCreate(ClaimsTypesStore.Addresses);
 }
 
 <h1>@Localizer["Edit Contact"]</h1>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
+        <form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Edit)" asp-route-returnUrl="@returnUrl" asp-route-currentUrl="@currentUrl" method="post">
             <input asp-for="EncryptedID" title="EncryptedID" placeholder="EncryptedID" hidden />
             <div class="form-group row">
                 <label asp-for="ContactID" class="col-sm-2 col-form-label"></label>
@@ -25,13 +64,13 @@
                         <option value="" selected disabled hidden>@Localizer["Choose a Contact"]</option>
                     </select>
                     <div class="input-group-append">
-                        <button id="ContactIDAction" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('ContactID')">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetContactEditBtnID')">
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             @if (userCanEditContacts)
                             {
-                                <a id="ContactIDEdit" class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="0" onclick="ActionEditHref2ID('ContactID')">@Localizer["Edit"]</a>
+                                <button type="submit" name="submit" value="@CompanyContactIDStore.GetContactEditBtnID" id="@CompanyContactIDStore.GetContactEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
                             }
                             @if (userCanCreateContacts)
                             {
@@ -52,13 +91,13 @@
                         <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
                     </select>
                     <div class="input-group-append">
-                        <button id="CompanyIDAction" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('CompanyID')">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetCompanyEditBtnID')">
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             @if(userCanEditCompanies)
                             {
-                                <a id="CompanyIDEdit" class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="0" onclick="ActionEditHref2ID('CompanyID')">@Localizer["Edit"]</a>
+                                <button type="submit" name="submit" value="@CompanyContactIDStore.GetCompanyEditBtnID" id="@CompanyContactIDStore.GetCompanyEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
                             }
                             @if (userCanCreateCompanies)
                             {
@@ -108,13 +147,13 @@
                         <option value="" selected disabled hidden>@Localizer["Choose an Address"]</option>
                     </select>
                     <div class="input-group-append">
-                        <button id="AddressIDAction" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('AddressID')">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetAddressEditBtnID')">
                             @Localizer["Action"]
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             @if(userCanEditAddresses)
                             {
-                                <a id="AddressIDEdit" class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Edit)" asp-route-returnUrl="@currentUrl" asp-route-id="0" onclick="ActionEditHref2ID('AddressID')">@Localizer["Edit"]</a>
+                                <button type="submit" name="submit" value="@CompanyContactIDStore.GetAddressEditBtnID" id="@CompanyContactIDStore.GetAddressEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
                             }
                             @if(userCanCreateAddresses)
                             {
@@ -141,18 +180,6 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/ActionEditHref2ID.js"></script>
+    <script src="~/js/ActionBtn.js"></script>
     <script src="~/js/ResetSelect.js"></script>
-    <script>
-        $(function () {
-            $("#AddressIDAction").on("click", function () {
-                if ($("#AddressID").val() == null) {
-                    $("#AddressIDEdit").addClass("disabled");
-                }
-                else {
-                    $("#AddressIDEdit").removeClass("disabled");
-                };
-            })
-        })
-    </script>
 }

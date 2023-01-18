@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Repositories.SQL;
+using Application.Requests.Addresses;
 using Application.Security;
+using Application.SQLModels;
 using Application.ViewModels;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -31,6 +33,26 @@ namespace Infrastructure.Repositories.SQL
             _protector = dataProtectionProvider
                 .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
         }
+
+        public async Task<AddressEditViewModel> GetAddressEditAsync(string encryptedID)
+        {
+            if(!int.TryParse(encryptedID, out int decryptedID))
+            {
+                decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            }
+
+            IQueryable<Address> query = _context.Addresses
+                .Where(address => address.ID == decryptedID);
+
+            return await query.ProjectTo<AddressEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+
+        public EntityEntry<Address> PostAddressEdit(Address addressChanges)
+        {
+            EntityEntry<Address> address = _context.Entry(addressChanges);
+            address.State = EntityState.Modified;
+            return address;
+        }
         public async Task<EntityEntry<Address>> PostAddressCreateAsync(Address address)
         {
             EntityEntry<Address> newAddress = await _context.Addresses.AddAsync(address);
@@ -42,14 +64,12 @@ namespace Infrastructure.Repositories.SQL
         {
             var address = _context.Addresses
                 .OrderBy(address => address.BusinessAddress)
-                .Select(address => new { 
+                .Select(address => new AddressSelectListSQLModel { 
                     ID = address.ID,
                     AddressPostCodeCity = address.BusinessAddress + " " + address.BusinessAddressPostalCode + " " + address.BusinessAddressCity
                 });
 
-            return new SelectList(address, nameof(Address.ID), "AddressPostCodeCity");
+            return new SelectList(address, nameof(AddressSelectListSQLModel.ID), nameof(AddressSelectListSQLModel.AddressPostCodeCity));
         }
-
-
     }
 }

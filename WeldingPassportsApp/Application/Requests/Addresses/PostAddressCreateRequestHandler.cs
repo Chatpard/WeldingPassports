@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories.SQL;
+using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
 using MediatR;
@@ -26,6 +27,8 @@ namespace Application.Requests.Addresses
                 Address address = _mapper.Map<Address>(request.AddressCreateVM);
                 await _repository.PostAddressCreateAsync(address);
                 await _repository.SaveAsync(cancellationToken);
+
+                request.Controller.TempData[nameof(CompanyContactEditViewModel.AddressID)] = address.ID;
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

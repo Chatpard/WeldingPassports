@@ -1,6 +1,7 @@
 ﻿using Application.Security;
 using Domain;
 using Infrastructure.Services.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
 {
+    [Authorize]
     public class TestsController : Controller
     {
         private readonly IWebHostEnvironment _env;

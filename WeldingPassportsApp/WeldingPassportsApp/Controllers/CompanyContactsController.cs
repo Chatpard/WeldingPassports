@@ -19,6 +19,7 @@ using WeldingPassportsApp.Stores;
 
 namespace WeldingPassportsApp.Controllers
 {
+    [Authorize]
     public class CompanyContactsController : Controller
     {
         private readonly IMediator _mediator;

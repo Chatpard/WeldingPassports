@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
 {
+    [Authorize]
     public class ContactsController : Controller
     {
         private readonly IMediator _mediator;

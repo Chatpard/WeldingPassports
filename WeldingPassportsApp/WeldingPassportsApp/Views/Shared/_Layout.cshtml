@@ -53,6 +53,10 @@
                                    asp-action="@nameof(TrainingCentersController.Index)">@Localizer["Training Centers"]</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="@typeof(ExamCentersController).GetNameOfController()"
+                               asp-action="@nameof(ExamCentersController.Index)">@Localizer["Exam Centers"]</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="@typeof(CompaniesController).GetNameOfController()"
                                    asp-action="@nameof(CompaniesController.Index)">@Localizer["Companies"]</a>
                             </li>

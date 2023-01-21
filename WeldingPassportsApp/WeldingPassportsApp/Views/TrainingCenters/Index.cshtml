@@ -18,7 +18,6 @@
     var userCanDeleteTrainingCenters = User.CanDelete(ClaimsTypesStore.TrainingCenters);
 
     var protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
-    
     var usersTrainingCenterID = await User.GetTrainingCenterID(userManager, trainingCentersSQLRepository, protector);
 }
 

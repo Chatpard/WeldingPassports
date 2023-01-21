@@ -69,6 +69,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.PEPassports+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(PEPassportCreateViewModel pePassportCreateVM, string returnUrl)
         {
             try

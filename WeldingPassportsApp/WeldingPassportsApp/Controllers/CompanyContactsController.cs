@@ -1,6 +1,7 @@
 ﻿using Application.Requests.CompanyContacts;
 using Application.Requests.PEPassports;
 using Application.Requests.Welders;
+using Application.Security;
 using Application.ViewModels;
 using AutoMapper;
 using MediatR;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WeldingPassportsApp.Stores;
@@ -34,6 +36,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.CompanyContacts+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -52,6 +55,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.CompanyContacts+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(string returnUrl)
         {
             try
@@ -67,6 +71,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.CompanyContacts+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(CompanyContactCreateViewModel contactCreateViewModel, string returnUrl)
         {
             try
@@ -81,6 +86,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.CompanyContacts+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> Details(string id, string returnUrl)
         {
             try
@@ -96,6 +103,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.CompanyContacts+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy") ]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -111,6 +119,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.CompanyContacts+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(CompanyContactEditViewModel companyContactEditViewModel, string returnUrl, string currentUrl, string submit)
         {
             switch(submit)
@@ -167,6 +176,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.CompanyContacts+ClaimsPrincipalExtensions.CanDeleteClaimsGroup+"Policy")]
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {
             try

@@ -1,4 +1,5 @@
 ﻿using Application.Requests.Addresses;
+using Application.Security;
 using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +25,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Addresses+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(string returnUrl)
         {
             try
@@ -39,6 +41,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Addresses+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(AddressCreateViewModel addressCreateVM, string returnUrl)
         {
             try
@@ -54,6 +57,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Addresses+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -69,6 +73,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Addresses+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(AddressEditViewModel addressEditViewModel, string returnUrl)
         {
             try

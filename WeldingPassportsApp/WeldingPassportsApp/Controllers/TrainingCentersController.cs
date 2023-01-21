@@ -65,6 +65,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.TrainingCenters+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(TrainingCenterCreateViewModel trainingCenterCreateVM, string returnUrl)
         {
             try
@@ -113,6 +114,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.TrainingCenters + ClaimsPrincipalExtensions.CanEditClaimsGroup + "Policy")]
         public async Task<IActionResult> Edit(TrainingCenterEditViewModel trainingCenterChanges, string returnUrl)
         {
             try

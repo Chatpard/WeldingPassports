@@ -112,7 +112,7 @@
                         <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
                            asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
                     }
-                    @if(userCanEditExaminations)
+                    @if(userCanEditExaminations || userCanUpdateCertificates)
                     {
                         <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
                            asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>

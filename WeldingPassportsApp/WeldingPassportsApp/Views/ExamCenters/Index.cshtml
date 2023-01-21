@@ -1,0 +1,123 @@
+﻿@model PaginatedList<ExamCenterIndexViewModel>
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Exam Centers Index"];
+    string currentUrl = ViewBag.CurrentUrl;
+    bool userCanReadExamCenters = User.CanRead(ClaimsTypesStore.ExamCenters);
+    bool userCanEditExamCenters = User.CanEdit(ClaimsTypesStore.ExamCenters);
+    bool userCanCreateExamCenters = User.CanCreate(ClaimsTypesStore.ExamCenters);
+    bool userCanDeleteExamCenters = User.CanDelete(ClaimsTypesStore.ExamCenters);
+}
+
+<h1>@Localizer["Exam Centers Index"]</h1>
+<hr />
+@if (userCanCreateExamCenters)
+{
+    <p>
+        <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Create)" asp-route-returnUrl="@currentUrl">
+            @Localizer["Create New"]
+        </a>
+    </p>
+}
+
+<form asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)" method="get" id="SearchForm">
+    <div class="form-actions no-color">
+        <p>
+            <label for="SearchInput">@Localizer["Find Exam Center:"]</label>
+            <input type="search" name="SearchString" value="@ViewData["CurrentFilter"]" id="SearchInput" />
+            <input type="submit" value=@Localizer["Search"] class="btn btn-light" /> |
+            <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)">
+                @Localizer["Back to Full List"]
+            </a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["CompanyName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["IsActive"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().IsActive)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "IsActive_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "IsActive_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var examCenter in Model)
+        {
+            <td>
+                @Html.DisplayFor(vm => examCenter.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(vm => examCenter.IsActive)
+            </td>
+            <td>
+                @if (userCanReadExamCenters)
+                {
+                    <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Details)"
+                asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                }
+                @if (userCanEditExamCenters)
+                {
+                    <text>|</text> <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Edit)"
+                                asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                }
+                @if (userCanDeleteExamCenters)
+                {
+                    <text>|</text> <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Delete)"
+                                asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                }
+            </td>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @prevDisabled">
+    @Localizer["Previous"]
+</a>
+<a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Index)"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-light @nextDisabled">
+    @Localizer["Next"]
+</a>
+
+@section Scripts {
+    <script src="~/js/SearchInputClick.js"></script>
+}

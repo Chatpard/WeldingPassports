@@ -97,7 +97,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = ClaimsTypesStore.Welders+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
+        [Authorize(Policy = ClaimsTypesStore.Examinations+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -111,6 +111,24 @@ namespace WeldingPassportsApp.Controllers
                 await Task.CompletedTask;
                 
                 return Utilities.ErrorView(_env, this, e, "Error in GetExaminationsEdit");
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Examinations+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
+        public async Task<IActionResult> Edit(ExaminationEditViewModel newExaminationVm, string returnUrl)
+        {
+            try
+            {
+                var query = new PostExaminationEditRequest(newExaminationVm, nameof(Details), returnUrl, this);
+
+                return await _mediator.Send(query);
+            }
+            catch (Exception e)
+            {
+                await Task.CompletedTask;
+                
+                return Utilities.ErrorView(_env, this, e, "Error in PostExaminationEdit");
             }
         }
 
@@ -131,6 +149,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Certificates+ClaimsPrincipalExtensions.CanUpdateClaimsGroup+"Policy")]
         public async Task<IActionResult> Update(ExaminationUpdateViewModel examinationUpdates, string returnUrl )
         {
             try
@@ -145,25 +164,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(ExaminationEditViewModel newExaminationVm, string returnUrl)
-        {
-            try
-            {
-                var query = new PostExaminationEditRequest(newExaminationVm, nameof(Details), returnUrl, this);
-
-                return await _mediator.Send(query);
-            }
-            catch (Exception e)
-            {
-                await Task.CompletedTask;
-                
-                return Utilities.ErrorView(_env, this, e, "Error in PostExaminationEdit");
-            }
-        }
-
         [HttpGet]
-        [Authorize(Policy = ClaimsTypesStore.Welders+ClaimsPrincipalExtensions.CanDeleteClaimsGroup+"Policy")]
+        [Authorize(Policy = ClaimsTypesStore.Examinations+ClaimsPrincipalExtensions.CanDeleteClaimsGroup+"Policy")]
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {
             try

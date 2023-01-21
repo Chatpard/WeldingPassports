@@ -2,6 +2,7 @@
 using Application.Requests.Contacts;
 using Application.Requests.PEPassports;
 using Application.Requests.Welders;
+using Application.Security;
 using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +28,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Contacts+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -46,6 +48,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Contacts+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(string returnUrl)
         {
             try
@@ -61,6 +64,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Contacts+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(ContactCreateViewModel contactCreateViewModel, string returnUrl)
         {
             try
@@ -90,6 +94,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Contacts+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -105,6 +110,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Contacts+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(ContactEditViewModel contactEditViewModel, string returnUrl)
         {
             try
@@ -119,6 +125,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Contacts+ClaimsPrincipalExtensions.CanDeleteClaimsGroup+"Policy")]
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {
             try

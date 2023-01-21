@@ -62,6 +62,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Welders+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(PEWelderCreateViewModel peWelderCreateViewModel, string returnUrl)
         {
             try
@@ -110,6 +111,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Welders+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(PEWelderEditViewModel peWelderChanges, string returnUrl)
         {
             try
@@ -124,6 +126,7 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
         [Authorize(Policy = ClaimsTypesStore.Welders+ClaimsPrincipalExtensions.CanDeleteClaimsGroup+"Policy")]
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {

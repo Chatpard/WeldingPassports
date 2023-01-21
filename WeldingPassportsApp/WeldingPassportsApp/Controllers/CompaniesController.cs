@@ -2,6 +2,7 @@
 using Application.Requests.CompanyContacts;
 using Application.Requests.PEPassports;
 using Application.Requests.Welders;
+using Application.Security;
 using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +28,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Companies+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> Index(
             string sortOrder,
             string currentFilter,
@@ -46,6 +48,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Companies+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(string returnUrl)
         {
             try
@@ -61,6 +64,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Companies+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> Create(CompanyCreateViewModel companyVM, string returnUrl)
         {
             try
@@ -75,6 +79,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Companies+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> Details(string id, string returnUrl)
         {
             try
@@ -90,6 +96,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Companies+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -104,6 +111,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Companies+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(CompanyEditViewModel company, string returnUrl)
         {
             try
@@ -118,6 +127,8 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Policy = ClaimsTypesStore.Companies+ClaimsPrincipalExtensions.CanDeleteClaimsGroup+"Policy")]
         public async Task<IActionResult> Delete(string id, string returnUrl)
         {
             try

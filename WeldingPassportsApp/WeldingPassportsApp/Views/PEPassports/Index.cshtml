@@ -4,7 +4,7 @@
 
 @{
     ViewData["Title"] = Localizer["PE Passports Index"];
-    var currentUrl = ViewBag.CurrentUrl;
+    string currentUrl = ViewBag.CurrentUrl;
     bool userCanReadPEPassports = User.CanRead(ClaimsTypesStore.PEPassports);
     bool userCanEditPEPassports = User.CanEdit(ClaimsTypesStore.PEPassports);
     bool userCanCreatePEPassports = User.CanCreate(ClaimsTypesStore.PEPassports);

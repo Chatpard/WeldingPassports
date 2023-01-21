@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repositories.SQL;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories.SQL;
 using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
@@ -43,7 +44,7 @@ namespace Application.Requests.Companies
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetCompaniesIndexPaginatedAsync(7, request.PageNumber ?? 1,
+            IPaginatedList<CompanyIndexViewModel> vm = await _repository.GetCompaniesIndexPaginatedAsync(7, request.PageNumber ?? 1,
                 request.SearchString, request.SortOrder);
 
             return request.Controller.View(vm);

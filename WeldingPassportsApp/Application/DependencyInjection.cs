@@ -31,6 +31,8 @@ namespace Application
                     provider.GetService<IDataProtectionPurposeStrings>()));
                 config.AddProfile(new ContactProfile(provider.GetService<IDataProtectionProvider>(),
                     provider.GetService<IDataProtectionPurposeStrings>()));
+                config.AddProfile(new ExamCenterProfile(provider.GetService<IDataProtectionProvider>(),
+                    provider.GetService<IDataProtectionPurposeStrings>()));
                 config.AddProfile(new ExaminationProfile(provider.GetService<IDataProtectionProvider>(),
                     provider.GetService<IDataProtectionPurposeStrings>()));
                 config.AddProfile(new PEPassportProfile(provider.GetService<IDataProtectionProvider>(),

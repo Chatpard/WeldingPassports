@@ -35,8 +35,7 @@ namespace Infrastructure.Repositories.SQL
 
         private IQueryable<CompanyContactIndexViewModel> GetContactsIndex()
         {
-            IQueryable<CompanyContact> query = _context.CompanyContacts
-                .Select(companyContact => companyContact);
+            IQueryable<CompanyContact> query = _context.CompanyContacts.AsQueryable();
 
             return query.ProjectTo<CompanyContactIndexViewModel>(_mapper.ConfigurationProvider);
         }

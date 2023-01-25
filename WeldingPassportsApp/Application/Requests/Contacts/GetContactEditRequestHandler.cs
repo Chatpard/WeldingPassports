@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories.SQL;
+using Application.ViewModels;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace Application.Requests.Contacts
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetContactEditAsync(request.EncryptedID);
+            ContactEditViewModel vm = await _repository.GetContactEditAsync(request.EncryptedID);
 
             return request.Controller.View(vm);
         }

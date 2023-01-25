@@ -2,6 +2,7 @@
 using Domain.Models;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,8 +20,7 @@ namespace Infrastructure.Repositories.API
 
         public async Task<char?> GetLetterById(int id)
         {
-            TrainingCenter trainingCenter = new TrainingCenter();
-            trainingCenter = await _context.TrainingCenters.FindAsync(id);
+            TrainingCenter trainingCenter = await _context.TrainingCenters.FindAsync(id);
 
             if (trainingCenter == null)
             {
@@ -32,7 +32,7 @@ namespace Infrastructure.Repositories.API
 
         public bool IsLetterInUse(char letter)
         {
-            TrainingCenter trainingCenter = _context.TrainingCenters.FirstOrDefault(trainingCenter => trainingCenter.Letter == letter);
+            TrainingCenter trainingCenter = _context.TrainingCenters.FirstOrDefault (trainingCenter => trainingCenter.Letter == letter);
             if (trainingCenter == null)
             {
                 return true;

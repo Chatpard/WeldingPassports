@@ -32,7 +32,8 @@ namespace Application.Requests.TrainingCenters
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
             TrainingCenterEditViewModel vm = await _repository.GetTrainingCenterEditAsync(request.EncryptedID);
-            vm.CompanySelectList = _companiesSQLRepository.CompanyNoTrainingCentersSelectList(vm.CompanyID);
+            //Todo: CompanySelectList unused Companies
+            vm.CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned:true, CompanyID:vm.CompanyID);
             vm.CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactSelectList(vm.EncryptedID, vm.CompanyContactID);
 
             return request.Controller.View(vm);

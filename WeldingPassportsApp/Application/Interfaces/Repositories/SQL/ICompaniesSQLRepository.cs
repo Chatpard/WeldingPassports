@@ -28,9 +28,7 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<int> DeleteCompanyByEncryptedIDAsync(string encryptedID, CancellationToken token);
 
-        SelectList CompanySelectList();
-
-        SelectList CompanyNoTrainingCentersSelectList(int? companyID = null);
+        SelectList CompanySelectList(bool unasigned = false, int? CompanyID = null);
 
         Task<int> SaveAsync(CancellationToken cancellationToken);
     }

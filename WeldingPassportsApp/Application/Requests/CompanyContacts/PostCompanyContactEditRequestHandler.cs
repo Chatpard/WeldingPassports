@@ -1,14 +1,8 @@
 ﻿using Application.Interfaces.Repositories.SQL;
-using Application.Requests.PEPassports;
-using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

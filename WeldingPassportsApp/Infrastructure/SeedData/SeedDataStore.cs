@@ -287,6 +287,16 @@ namespace Infrastructure.SeedData
                     BusinessPhone = "+32 2 274 39 09",
                     MobilePhone = "+32 486 82 46 82",
                     Email = "academy-pe@sibelga.be"
+                },
+                new CompanyContact()
+                {
+                    ID = 5,
+                    ContactID = 5,
+                    CompanyID = 9,
+                    JobTitle = "Examinator",
+                    BusinessPhone = "+32 2 274 39 09",
+                    MobilePhone = "+32 486 82 46 82",
+                    Email = "guy.doms@vincotte.be"
                 }
             };
         }
@@ -803,6 +813,13 @@ namespace Infrastructure.SeedData
                     FirstName = "Bastien",
                     LastName = "De Spiegelaere",
                     Birthday = new DateTime(1982, 8, 5)
+                },
+                new Contact()
+                {
+                    ID = 5,
+                    FirstName = "Guy",
+                    LastName = "Doms",
+                    Birthday = new DateTime(1962, 8, 5)
                 }
             };
         }

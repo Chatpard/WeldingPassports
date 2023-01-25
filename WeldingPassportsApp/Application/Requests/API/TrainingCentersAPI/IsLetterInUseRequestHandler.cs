@@ -3,11 +3,14 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Requests.API.TrainingCentersAPI
 {
-    public class IsLetterInUseRequestHandler : RequestHandler<IsLetterInUseRequest, JsonResult>
+    public class IsLetterInUseRequestHandler : IRequestHandler<IsLetterInUseRequest, JsonResult>
     {
         private readonly ITrainingCentersAPIRepository _repository;
 
@@ -16,7 +19,7 @@ namespace Application.Requests.API.TrainingCentersAPI
             _repository = repository;
         }
 
-        protected override JsonResult Handle(IsLetterInUseRequest request)
+        public async Task<JsonResult> Handle(IsLetterInUseRequest request, CancellationToken cancellationToken)
         {
             return new JsonResult(_repository.IsLetterInUse(request.Letter));
         }

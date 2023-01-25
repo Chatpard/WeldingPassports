@@ -63,6 +63,7 @@ namespace WeldingPassportsApp
                 await AddUserWithRoleAsync(adminEmail, RolesStore.Admin, userManager);
                 await AddTestUsersAsync(userManager, env);
                 await AddCompanyContactIdentityUserId(context, "leen.dezillie@v-c-l.be", "tc.trainingcenter@outlook.com");
+                await AddCompanyContactIdentityUserId(context, "guy.doms@vincotte.be", "ec.examcenter@outlook.com");
             }
         }
 

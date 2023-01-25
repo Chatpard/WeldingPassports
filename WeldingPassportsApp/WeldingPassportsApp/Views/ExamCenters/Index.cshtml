@@ -1,5 +1,11 @@
-﻿@model PaginatedList<ExamCenterIndexViewModel>
+﻿@using Application.Interfaces.Repositories.SQL;
+@using Microsoft.AspNetCore.DataProtection;
 @inject IViewLocalizer Localizer
+@inject UserManager<IdentityUser> userManager
+@inject IExamCentersSQLRepository examCentersSQLRepository
+@inject IDataProtectionProvider dataProtectionProvider
+@inject IDataProtectionPurposeStrings dataProtectionPurposeString
+@model PaginatedList<ExamCenterIndexViewModel>
 
 @{
     ViewData["Title"] = Localizer["Exam Centers Index"];
@@ -8,6 +14,9 @@
     bool userCanEditExamCenters = User.CanEdit(ClaimsTypesStore.ExamCenters);
     bool userCanCreateExamCenters = User.CanCreate(ClaimsTypesStore.ExamCenters);
     bool userCanDeleteExamCenters = User.CanDelete(ClaimsTypesStore.ExamCenters);
+
+    var protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeString.IdRouteValue);
+    var userExamCenterID = await User.GetExamCenterID(userManager, examCentersSQLRepository);
 }
 
 <h1>@Localizer["Exam Centers Index"]</h1>
@@ -71,8 +80,9 @@
     <tbody>
         @foreach (var examCenter in Model)
         {
+            <tr>
             <td>
-                @Html.DisplayFor(vm => examCenter.CompanyName)
+                @Html.DisplayFor(vm => examCenter.CompanyName)<br>
             </td>
             <td>
                 @Html.DisplayFor(vm => examCenter.IsActive)
@@ -81,9 +91,9 @@
                 @if (userCanReadExamCenters)
                 {
                     <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Details)"
-                asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                        asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
                 }
-                @if (userCanEditExamCenters)
+                @if (userCanEditExamCenters && (userExamCenterID == null || userExamCenterID == protector.Unprotect(examCenter.EncryptedID)))
                 {
                     <text>|</text> <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Edit)"
                                 asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
@@ -94,9 +104,11 @@
                                 asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
                 }
             </td>
+        </tr>
         }
     </tbody>
 </table>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";

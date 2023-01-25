@@ -525,7 +525,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@v-c-l.be",
                             CompanyMainPhone = "+32 2 520 56 58",
                             CompanyName = "VCL",
-                            WebPage = "v-c-l.be"
+                            WebPage = "https://v-c-l.be"
                         },
                         new
                         {
@@ -534,7 +534,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@tcz.be",
                             CompanyMainPhone = "+32 2 564 52 87",
                             CompanyName = "TCZ",
-                            WebPage = "tcz.be"
+                            WebPage = "https://tcz.be"
                         },
                         new
                         {
@@ -543,7 +543,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@technifutur.be",
                             CompanyMainPhone = "+32 4 382 45 72",
                             CompanyName = "Technifutur",
-                            WebPage = "technifutur.be"
+                            WebPage = "https://technifutur.be"
                         },
                         new
                         {
@@ -552,7 +552,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@sibelga.be",
                             CompanyMainPhone = "+32 2 856 45 82",
                             CompanyName = "Sibelga Academy",
-                            WebPage = "academy.sibelga.be"
+                            WebPage = "https://academy.sibelga.be"
                         },
                         new
                         {
@@ -561,7 +561,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@technocampus.be",
                             CompanyMainPhone = "+32 2 754 83 19",
                             CompanyName = "Technocampus",
-                            WebPage = "technocampus.be"
+                            WebPage = "https://technocampus.be"
                         },
                         new
                         {
@@ -570,7 +570,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@formation-polygone-eau.be",
                             CompanyMainPhone = "+32 8 778 93 30",
                             CompanyName = "Polygone de l'eau",
-                            WebPage = "formation-polygone-eau.be"
+                            WebPage = "https://formation-polygone-eau.be"
                         },
                         new
                         {
@@ -579,7 +579,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@kcbrugge.be",
                             CompanyMainPhone = "+32 5 069 63 74",
                             CompanyName = "Kwalificatiecentrum Brugge bvba",
-                            WebPage = "kcbrugge.be"
+                            WebPage = "https://kcbrugge.be"
                         },
                         new
                         {
@@ -588,7 +588,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@ores.be",
                             CompanyMainPhone = "+32 2 683 57 32",
                             CompanyName = "Ores",
-                            WebPage = "ores.be"
+                            WebPage = "https://ores.be"
                         },
                         new
                         {
@@ -597,7 +597,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@vinçotte.be",
                             CompanyMainPhone = "+32 2 364 87 54",
                             CompanyName = "Vinçotte",
-                            WebPage = "vinçotte.be"
+                            WebPage = "https://vinçotte.be"
                         },
                         new
                         {
@@ -606,7 +606,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@denestor.be",
                             CompanyMainPhone = "+32 9 375 31 69",
                             CompanyName = "De Nestor",
-                            WebPage = "denestor.be"
+                            WebPage = "https://denestor.be"
                         },
                         new
                         {
@@ -615,7 +615,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@lascentrum.be",
                             CompanyMainPhone = "+32 2 954 74 85",
                             CompanyName = "Lascentrum",
-                            WebPage = "lascentrum.be"
+                            WebPage = "https://lascentrum.be"
                         },
                         new
                         {
@@ -624,7 +624,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@hydrogaz.be",
                             CompanyMainPhone = "+32 2 456 81 37",
                             CompanyName = "Hydrogaz",
-                            WebPage = "hydrogaz.be"
+                            WebPage = "https://hydrogaz.be"
                         },
                         new
                         {
@@ -633,7 +633,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@fabricom.be",
                             CompanyMainPhone = "+32 2 793 98 07",
                             CompanyName = "Fabricom",
-                            WebPage = "fabricom.be"
+                            WebPage = "https://fabricom.be"
                         },
                         new
                         {
@@ -642,7 +642,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@ltc.be",
                             CompanyMainPhone = "+32 2 951 72 19",
                             CompanyName = "LTC",
-                            WebPage = "ltc.be"
+                            WebPage = "https://ltc.be"
                         },
                         new
                         {
@@ -651,7 +651,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@verhoeven.be",
                             CompanyMainPhone = "+32 2 837 49 27",
                             CompanyName = "Verhoeven",
-                            WebPage = "verhoeven.be"
+                            WebPage = "https://verhoeven.be"
                         },
                         new
                         {
@@ -660,7 +660,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@alkabel.be",
                             CompanyMainPhone = "+32 2 864 92 47",
                             CompanyName = "Alkabel",
-                            WebPage = "alkabel.be"
+                            WebPage = "https://alkabel.be"
                         },
                         new
                         {
@@ -669,7 +669,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@vindevogel.be",
                             CompanyMainPhone = "+32 2 482 24 35",
                             CompanyName = "Vindevogel",
-                            WebPage = "vindevogel.be"
+                            WebPage = "https://vindevogel.be"
                         },
                         new
                         {
@@ -678,7 +678,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@canalco.be",
                             CompanyMainPhone = "+32 2 507 74 19",
                             CompanyName = "Canalco",
-                            WebPage = "canalco.be"
+                            WebPage = "https://canalco.be"
                         },
                         new
                         {
@@ -687,7 +687,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@verschueren.be",
                             CompanyMainPhone = "+32 2 864 75 05",
                             CompanyName = "Verschueren",
-                            WebPage = "verschueren.be"
+                            WebPage = "https://verschueren.be"
                         },
                         new
                         {
@@ -696,7 +696,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@apc.be",
                             CompanyMainPhone = "+32 2 791 43 01",
                             CompanyName = "APC",
-                            WebPage = "apc.be"
+                            WebPage = "https://apc.be"
                         },
                         new
                         {
@@ -705,7 +705,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@fluvius.be",
                             CompanyMainPhone = "+32 2 907 43 67",
                             CompanyName = "Fluvius",
-                            WebPage = "fluvius.be"
+                            WebPage = "https://fluvius.be"
                         },
                         new
                         {
@@ -714,7 +714,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@infra.be",
                             CompanyMainPhone = "+32 2 703 09 84",
                             CompanyName = "Infra",
-                            WebPage = "infra.be"
+                            WebPage = "https://infra.be"
                         },
                         new
                         {
@@ -723,7 +723,7 @@ namespace Infrastructure.Migrations
                             CompanyEmail = "info@dalcom.be",
                             CompanyMainPhone = "+32 2 378 50 04",
                             CompanyName = "Dalcom",
-                            WebPage = "dalcom.be"
+                            WebPage = "https://dalcom.be"
                         });
                 });
 
@@ -813,6 +813,16 @@ namespace Infrastructure.Migrations
                             Email = "academy-pe@sibelga.be",
                             JobTitle = "CEO",
                             MobilePhone = "+32 486 82 46 82"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            BusinessPhone = "+32 2 274 39 09",
+                            CompanyID = 9,
+                            ContactID = 5,
+                            Email = "guy.doms@vincotte.be",
+                            JobTitle = "Examinator",
+                            MobilePhone = "+32 486 82 46 82"
                         });
                 });
 
@@ -864,6 +874,13 @@ namespace Infrastructure.Migrations
                             Birthday = new DateTime(1982, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Bastien",
                             LastName = "De Spiegelaere"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Birthday = new DateTime(1962, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Guy",
+                            LastName = "Doms"
                         });
                 });
 

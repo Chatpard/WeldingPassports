@@ -64,10 +64,10 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
-            IQueryable<Company> query = _context.Companies
-                .Where(company => company.ID == decryptedID);
+            Company company = await _context.Companies
+                .Where(company => company.ID == decryptedID).SingleOrDefaultAsync();
 
-            return await query.ProjectTo<CompanyDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+            return _mapper.Map<CompanyDetailsViewModel>(company);
         }
 
         public async Task<EntityEntry<Company>> PostCompanyCreateAsync(Company company)
@@ -104,9 +104,26 @@ namespace Infrastructure.Repositories.SQL
             return await SaveAsync(token);
         }
 
-        public SelectList CompanySelectList()
+        public SelectList CompanySelectList(bool unasigned = false, int? CompanyID = null)
         {
-            var company = _context.Companies
+            var companies = _context.Companies
+                .Include(company => company.TrainingCenter)
+                .Include(company => company.ExamCenter)
+                .AsQueryable();
+            if (unasigned)
+            {
+                if(CompanyID != null)
+                {
+                    companies = companies
+                        .Where(company => company.ID == CompanyID || (company.TrainingCenter == null && company.ExamCenter == null));
+                }
+                else
+                {
+                    companies = companies
+                        .Where(company => company.TrainingCenter == null && company.ExamCenter == null);
+                }
+            }
+            var companySelectList = companies
                 .OrderBy(company => company.CompanyName)
                 .Select(contact => new CompanySelectListSQLModel
                 {
@@ -114,25 +131,7 @@ namespace Infrastructure.Repositories.SQL
                     Name = contact.CompanyName,
                 });https://localhost:44315/Companies
 
-            return new SelectList(company, nameof(CompanySelectListSQLModel.ID), nameof(CompanySelectListSQLModel.Name));
-        }
-
-        public SelectList CompanyNoTrainingCentersSelectList(int? companyID = null)
-        {
-            var company = _context.Companies.Where(company => true);
-            if (companyID == null)
-            {
-                company = company.Where(company => company.TrainingCenter == null);
-            }
-            else
-            {
-                company = company.Where(company => company.TrainingCenter == null || company.ID == companyID);
-            };
-            company = company                
-                .OrderBy(contact => contact.CompanyName)
-                .Select(contact => contact);
-
-            return new SelectList(company, nameof(Company.ID), nameof(Company.CompanyName));
+            return new SelectList(companySelectList, nameof(CompanySelectListSQLModel.ID), nameof(CompanySelectListSQLModel.Name));
         }
 
         private static IQueryable<CompanyIndexViewModel> SortCompanyIndex(IQueryable<CompanyIndexViewModel> companiesQuery, string sortOrder)

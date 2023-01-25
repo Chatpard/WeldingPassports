@@ -14,6 +14,7 @@ namespace Application.ViewModels
         [Required]
         [Display(Name = "Company Letter")]
         [RegularExpression(@"([A-Z])$", ErrorMessage = "Incorrect Company Letter.")]
+        //Todo: Controller string replace with ref.
         [Remote(action: nameof(ITrainingCentersApiController.IsLetterInUse), controller: "TrainingCentersApi", areaName: "API", ErrorMessage = "This letter is already in use.")]
         public char? Letter { get; set; }
         

@@ -3,11 +3,11 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Application.Security
 @inject IViewLocalizer Localizer
-@model PaginatedList<TrainingCenterIndexViewModel>
 @inject UserManager<IdentityUser> userManager
 @inject ITrainingCentersSQLRepository trainingCentersSQLRepository
 @inject IDataProtectionProvider dataProtectionProvider
 @inject IDataProtectionPurposeStrings dataProtectionPurposeStrings
+@model PaginatedList<TrainingCenterIndexViewModel>
 
 @{
     ViewData["Title"] = Localizer["Training Centers Index"];
@@ -18,7 +18,7 @@
     var userCanDeleteTrainingCenters = User.CanDelete(ClaimsTypesStore.TrainingCenters);
 
     var protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
-    var usersTrainingCenterID = await User.GetTrainingCenterID(userManager, trainingCentersSQLRepository, protector);
+    var userTrainingCenterID = await User.GetTrainingCenterID(userManager, trainingCentersSQLRepository, protector);
 }
 
 <h1>@Localizer["Training Centers Index"]</h1>
@@ -163,7 +163,7 @@
                     <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Details)"
                         asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
                 }
-                @if (userCanEditTrainingCenters && (usersTrainingCenterID == null || usersTrainingCenterID == protector.Unprotect(@trainingCenter.EncryptedId)))
+                @if (userCanEditTrainingCenters && (userTrainingCenterID == null || userTrainingCenterID == protector.Unprotect(trainingCenter.EncryptedId)))
                 {
                     <text>|</text> <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Edit)"
                         asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>

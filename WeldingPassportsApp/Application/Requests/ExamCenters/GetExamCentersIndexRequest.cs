@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Requests.ExamCenters
 {
-    public class GetExamCentersIndexRequest: IRequest<ActionResult>
+    public class GetExamCentersIndexRequest: IRequest<IActionResult>
     {
         public GetExamCentersIndexRequest(string sortOrder, string currentFilter, string searchString, int? pageNumber, Controller controller)
         {

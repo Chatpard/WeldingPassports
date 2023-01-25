@@ -52,7 +52,7 @@
                     @if(userCanCreateAddresses)
                     {
                         <div class="input-group-append">
-                            <a class="btn btn-primary" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                            <a class="btn btn-primary" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
                         </div>
                     }
                     <div class="input-group-append">

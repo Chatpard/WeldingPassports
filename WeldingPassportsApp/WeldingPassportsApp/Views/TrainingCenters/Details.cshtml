@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
 @model TrainingCenterDetailsViewModel
 
 @{
@@ -11,7 +10,6 @@
 
 <h1>@Localizer["Training Center Details"]</h1>
 <hr />
-<br />
 <dl class="row">
     <dt class="col-sm-2">
         @Html.DisplayNameFor(model => model.Letter)

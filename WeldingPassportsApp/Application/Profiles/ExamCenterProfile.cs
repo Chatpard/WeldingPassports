@@ -23,6 +23,22 @@ namespace Application.Profiles
                     _protector.Protect(ec.ID.ToString())))
                 .ForMember(ecvm => ecvm.CompanyName, options => options.MapFrom(ec =>
                     ec.Company.CompanyName));
+
+            CreateMap<ExamCenter, ExamCenterDetailsViewModel>()
+                .ForMember(ecvm => ecvm.EncryptedID, options => options.MapFrom(ec =>
+                    _protector.Protect(ec.ID.ToString())))
+                .ForMember(ecvm => ecvm.CompanyName, options => options.MapFrom(ec =>
+                    ec.Company.CompanyName));
+            
+            CreateMap<ExamCenterCreateViewModel, ExamCenter>();
+
+            CreateMap<ExamCenter, ExamCenterEditViewModel>()
+                .ForMember(ecvm => ecvm.EncryptedID, options => options.MapFrom(ec =>
+                    _protector.Protect(ec.ID.ToString())));
+
+            CreateMap<ExamCenterEditViewModel, ExamCenter>()
+                .ForMember(ec => ec.ID, options => options.MapFrom(ecvm =>
+                    _protector.Unprotect(ecvm.EncryptedID)));
         }
     }
 }

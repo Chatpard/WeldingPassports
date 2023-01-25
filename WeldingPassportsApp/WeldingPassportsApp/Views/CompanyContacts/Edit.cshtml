@@ -63,21 +63,24 @@
                     <select asp-for="ContactID" class="form-control align-self-center" asp-items="@Model.ContactSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose a Contact"]</option>
                     </select>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetContactEditBtnID')">
-                            @Localizer["Action"]
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            @if (userCanEditContacts)
-                            {
-                                <button type="submit" name="submit" value="@CompanyContactIDStore.GetContactEditBtnID" id="@CompanyContactIDStore.GetContactEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
-                            }
-                            @if (userCanCreateContacts)
-                            {
-                                <a class="dropdown-item" type="button" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
-                            }
+                    @if (userCanEditContacts || userCanCreateContacts)
+                    {
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetContactEditBtnID')">
+                                @Localizer["Action"]
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if (userCanEditContacts)
+                                {
+                                    <button class="dropdown-item" type="submit" name="submit" value="@CompanyContactIDStore.GetContactEditBtnID" id="@CompanyContactIDStore.GetContactEditBtnID" style="width:auto">@Localizer["Edit"]</button>
+                                }
+                                @if (userCanCreateContacts)
+                                {
+                                    <a class="dropdown-item" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="input-group-append">
                         <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
@@ -90,21 +93,24 @@
                     <select asp-for="CompanyID" class="form-control align-self-center" asp-items="@Model.CompanySelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
                     </select>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetCompanyEditBtnID')">
-                            @Localizer["Action"]
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            @if(userCanEditCompanies)
-                            {
-                                <button type="submit" name="submit" value="@CompanyContactIDStore.GetCompanyEditBtnID" id="@CompanyContactIDStore.GetCompanyEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
-                            }
-                            @if (userCanCreateCompanies)
-                            {
-                                <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
-                            }
+                    @if (userCanEditCompanies || userCanCreateCompanies)
+                    {
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetCompanyEditBtnID')">
+                                @Localizer["Action"]
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if(userCanEditCompanies)
+                                {
+                                    <button type="submit" name="submit" value="@CompanyContactIDStore.GetCompanyEditBtnID" id="@CompanyContactIDStore.GetCompanyEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
+                                }
+                                @if (userCanCreateCompanies)
+                                {
+                                    <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="input-group-append">
                         <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
@@ -146,21 +152,24 @@
                     <select asp-for="AddressID" class="form-control" asp-items="@Model.AddressSelectList">
                         <option value="" selected disabled hidden>@Localizer["Choose an Address"]</option>
                     </select>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetAddressEditBtnID')">
-                            @Localizer["Action"]
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            @if(userCanEditAddresses)
-                            {
-                                <button type="submit" name="submit" value="@CompanyContactIDStore.GetAddressEditBtnID" id="@CompanyContactIDStore.GetAddressEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
-                            }
-                            @if(userCanCreateAddresses)
-                            {
-                                <a class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
-                            }
+                    @if(userCanEditAddresses || userCanCreateAddresses)
+                    {
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetAddressEditBtnID')">
+                                @Localizer["Action"]
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                @if(userCanEditAddresses)
+                                {
+                                    <button type="submit" name="submit" value="@CompanyContactIDStore.GetAddressEditBtnID" id="@CompanyContactIDStore.GetAddressEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
+                                }
+                                @if(userCanCreateAddresses)
+                                {
+                                    <a class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                                }
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="input-group-append">
                         <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>

@@ -68,11 +68,20 @@ namespace Application.Security
         {
             string userId = userManager.GetUserId(claimsPrincipal);
             TrainingCenter trainingCenter = await trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
-            int? trainingCenterId = trainingCenter?.ID;
 
-            if (trainingCenterId == null) return null;
+            if (trainingCenter == null) return null;
 
-            return trainingCenterId.ToString();
+            return trainingCenter.ID.ToString();
+        }
+
+        public static async Task<string?> GetExamCenterID(this ClaimsPrincipal claimsPrincipal, UserManager<IdentityUser> userManager, IExamCentersSQLRepository examCentersSQLRepository)
+        {
+            string userId = userManager.GetUserId(claimsPrincipal);
+            ExamCenter examCenter = await examCentersSQLRepository.GetExamCenterByUserId(userId);
+
+            if (examCenter == null) return null;
+
+            return examCenter.ID.ToString();
         }
     }
 }

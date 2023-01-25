@@ -75,10 +75,10 @@ namespace Infrastructure.Repositories.SQL
                 decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             }
 
-            IQueryable<Contact> query = _context.Contacts
-                .Where(contact => contact.ID == decryptedID);
+            Contact contact = await _context.Contacts
+                .Where(contact => contact.ID == decryptedID).SingleOrDefaultAsync();
 
-            return await query.ProjectTo<ContactEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+            return _mapper.Map<ContactEditViewModel>(contact);
         }
 
         public EntityEntry<Contact> PostContactEdit(Contact contactChanges)

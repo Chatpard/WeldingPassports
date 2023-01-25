@@ -81,8 +81,8 @@ namespace Application.Security
                             {Examinations, ClaimsValuesStore.CanRead },
                             {Certificates, ClaimsValuesStore.CanReadUpdate },
                             {ExamCenters, ClaimsValuesStore.CanReadEdit },
-                            {CompanyContacts, ClaimsValuesStore.CanRead },
-                            {Companies, ClaimsValuesStore.CanRead},
+                            {CompanyContacts, ClaimsValuesStore.CanReadEdit },
+                            {Companies, ClaimsValuesStore.CanReadEdit},
                             {Addresses, ClaimsValuesStore.CanReadEditCreateDelete },
                             {Contacts, ClaimsValuesStore.CanReadEditCreateDelete }
                         };

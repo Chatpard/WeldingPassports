@@ -3,7 +3,7 @@
 @model CompanyDetailsViewModel
 
 @{
-    ViewData["Title"] = @Localizer["Company Details"];
+    ViewData["Title"] = Localizer["Company Details"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
     var userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);

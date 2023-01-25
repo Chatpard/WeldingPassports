@@ -1,0 +1,38 @@
+﻿@model ExamCenterDetailsViewModel
+
+@{
+    ViewData["Title"] = Localizer["Exam Center Details"];
+    string currentUrl = ViewBag.currentUrl;
+    string returnUrl = ViewBag.returnUrl;
+
+    bool userCanEditExamCenters = User.CanEdit(ClaimsTypesStore.ExamCenters);
+}
+
+<h1>@Localizer["Exam Center Details"]</h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dt class="col-sm-10">
+            @Html.DisplayFor(model => model.IsActive)
+        </dt>
+    </dl>
+</div>
+<div>
+    @if (userCanEditExamCenters)
+    {
+        <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Edit)"
+        asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
+    }
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

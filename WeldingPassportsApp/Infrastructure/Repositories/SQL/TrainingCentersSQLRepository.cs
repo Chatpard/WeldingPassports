@@ -139,12 +139,18 @@ namespace Infrastructure.Repositories.SQL
         {
             switch (sortOrder)
             {
+                case "Letter_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.Letter);
+                    return trainingCentersQuery;
+                case "Letter_asc":
+                case null:
+                case "":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.Letter);
+                    return trainingCentersQuery;
                 case "CompanyName_desc":
                     trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.CompanyName);
                     return trainingCentersQuery;
                 case "CompanyName_asc":
-                case null:
-                case "":
                     trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.CompanyName);
                     return trainingCentersQuery;
                 case "BusinessAddressPostalCode_desc":

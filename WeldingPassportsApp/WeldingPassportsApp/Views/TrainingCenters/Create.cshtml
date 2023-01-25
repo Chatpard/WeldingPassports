@@ -49,10 +49,7 @@
                 <label asp-for="CompanyContactID" class="col-sm-2 col-form-label"></label>
                 <div class="input-group col-sm-10">
                     <select asp-for="CompanyContactID" class="form-control" asp-items="@Model.CompanyContactSelectList">
-                        <option value="0">@if (Model.CompanyContactID == 0)
-                        {@Localizer["Choose a Contact"]}
-                    else
-                        { @Localizer["No Contact"]}</option>
+                        <option value="0" selected disabled hidden>@Localizer["Choose a Contact"]</option>
                     </select>
                     @if (userCanCreateCompanyContacts)
                     {
@@ -82,5 +79,6 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="~/js/TrainingCenters/GetTrainingCenterLetterByTrainingCenterID.js"></script>
+    <script src="~/js/TrainingCenters/GetCompanyContactsFromCompanyID.js"></script>
     <script src="~/js/ResetSelect.js"></script>
 }

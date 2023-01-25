@@ -33,9 +33,9 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet(nameof(GetLetterByTrainingCenterId))]
-        public async Task<ActionResult<char?>> GetLetterByTrainingCenterId(int id)
+        public async Task<ActionResult<char?>> GetLetterByTrainingCenterId(int companyID)
         {
-            var query = new GetTrainingCenterLetterByTrainingCenterIdApiRequest(id, this);
+            var query = new GetTrainingCenterLetterByTrainingCenterIdApiRequest(companyID, this);
             return await _mediator.Send(query);
         }
     }

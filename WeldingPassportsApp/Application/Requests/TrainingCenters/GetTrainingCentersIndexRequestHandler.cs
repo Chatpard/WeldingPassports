@@ -28,7 +28,8 @@ namespace Application.Requests.TrainingCenters
 
         public async Task<IActionResult> Handle(GetTrainingCentersIndexRequest request, CancellationToken cancellationToken)
         {
-            request.Controller.ViewData["CurrentSort"] = request.SortOrder ?? "CompanyName_asc";
+            request.Controller.ViewData["CurrentSort"] = request.SortOrder ?? "Letter_asc";
+            request.Controller.ViewData["Letter"] = request.SortOrder == "Letter_desc" ? "Letter_asc" : "Letter_desc";
             request.Controller.ViewData["CompanyName"] = request.SortOrder == "CompanyName_desc" ? "CompanyName_asc" : "CompanyName_desc";
             request.Controller.ViewData["BusinessAddressPostalCode"] = request.SortOrder == "BusinessAddressPostalCode_desc" ? "BusinessAddressPostalCode_asc" : "BusinessAddressPostalCode_desc";
             request.Controller.ViewData["BusinessAddressCity"] = request.SortOrder == "BusinessAddressCity_desc" ? "BusinessAddressCity_asc" : "BusinessAddressCity_desc";

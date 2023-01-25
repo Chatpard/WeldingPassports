@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Requests.TrainingCenters
+namespace Application.Requests.API.TrainingCentersAPI
 {
     class GetTrainingCenterLetterByTrainingCenterIdApiRequestHandler : IRequestHandler<GetTrainingCenterLetterByTrainingCenterIdApiRequest, ActionResult<char?>>
     {
@@ -21,11 +21,11 @@ namespace Application.Requests.TrainingCenters
 
         public async Task<ActionResult<char?>> Handle(GetTrainingCenterLetterByTrainingCenterIdApiRequest request, CancellationToken cancellationToken)
         {
-            char? letter = await _repository.GetLetterById(request.TrainingCenterID);
+            char? letter = await _repository.GetLetterByCompanyID(request.CompanyID);
 
-            if(letter == null)
+            if (letter == null)
             {
-                return request.Controller.Ok(String.Empty);
+                return request.Controller.Ok(string.Empty);
             }
 
             return request.Controller.Ok(letter);

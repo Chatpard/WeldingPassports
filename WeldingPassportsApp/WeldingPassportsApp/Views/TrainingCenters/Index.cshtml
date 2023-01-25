@@ -50,6 +50,20 @@
         <tr>
             <th>
                 <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["Letter"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(t => t.FirstOrDefault().Letter)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Letter_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Letter_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Index)"
                    asp-route-sortOrder="@ViewData["CompanyName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                     @Html.DisplayNameFor(t => t.FirstOrDefault().CompanyName)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_desc")
@@ -139,6 +153,9 @@
         @foreach (var trainingCenter in Model)
         {
         <tr>
+            <td>
+                @Html.DisplayFor(vm => trainingCenter.Letter)
+            </td>
             <td>
                 @Html.DisplayFor(vm => trainingCenter.CompanyName)
             </td>

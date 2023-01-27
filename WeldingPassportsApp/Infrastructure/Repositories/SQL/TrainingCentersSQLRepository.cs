@@ -129,7 +129,7 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<TrainingCenter> GetTrainingCenterByUserId (string userId)
         {
-            CompanyContact companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.IdentityUserId == userId).Include(companyContact => companyContact.Company).SingleOrDefaultAsync();
+            CompanyContact companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.IdentityUserId == userId).SingleOrDefaultAsync();
             if(companyContact == null) return null;
 
             TrainingCenter trainingCenter = await _context.TrainingCenters.Where(trainingCenter => trainingCenter.CompanyID == companyContact.CompanyID).FirstOrDefaultAsync();

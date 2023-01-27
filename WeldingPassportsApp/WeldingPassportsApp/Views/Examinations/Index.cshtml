@@ -67,7 +67,7 @@
             <th>
                 <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
                    asp-route-sortOrder="@ViewData["CompanyNameECSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyNameTC)
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyNameEC)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyNameEC_desc")
                     {
                         @Html.Raw(" ▲")

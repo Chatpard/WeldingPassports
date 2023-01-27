@@ -20,13 +20,15 @@ namespace Application.Requests.Examinations
     {
         private readonly IExaminationsSQLRepository _repository;
         private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
+        private readonly IExamCentersSQLRepository _examCentersSQLRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public GetExaminationsIndexRequestHandler(IExaminationsSQLRepository repository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IMapper mapper, UserManager<IdentityUser> userManager)
+        public GetExaminationsIndexRequestHandler(IExaminationsSQLRepository repository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IExamCentersSQLRepository examCentersSQLRepository, IMapper mapper, UserManager<IdentityUser> userManager)
         {
             _repository = repository;
             _trainingCentersSQLRepository = trainingCentersSQLRepository;
+            _examCentersSQLRepository = examCentersSQLRepository;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -47,13 +49,15 @@ namespace Application.Requests.Examinations
             string userId = _userManager.GetUserId(request.Controller.User);
             TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
             int? trainingCenterId = trainingCenter?.ID;
+            ExamCenter examCenter = await _examCentersSQLRepository.GetExamCenterByUserId(userId);
+            int? examCenterId = examCenter?.ID;
 
             request.Controller.ViewData["CurrentFilter"] = request.SearchString;
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetExaminationsIndexPaginatedAsync(trainingCenterId, 7, request.PageNumber ?? 1,
-                request.SearchString, request.SortOrder);  ;
+            var vm = await _repository.GetExaminationsIndexPaginatedAsync(7, request.PageNumber ?? 1,
+                request.SearchString, request.SortOrder, trainingCenterId: trainingCenterId, examCenterId: examCenterId);
 
             return request.Controller.View(vm);
         }

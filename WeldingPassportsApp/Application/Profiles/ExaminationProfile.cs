@@ -42,8 +42,10 @@ namespace Application.Profiles
                     _protector.Protect(examination.ID.ToString())))
                 .ForMember(index => index.ExamDate, options => options.MapFrom(examination =>
                     examination.ExamDate))
-                .ForMember(index => index.CompanyName, options => options.MapFrom(examination =>
+                .ForMember(index => index.CompanyNameTC, options => options.MapFrom(examination =>
                     examination.TrainingCenter.Company.CompanyName))
+                .ForMember(index => index.CompanyNameEC, options => options.MapFrom(examination =>
+                    examination.ExamCenter.Company.CompanyName))
                 .ForMember(index => index.NumberOfPassports, options => options.MapFrom(examination =>
                     examination.Registrations.Count));
 

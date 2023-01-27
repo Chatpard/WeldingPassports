@@ -131,8 +131,7 @@ namespace Infrastructure.Repositories.SQL
 
         private IQueryable<ExaminationIndexViewModel> GetExaminationsIndex(int? trainingCenterId)
         {
-            IQueryable<Examination> examinationsQ = _context.Examinations
-                .Where(exmainations => true);
+            IQueryable<Examination> examinationsQ = _context.Examinations.AsQueryable();
             if (trainingCenterId != null)
             {
                 examinationsQ = examinationsQ
@@ -164,11 +163,17 @@ namespace Infrastructure.Repositories.SQL
                 case "":
                     examinationsQuery = examinationsQuery.OrderBy(examination => examination.ExamDate);
                     return examinationsQuery;
-                case "CompanyName_desc":
-                    examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.CompanyName);
+                case "CompanyNameTC_desc":
+                    examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.CompanyNameTC);
                     return examinationsQuery;
-                case "CompanyName_asc":
-                    examinationsQuery = examinationsQuery.OrderBy(examination => examination.CompanyName);
+                case "CompanyNameTC_asc":
+                    examinationsQuery = examinationsQuery.OrderBy(examination => examination.CompanyNameTC);
+                    return examinationsQuery;
+                case "CompanyNameEC_desc":
+                    examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.CompanyNameEC);
+                    return examinationsQuery;
+                case "CompanyNameEC_asc":
+                    examinationsQuery = examinationsQuery.OrderBy(examination => examination.CompanyNameEC);
                     return examinationsQuery;
                 case "NumberOfPassports_desc":
                     examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.NumberOfPassports);
@@ -185,7 +190,7 @@ namespace Infrastructure.Repositories.SQL
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                examinationsQuery = examinationsQuery.Where(examination => examination.CompanyName.Contains(searchString.ToLower()));
+                examinationsQuery = examinationsQuery.Where(examination => examination.CompanyNameTC.Contains(searchString.ToLower()));
             }
 
             return examinationsQuery;

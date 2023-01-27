@@ -31,8 +31,8 @@ namespace Application.Requests.Examinations
         public async Task<IActionResult> Handle(GetExaminationsCreateRequest request, CancellationToken cancellationToken)
         {
             string userId = _userManager.GetUserId(request.Controller.User);
-            TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
-            int? trainingCenterId = trainingCenter?.ID;
+            TrainingCenter userTrainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
+            int? userTrainingCenterId = userTrainingCenter?.ID;
 
             if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                 request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
@@ -41,7 +41,7 @@ namespace Application.Requests.Examinations
 
             var vm = new ExaminationCreateViewModel();
             vm.ExamCenterItems = _examCentersSQLRepository.ExamCenterSelectList();
-            vm.TrainingCenterItems = _trainingCentersSQLRepository.TrainingCenterSelectList(trainingCenterId);
+            vm.TrainingCenterItems = _trainingCentersSQLRepository.TrainingCenterSelectList(userTrainingCenterId);
 
             return await Task.FromResult(request.Controller.View(vm));
         }

@@ -86,7 +86,8 @@ namespace Infrastructure.Repositories.SQL
 
         public SelectList TrainingCenterSelectList(int? trainingsCenterId = null)
         {
-            var trainingCenters = _context.TrainingCenters.Where(traingCenter => true);
+            var trainingCenters = _context.TrainingCenters
+                .Where(trainingCenter =>  trainingCenter.IsActive);
             if (trainingsCenterId != null)
             {
                 trainingCenters = trainingCenters

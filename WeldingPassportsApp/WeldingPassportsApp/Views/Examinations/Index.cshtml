@@ -52,13 +52,27 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
-                   asp-route-sortOrder="@ViewData["CompanyNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
-                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyName)
-                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_desc")
+                   asp-route-sortOrder="@ViewData["CompanyNameTCSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyNameTC)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyNameTC_desc")
                     {
                         @Html.Raw(" ▲")
                     }
-                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_asc")
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyNameTC_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Index)"
+                   asp-route-sortOrder="@ViewData["CompanyNameECSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyNameTC)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyNameEC_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyNameEC_asc")
                     {
                         @Html.Raw(" ▼")
                     }
@@ -89,7 +103,10 @@
                     @Html.DisplayFor(vm => examination.ExamDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(vm => examination.CompanyName)
+                    @Html.DisplayFor(vm => examination.CompanyNameTC)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examination.CompanyNameEC)
                 </td>
                 <td>
                     @Html.DisplayFor(vm => examination.NumberOfPassports)

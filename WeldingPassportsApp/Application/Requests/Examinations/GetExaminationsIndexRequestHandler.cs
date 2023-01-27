@@ -35,7 +35,8 @@ namespace Application.Requests.Examinations
         {
             request.Controller.ViewData["CurrentSort"] = request.SortOrder ?? "ExamDate_asc";
             request.Controller.ViewData["ExamDateSort"] = request.SortOrder == "ExamDate_desc" ? "ExamDate_asc" : "ExamDate_desc";
-            request.Controller.ViewData["CompanyNameSort"] = request.SortOrder == "CompanyName_desc" ? "CompanyName_asc" : "CompanyName_desc";
+            request.Controller.ViewData["CompanyNameTCSort"] = request.SortOrder == "CompanyNameTC_desc" ? "CompanyNameTC_asc" : "CompanyNameTC_desc";
+            request.Controller.ViewData["CompanyNameECSort"] = request.SortOrder == "CompanyNameEC_desc" ? "CompanyNameEC_asc" : "CompanyNameEC_desc"; 
             request.Controller.ViewData["NumberOfPassportsSort"] = request.SortOrder == "NumberOfPassports_desc" ? "NumberOfPassports_asc" : "NumberOfPassports_desc";
 
             if (request.SearchString != null)

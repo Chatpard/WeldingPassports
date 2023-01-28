@@ -97,7 +97,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = ClaimsTypesStore.Examinations+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
+        [Authorize(Policy = ClaimsTypesStore.Examinations+ClaimsPrincipalExtensions.CanUpdateRevokeEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -115,7 +115,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
-        [Authorize(Policy = ClaimsTypesStore.Examinations+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
+        [Authorize(Policy = ClaimsTypesStore.Examinations+ClaimsPrincipalExtensions.CanUpdateRevokeEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(ExaminationEditViewModel newExaminationVm, string returnUrl)
         {
             try

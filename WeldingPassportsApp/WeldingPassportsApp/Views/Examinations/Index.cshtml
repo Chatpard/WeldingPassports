@@ -122,7 +122,7 @@
                         <text>|</text> <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Edit)"
                            asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
                     }
-                    @if (userCanDeleteExaminations)
+                    @if (userCanDeleteExaminations && examination.NumberOfPassports == 0)
                     {
                         <text>|</text> <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Delete)"
                            asp-route-id="@examination.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>

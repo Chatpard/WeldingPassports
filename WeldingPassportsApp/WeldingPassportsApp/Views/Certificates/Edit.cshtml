@@ -1,10 +1,15 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
+@inject IAuthorizationService Authorization
 @model CertificateEditViewModel
 
 @{
     ViewData["Title"] = Localizer["Edit Certificate"];
     var returnUrl = ViewBag.ReturnUrl;
+    var userCanUpdateCertificates = User.CanUpdate(ClaimsTypesStore.Certificates);
+    var userCanEditCertificates = User.CanEdit(ClaimsTypesStore.Certificates);
+    var userCanRevokeCertificates = User.CanRevoke(ClaimsTypesStore.Certificates);
 }
 
 <h1>@Localizer["Edit Certificate"]</h1>
@@ -47,7 +52,14 @@
     <div class="form-group row">
         <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems"></select>
+            @if (userCanEditCertificates)
+            {
+                <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems"></select>
+            }
+            else
+            {
+                <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems" readonly></select>
+            }
             <span asp-validation-for="ProcessID" class="text-danger"></span>
         </div>
     </div>
@@ -57,7 +69,14 @@
     <div class="form-group row">
         <label asp-for="CurrentCertificateCompanyID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <select asp-for="CurrentCertificateCompanyID" class="form-control" asp-items="Model.CompanyNameItems"></select>
+            @if (userCanEditCertificates)
+            {
+                <select asp-for="CurrentCertificateCompanyID" class="form-control" asp-items="Model.CompanyNameItems"></select>
+            }
+            else
+            {
+                <select asp-for="CurrentCertificateCompanyID" class="form-control" asp-items="Model.CompanyNameItems" readonly></select>
+            }
             <span asp-validation-for="CurrentCertificateCompanyID" class="text-danger"></span>
         </div>
     </div>
@@ -78,23 +97,46 @@
     <div class="form-group row">
         <label asp-for="CurrentCertificateRegistrationTypeID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <select asp-for="CurrentCertificateRegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems"></select>
+            @if (userCanEditCertificates)
+            {
+                <select asp-for="CurrentCertificateRegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems"></select>
+            }
+            else
+            {
+                <select asp-for="CurrentCertificateRegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems" readonly></select>
+            }
             <span asp-validation-for="CurrentCertificateRegistrationTypeID" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
         <label asp-for="CurrentCertificateHasPassed" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            @Html.DropDownListFor(m => m.CurrentCertificateHasPassed, new SelectList(new[]
+            @if (userCanUpdateCertificates)
             {
-            new SelectListItem { Value = null, Text = "Not set" },
-            new SelectListItem { Value = "False", Text = "False" },
-            new SelectListItem { Value = "True", Text = "True" },
-            },
-            "Value",
-            "Text"
-            ),
-            new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.CurrentCertificateHasPassed, new SelectList(new[]
+                {
+                new SelectListItem { Value = null, Text = "Not set" },
+                new SelectListItem { Value = "False", Text = "False" },
+                new SelectListItem { Value = "True", Text = "True" },
+                },
+                "Value",
+                "Text"
+                ),
+               new { @class = "form-control" })
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.CurrentCertificateHasPassed, new SelectList(new[]
+                {
+                new SelectListItem { Value = null, Text = "Not set" },
+                new SelectListItem { Value = "False", Text = "False" },
+                new SelectListItem { Value = "True", Text = "True" },
+                },
+                "Value",
+                "Text"
+                ),
+                new { @class = "form-control", @disabled =  "disabled" })
+            }
             <span asp-validation-for="CurrentCertificateHasPassed" class="text-danger"></span>
         </div>
     </div>
@@ -108,23 +150,46 @@
     <div class="form-group row">
         <label asp-for="CurrentCertificateRevokeDate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <input asp-for="CurrentCertificateRevokeDate" class="form-control">
+            @if (userCanRevokeCertificates)
+            {
+                <input asp-for="CurrentCertificateRevokeDate" class="form-control">
+            }
+            else
+            {
+                <input asp-for="CurrentCertificateRevokeDate" class="form-control" readonly>
+            }
             <span asp-validation-for="CurrentCertificateRevokeDate" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
         <label asp-for="CurrentCertificateRevokedByCompanyContactID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems">
-                <option value="0">Not Revoked</option>
-            </select>
+            @if (userCanRevokeCertificates)
+            {
+                <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems">
+                    <option value="0">Not Revoked</option>
+                </select>
+            }
+            else
+            {
+                <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems" disabled>
+                    <option value="0">Not Revoked</option>
+                </select>
+            }
             <span asp-validation-for="CurrentCertificateRevokedByCompanyContactID" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group row">
         <label asp-for="CurrentCertificateRevokeComment" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment">
+            @if (userCanRevokeCertificates)
+            {
+                <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment">
+            }
+            else
+            {
+                <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment" disabled>
+            }
             <span asp-validation-for="CurrentCertificateRevokeComment" class="text-danger"></span>
         </div>
     </div>

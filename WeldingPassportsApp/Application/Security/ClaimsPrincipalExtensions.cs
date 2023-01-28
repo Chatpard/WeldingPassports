@@ -16,32 +16,49 @@ namespace Application.Security
 {
     public static class ClaimsPrincipalExtensions
     {
-        public static readonly string[] CanReadClaimValues = new string[] { ClaimsValuesStore.CanRead, ClaimsValuesStore.CanReadUpdate, ClaimsValuesStore.CanReadEdit, ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete };
-        public static readonly string[] CanUpdateClaimValues = new string[] { ClaimsValuesStore.CanReadUpdate };
-        public static readonly string[] CanEditClaimValues = new string[] { ClaimsValuesStore.CanReadEdit, ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete };
-        public static readonly string[] CanCreateClaimValues = new string[] { ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete };
-        public static readonly string[] CanDeleteClaimValues = new string[] { ClaimsValuesStore.CanReadEditCreateDelete };
+        public static readonly string[] CanReadClaimValues = new string[] { ClaimsValuesStore.CanRead, ClaimsValuesStore.CanReadEdit, ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanRevokeClaimValues = new string[] { ClaimsValuesStore.CanRevoke, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanUpdateClaimValues = new string[] { ClaimsValuesStore.CanUpdate, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanEditClaimValues = new string[] { ClaimsValuesStore.CanReadEdit, ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanUpdateRevokeReadClaimValues = new string[] { ClaimsValuesStore.CanUpdate, ClaimsValuesStore.CanRevoke, ClaimsValuesStore.CanRead, ClaimsValuesStore.CanReadEdit, ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanUpdateRevokeEditClaimValues = new string[] { ClaimsValuesStore.CanUpdate, ClaimsValuesStore.CanRevoke, ClaimsValuesStore.CanReadEdit, ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanCreateClaimValues = new string[] { ClaimsValuesStore.CanReadEditCreate, ClaimsValuesStore.CanReadEditCreateDelete, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanDeleteClaimValues = new string[] { ClaimsValuesStore.CanReadEditCreateDelete, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
+        public static readonly string[] CanUpdateRevokeDeleteClaimValues = new string[] { ClaimsValuesStore.CanUpdate, ClaimsValuesStore.CanRevoke, ClaimsValuesStore.CanReadEditCreateDelete, ClaimsValuesStore.CanUpdateRevokeReadEditCreateDelete };
 
         public const string CanReadClaimsGroup = "CanRead";
+        public const string CanRevokeClaimsGroup = "CanRevoke";
         public const string CanUpdateClaimsGroup = "CanUpdate";
         public const string CanEditClaimsGroup = "CanEdit";
+        public const string CanUpdateRevokeReadClaimsGroup = "CanUpdateRevokeRead"; 
+        public const string CanUpdateRevokeEditClaimsGroup = "CanUpdateRevokeEdit";
         public const string CanCreateClaimsGroup = "CanCreate"; 
         public const string CanDeleteClaimsGroup = "CanDelete";
+        public const string CanUpdateRevokeDeleteClaimsGroup = "CanUpdateRevokeDelete";
 
         public static Dictionary<string, string[]> ClaimsGroups()
         { 
             return new Dictionary<string, string[]> { 
                 { CanReadClaimsGroup, CanReadClaimValues },
+                { CanRevokeClaimsGroup, CanRevokeClaimValues },
                 { CanUpdateClaimsGroup, CanUpdateClaimValues },
                 { CanEditClaimsGroup, CanEditClaimValues },
+                { CanUpdateRevokeReadClaimsGroup, CanUpdateRevokeReadClaimValues },
+                { CanUpdateRevokeEditClaimsGroup, CanUpdateRevokeEditClaimValues },
                 { CanCreateClaimsGroup, CanCreateClaimValues },
-                { CanDeleteClaimsGroup, CanDeleteClaimValues } 
+                { CanDeleteClaimsGroup, CanDeleteClaimValues },
+                { CanUpdateRevokeDeleteClaimsGroup, CanUpdateRevokeDeleteClaimValues }
             };
         }
         
         public static bool CanRead(this ClaimsPrincipal claimsPrincipal, string ClaimsType = "")
         {
             return CanReadClaimValues.Contains(claimsPrincipal.FindFirst(ClaimsType)?.Value);
+        }
+
+        public static bool CanRevoke(this ClaimsPrincipal claimsPrincipal, string ClaimsType = "")
+        {
+            return CanRevokeClaimValues.Contains(claimsPrincipal.FindFirst(ClaimsType)?.Value);
         }
 
         public static bool CanUpdate(this ClaimsPrincipal claimsPrincipal, string ClaimsType = "")

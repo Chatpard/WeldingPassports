@@ -28,7 +28,7 @@ namespace Application.Requests.ExamCenters
 
                 ExamCenter examCenter = _mapper.Map<ExamCenter>(request.ExamCenterEditVM);
                 _repository.PostExamCentersEdit(examCenter);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl); 
             }

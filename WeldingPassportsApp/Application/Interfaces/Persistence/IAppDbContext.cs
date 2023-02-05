@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -11,8 +12,6 @@ namespace Application.Interfaces
 {
     public interface IAppDbContext
     {
-        DbSet<Company> Companies { get; set; }
-
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

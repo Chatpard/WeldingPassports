@@ -1,10 +1,14 @@
 ﻿using Application.Interfaces.Repositories.API;
 using Application.Interfaces.Repositories.SQL;
+using Application.Security;
 using Application.SQLModels;
 using Domain.Models;
+using System.Threading;
 using Infrastructure.Services.Persistence;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.VisualBasic;
 using System;
@@ -20,11 +24,13 @@ namespace Infrastructure.Repositories.API
     {
         private readonly AppDbContext _context;
         private readonly IAppSettingsSQLRepository _appSettingsSQLRepository;
+        private readonly ICertificatesSQLRepository _certificatesSQLRepository;
 
-        public CertificatesAPIRepository(AppDbContext context, IAppSettingsSQLRepository appSettingsSQLRepository)
+        public CertificatesAPIRepository(AppDbContext context, IAppSettingsSQLRepository appSettingsSQLRepository, ICertificatesSQLRepository certificatesSQLRepository)
         {
             _context=context;
             _appSettingsSQLRepository=appSettingsSQLRepository;
+            _certificatesSQLRepository=certificatesSQLRepository;
         }
 
         public async Task<GetGetRegistrationTypesFromPEPassportReponse> GetGetRegistrationTypesFromPEPassportSelectList(int pePassportID)
@@ -133,6 +139,12 @@ namespace Infrastructure.Repositories.API
                         ProcessID = allowedRegistrationTypesQQQ.FirstOrDefault()?.ProcessID,
                         RegistrationsSelectList = new SelectList(allowedRegistrationTypes, nameof(RegistrationType.ID), "RegistrationTypeName")
                     };
+        }
+
+        public int DeleteRevokeByEncryptedID(string encryptedID)
+        {
+            _certificatesSQLRepository.DeleteByEncryptedID(encryptedID);
+            return _context.SaveChanges();
         }
     }
 }

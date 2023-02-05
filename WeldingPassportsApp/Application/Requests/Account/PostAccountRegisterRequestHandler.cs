@@ -46,7 +46,7 @@ namespace Application.Requests.Account
                     .Get<IRequestCultureFeature>().RequestCulture.Culture.Name;
 
                 var userToApproveEntityEntry = _repository.InsertUserToApprove(userToApprove);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
                 
                 userToApprove = _repository.EncryptUserToApproveID(userToApproveEntityEntry.Entity);
 

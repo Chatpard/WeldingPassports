@@ -7,6 +7,7 @@ namespace Application.ViewModels
     public class ExaminationDetailsViewModel
     {
         public string EncryptedID { get; set; }
+
         private DateTime? examDate;
         [DataType(DataType.Date)]
         [Display(Name = "Examination Date")]
@@ -27,10 +28,13 @@ namespace Application.ViewModels
                     examDate = null;
             }
         }
+        
         [Display(Name = "Exam Center")]
         public string ExamCenterName { get; set; }
+        
         [Display(Name = "Training Center")]
         public string TrainingCenterName { get; set; }
+        
         public IEnumerable<ExaminationDetailsCertificationsIndexViewModel> Certifications { get; set; }
     }
 }

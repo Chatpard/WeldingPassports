@@ -21,6 +21,6 @@ namespace Application.Interfaces.Repositories.SQL
 
         SelectList AddressSelectList();
 
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

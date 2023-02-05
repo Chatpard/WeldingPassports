@@ -6,10 +6,12 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain.Models;
 using Infrastructure.Services.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +21,24 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.SQL
 {
+    [AllowAnonymous]
     public class CertificatesSQLRepository : SaveChangesSQL, ICertificatesSQLRepository
     {
         private readonly AppDbContext _context;
+        private readonly IRevokeSQLRepository _revokeSQLRepository;
         private readonly IMapper _mapper;
         private readonly IDataProtector _protector;
 
-        public CertificatesSQLRepository(AppDbContext context, IMapper mapper,
+        public CertificatesSQLRepository(AppDbContext context, IRevokeSQLRepository revokeSQLRepository,IMapper mapper,
             IDataProtectionProvider dataProtectionProvider, IDataProtectionPurposeStrings dataProtectionPurposeStrings) : base(context)
         {
             _context = context;
+            this._revokeSQLRepository=revokeSQLRepository;
             _mapper = mapper;
             _protector = dataProtectionProvider
                 .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
         }
-
+        
         public async Task PostCertificateCreateAsync(CertificateCreateViewModel vm, CancellationToken cancellationToken)
         {
             var test = _mapper.Map<Registration>(vm);
@@ -47,7 +52,7 @@ namespace Infrastructure.Repositories.SQL
                 ExpiryDate = ((DateTime)vm.ExamDate).AddDays((await _context.AppSettings.FirstAsync()).MaxExpiryDays)
             };
             _context.Registrations.Add(registration);
-           await SaveAsync(cancellationToken);
+           await SaveChangesAsync(cancellationToken);
         }
 
         public async Task<CertificateCreateViewModel> GetCertificateCreateAsync(string examinationEncryptedID)
@@ -133,7 +138,13 @@ namespace Infrastructure.Repositories.SQL
             _context.Entry(registrationChanges).Property(registration => registration.RegistrationTypeID).IsModified = true;
             _context.Entry(registrationChanges).Property(registration => registration.HasPassed).IsModified = true;
 
-            if (vm.CurrentCertificateRevokedByCompanyContactID != null && vm.CurrentCertificateRevokeDate != null)
+            await SaveChangesAsync(cancellationToken);
+
+            if (vm.CurrentCertificateRevokedByCompanyContactID == null)
+            {
+                await _revokeSQLRepository.DeleteByCertificateEncryptedID(vm.EncryptedID);
+            }
+            else
             {
                 var revoke = new Revoke()
                 {
@@ -163,17 +174,36 @@ namespace Infrastructure.Repositories.SQL
                 }
             }
 
-            await SaveAsync(cancellationToken);
+            await SaveChangesAsync(cancellationToken);
         }
 
         public async Task<CertificateEditViewModel> GetCertificateEditAsync(string encryptedID)
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
-            var vm = await _context.Registrations
+            var registration = await _context.Registrations
                 .Where(registration => registration.ID == decryptedID)
-                .ProjectTo<CertificateEditViewModel>(_mapper.ConfigurationProvider)
+                .Include(registration => registration.PEPassport)
+                .Include(registration => registration.PEPassport.PEWelder)
+                .Include(registration => registration.PEPassport.TrainingCenter)
+                .Include(registration => registration.PEPassport.TrainingCenter.Company)
+                .Include(registration => registration.Process)
+                .Include(registration => registration.Company)
+                .Include(registration => registration.Examination)
+                .Include(registration => registration.RegistrationType)
+                .Include(registration => registration.Revoke)
+                .Include(registration => registration.Revoke.CompanyContact)
+                .Include(registration => registration.Revoke.CompanyContact.Contact)
+                .Include(registration => registration.Examination)
+                .Include(registration => registration.Examination.ExamCenter)
+                .Include(registration => registration.Examination.ExamCenter.Company)
+                .Include(registration => registration.PreviousRegistration)
+                .Include(registration => registration.PreviousRegistration.Revoke)
+                .Include(registration => registration.PreviousRegistration.Revoke.CompanyContact)
+                .Include(registration => registration.PreviousRegistration.Revoke.CompanyContact.Contact)
                 .SingleOrDefaultAsync();
+            //var vm = registration.ProjectTo<CertificateEditViewModel>(_mapper.ConfigurationProvider);
+            var vm = _mapper.Map<CertificateEditViewModel>(registration);
 
             vm.EncryptedID = encryptedID;
 
@@ -225,5 +255,21 @@ namespace Infrastructure.Repositories.SQL
             
             return vm;
         }
+    
+        public async Task<EntityEntry<Registration>> DeleteByEncryptedID(string encryptedID)
+        {
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            Registration registration = await _context.Registrations.FindAsync(decryptedID);
+            if(registration == null) { return null; };
+
+            EntityEntry<Registration> certificateEntityEntry = _context.Registrations.Remove(registration);
+
+            //EntityEntry<Registration> certificateEntityEntry = _context.Entry(registration);
+            //if (registration == null) { return null; };
+
+            //certificateEntityEntry.State = EntityState.Deleted;
+            return certificateEntityEntry;
+        }
+    
     }
 }

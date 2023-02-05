@@ -36,6 +36,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesDetails");
             }
         }
@@ -52,6 +53,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesCreate");
             }
         }
@@ -68,6 +70,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesCreate");
             }
         }
@@ -84,6 +87,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesEdit");
             }
         }
@@ -100,6 +104,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in PostCertificatesEdit");
             }
         }
@@ -116,6 +121,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesDelete");
             }
         }

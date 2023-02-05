@@ -27,7 +27,7 @@ namespace Application.Requests.PEPassports
                 PEPassport pePassport = _mapper.Map<PEPassport>(request.PEPassportVM);
 
                 await _repository.PostPEPassportCreateAsync(pePassport);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
                 PEPassportEditViewModel newPEPassport = _mapper.Map <PEPassportEditViewModel>(pePassport);
 
                 return request.Controller.RedirectToAction(request.NameOfDetailsAction, new { id = newPEPassport.EncryptedID, returnUrl = request.ReturnUrl });

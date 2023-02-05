@@ -101,7 +101,7 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             _context.Companies.Remove(new Company { ID = decryptedID });
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         public SelectList CompanySelectList(bool unasigned = false, int? CompanyID = null)

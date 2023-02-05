@@ -119,7 +119,7 @@
                         <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
                            asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
                     }
-                    @if (userCanDeleteCertificates)
+                    @if (userCanDeleteCertificates && !certification.IsRevoked)
                     {
                         <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Delete)"
                            asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
@@ -129,13 +129,12 @@
         }
     </tbody>
 </table>
-@if (userCanUpdateCertificates)
-{
-    <div>
+<div>
+    @if(userCanUpdateCertificates && Model.Certifications.Count() != 0){
         <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Update)" 
             asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary">@Localizer["Update"]</a>
-        <a class="btn btn-primary" style="width:auto" href="@returnUrl">
-            @Localizer["Back"]
-        </a>
-    </div>
-}
+    }
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

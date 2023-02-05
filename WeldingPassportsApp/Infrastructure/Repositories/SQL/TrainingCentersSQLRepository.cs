@@ -81,7 +81,7 @@ namespace Infrastructure.Repositories.SQL
 
             _context.TrainingCenters.Remove(new TrainingCenter { ID = decryptedID });
 
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         public SelectList TrainingCenterSelectList(int? trainingsCenterId = null)

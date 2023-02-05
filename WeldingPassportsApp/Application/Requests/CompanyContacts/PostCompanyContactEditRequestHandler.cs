@@ -28,7 +28,7 @@ namespace Application.Requests.CompanyContacts
 
                 CompanyContact companyContact = _mapper.Map<CompanyContact>(request.ContactChanges);
                 _repository.PostCompanyContactEdit(companyContact);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
                 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

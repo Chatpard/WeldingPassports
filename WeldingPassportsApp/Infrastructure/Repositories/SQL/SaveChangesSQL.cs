@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories.SQL
             _context = context;
         }
 
-        public async Task<int> SaveAsync(CancellationToken cancellationToken)
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
             return await _context.SaveChangesAsync(cancellationToken);
         }

@@ -184,7 +184,7 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             _context.PEWelders.Remove(new PEWelder { ID = decryptedID });
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         public async Task<IPaginatedList<PEWelderIndexViewModel>> GetPEWeldersIndexPaginatedAsync(int? trainingCenterId, int pageSize, int pageIndex, string searchString, string sortOrder)

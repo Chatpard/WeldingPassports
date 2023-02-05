@@ -50,7 +50,7 @@ namespace Application.Requests.Account
 
                 _repository.UpdateUserToApprove(user);
 
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 controller.HttpContext.Response.Cookies.Append(
                     "EmailConfirmed",

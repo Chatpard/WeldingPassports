@@ -10,5 +10,6 @@ namespace Application.Interfaces.Repositories.API
     public interface ICertificationsAPIRepository
     {
         Task<GetGetRegistrationTypesFromPEPassportReponse> GetGetRegistrationTypesFromPEPassportSelectList(int pePassportID);
+        int DeleteRevokeByEncryptedID(string pePassportID);
     }
 }

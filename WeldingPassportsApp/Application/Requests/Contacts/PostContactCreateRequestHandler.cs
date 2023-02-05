@@ -30,7 +30,7 @@ namespace Application.Requests.Contacts
             {
                 Contact contact = _mapper.Map<Contact>(request.ContactCreateVM);
                 await _repository.PostContactCreateAsync(contact);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 request.Controller.TempData[nameof(CompanyContactEditViewModel.ContactID)] = contact.ID;
 

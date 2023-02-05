@@ -30,7 +30,7 @@ namespace Application.Requests.Admin
             {
                 AppSettings appSettings = _mapper.Map<AppSettings>(request.AppSettingsChanges);
                 _repository.UpdateAppSettings(appSettings);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
                 
                 return request.Controller.RedirectToAction(request.NameOfDetailsAction);
             }

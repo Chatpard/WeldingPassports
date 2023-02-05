@@ -30,6 +30,8 @@ namespace Application.ViewModels
         [Display(Name = "Passed")] 
         public bool? HasPassed { get; set; }
 
+        public bool IsRevoked { get; set; }
+
         public string Color { get; set; }
 
     }

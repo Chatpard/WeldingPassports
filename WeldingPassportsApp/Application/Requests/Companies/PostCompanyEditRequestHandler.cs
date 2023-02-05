@@ -35,7 +35,7 @@ namespace Application.Requests.Companies
 
                 Company company = _mapper.Map<Company>(request.CompanyChanges);
                 _repository.PostCompanyEdit(company);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

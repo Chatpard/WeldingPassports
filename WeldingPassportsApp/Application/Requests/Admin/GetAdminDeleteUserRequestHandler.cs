@@ -21,7 +21,7 @@ namespace Application.Requests.Admin
         public async Task<IActionResult> Handle(GetAdminDeleteUserRequest request, CancellationToken cancellationToken)
         {
             await _repository.DeleteUserToApproveByEncryptedIDAsync(request.UserToApproveEncryptedID);
-            await _repository.SaveAsync(cancellationToken);
+            await _repository.SaveChangesAsync(cancellationToken);
             return request.Controller.LocalRedirect(request.ReturnUrl);
         }
     }

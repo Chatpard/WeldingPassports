@@ -34,7 +34,7 @@ namespace Application.Requests.Admin
 
             IdentityUser user = await _repository
                 .InsertAppUserByEncryptedIDAsync(request.UserToApproveEncryptedID, request.Role, cancellationToken);
-            await _repository.SaveAsync(cancellationToken);
+            await _repository.SaveChangesAsync(cancellationToken);
 
             var loginLink = request.Controller.Url.Action(request.NameOfLoginAction, request.NameOfAccountController, null,
             request.Controller.Request.Scheme);

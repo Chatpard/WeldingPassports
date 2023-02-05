@@ -22,6 +22,6 @@ namespace Application.Interfaces.Repositories.SQL
         Task<IdentityUser> InsertAppUserByEncryptedIDAsync(string userToApproveEncryptedID, string role, CancellationToken cancellationToken);
         UserToApprove EncryptUserToApproveID(UserToApprove userToApproveEntityEntry);
         Task<string> GetUserToApproveEmailLanguageByEncryptedIDAsync(string userToApproveEncryptedID);
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

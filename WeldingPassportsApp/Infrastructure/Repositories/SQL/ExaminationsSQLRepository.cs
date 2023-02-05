@@ -40,7 +40,7 @@ namespace Infrastructure.Repositories.SQL
             Examination newExamination = _mapper.Map<Examination>(newExaminationVm);
             EntityEntry<Examination> newExaminationEntity = _context.Entry<Examination>(newExamination);
             newExaminationEntity.State = EntityState.Modified;
-            await SaveAsync(cancellationToken);
+            await SaveChangesAsync(cancellationToken);
          }
 
         public async Task<ExaminationEditViewModel> GetExaminationEditAsync(string encryptedID)
@@ -57,7 +57,7 @@ namespace Infrastructure.Repositories.SQL
         {
             var examination = _mapper.Map<Examination>(vm);
             EntityEntry<Examination> newPePassport = await _context.AddAsync(examination);
-            await SaveAsync(cancellationToken);
+            await SaveChangesAsync(cancellationToken);
             return newPePassport;
         }
 
@@ -77,7 +77,7 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             _context.Examinations.Remove(new Examination { ID = decryptedID });
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         public async Task<IQueryable<ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup>> ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup(string encryptedID)

@@ -26,7 +26,7 @@ namespace Application.Requests.Addresses
             {
                 Address address = _mapper.Map<Address>(request.AddressCreateVM);
                 await _repository.PostAddressCreateAsync(address);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 request.Controller.TempData[nameof(CompanyContactEditViewModel.AddressID)] = address.ID;
 

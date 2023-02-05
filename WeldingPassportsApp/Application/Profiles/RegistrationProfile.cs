@@ -31,48 +31,108 @@ namespace Application.Profiles
 
             CreateMap<Registration, CertificateEditViewModel>()
                 .ForMember(vm => vm.Letter, options => options.MapFrom(registration =>
-                    registration.PEPassport.TrainingCenter.Letter))
+                    registration.PEPassport != null ?
+                        registration.PEPassport.TrainingCenter != null ?
+                            registration.PEPassport.TrainingCenter.Letter : 
+                            '?' :
+                        '?'))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(registration =>
-                    registration.PEPassport.AVNumber))
+                    registration.PEPassport != null ?
+                        registration.PEPassport.AVNumber :
+                        0))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(registration =>
-                    registration.PEPassport.PEWelder.FirstName))
+                    registration.PEPassport != null ?
+                        registration.PEPassport.PEWelder != null ?
+                            registration.PEPassport.PEWelder.FirstName :
+                            null :
+                        null))
                 .ForMember(vm => vm.LastName, options => options.MapFrom(registration =>
-                    registration.PEPassport.PEWelder.LastName))
+                    registration.PEPassport != null ?
+                        registration.PEPassport.PEWelder != null ?
+                            registration.PEPassport.PEWelder.LastName :
+                            null :
+                        null))
                 .ForMember(vm => vm.TrainingCenterName, options => options.MapFrom(registration =>
-                    registration.PEPassport.TrainingCenter.Company.CompanyName))
+                    registration.PEPassport != null ?
+                        registration.PEPassport.TrainingCenter != null ?
+                            registration.PEPassport.TrainingCenter.Company != null ?
+                                registration.PEPassport.TrainingCenter.Company.CompanyName :
+                                null :
+                            null :
+                        null))
                 .ForMember(vm => vm.ProcessID, options => options.MapFrom(registration =>
-                    registration.Process.ID))
+                    registration.Process != null ? 
+                        registration.Process.ID : 
+                        0))
                 // Current Certificate
                 .ForMember(vm => vm.CurrentCertificateCompanyID, options => options.MapFrom(registration =>
-                    registration.Company.ID))
+                    registration.Company != null ?
+                        registration.Company.ID :
+                        0))
                 .ForMember(vm => vm.CurrentCertificateExamDate, options => options.MapFrom(registration =>
-                    registration.Examination.ExamDate))
+                    registration.Examination != null ?
+                        registration.Examination.ExamDate :
+                        null))
                 .ForMember(vm => vm.CurrentCertificateExpiryDate, options => options.MapFrom(registration =>
                     registration.ExpiryDate))
                 .ForMember(vm => vm.CurrentCertificateRegistrationTypeID, options => options.MapFrom(registration =>
-                    registration.RegistrationType.ID))
+                    registration.RegistrationType != null ?
+                        registration.RegistrationType.ID :
+                        0))
                 .ForMember(vm => vm.CurrentCertificateHasPassed, options => options.MapFrom(registration =>
                     registration.HasPassed))
                 .ForMember(vm => vm.CurrentCertificateExamCenterName, options => options.MapFrom(registration =>
-                    registration.Examination.ExamCenter.Company.CompanyName))
+                    registration.Examination != null ?
+                        registration.Examination.ExamCenter != null ?
+                            registration.Examination.ExamCenter.Company != null ?
+                                registration.Examination.ExamCenter.Company.CompanyName :
+                                null :
+                            null :
+                        null))
                 .ForMember(vm => vm.CurrentCertificateRevokeDate, options => options.MapFrom(registration =>
-                    registration.Revoke.RevokeDate))
+                    registration.Revoke != null ?
+                        registration.Revoke.RevokeDate :
+                        null))
                 .ForMember(vm => vm.CurrentCertificateRevokedByCompanyContactID, options => options.MapFrom(registration =>
-                    registration.Revoke.CompanyContactID))
+                    registration.Revoke != null ?
+                        registration.Revoke.CompanyContactID :
+                        0))
                 .ForMember(vm => vm.CurrentCertificateRevokeComment, options => options.MapFrom(registration =>
-                    registration.Revoke.Comment))
+                    registration.Revoke != null ?
+                        registration.Revoke.Comment :
+                        ""))
                 // Previous Certificate
                 .ForMember(vm => vm.PreviousCertificateExpiryDate, options => options.MapFrom(registration =>
-                    registration.PreviousRegistration.ExpiryDate))
+                    registration.PreviousRegistration != null ? 
+                        registration.PreviousRegistration.ExpiryDate : 
+                        null))
                 .ForMember(vm => vm.PreviousCertificateHasPassed, options => options.MapFrom(registration =>
-                    registration.PreviousRegistration.HasPassed))
+                    registration.PreviousRegistration != null ? 
+                        registration.PreviousRegistration.HasPassed : 
+                        null))
                 .ForMember(vm => vm.PreviousCertificateRevokeDate, options => options.MapFrom(registration =>
-                    registration.PreviousRegistration.Revoke.RevokeDate))
+                    registration.PreviousRegistration != null ? 
+                        registration.PreviousRegistration.Revoke != null ? 
+                            registration.PreviousRegistration.Revoke.RevokeDate :
+                            null :
+                        null))
                 .ForMember(vm => vm.PreviousCertificateRevokedBy, options => options.MapFrom(registration =>
-                    registration.PreviousRegistration.Revoke.CompanyContact.Contact.FirstName + " " +
-                    registration.PreviousRegistration.Revoke.CompanyContact.Contact.LastName))
+                    registration.PreviousRegistration != null ?
+                        registration.PreviousRegistration.Revoke != null ?
+                            registration.PreviousRegistration.Revoke.CompanyContact != null ?
+                            registration.PreviousRegistration.Revoke.CompanyContact.Contact != null ?
+                                    registration.PreviousRegistration.Revoke.CompanyContact.Contact.FirstName + " " +
+                                    registration.PreviousRegistration.Revoke.CompanyContact.Contact.LastName : 
+                                    "" :
+                                "" :
+                            "" :
+                        ""))
                 .ForMember(vm => vm.PreviousCertificateRevokeComment, options => options.MapFrom(registration =>
-                    registration.PreviousRegistration.Revoke.Comment));
+                    registration.PreviousRegistration != null ?
+                        registration.PreviousRegistration.Revoke != null ?
+                            registration.PreviousRegistration.Revoke.Comment : 
+                            "" :
+                        ""));
 
             CreateMap<Registration, CertificateDetailsViewModel>()
                 .ForMember(vm => vm.Letter, options => options.MapFrom(registration =>
@@ -115,8 +175,8 @@ namespace Application.Profiles
                 .ForMember(vm => vm.PreviousCertificateRevokeDate, options => options.MapFrom(registration =>
                     registration.PreviousRegistration.Revoke.RevokeDate))
                 .ForMember(vm => vm.PreviousCertificateRevokedBy, options => options.MapFrom(registration =>
-                    registration.Revoke.CompanyContact.Contact.FirstName + " " + 
-                    registration.Revoke.CompanyContact.Contact.LastName))
+                    registration.PreviousRegistration.Revoke.CompanyContact.Contact.FirstName + " " + 
+                    registration.PreviousRegistration.Revoke.CompanyContact.Contact.LastName))
                 .ForMember(vm => vm.PreviousCertificateRevokeComment, options => options.MapFrom(registration =>
                     registration.PreviousRegistration.Revoke.Comment));
         }

@@ -31,6 +31,6 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<ExamCenter> GetExamCenterByUserId(string userId);
 
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

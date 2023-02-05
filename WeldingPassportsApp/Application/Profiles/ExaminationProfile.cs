@@ -90,6 +90,8 @@ namespace Application.Profiles
                     group.Registration.RegistrationType.RegistrationTypeName))
                 .ForMember(vm => vm.HasPassed, options => options.MapFrom(group =>
                     group.Registration.HasPassed))
+                .ForMember(vm => vm.IsRevoked, options => options.MapFrom(group =>
+                    group.Registration.Revoke != null))
                 .ForMember(index => index.Color, options => options.MapFrom(group =>
                     group.UIColor.Color));
         }

@@ -27,7 +27,7 @@ namespace Application.Requests.CompanyContacts
             {
                 Company company = _mapper.Map<Company>(request.ContactCreateVM);
                 await _repository.PostCompanyCreateAsync(company);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 request.Controller.TempData[nameof(CompanyContactEditViewModel.CompanyID)] = company.ID;
 

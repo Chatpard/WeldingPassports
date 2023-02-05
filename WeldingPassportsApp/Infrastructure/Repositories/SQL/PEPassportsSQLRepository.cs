@@ -135,7 +135,7 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             _context.PEPassports.Remove(new PEPassport { ID = decryptedID });
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         private async Task<IQueryable<PEPassportPEWelderRegistrationUIColorsGroup>> GetPEPassportPEWelderRegistrationUIColorsGroup(string encryptedID)

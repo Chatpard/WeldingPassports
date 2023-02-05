@@ -147,60 +147,63 @@
             <span asp-validation-for="CurrentCertificateExamCenterName" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
-        <label asp-for="CurrentCertificateRevokedByCompanyContactID" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <div class="input-group">
-                @if (userCanRevokeCertificates)
+    @if ((Model.CurrentCertificateHasPassed != null) && (Model.CurrentCertificateHasPassed != false))
+    {
+        <div class="form-group row">
+            <label asp-for="CurrentCertificateRevokedByCompanyContactID" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    @if (userCanRevokeCertificates)
+                    {
+                        <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems" onchange="ToggleDisableRevokeDateComment()">
+                            <option value="" selected disabled hidden>Not Revoked</option>
+                        </select>
+                        <div class="input-group-append">
+                            <input type="button" class="btn btn-primary reset" value="@Localizer["Clear"]" />
+                        </div>
+                    }
+                    else
+                    {
+                        <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems" disabled>
+                            <option value="" selected disabled hidden>Not Revoked</option>
+                        </select>
+                        <div class="input-group-append">
+                            <input type="button" class="btn btn-primary reset" value="@Localizer["Clear"]" disabled/>
+                        </div>
+                    }
+                </div>
+                <span asp-validation-for="CurrentCertificateRevokedByCompanyContactID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="CurrentCertificateRevokeDate" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                @if (userCanRevokeCertificates && @Model.CurrentCertificateRevokedByCompanyContactID.HasValue)
                 {
-                    <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems" onchange="ToggleDisableRevokeDateComment()">
-                        <option value="" selected disabled hidden>Not Revoked</option>
-                    </select>
-                    <div class="input-group-append">
-                        <input type="button" class="btn btn-primary reset" value="@Localizer["Clear"]" />
-                    </div>
+                    <input asp-for="CurrentCertificateRevokeDate" class="form-control" data-val="false" data-val-required=@Localizer["A Revoke Date is required"]>
                 }
                 else
                 {
-                    <select asp-for="CurrentCertificateRevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems" disabled>
-                        <option value="" selected disabled hidden>Not Revoked</option>
-                    </select>
-                    <div class="input-group-append">
-                        <input type="button" class="btn btn-primary reset" value="@Localizer["Clear"]" disabled/>
-                    </div>
+                    <input asp-for="CurrentCertificateRevokeDate" class="form-control" data-val="false" data-val-required=@Localizer["A Revoke Date is required"] readonly>
                 }
+                <span asp-validation-for="CurrentCertificateRevokeDate" class="text-danger"></span>
             </div>
-            <span asp-validation-for="CurrentCertificateRevokedByCompanyContactID" class="text-danger"></span>
         </div>
-    </div>
-    <div class="form-group row">
-        <label asp-for="CurrentCertificateRevokeDate" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            @if (userCanRevokeCertificates && @Model.CurrentCertificateRevokedByCompanyContactID.HasValue)
-            {
-                <input asp-for="CurrentCertificateRevokeDate" class="form-control" data-val="false" data-val-required=@Localizer["A Revoke Date is required"]>
-            }
-            else
-            {
-                <input asp-for="CurrentCertificateRevokeDate" class="form-control" data-val="false" data-val-required=@Localizer["A Revoke Date is required"] readonly>
-            }
-            <span asp-validation-for="CurrentCertificateRevokeDate" class="text-danger"></span>
+        <div class="form-group row">
+            <label asp-for="CurrentCertificateRevokeComment" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                @if (userCanRevokeCertificates && @Model.CurrentCertificateRevokedByCompanyContactID.HasValue)
+                {
+                    <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment" data-val="true" data-val-required=@Localizer["A Revoke Comment is required"]>
+                }
+                else
+                {
+                    <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment" data-val="true" data-val-required=@Localizer["A Revoke Comment is required"] disabled>
+                }
+                <span asp-validation-for="CurrentCertificateRevokeComment" class="text-danger"></span>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label asp-for="CurrentCertificateRevokeComment" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            @if (userCanRevokeCertificates && @Model.CurrentCertificateRevokedByCompanyContactID.HasValue)
-            {
-                <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment" data-val="true" data-val-required=@Localizer["A Revoke Comment is required"]>
-            }
-            else
-            {
-                <input asp-for="CurrentCertificateRevokeComment" class="form-control" placeholder="Revoke Comment" data-val="true" data-val-required=@Localizer["A Revoke Comment is required"] disabled>
-            }
-            <span asp-validation-for="CurrentCertificateRevokeComment" class="text-danger"></span>
-        </div>
-    </div>
+    }
     @if (Model.PreviousCertificateExpiryDate != null)
     {
         <h2>@Localizer["Previous Certificate"]</h2>

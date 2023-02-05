@@ -54,6 +54,7 @@ namespace Infrastructure.Services.Persistence
             }
 
             // Todo onlyLeafRegistrationDelete
+            // https://onthedrift.com/posts/efcore-triggered-part1/
             //foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())){
             //if(foreignKey.PrincipalEntityType.Name != "Domain.Models."+nameof(Registration))
             //{

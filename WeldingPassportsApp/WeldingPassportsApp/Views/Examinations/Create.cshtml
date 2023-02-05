@@ -15,9 +15,9 @@
 <form enctype="multipart/form-data" asp-controller="@typeof(ExaminationsController).GetNameOfController()"
       asp-action="@nameof(ExaminationsController.Create)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3">
     <div class="form-group row">
-        <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
+        <label asp-for="ExamDate" class="col-sm-2 col-form-label" value=""></label>
         <div class="col-sm-10">
-            <input asp-for="ExamDate" class="form-control" />
+            <input asp-for="ExamDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
         </div>
         <span asp-validation-for="ExamDate" class="text-danger"></span>
     </div>

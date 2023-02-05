@@ -41,16 +41,21 @@ namespace Infrastructure.Repositories.SQL
         
         public async Task PostCertificateCreateAsync(CertificateCreateViewModel vm, CancellationToken cancellationToken)
         {
-            var test = _mapper.Map<Registration>(vm);
-            var registration = new Registration
-            {
-                ExaminationID = test.ExaminationID,
-                PEPassportID = vm.PEPassportID,
-                CompanyID = vm.CompanyID,
-                ProcessID = vm.ProcessID,
-                RegistrationTypeID = vm.RegistrationTypeID,
-                ExpiryDate = ((DateTime)vm.ExamDate).AddDays((await _context.AppSettings.FirstAsync()).MaxExpiryDays)
-            };
+            var registration = _mapper.Map<Registration>(vm);
+            registration.ExpiryDate = ((DateTime)vm.ExamDate).AddDays((await _context.AppSettings.FirstAsync()).MaxExpiryDays);
+            registration.PreviousRegistrationID = _context.Registrations
+                .Where(anyRegistration => anyRegistration.PEPassportID == registration.PEPassportID)
+                .OrderByDescending(registration => registration.Examination.ExamDate)
+                .FirstOrDefault()?.ID;
+            //var registration = new Registration
+            //{
+            //    ExaminationID = test.ExaminationID,
+            //    PEPassportID = vm.PEPassportID,
+            //    CompanyID = vm.CompanyID,
+            //    ProcessID = vm.ProcessID,
+            //    RegistrationTypeID = vm.RegistrationTypeID,
+            //    ExpiryDate = ((DateTime)vm.ExamDate).AddDays((await _context.AppSettings.FirstAsync()).MaxExpiryDays)
+            //};
             _context.Registrations.Add(registration);
            await SaveChangesAsync(cancellationToken);
         }

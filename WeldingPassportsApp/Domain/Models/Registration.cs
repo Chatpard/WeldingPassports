@@ -37,13 +37,18 @@ namespace Domain.Models
 
         // Navigation Properties
         public Examination Examination { get; set; }
+
         public PEPassport PEPassport { get; set; }
+
         public RegistrationType RegistrationType { get; set; }
+
         public Process Process { get; set; }
-        
+
         //[NotMapped]
         public Registration PreviousRegistration { get; set; }
-        public Revoke Revoke { get; set; }
+
         public Company Company { get; set; }
+
+        public Revoke Revoke { get; set; }
     }
 }

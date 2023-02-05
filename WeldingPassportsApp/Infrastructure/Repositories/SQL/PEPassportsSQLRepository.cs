@@ -162,7 +162,8 @@ namespace Infrastructure.Repositories.SQL
                                             registration.Revoke != null ? ExtendableStatus.Revoked :
                                             EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
                                             (EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
-                                            ExtendableStatus.NoMoreExtendable)
+                                            ExtendableStatus.NoMoreExtendable),
+                                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID)
                                     })
                                 .Join(
                                     _context.UIColors.DefaultIfEmpty(),
@@ -179,7 +180,8 @@ namespace Infrastructure.Repositories.SQL
                                     (registrationExtendableStatus, uicolor) => new RegistrationUIColorGroup
                                     {
                                         Registration = registrationExtendableStatus.Registration,
-                                        UIColor = uicolor
+                                        UIColor = uicolor,
+                                        HasNext = registrationExtendableStatus.HasNext
                                     }
                                 )
                         }

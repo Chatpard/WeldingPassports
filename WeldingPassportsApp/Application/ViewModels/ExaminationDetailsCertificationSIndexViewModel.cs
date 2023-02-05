@@ -34,5 +34,7 @@ namespace Application.ViewModels
 
         public string Color { get; set; }
 
+        public bool HasNext { get; set; }
+
     }
 }

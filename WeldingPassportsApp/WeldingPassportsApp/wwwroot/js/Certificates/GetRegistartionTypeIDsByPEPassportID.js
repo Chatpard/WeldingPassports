@@ -7,8 +7,13 @@
                 $("#CompanyID").val(data.companyID);
                 $("#ProcessID").val(data.processID);
                 $("#RegistrationTypeID").find("option").remove();
-                $("#RegistrationTypeID").append(new Option("Choose Registration Type", ""));
-                $("#RegistrationTypeID").find("option").prop("disabled", true).prop("hidden", true);
+                var chooseOption = new Option("Choose Registration Type", "");
+                chooseOption.disabled = true;
+                chooseOption.selected = true;
+                if (data.registrationsSelectList.length != 0) {
+                    chooseOption.hidden = true;
+                }
+                $("#RegistrationTypeID").append(chooseOption);
                 for (i = 0; i < data.registrationsSelectList.length; i++) {
                     $("#RegistrationTypeID").append(new Option(data.registrationsSelectList[i].text, data.registrationsSelectList[i].value));
                 }

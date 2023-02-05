@@ -95,12 +95,12 @@ namespace Application.Profiles
                         null))
                 .ForMember(vm => vm.CurrentCertificateRevokedByCompanyContactID, options => options.MapFrom(registration =>
                     registration.Revoke != null ?
-                        registration.Revoke.CompanyContactID :
-                        0))
+                        (int?) registration.Revoke.CompanyContactID :
+                        null))
                 .ForMember(vm => vm.CurrentCertificateRevokeComment, options => options.MapFrom(registration =>
                     registration.Revoke != null ?
-                        registration.Revoke.Comment :
-                        ""))
+                        (string?) registration.Revoke.Comment :
+                        null))
                 // Previous Certificate
                 .ForMember(vm => vm.PreviousCertificateExpiryDate, options => options.MapFrom(registration =>
                     registration.PreviousRegistration != null ? 

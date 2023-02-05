@@ -92,8 +92,10 @@ namespace Application.Profiles
                     group.Registration.HasPassed))
                 .ForMember(vm => vm.IsRevoked, options => options.MapFrom(group =>
                     group.Registration.Revoke != null))
-                .ForMember(index => index.Color, options => options.MapFrom(group =>
-                    group.UIColor.Color));
+                .ForMember(vm => vm.Color, options => options.MapFrom(group =>
+                    group.UIColor.Color))
+                .ForMember(vm => vm.HasNext, options => options.MapFrom(group =>
+                    group.HasNext));
         }
     }
 }

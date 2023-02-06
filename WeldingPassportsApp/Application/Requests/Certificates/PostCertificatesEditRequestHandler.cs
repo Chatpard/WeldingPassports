@@ -30,7 +30,7 @@ namespace Application.Requests.Certificates
             
             if (request.Controller.ModelState.IsValid)
             {
-                await _repository.CertificateUpdateAsync(request.VM, cancellationToken);
+                await _repository.PostCertificateEditAsync(request.VM, cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

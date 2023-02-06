@@ -1459,6 +1459,7 @@ namespace Infrastructure.Migrations
                             CompanyID = 21,
                             ExaminationID = 2,
                             ExpiryDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasPassed = true,
                             PEPassportID = 11,
                             ProcessID = 2,
                             RegistrationTypeID = 1
@@ -1469,6 +1470,7 @@ namespace Infrastructure.Migrations
                             CompanyID = 21,
                             ExaminationID = 3,
                             ExpiryDate = new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasPassed = true,
                             PEPassportID = 11,
                             PreviousRegistrationID = 5,
                             ProcessID = 2,

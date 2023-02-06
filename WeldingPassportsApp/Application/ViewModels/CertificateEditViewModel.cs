@@ -85,6 +85,8 @@ namespace Application.ViewModels
         [Display(Name = "Exam Center")]
         public string CurrentCertificateExamCenterName { get; set; }
 
+        public bool HasNext { get; set; }
+
         [Display(Name = "Revoked By")]
         public int? CurrentCertificateRevokedByCompanyContactID { get; set; }
         public SelectList CompanyContactNameItems { get; set; }

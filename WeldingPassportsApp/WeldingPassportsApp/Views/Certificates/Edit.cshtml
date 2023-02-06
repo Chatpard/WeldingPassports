@@ -147,7 +147,7 @@
             <span asp-validation-for="CurrentCertificateExamCenterName" class="text-danger"></span>
         </div>
     </div>
-    @if ((Model.CurrentCertificateHasPassed != null) && (Model.CurrentCertificateHasPassed != false))
+    @if ((Model.CurrentCertificateHasPassed != null) && (Model.CurrentCertificateHasPassed == true))
     {
         <div class="form-group row">
             <label asp-for="CurrentCertificateRevokedByCompanyContactID" class="col-sm-2 col-form-label"></label>

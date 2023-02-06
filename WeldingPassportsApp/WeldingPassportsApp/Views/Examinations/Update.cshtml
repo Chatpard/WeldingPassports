@@ -87,16 +87,37 @@
                             @Html.DisplayFor(modelItem => Model.Certifications[i].RegistrationTypeName)
                         </td>
                         <td>
-                            @Html.DropDownListFor(m => Model.Certifications[i].HasPassed, new SelectList(new[]
-                        {
-                        new SelectListItem { Value = null, Text = "Not set" },
-                        new SelectListItem { Value = "False", Text = "False" },
-                        new SelectListItem { Value = "True", Text = "True" },
-                        },
-                        "Value",
-                        "Text"
-                        ),
-                        new { @class = "form-control" })
+                            <input asp-for="Certifications[i].HasNext" hidden />
+                            @if (Model.Certifications[i].HasNext)
+                            {
+                                @Html.DropDownListFor(m => Model.Certifications[i].HasPassed, 
+                                    selectList: new SelectList(new[]
+                                        {
+                                            new SelectListItem { Value = null, Text = "Not set" },
+                                            new SelectListItem { Value = "False", Text = "False" },
+                                            new SelectListItem { Value = "True", Text = "True" },
+                                        },
+                                        "Value",
+                                        "Text"
+                                    ),
+                                    htmlAttributes: new { @class = "form-control", @disabled = "disabled" }
+                                )
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(m => Model.Certifications[i].HasPassed,
+                                    selectList: new SelectList(new[]
+                                        {
+                                            new SelectListItem { Value = null, Text = "Not set" },
+                                            new SelectListItem { Value = "False", Text = "False" },
+                                            new SelectListItem { Value = "True", Text = "True" },
+                                        },
+                                        "Value",
+                                        "Text"
+                                    ),
+                                    htmlAttributes: new { @class = "form-control" }
+                                )
+                            }
                         </td>
                     </tr>
                 }

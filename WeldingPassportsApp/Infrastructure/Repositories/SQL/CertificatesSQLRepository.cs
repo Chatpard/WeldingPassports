@@ -126,7 +126,7 @@ namespace Infrastructure.Repositories.SQL
             return vm;
         }
 
-        public async Task CertificateUpdateAsync(CertificateEditViewModel vm, CancellationToken cancellationToken)
+        public async Task PostCertificateEditAsync(CertificateEditViewModel vm, CancellationToken cancellationToken)
         {
             var registrationChanges = new Registration()
             {
@@ -180,6 +180,18 @@ namespace Infrastructure.Repositories.SQL
             }
 
             await SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task PostCertificateUpdateAsync(string registrationEncryptedID, bool? HasPassed, CancellationToken cancellationToken)
+        {
+            int registrationDecryptedID = Convert.ToInt32(_protector.Unprotect(registrationEncryptedID));
+            Registration registration = await _context.Registrations.Where(registration => registration.ID == registrationDecryptedID).FirstOrDefaultAsync();
+            if (registration != null)
+            {
+                registration.HasPassed = HasPassed;
+                EntityEntry<Registration> registrationEntityEntry = _context.Entry(registration);
+                registrationEntityEntry.State = EntityState.Modified;
+            }
         }
 
         public async Task<CertificateEditViewModel> GetCertificateEditAsync(string encryptedID)

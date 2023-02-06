@@ -52,7 +52,7 @@
     <div class="form-group row">
         <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            @if (userCanEditCertificates)
+            @if (userCanEditCertificates && !Model.HasNext)
             {
                 <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems"></select>
             }
@@ -97,7 +97,7 @@
     <div class="form-group row">
         <label asp-for="CurrentCertificateRegistrationTypeID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            @if (userCanEditCertificates)
+            @if (userCanEditCertificates && !Model.HasNext)
             {
                 <select asp-for="CurrentCertificateRegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems"></select>
             }
@@ -111,13 +111,13 @@
     <div class="form-group row">
         <label asp-for="CurrentCertificateHasPassed" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            @if (userCanUpdateCertificates)
+            @if (userCanUpdateCertificates && !Model.HasNext)
             {
                 @Html.DropDownListFor(m => m.CurrentCertificateHasPassed, new SelectList(new[]
                 {
-                new SelectListItem { Value = null, Text = "Not set" },
-                new SelectListItem { Value = "False", Text = "False" },
-                new SelectListItem { Value = "True", Text = "True" },
+                    new SelectListItem { Value = null, Text = "Not set" },
+                    new SelectListItem { Value = "False", Text = "False" },
+                    new SelectListItem { Value = "True", Text = "True" },
                 },
                 "Value",
                 "Text"
@@ -128,9 +128,9 @@
             {
                 @Html.DropDownListFor(m => m.CurrentCertificateHasPassed, new SelectList(new[]
                 {
-                new SelectListItem { Value = null, Text = "Not set" },
-                new SelectListItem { Value = "False", Text = "False" },
-                new SelectListItem { Value = "True", Text = "True" },
+                    new SelectListItem { Value = null, Text = "Not set" },
+                    new SelectListItem { Value = "False", Text = "False" },
+                    new SelectListItem { Value = "True", Text = "True" },
                 },
                 "Value",
                 "Text"

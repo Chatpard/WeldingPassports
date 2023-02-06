@@ -170,7 +170,7 @@ namespace Infrastructure.Repositories.SQL
                                     registrationExtendableStatus => new
                                     {
                                         ExtendableStatus = registrationExtendableStatus.ExtendableStatus,
-                                        HasPassed = (bool)(registrationExtendableStatus.Registration.HasPassed.HasValue ? registrationExtendableStatus.Registration.HasPassed.HasValue : false)
+                                        HasPassed = (bool)(registrationExtendableStatus.Registration.HasPassed.HasValue ? registrationExtendableStatus.Registration.HasPassed : false)
                                     },
                                     uicolor => new
                                     {

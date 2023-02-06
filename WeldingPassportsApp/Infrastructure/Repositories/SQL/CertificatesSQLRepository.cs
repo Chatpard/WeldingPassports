@@ -1,6 +1,7 @@
 ﻿using Application;
 using Application.Interfaces.Repositories.SQL;
 using Application.Security;
+using Application.SQLModels;
 using Application.ViewModels;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -218,6 +219,27 @@ namespace Infrastructure.Repositories.SQL
                 .Include(registration => registration.PreviousRegistration.Revoke)
                 .Include(registration => registration.PreviousRegistration.Revoke.CompanyContact)
                 .Include(registration => registration.PreviousRegistration.Revoke.CompanyContact.Contact)
+                .Select(registration => new RegistrationHasNext
+                {
+                        ID = registration.ID,
+                        PreviousRegistrationID = registration.PreviousRegistrationID,
+                        ExaminationID = registration.ExaminationID,
+                        PEPassportID = registration.PEPassportID,
+                        RegistrationTypeID = registration.RegistrationTypeID,
+                        ProcessID = registration.ProcessID,
+                        CompanyID = registration.CompanyID,
+                        ExpiryDate = registration.ExpiryDate,
+                        HasPassed = registration.HasPassed,
+                        CertificatePath = registration.CertificatePath,
+                        Examination = registration.Examination,
+                        PEPassport = registration.PEPassport,
+                        RegistrationType =  registration.RegistrationType,
+                        Process = registration.Process,
+                        PreviousRegistration = registration.PreviousRegistration,
+                        Company = registration.Company,
+                        Revoke = registration.Revoke,
+                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID)
+                    })
                 .SingleOrDefaultAsync();
             //var vm = registration.ProjectTo<CertificateEditViewModel>(_mapper.ConfigurationProvider);
             var vm = _mapper.Map<CertificateEditViewModel>(registration);

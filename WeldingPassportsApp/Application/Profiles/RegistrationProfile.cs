@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Repositories.SQL;
 using Application.Security;
+using Application.SQLModels;
 using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
@@ -31,7 +32,7 @@ namespace Application.Profiles
                 .ForMember(registration => registration.RegistrationTypeID, options => options.MapFrom(vm =>
                     vm.RegistrationTypeID));
 
-            CreateMap<Registration, CertificateEditViewModel>()
+            CreateMap<RegistrationHasNext, CertificateEditViewModel>()
                 .ForMember(vm => vm.Letter, options => options.MapFrom(registration =>
                     registration.PEPassport != null ?
                         registration.PEPassport.TrainingCenter != null ?

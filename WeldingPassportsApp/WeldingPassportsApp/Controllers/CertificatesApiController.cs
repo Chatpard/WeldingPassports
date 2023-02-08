@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
@@ -25,9 +26,9 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet(nameof(GetRegistrationTypesFromPEPassport))]
-        public async Task<ActionResult<GetGetRegistrationTypesFromPEPassportReponse>> GetRegistrationTypesFromPEPassport(int pePassportID)
+        public async Task<ActionResult<GetGetRegistrationTypesFromPEPassportReponse>> GetRegistrationTypesFromPEPassport(int pePassportID, int? processID, DateTime examDate)
         {
-            var query = new GetRegistrationTypesFromPEPassportRequest(pePassportID);
+            var query = new GetRegistrationTypesFromPEPassportRequest(pePassportID, processID, examDate);
             return await _mediator.Send(query);
         }
 
@@ -35,6 +36,13 @@ namespace WeldingPassportsApp.Controllers
         public async Task<EntityEntry<Revoke>> DeleteRevokeByEncryptedID(string encryptedID)
         {
             var query = new DeleteCertificatesRevokeRequest(encryptedID);
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(nameof(MaxCertificateExpirationDate))]
+        public async Task<DateTime?> MaxCertificateExpirationDate(int pePassportID, int processID, string examDateString)
+        {
+            var query = new GetCertificateMaxExpirationDateRequest(pePassportID, processID, examDateString);
             return await _mediator.Send(query);
         }
     }

@@ -303,12 +303,7 @@ namespace Infrastructure.Repositories.SQL
 
             EntityEntry<Registration> certificateEntityEntry = _context.Registrations.Remove(registration);
 
-            //EntityEntry<Registration> certificateEntityEntry = _context.Entry(registration);
-            //if (registration == null) { return null; };
-
-            //certificateEntityEntry.State = EntityState.Deleted;
             return certificateEntityEntry;
         }
-    
     }
 }

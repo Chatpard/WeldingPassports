@@ -27,6 +27,8 @@ namespace Application.Profiles
                     examination.ExamCenter.ID))
                 .ForMember(vm => vm.TrainingCenterID, options => options.MapFrom(examination =>
                     examination.TrainingCenter.ID))
+                .ForMember(vm => vm.HasCertificates, options => options.MapFrom(examination =>
+                    examination.Registrations.Any()))
                 .ReverseMap()
                 .ForMember(examination => examination.ID, options => options.MapFrom(vm =>
                     _protector.Unprotect(vm.EncryptedID)))

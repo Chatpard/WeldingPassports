@@ -241,7 +241,6 @@ namespace Infrastructure.Repositories.SQL
                         HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID)
                     })
                 .SingleOrDefaultAsync();
-            //var vm = registration.ProjectTo<CertificateEditViewModel>(_mapper.ConfigurationProvider);
             var vm = _mapper.Map<CertificateEditViewModel>(registration);
 
             vm.EncryptedID = encryptedID;

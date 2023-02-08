@@ -19,7 +19,13 @@
     <div class="form-group row">
         <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <input asp-for="ExamDate" class="form-control" />
+            @if(Model.HasCertificates){
+                <input asp-for="ExamDate" class="form-control" readonly/>
+            }
+            else
+            {
+                <input asp-for="ExamDate" class="form-control" />
+            }
         </div>
         <span asp-validation-for="ExamDate" class="text-danger"></span>
     </div>

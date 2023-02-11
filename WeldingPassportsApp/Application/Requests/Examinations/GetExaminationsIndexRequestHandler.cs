@@ -33,8 +33,23 @@ namespace Application.Requests.Examinations
             _userManager = userManager;
         }
 
+        private const string EncryptedExaminationID = "EncryptedExaminationID";
+        private const string ReturnUrl = "ReturnUrl";
+
         public async Task<IActionResult> Handle(GetExaminationsIndexRequest request, CancellationToken cancellationToken)
         {
+            if (request.Controller.TempData.ContainsKey(EncryptedExaminationID) && request.Controller.TempData.ContainsKey(ReturnUrl))
+            {
+                if (request.Controller.TempData[EncryptedExaminationID] != null && request.Controller.TempData[ReturnUrl] != null)
+                {
+                    string encryptedExaminationID = (string) request.Controller.TempData[EncryptedExaminationID];
+                    request.Controller.TempData.Remove(EncryptedExaminationID);
+                    string returnUrl = (string) request.Controller.TempData[ReturnUrl];
+                    request.Controller.TempData.Remove(ReturnUrl);
+                    return request.Controller.RedirectToAction(request.ExaminationDetailsActionName, request.ExaminationsControllerName, new { id = encryptedExaminationID, returnUrl = returnUrl });
+                }
+            }
+
             request.Controller.ViewData["CurrentSort"] = request.SortOrder ?? "ExamDate_asc";
             request.Controller.ViewData["ExamDateSort"] = request.SortOrder == "ExamDate_desc" ? "ExamDate_asc" : "ExamDate_desc";
             request.Controller.ViewData["CompanyNameTCSort"] = request.SortOrder == "CompanyNameTC_desc" ? "CompanyNameTC_asc" : "CompanyNameTC_desc";

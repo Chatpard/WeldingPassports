@@ -1,5 +1,4 @@
 ﻿using Application.Requests.Examinations;
-using Application.Requests.Welders;
 using Application.Security;
 using Application.ViewModels;
 using Domain;
@@ -8,8 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
@@ -36,7 +33,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new GetExaminationsIndexRequest(sortOrder, currentFilter, searchString, pageNumber, this);
+                var query = new GetExaminationsIndexRequest(sortOrder, currentFilter, searchString, pageNumber, typeof(ExaminationsController).GetNameOfController(), nameof(ExaminationsController.Details), this);
 
                 return await _mediator.Send(query);
             }
@@ -68,7 +65,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new PostExaminationsCreateRequest(examination, returnUrl, this);
+                var query = new PostExaminationsCreateRequest(examination, returnUrl, typeof(ExaminationsController).GetNameOfController(), nameof(ExaminationsController.Edit), this);
 
                 return await _mediator.Send(query);
             }

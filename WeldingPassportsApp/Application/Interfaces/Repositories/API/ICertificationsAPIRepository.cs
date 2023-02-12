@@ -9,7 +9,7 @@ namespace Application.Interfaces.Repositories.API
 {
     public interface ICertificationsAPIRepository
     {
-        Task<GetGetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesFromPEPassportSelectList(int pePassportID, int? processID, DateTime examDate);
+        Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesFromPEPassportSelectList(int? pePassportID, int? processID, DateTime examDate);
         int DeleteRevokeByEncryptedID(string pePassportID);
         Task<DateTime?> GetCertificateMaxExpirationDate(int? pePassportID, int? processID);
     }

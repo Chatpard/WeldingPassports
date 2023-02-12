@@ -65,7 +65,11 @@ namespace Infrastructure.Services.Persistence
             //        foreignKey.DeleteBehavior = DeleteBehavior.Cascade;
             //}
 
+            modelBuilder.Entity<PEPassport>().HasIndex(pePassport => new { pePassport.TrainingCenterID, pePassport.AVNumber }).IsUnique();
+            modelBuilder.Entity<PEWelder>().HasIndex(peWelder => peWelder.NationalNumber).IsUnique();
+            modelBuilder.Entity<PEWelder>().HasIndex(peWelder => peWelder.IdNumber).IsUnique();
             modelBuilder.Entity<TrainingCenter>().HasIndex(trainingCenter => trainingCenter.Letter).IsUnique();
+
             modelBuilder.Seed(_env);
         }
 

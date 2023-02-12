@@ -7,5 +7,7 @@ namespace Application.Interfaces.Repositories.API
     public interface IPEPassportsAPIRepository
     {
         int? GetMaxAVNumber(int trainingCenterID);
+
+        bool IsAvailableAVNumber(int avNumber, char letter);
     }
 }

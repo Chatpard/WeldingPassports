@@ -1,13 +1,13 @@
-﻿function MaxCertificateExpirationDate(pePassportID, processID, examDate) {
+﻿function GetMaxCertificateExpirationDate(pePassportID, processID, registrationTypeID, examDate) {
     console.log("MaxCertificateExpirationDate: pePassportID = " + pePassportID + ", processID = " + processID, "examDate = " + examDate);
     if (pePassportID != null && processID != null && examDate != null) {
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "/../../Api/CertificatesApi/MaxCertificateExpirationDate",
-            data: { pePassportID: pePassportID, processID: processID, examDateString: examDate },
+            url: "/../../Api/CertificatesApi/GetMaxCertificateExpirationDate",
+            data: { examDateString: examDate, pePassportID: pePassportID, processID: processID, registrationTypeID: registrationTypeID },
             success: function (response) {
-                console.log("MaxCertificateExpirationDate: " + response);
+                console.log("GetMaxCertificateExpirationDate: " + response);
                 try {
                     if (response != null) {
                         let d = new Date(response);

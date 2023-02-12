@@ -7,10 +7,14 @@ namespace Application.Requests.API.CertificatesAPI
 {
     public class GetCertificateMaxExpirationDateRequest: IRequest<DateTime?>
     {
-        public GetCertificateMaxExpirationDateRequest(int? pePasportID, int? processID, string examDateString)
+        public GetCertificateMaxExpirationDateRequest(int? pePasportID, int? processID, int? registrationTypeID, string examDateString)
         {
             PePasportID = pePasportID;
+
             ProcessID = processID;
+
+            RegistrationTypeID = registrationTypeID;
+
             try
             {
                 ExamDate = DateTime.Parse(examDateString);
@@ -20,6 +24,7 @@ namespace Application.Requests.API.CertificatesAPI
 
         public int? PePasportID { get; }
         public int? ProcessID { get; }
+        public int? RegistrationTypeID { get; }
         public DateTime? ExamDate { get; }
     }
 }

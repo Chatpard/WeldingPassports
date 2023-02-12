@@ -22,23 +22,27 @@ namespace Application.Requests.API.CertificatesAPI
         }
         public async Task<DateTime?> Handle(GetCertificateMaxExpirationDateRequest request, CancellationToken cancellationToken)
         {
-            DateTime? expirationDate = await _certificationsAPIRepository?.GetCertificateMaxExpirationDate(request.PePasportID, request.ProcessID);
 
             AppSettings appSettings = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
-            if(expirationDate != null)
+            //Todo hardcoded
+            if(request.RegistrationTypeID == 1 && request.ExamDate != null)
             {
-                DateTime? maxExtensionDays = expirationDate?.AddDays(appSettings.MaxExtensionDays);
-                DateTime? maxInAdvanceDays = expirationDate?.AddDays(appSettings.MaxInAdvanceDays * -1);
-                if(maxInAdvanceDays > request.ExamDate || request.ExamDate > maxExtensionDays)
-                {
-                    expirationDate = null;
-                }
+                return request.ExamDate?.AddDays(appSettings.MaxExpiryDays);
             }
+
+            DateTime? expirationDate = await _certificationsAPIRepository?.GetCertificateMaxExpirationDate(request.PePasportID, request.ProcessID);
 
             if(expirationDate == null)
             {
-                expirationDate = request.ExamDate;
+                return request.ExamDate?.AddDays(appSettings.MaxExpiryDays);
+            }
+
+            DateTime? maxExtensionDays = expirationDate?.AddDays(appSettings.MaxExtensionDays);
+            DateTime? maxInAdvanceDays = expirationDate?.AddDays(appSettings.MaxInAdvanceDays * -1);
+            if(maxInAdvanceDays > request.ExamDate || request.ExamDate > maxExtensionDays)
+            {
+                return request.ExamDate?.AddDays(appSettings.MaxExpiryDays);
             }
 
             return expirationDate?.AddDays(appSettings.MaxExpiryDays);

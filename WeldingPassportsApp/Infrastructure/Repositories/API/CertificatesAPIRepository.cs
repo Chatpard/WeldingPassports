@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories.API
             _certificatesSQLRepository=certificatesSQLRepository;
         }
 
-        public async Task<GetGetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesFromPEPassportSelectList(int pePassportID, int? processID, DateTime examDate)
+        public async Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesFromPEPassportSelectList(int? pePassportID, int? processID, DateTime examDate)
         {
             AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
@@ -59,7 +59,7 @@ namespace Infrastructure.Repositories.API
                     }
                 };
 
-            if(pePassportID != 0)
+            if(pePassportID != null)
             {
                 var pePassPort = _context.PEPassports
                     .Where(pePassport => pePassport.ID == pePassportID)
@@ -72,7 +72,9 @@ namespace Infrastructure.Repositories.API
                 }
 
                 var registrations = pePassPort
-                    .Registrations.AsQueryable();
+                    .Registrations
+                    .AsQueryable()
+                    .Where(registration => !_context.Revokes.Where(revoke => revoke.RegistrationID == registration.ID).Any());
 
                 if(processID!= null)
                 {
@@ -111,9 +113,8 @@ namespace Infrastructure.Repositories.API
                         RegistrationTypeID = (int?) registration.RegistrationTypeID,
                         ExtendableStatus =
                             registration.Revoke != null ? ExtendableStatus.Revoked :
-                            EF.Functions.DateDiffDay(examDate, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
-                            (EF.Functions.DateDiffDay(examDate, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
-                            ExtendableStatus.NoMoreExtendable),
+                            EF.Functions.DateDiffDay(registration.ExpiryDate, examDate) < (app.MaxInAdvanceDays * -1) ? ExtendableStatus.NotYetExtendable :
+                            EF.Functions.DateDiffDay(registration.ExpiryDate, examDate) < (app.MaxExtensionDays + 1) ? ExtendableStatus.Extendable : ExtendableStatus.NoMoreExtendable,
                         HasPassed = registration.HasPassed
                     });
 
@@ -139,7 +140,7 @@ namespace Infrastructure.Repositories.API
                     );
             }
 
-            return new GetGetRegistrationTypesFromPEPassportReponse
+            return new GetRegistrationTypesFromPEPassportReponse
                     {
                         CompanyID = allowedRegistrationTypesQ.FirstOrDefault()?.CompanyID,
                         ProcessID = allowedRegistrationTypesQ.FirstOrDefault()?.ProcessID ?? processID,
@@ -168,7 +169,9 @@ namespace Infrastructure.Repositories.API
                         .Where(registration => registration.ProcessID == processID);
                 }
 
-                leafRegistration = await registrations?.OrderBy(registration => registration.ExpiryDate)
+                leafRegistration = await registrations?
+                    .Where(registration => registration.Revoke == null)
+                    .OrderByDescending(registration => registration.ExpiryDate)
                     .FirstOrDefaultAsync();
             }
 

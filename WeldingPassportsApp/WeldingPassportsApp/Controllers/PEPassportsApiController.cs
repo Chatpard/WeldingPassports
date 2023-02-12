@@ -1,4 +1,6 @@
-﻿using Application.Requests.PEPassports;
+﻿using Application.Interfaces.Repositories.API;
+using Application.Requests.API.PEPassportsAPI;
+using Application.Requests.PEPassports;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,8 +28,28 @@ namespace WeldingPassportsApp.Controllers
         [HttpGet(nameof(GetMaxAVNumber))]
          public async Task<ActionResult<string>> GetMaxAVNumber(int trainingCenterID)
         {
-            var query = new GetPEPassportGetMaxAVNumberApiRequest(trainingCenterID, this);
-            return await _mediator.Send(query);
+            try
+            {
+                var query = new GetPEPassportGetMaxAVNumberApiRequest(trainingCenterID, this);
+                return await _mediator.Send(query);
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        public async Task<ActionResult<bool>> GetIsAVNumberAvailable(int avNumber, char letter)
+        {
+            try
+            {
+                var query = new IsAVNumberAvailableRequest(avNumber, letter, this);
+                return await _mediator.Send(query);
+            }
+            catch 
+            { 
+                return false;
+            }
         }
     }
 }

@@ -79,7 +79,7 @@
         <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
-                <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems" onchange="MaxCertificateExpirationDate($('#PEPassportID').val(), $('#ProcessID').val(), $('#ExamDate').val())">
+                <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems" onchange="GetRegistrationTypesFromPEPassport($('#PEPassportID').val(), $('#ProcessID').val(), $('#ExamDate').val())">
                     @if (Model.ProcessNameItems.Any())
                     {
                         <option value="" selected disabled hidden>@Localizer["Choose Process"]</option>
@@ -100,7 +100,7 @@
         <label asp-for="RegistrationTypeID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
-                <select asp-for="RegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems">
+                <select asp-for="RegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems" onchange="GetMaxCertificateExpirationDate($('#PEPassportID').val(), $('#ProcessID').val(), $('#RegistrationTypeID').val(), $('#ExamDate').val())">
                     @if (Model.RegistrationTypeNameItems.Any())
                     {
                         <option value="" selected disabled hidden>@Localizer["Choose Registration Type"]</option>
@@ -133,6 +133,7 @@
 </form>
 
 @section Scripts {
+    <script src="~/js/SetProcessTypeSelectSingle.js"></script>
     <script src="~/js/Certificates/GetRegistartionTypeIDsByPEPassportID.js"></script>
     <script src="~/js/Certificates/GetMaxCertificateExpirationDate.js"></script>
     <script src="~/js/ResetSelect.js"></script>

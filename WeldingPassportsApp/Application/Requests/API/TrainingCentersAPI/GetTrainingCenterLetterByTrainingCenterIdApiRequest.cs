@@ -5,13 +5,13 @@ namespace Application.Requests.API.TrainingCentersAPI
 {
     public class GetTrainingCenterLetterByTrainingCenterIdApiRequest : IRequest<ActionResult<char?>>
     {
-        public GetTrainingCenterLetterByTrainingCenterIdApiRequest(int companyID, ControllerBase controller)
+        public GetTrainingCenterLetterByTrainingCenterIdApiRequest(int trainingCenterID, ControllerBase controller)
         {
-            CompanyID = companyID;
+            TrainingCenterID = trainingCenterID;
             Controller = controller;
         }
 
-        public int CompanyID { get; }
+        public int TrainingCenterID { get; }
         public ControllerBase Controller { get; }
     }
 }

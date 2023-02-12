@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.API.CertificatesAPI
 {
-    public class GetRegistrationTypesFromPEPassportRequestHandler : IRequestHandler<GetRegistrationTypesFromPEPassportRequest, ActionResult<GetGetRegistrationTypesFromPEPassportReponse>>
+    public class GetRegistrationTypesFromPEPassportRequestHandler : IRequestHandler<GetRegistrationTypesFromPEPassportRequest, ActionResult<GetRegistrationTypesFromPEPassportReponse>>
     {
         private readonly ICertificationsAPIRepository _repository;
 
@@ -19,7 +19,7 @@ namespace Application.Requests.API.CertificatesAPI
         {
             _repository = repository;
         }
-        public async Task<ActionResult<GetGetRegistrationTypesFromPEPassportReponse>> Handle(GetRegistrationTypesFromPEPassportRequest request, CancellationToken cancellationToken)
+        public async Task<ActionResult<GetRegistrationTypesFromPEPassportReponse>> Handle(GetRegistrationTypesFromPEPassportRequest request, CancellationToken cancellationToken)
         {
             return await _repository.GetRegistrationTypesFromPEPassportSelectList(request.PEPassortID, request.ProcessID, request.ExamDate);
         }

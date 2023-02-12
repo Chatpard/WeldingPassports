@@ -14,7 +14,15 @@ function GetRegistrationTypesFromPEPassport(pePassportID, processID, examDate) {
         for (i = 0; i < data.registrationsSelectList.length; i++) {
             $("#RegistrationTypeID").append(new Option(data.registrationsSelectList[i].text, data.registrationsSelectList[i].value));
         }
+        SetRegistrationTypeSelectSingle();
+
         $("#ProcessID").val(data.processID);
-        MaxCertificateExpirationDate(pePassportID, data.processID, examDate);
+        GetMaxCertificateExpirationDate(pePassportID, data.processID, $("#RegistrationTypeID").val(), examDate);
     });
+}
+
+function SetRegistrationTypeSelectSingle() {
+    if ($("#RegistrationTypeID option").length == 2) {
+        $("#RegistrationTypeID").val("1").change();
+    }
 }

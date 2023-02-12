@@ -26,7 +26,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet(nameof(GetRegistrationTypesFromPEPassport))]
-        public async Task<ActionResult<GetGetRegistrationTypesFromPEPassportReponse>> GetRegistrationTypesFromPEPassport(int pePassportID, int? processID, DateTime examDate)
+        public async Task<ActionResult<GetRegistrationTypesFromPEPassportReponse>> GetRegistrationTypesFromPEPassport(int? pePassportID, int? processID, DateTime examDate)
         {
             var query = new GetRegistrationTypesFromPEPassportRequest(pePassportID, processID, examDate);
             return await _mediator.Send(query);
@@ -39,10 +39,10 @@ namespace WeldingPassportsApp.Controllers
             return await _mediator.Send(query);
         }
 
-        [HttpGet(nameof(MaxCertificateExpirationDate))]
-        public async Task<DateTime?> MaxCertificateExpirationDate(int pePassportID, int processID, string examDateString)
+        [HttpGet(nameof(GetMaxCertificateExpirationDate))]
+        public async Task<DateTime?> GetMaxCertificateExpirationDate(string examDateString, int pePassportID, int processID, int? registrationTypeID = null)
         {
-            var query = new GetCertificateMaxExpirationDateRequest(pePassportID, processID, examDateString);
+            var query = new GetCertificateMaxExpirationDateRequest(pePassportID, processID, registrationTypeID, examDateString);
             return await _mediator.Send(query);
         }
     }

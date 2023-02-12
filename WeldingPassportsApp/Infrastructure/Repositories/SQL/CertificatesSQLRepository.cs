@@ -63,6 +63,8 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<CertificateCreateViewModel> GetCertificateCreateAsync(string examinationEncryptedID)
         {
+            AppSettings appSettings = await _context.AppSettings.FirstAsync();
+
             var vm = new CertificateCreateViewModel();
             vm.ExaminationEncryptedID = examinationEncryptedID;
 
@@ -78,7 +80,7 @@ namespace Infrastructure.Repositories.SQL
                 .Select(e => e.ExamDate)
                 .SingleOrDefaultAsync();
 
-            vm.ExpiryDate = ((DateTime)vm.ExamDate).AddDays((await _context.AppSettings.FirstAsync()).MaxExpiryDays);
+            vm.ExpiryDate = ((DateTime)vm.ExamDate).AddDays(appSettings.MaxExpiryDays);
 
             vm.ExamCenterName = await _context.Examinations
                 .Where(e => e.ID == examinationDecryptedID)
@@ -102,6 +104,12 @@ namespace Infrastructure.Repositories.SQL
                 .OrderBy(passport => passport.AVNumber)
                 .Where(passport => passport.TrainingCenterID == trainingCenterID)
                 .Where(passport => ! passport.Registrations.Where(registration => registration.ExaminationID == examinationDecryptedID).Any())
+                .Where(passport => ! passport.Registrations.Where(registration => (
+                        (registration.Revoke == null) && 
+                        (((DateTime) registration.ExpiryDate).AddDays(-1 * appSettings.MaxInAdvanceDays) > vm.ExamDate))
+                    ).Any())
+                .Where(passport => ! passport.Registrations.Where(registration =>
+                    registration.Revoke.RevokeDate > vm.ExamDate).Any())
                 .Select(passport => new {
                     ID = passport.ID,
                     AVNumber = $"{passport.TrainingCenter.Letter} {passport.AVNumber.ToString("D5")} ({passport.PEWelder.FirstName} {passport.PEWelder.LastName})"

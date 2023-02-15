@@ -57,17 +57,17 @@ namespace WeldingPassportsApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
-            try
-            {
+            //try
+            //{
                 var query = new GetAccountExternalLoginCallbackRequest(returnUrl, remoteError, nameof(Register),
                     nameof(Login), nameof(RegistrationSuccess), nameof(EmailConfirmed), this);
 
                 return await _mediator.Send(query);
-            }
-            catch (Exception e)
-            {
-                return Utilities.ErrorView(_env, this, e, "Error in GetAccountExternalLoginCallback");
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    return Utilities.ErrorView(_env, this, e, "Error in GetAccountExternalLoginCallback");
+            //}
         }
 
         [HttpGet]

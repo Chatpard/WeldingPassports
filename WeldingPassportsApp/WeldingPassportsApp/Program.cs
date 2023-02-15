@@ -1,4 +1,9 @@
+#define Managed
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -11,11 +16,20 @@ namespace WeldingPassportsApp
     {
         public static async Task Main(string[] args)
         {
-            await (await CreateHostBuilder(args).Build().MigrateAsync("it@synergrid.be")).RunAsync();
+            //await (await CreateHostBuilder(args).Build().MigrateAsync("it@synergrid.be")).RunAsync();
+            await (CreateHostBuilder(args).Build()).RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    var builtConfig = config.Build();
+                    var secretClient = new SecretClient(
+                        new Uri($"https://{builtConfig["KeyVaultName"]}.vault.azure.net/"),
+                        new DefaultAzureCredential());
+                    config.AddAzureKeyVault(secretClient, new KeyVaultSecretManager());
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

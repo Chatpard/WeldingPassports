@@ -26,24 +26,17 @@ namespace Application.Requests.Examinations
                 if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
-                foreach(ExaminationDetailsCertificationsIndexViewModel certificationViewModel in request.ExaminationUpdates.Certifications)
+                foreach(ExaminationDetailsCertificationsIndexViewModel registrationIndexViewModel in request.ExaminationUpdates.Certifications)
                 {
-                    CertificateEditViewModel certificateEditViewModel = await _repository.GetCertificateEditAsync(certificationViewModel.EncryptedID);
-
-                    if (certificateEditViewModel == null)
+                    if (!registrationIndexViewModel.HasNext)
                     {
-                        return request.Controller.View(request.ExaminationUpdates);
-                    }
-
-                    if(certificateEditViewModel.CurrentCertificateHasPassed != certificationViewModel.HasPassed)
-                    {
-                        certificateEditViewModel.CurrentCertificateHasPassed = certificationViewModel.HasPassed;
-                        await _repository.CertificateUpdateAsync(certificateEditViewModel, cancellationToken);
+                        await _repository.PostCertificateUpdateAsync(registrationIndexViewModel.EncryptedID, registrationIndexViewModel.HasPassed, cancellationToken);
                     }
                 }
 
+                await _repository.SaveChangesAsync(cancellationToken);
+
                 return request.Controller.LocalRedirect(request.ReturnUrl);
-                
             }
 
             return request.Controller.View(request.ExaminationUpdates);

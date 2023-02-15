@@ -8,6 +8,7 @@
     var currentUrl = ViewBag.CurrentUrl;
     bool userCanEditPEPassports = User.CanEdit(ClaimsTypesStore.PEPassports);
     bool userCanReadCertificates = User.CanRead(ClaimsTypesStore.Certificates);
+    bool userCanEditCertificates = User.CanEdit(ClaimsTypesStore.Certificates); 
     bool userCanUpdateCertificates = User.CanUpdate(ClaimsTypesStore.Certificates);
     bool userCanDeleteCertificates = User.CanDelete(ClaimsTypesStore.Certificates);
 }
@@ -109,25 +110,30 @@
                 <td>
                     @if (userCanReadCertificates)
                     {
-                        <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Details)"
+                        <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
                         asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
                     }
-                    @if (userCanDeleteCertificates)
+                    @if (userCanEditCertificates)
                     {
-                        <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Delete)" asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                        <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
+                                  asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                    }
+                    @if (userCanDeleteCertificates && !certification.IsRevoked && !certification.HasNext)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Delete)" asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
-@if (userCanUpdateCertificates)
-{
-    <div>
+<div>
+    @if(userCanUpdateCertificates && Model.Certifications.Count() != 0)
+    {
         <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Update)"
-            asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Edit"]</a>
-        <a class="btn btn-primary" style="width:auto" href="@returnUrl">
-            @Localizer["Back"]
-        </a>
-    </div>
-}
+            asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Update"]</a>
+    }
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

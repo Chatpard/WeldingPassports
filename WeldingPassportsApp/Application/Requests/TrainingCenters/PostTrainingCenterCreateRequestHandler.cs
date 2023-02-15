@@ -32,11 +32,11 @@ namespace Application.Requests.TrainingCenters
 
                 TrainingCenter newtrainingCenter = _mapper.Map<TrainingCenter>(request.TrainingCenterCreateVM);
                 await _repository.PostTrainingCenterCreateAsync(newtrainingCenter);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 EntityEntry<ListTrainingCenter> listTrainingCenter = await _listTrainingCentersSQLRepository.Create(newtrainingCenter.ID, request.TrainingCenterCreateVM.CompanyContactID);
                 if (listTrainingCenter != null)
-                    await _repository.SaveAsync(cancellationToken);
+                    await _repository.SaveChangesAsync(cancellationToken);
 
                 TrainingCenterEditViewModel newTrainingCenterVM = _mapper.Map<TrainingCenterEditViewModel>(newtrainingCenter);
 

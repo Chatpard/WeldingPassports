@@ -30,6 +30,6 @@ namespace Application.Interfaces.Repositories.SQL
 
         SelectList CompanySelectList(bool unasigned = false, int? CompanyID = null);
 
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

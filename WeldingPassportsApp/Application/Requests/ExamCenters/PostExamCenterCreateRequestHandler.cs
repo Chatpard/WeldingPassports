@@ -29,7 +29,7 @@ namespace Application.Requests.ExamCenters
             {
                 ExamCenter examCenter = _mapper.Map<ExamCenter>(request.ExamCenterCreateVM);
                 await _repository.PostExamCentersCreateAsync(examCenter);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

@@ -7,10 +7,12 @@
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
     var userCanEditExaminations = User.CanEdit(ClaimsTypesStore.Examinations);
-    var userCanReadCertificates = User.CanRead(ClaimsTypesStore.Certificates);
     var userCanCreateCertificates = User.CanCreate(ClaimsTypesStore.Certificates);
-    var userCanDeleteCertificates = User.CanDelete(ClaimsTypesStore.Certificates);
     var userCanUpdateCertificates = User.CanUpdate(ClaimsTypesStore.Certificates);
+    var userCanRevokeCertificates = User.CanRevoke(ClaimsTypesStore.Certificates);
+    var userCanReadCertificates = User.CanRead(ClaimsTypesStore.Certificates) || userCanUpdateCertificates || userCanRevokeCertificates;
+    var userCanEditCertificates = User.CanEdit(ClaimsTypesStore.Certificates) || userCanUpdateCertificates || userCanRevokeCertificates;
+    var userCanDeleteCertificates = User.CanDelete(ClaimsTypesStore.Certificates);
 }
 
 <h1>@Localizer["Examination Details"]</h1>
@@ -107,17 +109,17 @@
                     @Html.DisplayFor(modelItem => certification.HasPassed)
                 </td>
                 <td>
-                    @if (userCanReadCertificates)
+                    @if (userCanReadCertificates )
                     {
                         <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Details)"
                            asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
                     }
-                    @if(userCanEditExaminations || userCanUpdateCertificates)
+                    @if (userCanEditCertificates )
                     {
                         <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
                            asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
                     }
-                    @if (userCanDeleteCertificates)
+                    @if (userCanDeleteCertificates && !certification.IsRevoked && !certification.HasNext)
                     {
                         <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Delete)"
                            asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
@@ -127,13 +129,12 @@
         }
     </tbody>
 </table>
-@if (userCanUpdateCertificates)
-{
-    <div>
+<div>
+    @if(userCanUpdateCertificates && Model.Certifications.Count() != 0){
         <a asp-controller="@typeof(ExaminationsController).GetNameOfController()" asp-action="@nameof(ExaminationsController.Update)" 
             asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary">@Localizer["Update"]</a>
-        <a class="btn btn-primary" style="width:auto" href="@returnUrl">
-            @Localizer["Back"]
-        </a>
-    </div>
-}
+    }
+    <a class="btn btn-primary" style="width:auto" href="@returnUrl">
+        @Localizer["Back"]
+    </a>
+</div>

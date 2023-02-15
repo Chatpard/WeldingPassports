@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230125162855_Initial")]
-    partial class Initial
+    [Migration("20230211151156_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1082,7 +1082,8 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PEWelderID");
 
-                    b.HasIndex("TrainingCenterID");
+                    b.HasIndex("TrainingCenterID", "AVNumber")
+                        .IsUnique();
 
                     b.ToTable("PEPassports");
 
@@ -1198,18 +1199,26 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NationalNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhotoPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("IdNumber")
+                        .IsUnique()
+                        .HasFilter("[IdNumber] IS NOT NULL");
+
+                    b.HasIndex("NationalNumber")
+                        .IsUnique()
+                        .HasFilter("[NationalNumber] IS NOT NULL");
 
                     b.ToTable("PEWelders");
 
@@ -1402,8 +1411,6 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PEPassportID");
 
-                    b.HasIndex("PreviousRegistrationID");
-
                     b.HasIndex("ProcessID");
 
                     b.HasIndex("RegistrationTypeID");
@@ -1461,6 +1468,7 @@ namespace Infrastructure.Migrations
                             CompanyID = 21,
                             ExaminationID = 2,
                             ExpiryDate = new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasPassed = true,
                             PEPassportID = 11,
                             ProcessID = 2,
                             RegistrationTypeID = 1
@@ -1471,6 +1479,7 @@ namespace Infrastructure.Migrations
                             CompanyID = 21,
                             ExaminationID = 3,
                             ExpiryDate = new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasPassed = true,
                             PEPassportID = 11,
                             PreviousRegistrationID = 5,
                             ProcessID = 2,
@@ -2211,11 +2220,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PEPassportID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Domain.Models.Registration", "PreviousRegistration")
-                        .WithMany()
-                        .HasForeignKey("PreviousRegistrationID")
-                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Process", "Process")
                         .WithMany("Registrations")

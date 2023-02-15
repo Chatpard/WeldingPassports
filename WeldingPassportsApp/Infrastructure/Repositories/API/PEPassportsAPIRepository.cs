@@ -39,5 +39,10 @@ namespace Infrastructure.Repositories.API
                 return null;
             }
         }
+
+        public bool IsAvailableAVNumber(int avNumber, char letter)
+        {
+            return !_context.PEPassports.Where(pePassport =>  pePassport.AVNumber == avNumber && pePassport.TrainingCenter.Letter == letter).Any();
+        }
     }
 }

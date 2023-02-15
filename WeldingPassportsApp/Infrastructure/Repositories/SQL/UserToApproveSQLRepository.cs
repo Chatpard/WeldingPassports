@@ -98,7 +98,7 @@ namespace Infrastructure.Repositories.SQL
                 user = await _userManager.FindByEmailAsync(user.Email);
 
                 await DeleteUserToApproveByIDAsync(userToApproveID);
-                await SaveAsync(cancellationToken);
+                await SaveChangesAsync(cancellationToken);
 
                 Contact contact = new Contact()
                 {

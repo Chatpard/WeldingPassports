@@ -40,7 +40,7 @@ namespace Infrastructure.Repositories.SQL
             Examination newExamination = _mapper.Map<Examination>(newExaminationVm);
             EntityEntry<Examination> newExaminationEntity = _context.Entry<Examination>(newExamination);
             newExaminationEntity.State = EntityState.Modified;
-            await SaveAsync(cancellationToken);
+            await SaveChangesAsync(cancellationToken);
          }
 
         public async Task<ExaminationEditViewModel> GetExaminationEditAsync(string encryptedID)
@@ -57,7 +57,7 @@ namespace Infrastructure.Repositories.SQL
         {
             var examination = _mapper.Map<Examination>(vm);
             EntityEntry<Examination> newPePassport = await _context.AddAsync(examination);
-            await SaveAsync(cancellationToken);
+            await SaveChangesAsync(cancellationToken);
             return newPePassport;
         }
 
@@ -77,7 +77,7 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             _context.Examinations.Remove(new Examination { ID = decryptedID });
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         public async Task<IQueryable<ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup>> ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup(string encryptedID)
@@ -101,8 +101,8 @@ namespace Infrastructure.Repositories.SQL
                                             registration.Revoke != null ? ExtendableStatus.Revoked :
                                             EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
                                             (EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
-                                            ExtendableStatus.NoMoreExtendable)
-
+                                            ExtendableStatus.NoMoreExtendable),
+                                HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID)
                             })
                             .Join(
                                 _context.UIColors.DefaultIfEmpty(),
@@ -119,7 +119,8 @@ namespace Infrastructure.Repositories.SQL
                                 (registrationExtendableStatus, uiColor) => new RegistrationUIColorGroup
                                 {
                                     Registration = registrationExtendableStatus.Registration,
-                                    UIColor = uiColor
+                                    UIColor = uiColor,
+                                    HasNext = registrationExtendableStatus.HasNext
                                 }
                             )
                     }
@@ -129,21 +130,25 @@ namespace Infrastructure.Repositories.SQL
             return query;
         }
 
-        private IQueryable<ExaminationIndexViewModel> GetExaminationsIndex(int? trainingCenterId)
+        private IQueryable<ExaminationIndexViewModel> GetExaminationsIndex(int? trainingCenterId, int? examCenterId)
         {
-            IQueryable<Examination> examinationsQ = _context.Examinations
-                .Where(exmainations => true);
+            IQueryable<Examination> examinationsQ = _context.Examinations.AsQueryable();
             if (trainingCenterId != null)
             {
                 examinationsQ = examinationsQ
-                    .Where(examination => examination.TrainingCenterID == trainingCenterId); ;
+                    .Where(examination => examination.TrainingCenterID == trainingCenterId);
+            }
+            if (examCenterId != null)
+            {
+                examinationsQ = examinationsQ
+                    .Where(examination => examination.ExamCenterID == examCenterId);
             }
             return examinationsQ.ProjectTo<ExaminationIndexViewModel>(_mapper.ConfigurationProvider);
         }
 
-        public async Task<IPaginatedList<ExaminationIndexViewModel>> GetExaminationsIndexPaginatedAsync(int? trainingCenterId, int pageSize, int pageIndex, string searchString, string sortOrder)
+        public async Task<IPaginatedList<ExaminationIndexViewModel>> GetExaminationsIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder, int? trainingCenterId = null, int? examCenterId = null)
         {
-            var weldersQuery = GetExaminationsIndex(trainingCenterId);
+            var weldersQuery = GetExaminationsIndex(trainingCenterId: trainingCenterId, examCenterId: examCenterId);
 
             weldersQuery = SearchExaminationIndex(weldersQuery, searchString);
 
@@ -164,11 +169,17 @@ namespace Infrastructure.Repositories.SQL
                 case "":
                     examinationsQuery = examinationsQuery.OrderBy(examination => examination.ExamDate);
                     return examinationsQuery;
-                case "CompanyName_desc":
-                    examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.CompanyName);
+                case "CompanyNameTC_desc":
+                    examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.CompanyNameTC);
                     return examinationsQuery;
-                case "CompanyName_asc":
-                    examinationsQuery = examinationsQuery.OrderBy(examination => examination.CompanyName);
+                case "CompanyNameTC_asc":
+                    examinationsQuery = examinationsQuery.OrderBy(examination => examination.CompanyNameTC);
+                    return examinationsQuery;
+                case "CompanyNameEC_desc":
+                    examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.CompanyNameEC);
+                    return examinationsQuery;
+                case "CompanyNameEC_asc":
+                    examinationsQuery = examinationsQuery.OrderBy(examination => examination.CompanyNameEC);
                     return examinationsQuery;
                 case "NumberOfPassports_desc":
                     examinationsQuery = examinationsQuery.OrderByDescending(examination => examination.NumberOfPassports);
@@ -185,7 +196,7 @@ namespace Infrastructure.Repositories.SQL
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                examinationsQuery = examinationsQuery.Where(examination => examination.CompanyName.Contains(searchString.ToLower()));
+                examinationsQuery = examinationsQuery.Where(examination => examination.CompanyNameTC.Contains(searchString.ToLower()));
             }
 
             return examinationsQuery;

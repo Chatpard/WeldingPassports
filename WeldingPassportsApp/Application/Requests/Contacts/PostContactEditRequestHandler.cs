@@ -32,7 +32,7 @@ namespace Application.Requests.Contacts
 
                 Contact contact = _mapper.Map<Contact>(request.ContactChanges);
                 _repository.PostContactEdit(contact);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

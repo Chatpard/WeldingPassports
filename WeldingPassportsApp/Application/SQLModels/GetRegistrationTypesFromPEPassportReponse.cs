@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Application.SQLModels
 {
-    public class GetGetRegistrationTypesFromPEPassportReponse
+    public class GetRegistrationTypesFromPEPassportReponse
     {
         public int? CompanyID { get; set; }
 

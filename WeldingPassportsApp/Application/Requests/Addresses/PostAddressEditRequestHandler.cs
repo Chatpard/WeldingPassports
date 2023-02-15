@@ -31,7 +31,7 @@ namespace Application.Requests.Addresses
 
                 Address address = _mapper.Map<Address>(request.AddressChanges);
                 _repository.PostAddressEdit(address);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

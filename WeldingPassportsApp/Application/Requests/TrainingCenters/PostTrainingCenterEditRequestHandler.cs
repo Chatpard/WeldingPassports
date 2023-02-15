@@ -30,10 +30,10 @@ namespace Application.Requests.TrainingCenters
 
                 TrainingCenter trainingCenterChanges = _mapper.Map<TrainingCenter>(request.TrainingCenterChanges);
                 _repository.PostTrainingCenterEditAsync(trainingCenterChanges);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 await _listTrainingCentersSQLRepository.Edit(trainingCenterChanges.ID, request.TrainingCenterChanges.CompanyContactID);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

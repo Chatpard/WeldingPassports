@@ -8,16 +8,18 @@ namespace Application.Security
     public static class ClaimsValuesStore
     {
         public const string CanRead = "CanRead";
-        public const string CanReadUpdate = "CanReadUpdate";
+        public const string CanRevoke = "CanRevoke";
+        public const string CanUpdate = "CanUpdate";
         public const string CanReadEdit = "CanReadEdit";
         public const string CanReadEditCreate = "CanReadEditCreate";
         public const string CanReadEditCreateDelete = "CanReadEditCreateDelete";
+        public const string CanUpdateRevokeReadEditCreateDelete = "CanUpdateRevokeReadEditCreateDelete";
 
         public static List<string> PermissionsViews
         {
             get
             {
-                return new List<string> { CanRead, CanReadUpdate, CanReadEdit, CanReadEditCreate, CanReadEditCreateDelete };
+                return new List<string> { CanRead, CanRevoke, CanUpdate, CanReadEdit, CanReadEditCreate, CanReadEditCreateDelete, CanUpdateRevokeReadEditCreateDelete };
             }
         }
     }

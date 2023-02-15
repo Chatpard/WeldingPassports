@@ -27,6 +27,8 @@ namespace Application.Profiles
                     examination.ExamCenter.ID))
                 .ForMember(vm => vm.TrainingCenterID, options => options.MapFrom(examination =>
                     examination.TrainingCenter.ID))
+                .ForMember(vm => vm.HasCertificates, options => options.MapFrom(examination =>
+                    examination.Registrations.Any()))
                 .ReverseMap()
                 .ForMember(examination => examination.ID, options => options.MapFrom(vm =>
                     _protector.Unprotect(vm.EncryptedID)))
@@ -42,8 +44,10 @@ namespace Application.Profiles
                     _protector.Protect(examination.ID.ToString())))
                 .ForMember(index => index.ExamDate, options => options.MapFrom(examination =>
                     examination.ExamDate))
-                .ForMember(index => index.CompanyName, options => options.MapFrom(examination =>
+                .ForMember(index => index.CompanyNameTC, options => options.MapFrom(examination =>
                     examination.TrainingCenter.Company.CompanyName))
+                .ForMember(index => index.CompanyNameEC, options => options.MapFrom(examination =>
+                    examination.ExamCenter.Company.CompanyName))
                 .ForMember(index => index.NumberOfPassports, options => options.MapFrom(examination =>
                     examination.Registrations.Count));
 
@@ -88,8 +92,12 @@ namespace Application.Profiles
                     group.Registration.RegistrationType.RegistrationTypeName))
                 .ForMember(vm => vm.HasPassed, options => options.MapFrom(group =>
                     group.Registration.HasPassed))
-                .ForMember(index => index.Color, options => options.MapFrom(group =>
-                    group.UIColor.Color));
+                .ForMember(vm => vm.IsRevoked, options => options.MapFrom(group =>
+                    group.Registration.Revoke != null))
+                .ForMember(vm => vm.Color, options => options.MapFrom(group =>
+                    group.UIColor.Color))
+                .ForMember(vm => vm.HasNext, options => options.MapFrom(group =>
+                    group.HasNext));
         }
     }
 }

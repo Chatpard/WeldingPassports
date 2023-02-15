@@ -105,7 +105,7 @@ namespace Infrastructure.Repositories.SQL
                     _context.Contacts.Remove(new Contact { ID = contact.ID });
             }
 
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         public SelectList ContactSelectList()

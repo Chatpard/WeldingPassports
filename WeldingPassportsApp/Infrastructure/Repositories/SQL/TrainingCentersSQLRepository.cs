@@ -81,12 +81,13 @@ namespace Infrastructure.Repositories.SQL
 
             _context.TrainingCenters.Remove(new TrainingCenter { ID = decryptedID });
 
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         public SelectList TrainingCenterSelectList(int? trainingsCenterId = null)
         {
-            var trainingCenters = _context.TrainingCenters.Where(traingCenter => true);
+            var trainingCenters = _context.TrainingCenters
+                .Where(trainingCenter =>  trainingCenter.IsActive);
             if (trainingsCenterId != null)
             {
                 trainingCenters = trainingCenters
@@ -128,7 +129,7 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<TrainingCenter> GetTrainingCenterByUserId (string userId)
         {
-            CompanyContact companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.IdentityUserId == userId).Include(companyContact => companyContact.Company).SingleOrDefaultAsync();
+            CompanyContact companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.IdentityUserId == userId).SingleOrDefaultAsync();
             if(companyContact == null) return null;
 
             TrainingCenter trainingCenter = await _context.TrainingCenters.Where(trainingCenter => trainingCenter.CompanyID == companyContact.CompanyID).FirstOrDefaultAsync();

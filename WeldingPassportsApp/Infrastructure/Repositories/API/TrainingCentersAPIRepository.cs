@@ -18,10 +18,11 @@ namespace Infrastructure.Repositories.API
             _context = context;
         }
 
-        public async Task<char?> GetLetterByCompanyID(int id)
+
+        public async Task<char?> GetLetterByTrainingCenterID(int trainingCenterID)
         {
             TrainingCenter trainingCenter = await _context.TrainingCenters
-                .Where(trainingCenter => trainingCenter.CompanyID == id).SingleOrDefaultAsync();
+                .Where(trainingCenter => trainingCenter.ID == trainingCenterID).SingleOrDefaultAsync();
 
             if (trainingCenter == null)
             {

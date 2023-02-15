@@ -135,7 +135,7 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             _context.PEPassports.Remove(new PEPassport { ID = decryptedID });
-            return await SaveAsync(token);
+            return await SaveChangesAsync(token);
         }
 
         private async Task<IQueryable<PEPassportPEWelderRegistrationUIColorsGroup>> GetPEPassportPEWelderRegistrationUIColorsGroup(string encryptedID)
@@ -162,14 +162,15 @@ namespace Infrastructure.Repositories.SQL
                                             registration.Revoke != null ? ExtendableStatus.Revoked :
                                             EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
                                             (EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
-                                            ExtendableStatus.NoMoreExtendable)
+                                            ExtendableStatus.NoMoreExtendable),
+                                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID)
                                     })
                                 .Join(
                                     _context.UIColors.DefaultIfEmpty(),
                                     registrationExtendableStatus => new
                                     {
                                         ExtendableStatus = registrationExtendableStatus.ExtendableStatus,
-                                        HasPassed = (bool)(registrationExtendableStatus.Registration.HasPassed.HasValue ? registrationExtendableStatus.Registration.HasPassed.HasValue : false)
+                                        HasPassed = (bool)(registrationExtendableStatus.Registration.HasPassed.HasValue ? registrationExtendableStatus.Registration.HasPassed : false)
                                     },
                                     uicolor => new
                                     {
@@ -179,7 +180,8 @@ namespace Infrastructure.Repositories.SQL
                                     (registrationExtendableStatus, uicolor) => new RegistrationUIColorGroup
                                     {
                                         Registration = registrationExtendableStatus.Registration,
-                                        UIColor = uicolor
+                                        UIColor = uicolor,
+                                        HasNext = registrationExtendableStatus.HasNext
                                     }
                                 )
                         }

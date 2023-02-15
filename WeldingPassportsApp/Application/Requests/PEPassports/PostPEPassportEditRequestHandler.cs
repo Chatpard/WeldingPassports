@@ -35,7 +35,7 @@ namespace Application.Requests.Admin
 
                 PEPassport pePassport = _mapper.Map<PEPassport>(request.PEPassportChanges);
                 _repository.PostPEPassportEditasync(pePassport);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

@@ -33,6 +33,6 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<TrainingCenter> GetTrainingCenterByUserId(string userId);
 
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

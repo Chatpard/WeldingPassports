@@ -28,7 +28,6 @@ namespace Application.ViewModels
         public int ProcessID { get; set; }
         public SelectList ProcessNameItems { get; set; }
 
-
         // Current Certificate
         [Display(Name = "Company")]
         public int CurrentCertificateCompanyID { get; set; }
@@ -86,6 +85,12 @@ namespace Application.ViewModels
         [Display(Name = "Exam Center")]
         public string CurrentCertificateExamCenterName { get; set; }
 
+        public bool HasNext { get; set; }
+
+        [Display(Name = "Revoked By")]
+        public int? CurrentCertificateRevokedByCompanyContactID { get; set; }
+        public SelectList CompanyContactNameItems { get; set; }
+
         private DateTime? currentCertificateRevokeDate;
         [DataType(DataType.Date)]
         [Display(Name = "Revoke Date")]
@@ -107,13 +112,8 @@ namespace Application.ViewModels
             }
         }
 
-        [Display(Name = "Revoked By")]
-        public int? CurrentCertificateRevokedByCompanyContactID { get; set; }
-        public SelectList CompanyContactNameItems { get; set; }
-
         [Display(Name = "Revoke Comment")]
         public string CurrentCertificateRevokeComment { get; set; }
-
 
         // Previous Certificate
         private DateTime? previousCertificateExpiryDate;

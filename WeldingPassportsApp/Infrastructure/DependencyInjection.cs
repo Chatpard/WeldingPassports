@@ -66,6 +66,7 @@ namespace Infrastructure
             services.AddScoped<IExamCentersSQLRepository, ExamCentersSQLRepository>();
             services.AddScoped<IListTrainingCentersSQLRepository, ListTrainingCentersSQLRepository>();
             services.AddScoped<ICertificatesSQLRepository, CertificatesSQLRepository>();
+            services.AddScoped<IRevokeSQLRepository, RevokeSQLRepository>();
         }
 
         private static void AddAPIRepositoriesToServices(this IServiceCollection services)

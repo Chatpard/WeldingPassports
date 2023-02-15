@@ -90,10 +90,10 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<int> DeleteExamCenterByEncryptedIDasync(string encryptedID, CancellationToken cancellationToken)
         {
-            int unencryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
-            EntityEntry examCenterEntityEntry = _context.Entry(await _context.ExamCenters.Where(ec => ec.ID == unencryptedID).SingleOrDefaultAsync());
+            int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+            EntityEntry examCenterEntityEntry = _context.Entry(await _context.ExamCenters.Where(ec => ec.ID == decryptedID).SingleOrDefaultAsync());
             examCenterEntityEntry.State = EntityState.Deleted;
-            return await SaveAsync(cancellationToken);
+            return await SaveChangesAsync(cancellationToken);
         }
         
         public SelectList ExamCenterSelectList()

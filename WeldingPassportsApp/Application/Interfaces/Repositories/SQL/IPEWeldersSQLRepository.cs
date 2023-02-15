@@ -27,6 +27,6 @@ namespace Application.Interfaces.Repositories.SQL
 
         SelectList PEWelderSelectList(int? trainingCenterID = null);
 
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -29,6 +29,6 @@ namespace Application.Interfaces.Repositories.SQL
 
         SelectList CompanyContactSelectList(string? encryptedCompanyID, int? companyContactID);
 
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

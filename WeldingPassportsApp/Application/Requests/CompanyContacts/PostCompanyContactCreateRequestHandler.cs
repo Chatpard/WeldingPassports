@@ -32,7 +32,7 @@ namespace Application.Requests.CompanyContacts
             {
                 CompanyContact companyContact = _mapper.Map<CompanyContact>(request.ContactVM);
                 await _repository.PostCompanyContactCreateAsync(companyContact);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
                 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

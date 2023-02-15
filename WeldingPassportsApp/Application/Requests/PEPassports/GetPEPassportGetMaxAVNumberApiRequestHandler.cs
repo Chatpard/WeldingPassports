@@ -18,7 +18,7 @@ namespace Application.Requests.PEPassports
             _peWeldersAPIRepository = peWeldersAPIRepository;
         }
 
-        public async System.Threading.Tasks.Task<ActionResult<string>> Handle(GetPEPassportGetMaxAVNumberApiRequest request, CancellationToken cancellationToken)
+        public async Task<ActionResult<string>> Handle(GetPEPassportGetMaxAVNumberApiRequest request, CancellationToken cancellationToken)
         {
             int? MaxAVNumber = _peWeldersAPIRepository.GetMaxAVNumber(request.TrainingCenterID);
 

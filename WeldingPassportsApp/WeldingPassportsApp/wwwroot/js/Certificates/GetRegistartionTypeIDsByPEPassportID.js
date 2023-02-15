@@ -1,18 +1,28 @@
-﻿$(function () {
-    $(function () {
-        $("#PEPassportID").on("change", function () {
-            $.getJSON("https://localhost:44315/Api/CertificatesApi/GetRegistrationTypesFromPEPassport", { PEPassportID: Number($(this).val()) }, function () {
-                console.log("succes");
-            }).done(function (data) {
-                $("#CompanyID").val(data.companyID);
-                $("#ProcessID").val(data.processID);
-                $("#RegistrationTypeID").find("option").remove();
-                $("#RegistrationTypeID").append(new Option("Choose Registration Type", ""));
-                $("#RegistrationTypeID").find("option").prop("disabled", true).prop("hidden", true);
-                for (i = 0; i < data.registrationsSelectList.length; i++) {
-                    $("#RegistrationTypeID").append(new Option(data.registrationsSelectList[i].text, data.registrationsSelectList[i].value));
-                }
-            });
-        });
+﻿
+function GetRegistrationTypesFromPEPassport(pePassportID, processID, examDate) {
+    $.getJSON("/../../Api/CertificatesApi/GetRegistrationTypesFromPEPassport", { pePassportID: pePassportID, processID: processID, examDate: examDate }, function () {
+    }).done(function (data) {
+        $("#CompanyID").val(data.companyID);
+        $("#RegistrationTypeID").find("option").remove();
+        var chooseOption = new Option("Choose Registration Type", "");
+        chooseOption.disabled = true;
+        chooseOption.selected = true;
+        if (data.registrationsSelectList.length != 0) {
+            chooseOption.hidden = true;
+        }
+        $("#RegistrationTypeID").append(chooseOption);
+        for (i = 0; i < data.registrationsSelectList.length; i++) {
+            $("#RegistrationTypeID").append(new Option(data.registrationsSelectList[i].text, data.registrationsSelectList[i].value));
+        }
+        SetRegistrationTypeSelectSingle();
+
+        $("#ProcessID").val(data.processID);
+        GetMaxCertificateExpirationDate(pePassportID, data.processID, $("#RegistrationTypeID").val(), examDate);
     });
-});
+}
+
+function SetRegistrationTypeSelectSingle() {
+    if ($("#RegistrationTypeID option").length == 2) {
+        $("#RegistrationTypeID").val("1").change();
+    }
+}

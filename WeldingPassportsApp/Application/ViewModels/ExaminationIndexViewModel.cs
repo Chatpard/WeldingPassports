@@ -10,6 +10,7 @@ namespace Application.ViewModels
     {
         [NotMapped]
         public string EncryptedID { get; set; }
+        
         private DateTime? examDate;
         [DataType(DataType.Date)]
         [Display(Name = "Examination Date")]
@@ -30,8 +31,13 @@ namespace Application.ViewModels
                     examDate = null;
             }
         }
+        
         [Display(Name = "Training Center")]
-        public string CompanyName { get; set; }
+        public string CompanyNameTC { get; set; }
+
+        [Display(Name = "Exam Center")]
+        public string CompanyNameEC { get; set; }
+        
         [Display(Name = "# Passports")]
         public int NumberOfPassports { get; set; }
     }

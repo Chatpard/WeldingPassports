@@ -34,7 +34,7 @@ namespace Application.Requests.Welders
 
                 PEWelder peWelder = _mapper.Map<PEWelder>(request.PEWelderChanges);
                 _repository.PutPEWelderUpdate(peWelder);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
                 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

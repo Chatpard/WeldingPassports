@@ -20,13 +20,6 @@
         </div>
     </div>
     <div class="form-group row">
-        <label asp-for="ExpiryDate" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
-            <input asp-for="ExpiryDate" class="form-control" readonly>
-            <span asp-validation-for="ExpiryDate" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group row">
         <label asp-for="ExamCenterName" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <input asp-for="ExamCenterName" class="form-control" readonly>
@@ -42,51 +35,94 @@
     </div>
     <div class="form-group row">
         <label asp-for="PEPassportID" class="col-sm-2 col-form-label"></label>
-        <div class="input-group col-sm-10">
-            <select asp-for="PEPassportID" class="form-control" asp-items="Model.PEPassportAVNumberItems">
-                <option value="" selected disabled hidden>@Localizer["Choose PE Passport"]</option>
-            </select>
-            <div class="input-group-append">
-                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+        <div class="col-sm-10">
+            <div class="input-group">
+                <select asp-for="PEPassportID" class="form-control" asp-items="Model.PEPassportAVNumberItems" onchange="GetRegistrationTypesFromPEPassport($('#PEPassportID').val(), $('#ProcessID').val(), $('#ExamDate').val())">
+                    @if (Model.PEPassportAVNumberItems.Any())
+                    {
+                        <option value="" selected disabled hidden>@Localizer["Choose PE Passport"]</option>
+                    }
+                    else
+                    {
+                        <option value="" selected disabled>@Localizer["Choose PE Passport"]</option>
+                    }
+                </select>
+                <div class="input-group-append">
+                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                </div>
             </div>
+            <span asp-validation-for="PEPassportID" class="text-danger"></span>
         </div>
-        <span asp-validation-for="PEPassportID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
-        <div class="input-group col-sm-10">
-            <select asp-for="CompanyID" class="form-control" asp-items="Model.CompanyNameItems">
-                <option value="" selected disabled hidden>@Localizer["Choose Company"]</option>
-            </select>
-            <div class="input-group-append">
-                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+        <div class="col-sm-10">
+            <div class="input-group">
+                <select asp-for="CompanyID" class="form-control" asp-items="Model.CompanyNameItems">
+                    @if(Model.CompanyNameItems.Any())
+                    {
+                        <option value="" selected disabled hidden>@Localizer["Choose Company"]</option>
+                    }
+                    else
+                    {
+                        <option value="" selected disabled>@Localizer["Choose Company"]</option>
+                    }
+                </select>
+                <div class="input-group-append">
+                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                </div>
             </div>
+            <span asp-validation-for="CompanyID" class="text-danger"></span>
         </div>
-        <span asp-validation-for="CompanyID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
-        <div class="input-group col-sm-10">
-            <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems">
-                <option value="" selected disabled hidden>@Localizer["Choose Process"]</option>
-            </select>
-            <div class="input-group-append">
-                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+        <div class="col-sm-10">
+            <div class="input-group">
+                <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems" onchange="GetRegistrationTypesFromPEPassport($('#PEPassportID').val(), $('#ProcessID').val(), $('#ExamDate').val())">
+                    @if (Model.ProcessNameItems.Any())
+                    {
+                        <option value="" selected disabled hidden>@Localizer["Choose Process"]</option>
+                    }
+                    else
+                    {
+                        <option value="" selected disabled>@Localizer["Choose Process"]</option>
+                    }
+                </select>
+                <div class="input-group-append">
+                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                </div>
             </div>
+            <span asp-validation-for="ProcessID" class="text-danger"></span>
         </div>
-        <span asp-validation-for="ProcessID" class="text-danger"></span>
     </div>
     <div class="form-group row">
         <label asp-for="RegistrationTypeID" class="col-sm-2 col-form-label"></label>
-        <div class="input-group col-sm-10">
-            <select asp-for="RegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems">
-                <option value="" selected disabled hidden>@Localizer["Choose Registration Type"]</option>
-            </select>
-            <div class="input-group-append">
-                <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+        <div class="col-sm-10">
+            <div class="input-group">
+                <select asp-for="RegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems" onchange="GetMaxCertificateExpirationDate($('#PEPassportID').val(), $('#ProcessID').val(), $('#RegistrationTypeID').val(), $('#ExamDate').val())">
+                    @if (Model.RegistrationTypeNameItems.Any())
+                    {
+                        <option value="" selected disabled hidden>@Localizer["Choose Registration Type"]</option>
+                    }
+                    else
+                    {
+                        <option value="" selected disabled>@Localizer["Choose Registration Type"]</option>
+                    }
+                </select>
+                <div class="input-group-append">
+                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                </div>
             </div>
+            <span asp-validation-for="RegistrationTypeID" class="text-danger"></span>
         </div>
-        <span asp-validation-for="RegistrationTypeID" class="text-danger"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="ExpiryDate" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="ExpiryDate" class="form-control">
+            <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+        </div>
     </div>
     <div class="form-group row">
         <div class="col-sm-10">
@@ -97,6 +133,8 @@
 </form>
 
 @section Scripts {
+    <script src="~/js/SetProcessTypeSelectSingle.js"></script>
     <script src="~/js/Certificates/GetRegistartionTypeIDsByPEPassportID.js"></script>
+    <script src="~/js/Certificates/GetMaxCertificateExpirationDate.js"></script>
     <script src="~/js/ResetSelect.js"></script>
 }

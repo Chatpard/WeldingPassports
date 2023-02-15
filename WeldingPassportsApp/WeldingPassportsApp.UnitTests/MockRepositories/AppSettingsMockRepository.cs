@@ -1,5 +1,7 @@
-﻿using Application.Interfaces.Repositories.SQL;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories.SQL;
 using Domain.Models;
+using Infrastructure.Repositories.SQL;
 using Infrastructure.SeedData;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -10,11 +12,12 @@ using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.UnitTests.MockRepositories
 {
-    public class AppSettingsMockRepository : IAppSettingsSQLRepository
+    public class AppSettingsMockRepository : SaveChangesSQL, IAppSettingsSQLRepository
     {
         private readonly List<AppSettings> _appSettingsList;
+        private static readonly IAppDbContext context;
 
-        public AppSettingsMockRepository()
+        public AppSettingsMockRepository():base(context)
         {
             _appSettingsList = new List<AppSettings>(SeedDataStore.GetSeedData<AppSettings>());
         }

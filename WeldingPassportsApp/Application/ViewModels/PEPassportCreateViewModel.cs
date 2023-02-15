@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Application.Interfaces.Controllers;
+using Application.Interfaces.Repositories.API;
+using Application.Utilities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,8 +16,9 @@ namespace Application.ViewModels
         public char Letter { get; set; }
 
         [Display(Name = "AV Number")]
+        [Remote(action: "GetIsAVNumberAvailable", controller: "PEPassportsApi", AdditionalFields = "Letter", ErrorMessage = "This AV number is already in use")]
         public string AVNumber { get; set; }
-
+        
         [Display(Name = "Training Center")]
         public int TrainingCenterID { get; set; }
 

@@ -27,6 +27,6 @@ namespace Application.Interfaces.Repositories.SQL
 
         SelectList PEPassportSelectList();
         
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

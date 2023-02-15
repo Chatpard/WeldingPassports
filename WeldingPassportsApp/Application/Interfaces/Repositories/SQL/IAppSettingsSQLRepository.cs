@@ -16,6 +16,6 @@ namespace Application.Interfaces.Repositories.SQL
         EntityEntry<AppSettings> InsertAppsettings(AppSettings appSettings);
         Task<EntityEntry<AppSettings>> DeleteAppsettingsAsync(int AppSettingsID);
         EntityEntry<AppSettings> UpdateAppSettings(AppSettings appSettingsChanges);
-        Task<int> SaveAsync(CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

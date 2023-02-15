@@ -3,7 +3,9 @@ using Domain.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace Infrastructure.Services.Persistence
     public class AppDbContext : IdentityDbContext, IAppDbContext
     {
         private readonly IWebHostEnvironment _env;
-
+        
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AppSettings> AppSettings { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -47,12 +49,52 @@ namespace Infrastructure.Services.Persistence
             base.OnModelCreating(modelBuilder);
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
+            // Todo onlyLeafRegistrationDelete
+            // https://onthedrift.com/posts/efcore-triggered-part1/
+            //foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())){
+            //if(foreignKey.PrincipalEntityType.Name != "Domain.Models."+nameof(Registration))
+            //{
+            //        foreignKey.DeleteBehavior = DeleteBehavior.Cascade;
+            //}
+            //else
+            //{
+            //        foreignKey.DeleteBehavior = DeleteBehavior.Cascade;
+            //}
+
+            modelBuilder.Entity<PEPassport>().HasIndex(pePassport => new { pePassport.TrainingCenterID, pePassport.AVNumber }).IsUnique();
+            modelBuilder.Entity<PEWelder>().HasIndex(peWelder => peWelder.NationalNumber).IsUnique();
+            modelBuilder.Entity<PEWelder>().HasIndex(peWelder => peWelder.IdNumber).IsUnique();
             modelBuilder.Entity<TrainingCenter>().HasIndex(trainingCenter => trainingCenter.Letter).IsUnique();
-                                   
+
             modelBuilder.Seed(_env);
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    using (var command = Database.GetDbConnection().CreateCommand())
+        //    {
+        //        command.CommandText = @"
+        //                CREATE TRIGGER tr_OnlyLeafNodesCertificatesDelete
+        //                   on dbo."+nameof(Registration)+@"
+        //                   INSTEAD OF DELETE
+        //                   AS
+        //                   BEGIN
+        //                        DECLARE @ID INT;
+        //                        SELECT @ID = ID
+        //                        FROM deleted;
+        //                        IF EXIST (SELECT 1 FROM"+nameof(Registration)+@"WHERE PrevID = @ID)
+        //                        BEGIN
+        //                            ROLLBACK TRANSACTION;
+        //                        END;
+        //                   END;
+        //            ";
+        //        command.ExecuteNonQuery();
+        //    }
+        //}
 
         override async public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {

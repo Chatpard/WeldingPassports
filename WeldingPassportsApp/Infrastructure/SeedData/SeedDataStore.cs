@@ -136,7 +136,7 @@ namespace Infrastructure.SeedData
                     ProcessID = 2, // Butt
                     CompanyID = 21, // Fluvius
                     ExpiryDate = new DateTime(2021, 8, 20),
-                    HasPassed = null, // TBC
+                    HasPassed = true, // TBC
                 },
                 new Registration()
                 {
@@ -148,7 +148,7 @@ namespace Infrastructure.SeedData
                     ProcessID = 2, // Butt
                     CompanyID = 21, // Fluvius
                     ExpiryDate = new DateTime(2022, 10, 20),
-                    HasPassed = null, // TBC
+                    HasPassed = true, // TBC
                 },
                 new Registration()
                 {

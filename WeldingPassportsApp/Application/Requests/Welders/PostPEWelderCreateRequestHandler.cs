@@ -33,7 +33,7 @@ namespace Application.Requests.Welders
                 PEWelder peWelder = _mapper.Map<PEWelder>(request.PEWelderVM);
 
                 await _repository.PostPEWelderCreateAsync(peWelder);
-                await _repository.SaveAsync(cancellationToken);
+                await _repository.SaveChangesAsync(cancellationToken);
                 PEWelderEditViewModel newPEWelder = _mapper.Map<PEWelderEditViewModel>(peWelder);
                 
                 return request.Controller.RedirectToAction(request.NameOfDetailsAction, new { id = newPEWelder.EncryptedID, returnUrl = request.ReturnUrl });

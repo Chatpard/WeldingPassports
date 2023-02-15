@@ -21,7 +21,7 @@ namespace Application.Requests.API.TrainingCentersAPI
 
         public async Task<ActionResult<char?>> Handle(GetTrainingCenterLetterByTrainingCenterIdApiRequest request, CancellationToken cancellationToken)
         {
-            char? letter = await _repository.GetLetterByCompanyID(request.CompanyID);
+            char? letter = await _repository.GetLetterByTrainingCenterID(request.TrainingCenterID);
 
             if (letter == null)
             {

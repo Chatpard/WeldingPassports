@@ -10,6 +10,7 @@ namespace Application.ViewModels
     {
         public string EncryptedID { get; set; }
         private DateTime? examDate;
+
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Examination Date")]
@@ -30,11 +31,20 @@ namespace Application.ViewModels
                     examDate = null;
             }
         }
+
+        [Required]
         [Display(Name = "Exam Center")]
         public string ExamCenterID { get; set; }
+
         public SelectList ExamCenterItems { get; set; }
+
+        [Required]
         [Display(Name = "Training Center")]
         public string TrainingCenterID { get; set; }
+
         public SelectList TrainingCenterItems { get; set; }
+
+        [Required]
+        public bool HasCertificates { get; set; }
     }
 }

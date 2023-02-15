@@ -30,22 +30,15 @@ namespace Application.Requests.PEPassports
                 if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
-                foreach(PEPassportDetailsRegistrationsIndexViewModel registrationViewModel in request.PePassportUpdates.Certifications)
+                foreach(PEPassportDetailsRegistrationsIndexViewModel registrationIndexViewModel in request.PePassportUpdates.Certifications)
                 {
-                    CertificateEditViewModel certificateViewModel = await _repository.GetCertificateEditAsync(registrationViewModel.EncryptedID);
-
-                    if(certificateViewModel == null)
+                    if(!registrationIndexViewModel.HasNext)
                     {
-                        return request.Controller.View(request.PePassportUpdates);
+                        await _repository.PostCertificateUpdateAsync(registrationIndexViewModel.EncryptedID, registrationIndexViewModel.HasPassed, cancellationToken);
                     }
-
-                    if(certificateViewModel.CurrentCertificateHasPassed != registrationViewModel.HasPassed)
-                    {
-                        certificateViewModel.CurrentCertificateHasPassed = registrationViewModel.HasPassed;
-                        await _repository.CertificateUpdateAsync(certificateViewModel, cancellationToken);
-                    }
-
                 }
+
+                await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }

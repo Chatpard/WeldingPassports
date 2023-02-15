@@ -9,6 +9,16 @@
     <Compile Remove="Migrations\20220122122107_Initial_Migration.Designer.cs" />
     <Compile Remove="Migrations\20230125162126_Initial.cs" />
     <Compile Remove="Migrations\20230125162126_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20230131225324_test.cs" />
+    <Compile Remove="Migrations\20230131225324_test.Designer.cs" />
+    <Compile Remove="Migrations\20230131230145_test2.cs" />
+    <Compile Remove="Migrations\20230131230145_test2.Designer.cs" />
+    <Compile Remove="Migrations\20230131230319_test3.cs" />
+    <Compile Remove="Migrations\20230131230319_test3.Designer.cs" />
+    <Compile Remove="Migrations\20230131230432_test4.cs" />
+    <Compile Remove="Migrations\20230131230432_test4.Designer.cs" />
+    <Compile Remove="Migrations\20230201223035_NotMapped.cs" />
+    <Compile Remove="Migrations\20230201223035_NotMapped.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

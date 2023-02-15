@@ -25,7 +25,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = ClaimsTypesStore.Certificates+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
+        [Authorize(Policy = ClaimsTypesStore.Certificates+ClaimsPrincipalExtensions.CanUpdateRevokeReadClaimsGroup+"Policy")]
         public async Task<IActionResult> Details(string id, string returnUrl)
         {
             try
@@ -36,6 +36,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesDetails");
             }
         }
@@ -52,6 +53,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesCreate");
             }
         }
@@ -68,12 +70,13 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesCreate");
             }
         }
 
         [HttpGet]
-        [Authorize(Policy = ClaimsTypesStore.Certificates+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
+        [Authorize(Policy = ClaimsTypesStore.Certificates+ClaimsPrincipalExtensions.CanUpdateRevokeEditClaimsGroup+"Policy") ]
         public async Task<IActionResult> Edit(string id, string returnUrl)
         {
             try
@@ -84,12 +87,13 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesEdit");
             }
         }
 
         [HttpPost]
-        [Authorize(Policy = ClaimsTypesStore.Certificates+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
+        [Authorize(Policy = ClaimsTypesStore.Certificates+ClaimsPrincipalExtensions.CanUpdateRevokeEditClaimsGroup+"Policy")]
         public async Task<IActionResult> Edit(CertificateEditViewModel vm, string returnUrl)
         {
             try
@@ -100,6 +104,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask; 
                 return Utilities.ErrorView(_env, this, e, "Error in PostCertificatesEdit");
             }
         }
@@ -116,6 +121,7 @@ namespace WeldingPassportsApp.Controllers
             }
             catch (Exception e)
             {
+                await Task.CompletedTask;
                 return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesDelete");
             }
         }

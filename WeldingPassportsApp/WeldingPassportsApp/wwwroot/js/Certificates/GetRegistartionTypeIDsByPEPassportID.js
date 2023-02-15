@@ -1,6 +1,6 @@
 ﻿
 function GetRegistrationTypesFromPEPassport(pePassportID, processID, examDate) {
-    $.getJSON("/../../Api/CertificatesApi/GetRegistrationTypesFromPEPassport", { pePassportID: pePassportID, processID: processID, examDate: examDate }, function () {
+    $.getJSON("/../../api/CertificatesApi/GetRegistrationTypesFromPEPassport", { pePassportID: pePassportID, processID: processID, examDate: examDate }, function () {
     }).done(function (data) {
         $("#CompanyID").val(data.companyID);
         $("#RegistrationTypeID").find("option").remove();

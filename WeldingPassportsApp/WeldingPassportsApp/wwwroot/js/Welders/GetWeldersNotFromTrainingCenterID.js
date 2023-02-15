@@ -1,7 +1,7 @@
 ﻿$(function () {
     $(function () {
         $("#TrainingCenterID").on("change", function () {
-            $.getJSON("https://localhost:44315/api/WeldersApi/GetWeldersNotFromTrainingCenterId", { id: Number($(this).val()) }, function () {
+            $.getJSON("/../../api/WeldersApi/GetWeldersNotFromTrainingCenterId", { id: Number($(this).val()) }, function () {
                 console.log("succes");
             }).done(function (data) {
                 $("#PEWelderID").find("option").remove();

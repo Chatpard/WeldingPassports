@@ -1,7 +1,7 @@
 $(function () {
     $(function () {
         $("#CompanyID").on("change", function () {
-            $.getJSON("https://localhost:44315/Api/CompanyContactsApi/GetCompanyContactsFromCompany", { CompanyID: Number($(this).val()) }, function () {
+            $.getJSON("/../../api/CompanyContactsApi/GetCompanyContactsFromCompany", { CompanyID: Number($(this).val()) }, function () {
                 console.log("succes");
             }).done(function (data) {
                 $("#CompanyContactID").find("option").remove();

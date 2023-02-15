@@ -4,7 +4,7 @@
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: "/../../Api/CertificatesApi/GetMaxCertificateExpirationDate",
+            url: "/../../api/CertificatesApi/GetMaxCertificateExpirationDate",
             data: { examDateString: examDate, pePassportID: pePassportID, processID: processID, registrationTypeID: registrationTypeID },
             success: function (response) {
                 console.log("GetMaxCertificateExpirationDate: " + response);

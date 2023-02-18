@@ -1262,8 +1262,8 @@ namespace Infrastructure.SeedData
                     ID = 20,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    RegistrationTypeID = 3, // Re-Examination1
-                    AvailableRegistrationTypeID = 3  // Re-Examination1
+                    RegistrationTypeID = 4, // Re-Examination2
+                    AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
@@ -1271,30 +1271,14 @@ namespace Infrastructure.SeedData
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
                     RegistrationTypeID = 4, // Re-Examination2
-                    AvailableRegistrationTypeID = 1 // Training
-                },
-                new AllowedRegistrationType()
-                {
-                    ID = 22,
-                    ExtendableStatus = ExtendableStatus.Extendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 4, // Re-Examination2
                     AvailableRegistrationTypeID = 2 // Extension
-                },
-                new AllowedRegistrationType()
-                {
-                    ID = 23,
-                    ExtendableStatus = ExtendableStatus.Extendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 4, // Re-Examination2
-                    AvailableRegistrationTypeID = 3 // Re-Examination1
                 },
             #endregion
 
                 #region NoMoreExtendable
                 new AllowedRegistrationType()
                 {
-                    ID = 24,
+                    ID = 22,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = null,
                     RegistrationTypeID = null, // No Registration
@@ -1302,10 +1286,26 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 25,
+                    ID = 23,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = false,
                     RegistrationTypeID = 1, // Training
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 24,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    RegistrationTypeID = 2, // Extension
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 25,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    RegistrationTypeID = 3, // Re-Examination1
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
@@ -1313,28 +1313,12 @@ namespace Infrastructure.SeedData
                     ID = 26,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = false,
-                    RegistrationTypeID = 2, // Extension
-                    AvailableRegistrationTypeID = 1 // Training
-                },
-                new AllowedRegistrationType()
-                {
-                    ID = 27,
-                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
-                    HasPassed = false,
-                    RegistrationTypeID = 3, // Re-Examination1
-                    AvailableRegistrationTypeID = 1 // Training
-                },
-                new AllowedRegistrationType()
-                {
-                    ID = 28,
-                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
-                    HasPassed = false,
                     RegistrationTypeID = 4, // Re-Examination2
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 29,
+                    ID = 27,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = true,
                     RegistrationTypeID = 1, // Training
@@ -1342,7 +1326,7 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 30,
+                    ID = 28,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = true,
                     RegistrationTypeID = 2, // Extension
@@ -1350,7 +1334,7 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 31,
+                    ID = 29,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = true,
                     RegistrationTypeID = 3, // Re-Examination1
@@ -1358,7 +1342,7 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 32,
+                    ID = 30,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = true,
                     RegistrationTypeID = 4, // Re-Examination2
@@ -1369,7 +1353,7 @@ namespace Infrastructure.SeedData
                 #region Revoked
                 new AllowedRegistrationType()
                 {
-                    ID = 33,
+                    ID = 31,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = null,
                     RegistrationTypeID = null, // No Registration
@@ -1377,7 +1361,7 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 34,
+                    ID = 32,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
                     RegistrationTypeID = 1, // Training
@@ -1385,7 +1369,7 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 35,
+                    ID = 33,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
                     RegistrationTypeID = 2, // Extension
@@ -1393,7 +1377,7 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 36,
+                    ID = 34,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
                     RegistrationTypeID = 3, // Re-Examination1
@@ -1401,7 +1385,7 @@ namespace Infrastructure.SeedData
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 37,
+                    ID = 35,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
                     RegistrationTypeID = 4, // Re-Examination2

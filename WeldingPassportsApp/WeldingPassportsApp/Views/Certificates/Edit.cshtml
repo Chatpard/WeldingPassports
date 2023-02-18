@@ -60,7 +60,7 @@
             }
             else
             {
-                <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems" readonly></select>
+                <select asp-for="ProcessID" class="form-control" asp-items="Model.ProcessNameItems" disabled="disabled"></select>
             }
             <span asp-validation-for="ProcessID" class="text-danger"></span>
         </div>
@@ -77,7 +77,7 @@
             }
             else
             {
-                <select asp-for="CurrentCertificateCompanyID" class="form-control" asp-items="Model.CompanyNameItems" readonly></select>
+                <select asp-for="CurrentCertificateCompanyID" class="form-control" asp-items="Model.CompanyNameItems" disabled="disabled"></select>
             }
             <span asp-validation-for="CurrentCertificateCompanyID" class="text-danger"></span>
         </div>
@@ -105,7 +105,7 @@
             }
             else
             {
-                <select asp-for="CurrentCertificateRegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems" readonly></select>
+                <select asp-for="CurrentCertificateRegistrationTypeID" class="form-control" asp-items="Model.RegistrationTypeNameItems" disabled="disabled"></select>
             }
             <span asp-validation-for="CurrentCertificateRegistrationTypeID" class="text-danger"></span>
         </div>

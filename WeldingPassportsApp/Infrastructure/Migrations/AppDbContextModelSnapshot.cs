@@ -320,14 +320,6 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ID = 20,
-                            AvailableRegistrationTypeID = 3,
-                            ExtendableStatus = 1,
-                            HasPassed = true,
-                            RegistrationTypeID = 3
-                        },
-                        new
-                        {
-                            ID = 21,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 1,
                             HasPassed = true,
@@ -335,7 +327,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ID = 22,
+                            ID = 21,
                             AvailableRegistrationTypeID = 2,
                             ExtendableStatus = 1,
                             HasPassed = true,
@@ -343,17 +335,25 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
+                            ID = 22,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2
+                        },
+                        new
+                        {
                             ID = 23,
-                            AvailableRegistrationTypeID = 3,
-                            ExtendableStatus = 1,
-                            HasPassed = true,
-                            RegistrationTypeID = 4
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            RegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 24,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            RegistrationTypeID = 2
                         },
                         new
                         {
@@ -361,7 +361,7 @@ namespace Infrastructure.Migrations
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 2,
                             HasPassed = false,
-                            RegistrationTypeID = 1
+                            RegistrationTypeID = 3
                         },
                         new
                         {
@@ -369,23 +369,23 @@ namespace Infrastructure.Migrations
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 2,
                             HasPassed = false,
-                            RegistrationTypeID = 2
+                            RegistrationTypeID = 4
                         },
                         new
                         {
                             ID = 27,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 2,
-                            HasPassed = false,
-                            RegistrationTypeID = 3
+                            HasPassed = true,
+                            RegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 28,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 2,
-                            HasPassed = false,
-                            RegistrationTypeID = 4
+                            HasPassed = true,
+                            RegistrationTypeID = 2
                         },
                         new
                         {
@@ -393,7 +393,7 @@ namespace Infrastructure.Migrations
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 2,
                             HasPassed = true,
-                            RegistrationTypeID = 1
+                            RegistrationTypeID = 3
                         },
                         new
                         {
@@ -401,33 +401,17 @@ namespace Infrastructure.Migrations
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 2,
                             HasPassed = true,
-                            RegistrationTypeID = 2
+                            RegistrationTypeID = 4
                         },
                         new
                         {
                             ID = 31,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
-                            HasPassed = true,
-                            RegistrationTypeID = 3
-                        },
-                        new
-                        {
-                            ID = 32,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
-                            HasPassed = true,
-                            RegistrationTypeID = 4
-                        },
-                        new
-                        {
-                            ID = 33,
-                            AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 3
                         },
                         new
                         {
-                            ID = 34,
+                            ID = 32,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 3,
                             HasPassed = true,
@@ -435,7 +419,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ID = 35,
+                            ID = 33,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 3,
                             HasPassed = true,
@@ -443,7 +427,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ID = 36,
+                            ID = 34,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 3,
                             HasPassed = true,
@@ -451,7 +435,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            ID = 37,
+                            ID = 35,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 3,
                             HasPassed = true,
@@ -1409,6 +1393,8 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PEPassportID");
 
+                    b.HasIndex("PreviousRegistrationID");
+
                     b.HasIndex("ProcessID");
 
                     b.HasIndex("RegistrationTypeID");
@@ -2218,6 +2204,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PEPassportID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Domain.Models.Registration", "PreviousRegistration")
+                        .WithMany()
+                        .HasForeignKey("PreviousRegistrationID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Process", "Process")
                         .WithMany("Registrations")

@@ -27,7 +27,9 @@ namespace Application.Requests.Account
 
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(request.Provider, redirectUrl);
 
-            return Task.FromResult(new ChallengeResult(request.Provider, properties));
+            var challengeResult = new ChallengeResult(request.Provider, properties);
+
+            return Task.FromResult(challengeResult);
         }
     }
 }

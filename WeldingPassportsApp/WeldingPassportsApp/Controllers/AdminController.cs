@@ -29,7 +29,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "AdminCanReadPolicy")]
+        [Authorize(Policy = ClaimsTypesStore.Admin+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> AppSettingsDetails()
         {
             try
@@ -45,7 +45,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "AdminCanReadEditPolicy")]
+        [Authorize(Policy = ClaimsTypesStore.Admin+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> AppSettingsEdit(int id)
         {
             try
@@ -62,6 +62,7 @@ namespace WeldingPassportsApp.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
+        [Authorize(Policy = ClaimsTypesStore.Admin+ClaimsPrincipalExtensions.CanEditClaimsGroup+"Policy")]
         public async Task<IActionResult> AppSettingsEdit(AppSettingsViewModel appSettingsChanges)
         {
             try
@@ -77,7 +78,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "AdminCanReadEdit")]
+        [Authorize(Policy = ClaimsTypesStore.Admin+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> UsersToApproveIndex()
         {
             try
@@ -92,6 +93,7 @@ namespace WeldingPassportsApp.Controllers
             }
         }
 
+        [Authorize(Policy = ClaimsTypesStore.Admin+ClaimsPrincipalExtensions.CanReadClaimsGroup+"Policy")]
         public async Task<IActionResult> UserToApproveDetails(string id)
         {
             try
@@ -107,6 +109,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = ClaimsTypesStore.Admin+ClaimsPrincipalExtensions.CanCreateClaimsGroup+"Policy")]
         public async Task<IActionResult> ApproveUser(string id, string role)
         {
             try
@@ -123,7 +126,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "AdminCanReadEditDeletePolicy")]
+        [Authorize(Policy = ClaimsTypesStore.Admin+ClaimsPrincipalExtensions.CanDeleteClaimsGroup+"Policy")]
         public async Task<IActionResult> DeleteUser(string id, string returnUrl)
         {
             try

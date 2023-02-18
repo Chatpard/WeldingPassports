@@ -567,6 +567,12 @@ namespace Infrastructure.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Registrations_Registrations_PreviousRegistrationID",
+                        column: x => x.PreviousRegistrationID,
+                        principalTable: "Registrations",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Registrations_Processes_ProcessID",
                         column: x => x.ProcessID,
                         principalTable: "Processes",
@@ -716,43 +722,41 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ID", "AvailableRegistrationTypeID", "ExtendableStatus", "HasPassed", "RegistrationTypeID" },
                 values: new object[,]
                 {
-                    { 25, 1, 2, false, 1 },
-                    { 34, 1, 3, true, 1 },
+                    { 22, 1, 2, null, null },
+                    { 31, 1, 3, null, null },
+                    { 32, 1, 3, true, 1 },
                     { 3, 1, 0, false, 2 },
                     { 8, 1, 1, false, 2 },
                     { 14, 2, 1, true, 1 },
                     { 16, 1, 1, true, 2 },
-                    { 26, 1, 2, false, 2 },
-                    { 30, 1, 2, true, 2 },
-                    { 35, 1, 3, true, 2 },
+                    { 24, 1, 2, false, 2 },
+                    { 28, 1, 2, true, 2 },
+                    { 33, 1, 3, true, 2 },
                     { 4, 1, 0, false, 3 },
                     { 9, 3, 1, false, 2 },
                     { 10, 1, 1, false, 3 },
                     { 15, 3, 1, true, 1 },
-                    { 33, 1, 3, null, null },
                     { 17, 3, 1, true, 2 },
+                    { 18, 1, 1, true, 3 },
                     { 19, 2, 1, true, 3 },
-                    { 20, 3, 1, true, 3 },
-                    { 27, 1, 2, false, 3 },
-                    { 31, 1, 2, true, 3 },
-                    { 36, 1, 3, true, 3 },
+                    { 25, 1, 2, false, 3 },
+                    { 29, 1, 2, true, 3 },
+                    { 34, 1, 3, true, 3 },
                     { 5, 1, 0, false, 4 },
                     { 11, 4, 1, false, 3 },
                     { 12, 1, 1, false, 4 },
-                    { 21, 1, 1, true, 4 },
-                    { 22, 2, 1, true, 4 },
-                    { 23, 3, 1, true, 4 },
-                    { 28, 1, 2, false, 4 },
-                    { 18, 1, 1, true, 3 },
-                    { 29, 1, 2, true, 1 },
-                    { 37, 1, 3, true, 4 },
-                    { 24, 1, 2, null, null },
+                    { 20, 1, 1, true, 4 },
+                    { 21, 2, 1, true, 4 },
+                    { 26, 1, 2, false, 4 },
+                    { 27, 1, 2, true, 1 },
+                    { 23, 1, 2, false, 1 },
+                    { 35, 1, 3, true, 4 },
                     { 13, 1, 1, true, 1 },
                     { 7, 1, 1, false, 1 },
                     { 6, 1, 1, null, null },
                     { 2, 1, 0, false, 1 },
                     { 1, 1, 0, null, null },
-                    { 32, 1, 2, true, 4 }
+                    { 30, 1, 2, true, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -760,19 +764,19 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ID", "AddressID", "CompanyEmail", "CompanyMainPhone", "CompanyName", "WebPage" },
                 values: new object[,]
                 {
-                    { 9, 9, "info@vinçotte.be", "+32 2 364 87 54", "Vinçotte", "https://vinçotte.be" },
-                    { 8, 8, "info@ores.be", "+32 2 683 57 32", "Ores", "https://ores.be" },
-                    { 7, 7, "info@kcbrugge.be", "+32 5 069 63 74", "Kwalificatiecentrum Brugge bvba", "https://kcbrugge.be" },
+                    { 2, 2, "info@tcz.be", "+32 2 564 52 87", "TCZ", "https://tcz.be" },
+                    { 3, 3, "info@technifutur.be", "+32 4 382 45 72", "Technifutur", "https://technifutur.be" },
                     { 4, 4, "info@sibelga.be", "+32 2 856 45 82", "Sibelga Academy", "https://academy.sibelga.be" },
                     { 5, 5, "info@technocampus.be", "+32 2 754 83 19", "Technocampus", "https://technocampus.be" },
-                    { 10, 10, "info@denestor.be", "+32 9 375 31 69", "De Nestor", "https://denestor.be" },
-                    { 3, 3, "info@technifutur.be", "+32 4 382 45 72", "Technifutur", "https://technifutur.be" },
-                    { 2, 2, "info@tcz.be", "+32 2 564 52 87", "TCZ", "https://tcz.be" },
                     { 6, 6, "info@formation-polygone-eau.be", "+32 8 778 93 30", "Polygone de l'eau", "https://formation-polygone-eau.be" },
+                    { 7, 7, "info@kcbrugge.be", "+32 5 069 63 74", "Kwalificatiecentrum Brugge bvba", "https://kcbrugge.be" },
+                    { 8, 8, "info@ores.be", "+32 2 683 57 32", "Ores", "https://ores.be" },
+                    { 9, 9, "info@vinçotte.be", "+32 2 364 87 54", "Vinçotte", "https://vinçotte.be" },
+                    { 10, 10, "info@denestor.be", "+32 9 375 31 69", "De Nestor", "https://denestor.be" },
                     { 11, 11, "info@lascentrum.be", "+32 2 954 74 85", "Lascentrum", "https://lascentrum.be" },
-                    { 15, 12, "info@verhoeven.be", "+32 2 837 49 27", "Verhoeven", "https://verhoeven.be" },
-                    { 13, 12, "info@fabricom.be", "+32 2 793 98 07", "Fabricom", "https://fabricom.be" },
                     { 14, 12, "info@ltc.be", "+32 2 951 72 19", "LTC", "https://ltc.be" },
+                    { 13, 12, "info@fabricom.be", "+32 2 793 98 07", "Fabricom", "https://fabricom.be" },
+                    { 15, 12, "info@verhoeven.be", "+32 2 837 49 27", "Verhoeven", "https://verhoeven.be" },
                     { 16, 12, "info@alkabel.be", "+32 2 864 92 47", "Alkabel", "https://alkabel.be" },
                     { 17, 12, "info@vindevogel.be", "+32 2 482 24 35", "Vindevogel", "https://vindevogel.be" },
                     { 18, 12, "info@canalco.be", "+32 2 507 74 19", "Canalco", "https://canalco.be" },
@@ -872,10 +876,18 @@ namespace Infrastructure.Migrations
                     { 2, null, 19, 1, new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 9, null, 2, 1 },
                     { 3, null, 13, 2, new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 3, null, 1, 1 },
                     { 5, null, 21, 2, new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, null, 2, 1 },
-                    { 4, null, 13, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 3, 3, 1, 3 },
-                    { 6, null, 21, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, 5, 2, 3 },
                     { 7, null, 23, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 13, null, 1, 1 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Registrations",
+                columns: new[] { "ID", "CertificatePath", "CompanyID", "ExaminationID", "ExpiryDate", "HasPassed", "PEPassportID", "PreviousRegistrationID", "ProcessID", "RegistrationTypeID" },
+                values: new object[] { 4, null, 13, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 3, 3, 1, 3 });
+
+            migrationBuilder.InsertData(
+                table: "Registrations",
+                columns: new[] { "ID", "CertificatePath", "CompanyID", "ExaminationID", "ExpiryDate", "HasPassed", "PEPassportID", "PreviousRegistrationID", "ProcessID", "RegistrationTypeID" },
+                values: new object[] { 6, null, 21, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, 5, 2, 3 });
 
             migrationBuilder.InsertData(
                 table: "Revokes",
@@ -1035,6 +1047,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Registrations_PEPassportID",
                 table: "Registrations",
                 column: "PEPassportID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Registrations_PreviousRegistrationID",
+                table: "Registrations",
+                column: "PreviousRegistrationID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Registrations_ProcessID",

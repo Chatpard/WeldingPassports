@@ -43,22 +43,17 @@ namespace Infrastructure.Repositories.SQL
         public async Task PostCertificateCreateAsync(CertificateCreateViewModel vm, CancellationToken cancellationToken)
         {
             var registration = _mapper.Map<Registration>(vm);
-            registration.ExpiryDate = ((DateTime)vm.ExamDate).AddDays((await _context.AppSettings.FirstAsync()).MaxExpiryDays);
-            registration.PreviousRegistrationID = _context.Registrations
-                .Where(anyRegistration => anyRegistration.PEPassportID == registration.PEPassportID)
-                .OrderByDescending(registration => registration.Examination.ExamDate)
-                .FirstOrDefault()?.ID;
-            //var registration = new Registration
-            //{
-            //    ExaminationID = test.ExaminationID,
-            //    PEPassportID = vm.PEPassportID,
-            //    CompanyID = vm.CompanyID,
-            //    ProcessID = vm.ProcessID,
-            //    RegistrationTypeID = vm.RegistrationTypeID,
-            //    ExpiryDate = ((DateTime)vm.ExamDate).AddDays((await _context.AppSettings.FirstAsync()).MaxExpiryDays)
-            //};
-            _context.Registrations.Add(registration);
-           await SaveChangesAsync(cancellationToken);
+            registration.PEPassport = await _context.PEPassports.Where(pePassport => pePassport.ID == registration.PEPassportID).SingleOrDefaultAsync();
+            if(registration.PEPassport != null)
+            {
+                registration.PreviousRegistrationID = _context.Registrations
+                    .Include(registration => registration.PEPassport)
+                    .Where(anyRegistration => anyRegistration.PEPassport.PEWelderID == registration.PEPassport.PEWelderID)
+                    .OrderByDescending(registration => registration.Examination.ExamDate)
+                    .FirstOrDefault()?.ID;
+                _context.Registrations.Add(registration);
+               await SaveChangesAsync(cancellationToken);
+            }
         }
 
         public async Task<CertificateCreateViewModel> GetCertificateCreateAsync(string examinationEncryptedID)

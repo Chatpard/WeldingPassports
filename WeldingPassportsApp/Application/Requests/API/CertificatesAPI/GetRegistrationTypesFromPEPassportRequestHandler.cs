@@ -21,7 +21,7 @@ namespace Application.Requests.API.CertificatesAPI
         }
         public async Task<ActionResult<GetRegistrationTypesFromPEPassportReponse>> Handle(GetRegistrationTypesFromPEPassportRequest request, CancellationToken cancellationToken)
         {
-            return await _repository.GetRegistrationTypesFromPEPassportSelectList(request.PEPassortID, request.ProcessID, request.ExamDate);
+            return await _repository.GetRegistrationTypesSelectListFromPEPassport(request.PEPassortID, request.ProcessID, request.ExamDate);
         }
     }
 }

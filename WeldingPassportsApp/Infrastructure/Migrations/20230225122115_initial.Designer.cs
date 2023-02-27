@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230217133132_initial")]
+    [Migration("20230225122115_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -182,7 +182,7 @@ namespace Infrastructure.Migrations
                             ID = 2,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 0,
-                            HasPassed = false,
+                            HasPassed = true,
                             RegistrationTypeID = 1
                         },
                         new
@@ -190,7 +190,7 @@ namespace Infrastructure.Migrations
                             ID = 3,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 0,
-                            HasPassed = false,
+                            HasPassed = true,
                             RegistrationTypeID = 2
                         },
                         new
@@ -198,7 +198,7 @@ namespace Infrastructure.Migrations
                             ID = 4,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 0,
-                            HasPassed = false,
+                            HasPassed = true,
                             RegistrationTypeID = 3
                         },
                         new
@@ -206,7 +206,7 @@ namespace Infrastructure.Migrations
                             ID = 5,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 0,
-                            HasPassed = false,
+                            HasPassed = true,
                             RegistrationTypeID = 4
                         },
                         new
@@ -1395,8 +1395,6 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PEPassportID");
 
-                    b.HasIndex("PreviousRegistrationID");
-
                     b.HasIndex("ProcessID");
 
                     b.HasIndex("RegistrationTypeID");
@@ -2206,11 +2204,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PEPassportID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Domain.Models.Registration", "PreviousRegistration")
-                        .WithMany()
-                        .HasForeignKey("PreviousRegistrationID")
-                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Process", "Process")
                         .WithMany("Registrations")

@@ -4,6 +4,7 @@ using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
 using Microsoft.AspNetCore.DataProtection;
+using System;
 using System.Linq;
 
 namespace Application.Profiles
@@ -20,7 +21,7 @@ namespace Application.Profiles
 
             CreateMap<Company, CompanyIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(company =>
-                    _protector.Protect(company.ID.ToString())))
+                    _protector.Protect(Convert.ToString(company.ID))))
                 .ForMember(index => index.CompanyName, options => options.MapFrom(company =>
                     company.CompanyName))
                 .ForMember(index => index.CompanyMainPhone, options => options.MapFrom(company =>
@@ -34,7 +35,7 @@ namespace Application.Profiles
 
             CreateMap<Company, CompanyDetailsViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(company =>
-                    _protector.Protect(company.ID.ToString())))
+                    _protector.Protect(Convert.ToString(company.ID))))
                 .ForMember(index => index.BusinessAddress, options => options.MapFrom(company =>
                     company.Address.BusinessAddress))
                 .ForMember(index => index.BusinessAddressCity, options => options.MapFrom(company =>
@@ -46,7 +47,7 @@ namespace Application.Profiles
 
             CreateMap<Company, CompanyEditViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(company =>
-                    _protector.Protect(company.ID.ToString())));
+                    _protector.Protect(Convert.ToString(company.ID))));
 
             CreateMap<CompanyEditViewModel, Company>()
                 .ForMember(index => index.ID, options => options.MapFrom(company =>

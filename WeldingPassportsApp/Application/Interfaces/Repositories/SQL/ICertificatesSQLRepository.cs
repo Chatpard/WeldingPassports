@@ -1,4 +1,5 @@
-﻿using Application.ViewModels;
+﻿using Application.SQLModels;
+using Application.ViewModels;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -19,5 +20,7 @@ namespace Application.Interfaces.Repositories.SQL
         Task<CertificateDetailsViewModel> GetCertificateDetailsAsync(string encryptedID);
         Task<EntityEntry<Registration>> DeleteByEncryptedID(string encryptedID);
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesSelectListFromPEPassport(int? pePassportID, int? processID, DateTime examDate, Registration previousRegistration = null);
+        Task<DateTime?> GetCertificateMaxExpirationDate(int? pePassportID, int? processID, DateTime? examDate = null);
     }
 }

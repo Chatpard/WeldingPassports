@@ -22,7 +22,7 @@ namespace Application.Profiles
 
             CreateMap<Examination, ExaminationEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(examination =>
-                    _protector.Protect(examination.ID.ToString())))
+                    _protector.Protect(Convert.ToString(examination.ID))))
                 .ForMember(vm => vm.ExamCenterID, options => options.MapFrom(examination =>
                     examination.ExamCenter.ID))
                 .ForMember(vm => vm.TrainingCenterID, options => options.MapFrom(examination =>
@@ -41,7 +41,7 @@ namespace Application.Profiles
 
             CreateMap<Examination, ExaminationIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(examination =>
-                    _protector.Protect(examination.ID.ToString())))
+                    _protector.Protect(Convert.ToString(examination.ID))))
                 .ForMember(index => index.ExamDate, options => options.MapFrom(examination =>
                     examination.ExamDate))
                 .ForMember(index => index.CompanyNameTC, options => options.MapFrom(examination =>
@@ -53,7 +53,7 @@ namespace Application.Profiles
 
             CreateMap<ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup, ExaminationDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.Examination.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.Examination.ID))))
                 .ForMember(vm => vm.ExamDate, options => options.MapFrom(group =>
                     group.Examination.ExamDate))
                 .ForMember(vm => vm.ExamCenterName, options => options.MapFrom(group =>
@@ -65,7 +65,7 @@ namespace Application.Profiles
 
             CreateMap<ExaminationTrainingCenterPEPassportPEWelderRegistrationUIColorsGroup, ExaminationUpdateViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.Examination.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.Examination.ID))))
                 .ForMember(vm => vm.ExamDate, options => options.MapFrom(group =>
                     group.Examination.ExamDate))
                 .ForMember(vm => vm.ExamCenterName, options => options.MapFrom(group =>
@@ -77,7 +77,7 @@ namespace Application.Profiles
 
             CreateMap<RegistrationUIColorGroup, ExaminationDetailsCertificationsIndexViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.Registration.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.Registration.ID))))
                 .ForMember(vm => vm.Letter, options => options.MapFrom(group =>
                     group.Registration.PEPassport.TrainingCenter.Letter))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>

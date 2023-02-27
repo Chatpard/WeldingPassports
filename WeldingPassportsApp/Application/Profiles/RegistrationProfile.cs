@@ -68,23 +68,23 @@ namespace Application.Profiles
                         registration.Process.ID : 
                         0))
                 // Current Certificate
-                .ForMember(vm => vm.CurrentCertificateCompanyID, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.CompanyID, options => options.MapFrom(registration =>
                     registration.Company != null ?
                         registration.Company.ID :
                         0))
-                .ForMember(vm => vm.CurrentCertificateExamDate, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.ExamDate, options => options.MapFrom(registration =>
                     registration.Examination != null ?
                         registration.Examination.ExamDate :
                         null))
-                .ForMember(vm => vm.CurrentCertificateExpiryDate, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.ExpiryDate, options => options.MapFrom(registration =>
                     registration.ExpiryDate))
-                .ForMember(vm => vm.CurrentCertificateRegistrationTypeID, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.RegistrationTypeID, options => options.MapFrom(registration =>
                     registration.RegistrationType != null ?
                         registration.RegistrationType.ID :
                         0))
-                .ForMember(vm => vm.CurrentCertificateHasPassed, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.HasPassed, options => options.MapFrom(registration =>
                     registration.HasPassed))
-                .ForMember(vm => vm.CurrentCertificateExamCenterName, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.ExamCenterName, options => options.MapFrom(registration =>
                     registration.Examination != null ?
                         registration.Examination.ExamCenter != null ?
                             registration.Examination.ExamCenter.Company != null ?
@@ -92,15 +92,15 @@ namespace Application.Profiles
                                 null :
                             null :
                         null))
-                .ForMember(vm => vm.CurrentCertificateRevokeDate, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.RevokeDate, options => options.MapFrom(registration =>
                     registration.Revoke != null ?
                         registration.Revoke.RevokeDate :
                         null))
-                .ForMember(vm => vm.CurrentCertificateRevokedByCompanyContactID, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.RevokedByCompanyContactID, options => options.MapFrom(registration =>
                     registration.Revoke != null ?
                         (int?) registration.Revoke.CompanyContactID :
                         null))
-                .ForMember(vm => vm.CurrentCertificateRevokeComment, options => options.MapFrom(registration =>
+                .ForMember(vm => vm.RevokeComment, options => options.MapFrom(registration =>
                     registration.Revoke != null ?
                         (string?) registration.Revoke.Comment :
                         null))
@@ -182,6 +182,8 @@ namespace Application.Profiles
                     registration.PreviousRegistration.Revoke.CompanyContact.Contact.LastName))
                 .ForMember(vm => vm.PreviousCertificateRevokeComment, options => options.MapFrom(registration =>
                     registration.PreviousRegistration.Revoke.Comment));
+
+            CreateMap<Registration, CurrentRegistration>();
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Application.Security
 
             if (trainingCenter == null) return null;
 
-            return trainingCenter.ID.ToString();
+            return Convert.ToString(trainingCenter.ID);
         }
 
         public static async Task<string?> GetExamCenterID(this ClaimsPrincipal claimsPrincipal, UserManager<IdentityUser> userManager, IExamCentersSQLRepository examCentersSQLRepository)
@@ -98,7 +98,7 @@ namespace Application.Security
 
             if (examCenter == null) return null;
 
-            return examCenter.ID.ToString();
+            return Convert.ToString(examCenter.ID);
         }
     }
 }

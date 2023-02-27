@@ -21,7 +21,7 @@ namespace Application
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                        new Claim(ClaimTypes.NameIdentifier, userID.ToString()),
+                        new Claim(ClaimTypes.NameIdentifier, Convert.ToString(userID)),
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 Issuer = myIssuer,

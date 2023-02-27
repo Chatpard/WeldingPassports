@@ -1,4 +1,5 @@
-﻿using Application.Requests.API.CertificatesAPI;
+﻿using Application.APIModels;
+using Application.Requests.API.CertificatesAPI;
 using Application.SQLModels;
 using Domain.Models;
 using MediatR;
@@ -40,7 +41,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [HttpGet(nameof(GetMaxCertificateExpirationDate))]
-        public async Task<DateTime?> GetMaxCertificateExpirationDate(string examDateString, int pePassportID, int processID, int? registrationTypeID = null)
+        public async Task<ExpiryDateAPIModel> GetMaxCertificateExpirationDate(string examDateString, int pePassportID, int processID, int? registrationTypeID = null)
         {
             var query = new GetCertificateMaxExpirationDateRequest(pePassportID, processID, registrationTypeID, examDateString);
             return await _mediator.Send(query);

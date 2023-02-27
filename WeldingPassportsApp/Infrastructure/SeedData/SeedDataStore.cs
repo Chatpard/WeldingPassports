@@ -1114,7 +1114,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 2,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
-                    HasPassed = false,
+                    HasPassed = true,
                     RegistrationTypeID = 1, // Training
                     AvailableRegistrationTypeID = 1 // Training
                 },
@@ -1122,7 +1122,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 3,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
-                    HasPassed = false,
+                    HasPassed = true,
                     RegistrationTypeID = 2, // Extension
                     AvailableRegistrationTypeID = 1 // Training
                 },
@@ -1130,7 +1130,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 4,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
-                    HasPassed = false,
+                    HasPassed = true,
                     RegistrationTypeID = 3, // Re-Examination1
                     AvailableRegistrationTypeID = 1 // Training
                 },
@@ -1138,7 +1138,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 5,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
-                    HasPassed = false,
+                    HasPassed = true,
                     RegistrationTypeID = 4, // Re-Examination2
                     AvailableRegistrationTypeID = 1 // Training
                 },

@@ -23,15 +23,15 @@ namespace Application.Profiles
 
             CreateMap<Address, AddressDetailsViewModel>()
                 .ForMember(details => details.EncryptedID, address => address.MapFrom(address => 
-                    _protector.Protect(address.ID.ToString())));
+                    _protector.Protect(Convert.ToString(address.ID))));
 
             CreateMap<Address, AddressEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, address => address.MapFrom(address =>
-                    _protector.Protect(address.ID.ToString())));
+                    _protector.Protect(Convert.ToString(address.ID))));
 
             CreateMap<AddressEditViewModel, Address>()
                 .ForMember(address => address.ID, vm => vm.MapFrom(vm =>
-                    _protector.Unprotect(vm.EncryptedID.ToString())));
+                    _protector.Unprotect(vm.EncryptedID)));
         }
     }
 }

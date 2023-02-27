@@ -29,7 +29,7 @@ namespace Application.Requests.Examinations
         public async Task<IActionResult> Handle(PostExaminationsCreateRequest request, CancellationToken cancellationToken)
         {
             EntityEntry<Examination> examination = await _repository.PostExaminationCreateAsync(request.Vm, cancellationToken);
-            string encryptedExaminationID = _protector.Protect(examination.Entity.ID.ToString());
+            string encryptedExaminationID = _protector.Protect(Convert.ToString(examination.Entity.ID));
 
             request.Controller.TempData["EncryptedExaminationID"] = encryptedExaminationID;
             request.Controller.TempData["ReturnUrl"] = request.Controller.Url.Action(request.ExaminationEditActionName, request.ExaminationsControllerName, new { id = encryptedExaminationID, returnUrl = request.ReturnUrl });

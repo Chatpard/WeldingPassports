@@ -4,6 +4,7 @@ using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
 using Microsoft.AspNetCore.DataProtection;
+using System;
 using System.Linq;
 
 namespace Application.Profiles
@@ -20,7 +21,7 @@ namespace Application.Profiles
 
             CreateMap<TrainingCenter, TrainingCenterIndexViewModel>()
                 .ForMember(index => index.EncryptedId, options => options.MapFrom(trainingCenter =>
-                    _protector.Protect(trainingCenter.ID.ToString())))
+                    _protector.Protect(Convert.ToString(trainingCenter.ID))))
                 .ForMember(index => index.CompanyName, options => options.MapFrom(trainingCenter =>
                     trainingCenter.Company.CompanyName))
                 .ForMember(index => index.BusinessAddressPostalCode, options => options.MapFrom(trainingCenter =>
@@ -37,7 +38,7 @@ namespace Application.Profiles
 
             CreateMap<TrainingCenter, TrainingCenterDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(trainingCenter =>
-                    _protector.Protect(trainingCenter.ID.ToString())))
+                    _protector.Protect(Convert.ToString(trainingCenter.ID))))
                 .ForMember(vm => vm.Letter, options => options.MapFrom(trainingCenter =>
                     trainingCenter.Letter))
                 .ForMember(vm => vm.IsActive, options => options.MapFrom(trainingCenter =>
@@ -86,7 +87,7 @@ namespace Application.Profiles
 
             CreateMap<TrainingCenter, TrainingCenterEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(trainingCenter =>
-                    _protector.Protect(trainingCenter.ID.ToString())))
+                    _protector.Protect(Convert.ToString(trainingCenter.ID))))
                 .ForMember(vm => vm.CompanyContactID, options => options.MapFrom(trainingCenter =>
                     trainingCenter.ListTrainingCenter.CompanyContactID));
 

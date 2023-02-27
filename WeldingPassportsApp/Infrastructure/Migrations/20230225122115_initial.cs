@@ -567,12 +567,6 @@ namespace Infrastructure.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Registrations_Registrations_PreviousRegistrationID",
-                        column: x => x.PreviousRegistrationID,
-                        principalTable: "Registrations",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Registrations_Processes_ProcessID",
                         column: x => x.ProcessID,
                         principalTable: "Processes",
@@ -725,14 +719,14 @@ namespace Infrastructure.Migrations
                     { 22, 1, 2, null, null },
                     { 31, 1, 3, null, null },
                     { 32, 1, 3, true, 1 },
-                    { 3, 1, 0, false, 2 },
+                    { 3, 1, 0, true, 2 },
                     { 8, 1, 1, false, 2 },
                     { 14, 2, 1, true, 1 },
                     { 16, 1, 1, true, 2 },
                     { 24, 1, 2, false, 2 },
                     { 28, 1, 2, true, 2 },
                     { 33, 1, 3, true, 2 },
-                    { 4, 1, 0, false, 3 },
+                    { 4, 1, 0, true, 3 },
                     { 9, 3, 1, false, 2 },
                     { 10, 1, 1, false, 3 },
                     { 15, 3, 1, true, 1 },
@@ -742,7 +736,7 @@ namespace Infrastructure.Migrations
                     { 25, 1, 2, false, 3 },
                     { 29, 1, 2, true, 3 },
                     { 34, 1, 3, true, 3 },
-                    { 5, 1, 0, false, 4 },
+                    { 5, 1, 0, true, 4 },
                     { 11, 4, 1, false, 3 },
                     { 12, 1, 1, false, 4 },
                     { 20, 1, 1, true, 4 },
@@ -754,7 +748,7 @@ namespace Infrastructure.Migrations
                     { 13, 1, 1, true, 1 },
                     { 7, 1, 1, false, 1 },
                     { 6, 1, 1, null, null },
-                    { 2, 1, 0, false, 1 },
+                    { 2, 1, 0, true, 1 },
                     { 1, 1, 0, null, null },
                     { 30, 1, 2, true, 4 }
                 });
@@ -876,18 +870,10 @@ namespace Infrastructure.Migrations
                     { 2, null, 19, 1, new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 9, null, 2, 1 },
                     { 3, null, 13, 2, new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 3, null, 1, 1 },
                     { 5, null, 21, 2, new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, null, 2, 1 },
+                    { 4, null, 13, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 3, 3, 1, 3 },
+                    { 6, null, 21, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, 5, 2, 3 },
                     { 7, null, 23, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 13, null, 1, 1 }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Registrations",
-                columns: new[] { "ID", "CertificatePath", "CompanyID", "ExaminationID", "ExpiryDate", "HasPassed", "PEPassportID", "PreviousRegistrationID", "ProcessID", "RegistrationTypeID" },
-                values: new object[] { 4, null, 13, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 3, 3, 1, 3 });
-
-            migrationBuilder.InsertData(
-                table: "Registrations",
-                columns: new[] { "ID", "CertificatePath", "CompanyID", "ExaminationID", "ExpiryDate", "HasPassed", "PEPassportID", "PreviousRegistrationID", "ProcessID", "RegistrationTypeID" },
-                values: new object[] { 6, null, 21, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, 5, 2, 3 });
 
             migrationBuilder.InsertData(
                 table: "Revokes",
@@ -1047,11 +1033,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Registrations_PEPassportID",
                 table: "Registrations",
                 column: "PEPassportID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Registrations_PreviousRegistrationID",
-                table: "Registrations",
-                column: "PreviousRegistrationID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Registrations_ProcessID",

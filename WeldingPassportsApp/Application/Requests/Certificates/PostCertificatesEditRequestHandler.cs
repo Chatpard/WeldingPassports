@@ -25,8 +25,8 @@ namespace Application.Requests.Certificates
             if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                 request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
-            if (request.VM.CurrentCertificateRevokedByCompanyContactID == 0)
-                request.VM.CurrentCertificateRevokedByCompanyContactID = null;
+            if (request.VM.RevokedByCompanyContactID == 0)
+                request.VM.RevokedByCompanyContactID = null;
             
             if (request.Controller.ModelState.IsValid)
             {

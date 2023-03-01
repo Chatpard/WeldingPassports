@@ -40,7 +40,7 @@ namespace WeldingPassportsApp.Controllers
                 IdentityUser user = null;
 
                 if (role == RolesStore.Admin)
-                    user = await _userManager.FindByEmailAsync("it.synergrid@outlook.com");
+                    user = await _userManager.FindByEmailAsync("it.pepassportsapp@outlook.com");
                 else if (role == RolesStore.TC)
                     user = await _userManager.FindByEmailAsync("tc.trainingcenter@outlook.com");
                 else if (role == RolesStore.DSO)

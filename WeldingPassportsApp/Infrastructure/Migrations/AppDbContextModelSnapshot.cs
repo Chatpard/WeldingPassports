@@ -1393,6 +1393,8 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PEPassportID");
 
+                    b.HasIndex("PreviousRegistrationID");
+
                     b.HasIndex("ProcessID");
 
                     b.HasIndex("RegistrationTypeID");
@@ -1438,7 +1440,7 @@ namespace Infrastructure.Migrations
                             ID = 4,
                             CompanyID = 13,
                             ExaminationID = 3,
-                            ExpiryDate = new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExpiryDate = new DateTime(2022, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PEPassportID = 3,
                             PreviousRegistrationID = 3,
                             ProcessID = 1,
@@ -1465,7 +1467,7 @@ namespace Infrastructure.Migrations
                             PEPassportID = 11,
                             PreviousRegistrationID = 5,
                             ProcessID = 2,
-                            RegistrationTypeID = 3
+                            RegistrationTypeID = 1
                         },
                         new
                         {
@@ -2202,6 +2204,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PEPassportID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Domain.Models.Registration", "PreviousRegistration")
+                        .WithMany()
+                        .HasForeignKey("PreviousRegistrationID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Process", "Process")
                         .WithMany("Registrations")

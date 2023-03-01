@@ -73,7 +73,7 @@ namespace WeldingPassportsApp
             if (env.IsDevelopment() || env.IsStaging())
             {
                 // Admin
-                await AddUserWithRoleAsync("it.synergrid@outlook.com", RolesStore.Admin, userManager);
+                await AddUserWithRoleAsync("it.pepassportsapp@outlook.com", RolesStore.Admin, userManager);
 
                 // TC
                 await AddUserWithRoleAsync("tc.trainingcenter@outlook.com", RolesStore.TC, userManager);

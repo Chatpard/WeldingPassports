@@ -123,7 +123,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 3, // Re-Examination1
                     ProcessID = 1, // Electro
                     CompanyID = 13, // Fabricom
-                    ExpiryDate = new DateTime(2022, 10, 20),
+                    ExpiryDate = new DateTime(2022, 8, 20),
                     HasPassed = null // TBC
                 },
                 new Registration()
@@ -144,7 +144,7 @@ namespace Infrastructure.SeedData
                     PreviousRegistrationID = 5,
                     ExaminationID = 3, // 20-okt-21
                     PEPassportID = 11, // T00479
-                    RegistrationTypeID = 3, // Re-Examination1
+                    RegistrationTypeID = 1, // Training
                     ProcessID = 2, // Butt
                     CompanyID = 21, // Fluvius
                     ExpiryDate = new DateTime(2022, 10, 20),

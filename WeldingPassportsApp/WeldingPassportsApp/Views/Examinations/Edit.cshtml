@@ -14,7 +14,7 @@
 <hr />
 <br />
 <form asp-controller="@typeof(ExaminationsController).GetNameOfController()"
-    asp-action="@nameof(ExaminationsController.Edit)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3">
+      asp-action="@nameof(ExaminationsController.Edit)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3" onsubmit="PrepareFormOnsubmit()">
     <input type="hidden" asp-for="EncryptedID" />
     <div class="form-group row">
         <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
@@ -52,21 +52,30 @@
     <div class="form-group row">
         <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            <div class="input-group">
-                <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems">
+            @if (Model.HasCertificates)
+            {
+                <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems" disabled="disabled">
                     <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
                 </select>
-                @if (userCanCreateTrainingCenters)
-                {
+            }
+            else
+            {
+                <div class="input-group">
+                    <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems">
+                        <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
+                    </select>
+                    @if (userCanCreateTrainingCenters)
+                        {
+                            <div class="input-group-append">
+                                <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                            </div>
+                        }
                     <div class="input-group-append">
-                        <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                     </div>
-                }
-                <div class="input-group-append">
-                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
                 </div>
-            </div>
-            <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+                <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
+            }
         </div>
     </div>
     <div class="form-group row">
@@ -80,4 +89,5 @@
 
 @section Scripts {
     <script src="~/js/ResetSelect.js"></script>
+    <script src="~/js/Examinations/PrepareFormOnsubmit.js"></script>
 }

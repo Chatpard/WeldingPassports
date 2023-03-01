@@ -6,6 +6,10 @@
     ViewData["Title"] = Localizer["Examination Update"];
     var returnUrl = ViewBag.ReturnUrl;
     var currentUrl = ViewBag.CurrentUrl;
+
+    var NotSet = Localizer["Not Set"].Value;
+    var Failed = Localizer["Failed"].Value;
+    var Passed = Localizer["Passed"].Value;
 }
 
 <h1>@Localizer["Examination Update"]</h1>
@@ -93,9 +97,9 @@
                                 @Html.DropDownListFor(m => Model.Certifications[i].HasPassed, 
                                     selectList: new SelectList(new[]
                                         {
-                                            new SelectListItem { Value = null, Text = "Not set" },
-                                            new SelectListItem { Value = "False", Text = "False" },
-                                            new SelectListItem { Value = "True", Text = "True" },
+                                            new SelectListItem { Value = null, Text = NotSet },
+                                            new SelectListItem { Value = "False", Text = Failed },
+                                            new SelectListItem { Value = "True", Text = Passed },
                                         },
                                         "Value",
                                         "Text"
@@ -108,9 +112,9 @@
                                 @Html.DropDownListFor(m => Model.Certifications[i].HasPassed,
                                     selectList: new SelectList(new[]
                                         {
-                                            new SelectListItem { Value = null, Text = "Not set" },
-                                            new SelectListItem { Value = "False", Text = "False" },
-                                            new SelectListItem { Value = "True", Text = "True" },
+                                            new SelectListItem { Value = null, Text = NotSet },
+                                            new SelectListItem { Value = "False", Text = Failed },
+                                            new SelectListItem { Value = "True", Text = Passed },
                                         },
                                         "Value",
                                         "Text"

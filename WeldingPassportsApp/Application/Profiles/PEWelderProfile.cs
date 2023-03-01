@@ -21,7 +21,7 @@ namespace Application.Profiles
 
             CreateMap<PEWelderRegistrationUIColorGroup, PEWelderIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.PEWelder.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.PEWelder.ID))))
                 .ForMember(index => index.FirstName, options => options.MapFrom(group =>
                     group.PEWelder.FirstName))
                 .ForMember(index => index.LastName, options => options.MapFrom(group =>
@@ -35,7 +35,7 @@ namespace Application.Profiles
 
             CreateMap<PEPassportRegistrationUIColorGroup, PEWelderDetailsPEPassportsIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.PEPassport.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.PEPassport.ID))))
                 .ForMember(index => index.Letter, options => options.MapFrom(group =>
                     group.PEPassport == null ? ' ' : group.PEPassport.TrainingCenter.Letter))
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
@@ -51,7 +51,7 @@ namespace Application.Profiles
 
             CreateMap<PEWelderListRegistrationUIColorGroup, PEWelderDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.PEWelder.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.PEWelder.ID))))
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(group =>
                     group.PEWelder.FirstName))
                 .ForMember(vm => vm.LastName, options => options.MapFrom(group =>
@@ -65,7 +65,7 @@ namespace Application.Profiles
 
             CreateMap<PEWelder, PEWelderEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(peWelder =>
-                    _protector.Protect(peWelder.ID.ToString())));
+                    _protector.Protect(Convert.ToString(peWelder.ID))));
 
             CreateMap<PEWelderEditViewModel, PEWelder>()
                 .ForMember(peWelder => peWelder.ID, options => options.MapFrom(vm =>

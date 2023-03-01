@@ -21,7 +21,7 @@ namespace Application.Profiles
 
             CreateMap<PEPassportRegistrationUIColorGroup, PEPassportIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.PEPassport.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.PEPassport.ID))))
                 .ForMember(index => index.Letter, options => options.MapFrom(group =>
                     group.PEPassport.TrainingCenter.Letter))
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
@@ -40,7 +40,7 @@ namespace Application.Profiles
 
             CreateMap<PEPassportPEWelderRegistrationUIColorsGroup, PEPassportDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.PEPassport.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.PEPassport.ID))))
                 .ForMember(vm => vm.Letter, options => options.MapFrom(group =>
                     group.PEPassport.TrainingCenter.Letter))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>
@@ -58,7 +58,7 @@ namespace Application.Profiles
 
             CreateMap<PEPassportPEWelderRegistrationUIColorsGroup, PEPassportUpdateViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.PEPassport.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.PEPassport.ID))))
                 .ForMember(vm => vm.Letter, options => options.MapFrom(group =>
                     group.PEPassport.TrainingCenter.Letter))
                 .ForMember(vm => vm.AVNumber, options => options.MapFrom(group =>
@@ -96,7 +96,7 @@ namespace Application.Profiles
 
             CreateMap<PEPassport, PEPassportEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(passport =>
-                    _protector.Protect(passport.ID.ToString())))
+                    _protector.Protect(Convert.ToString(passport.ID))))
                 .ForMember(vm => vm.Letter, options => options.MapFrom(passport =>
                     passport.TrainingCenter.Letter))
                 .ForMember(vm => vm.TrainingCenterID, options => options.MapFrom(passport =>
@@ -116,7 +116,7 @@ namespace Application.Profiles
 
             CreateMap<RegistrationUIColorGroup, PEPassportDetailsRegistrationsIndexViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(group.Registration.ID.ToString())))
+                    _protector.Protect(Convert.ToString(group.Registration.ID))))
                 .ForMember(vm => vm.ExpiryDate, options => options.MapFrom(group =>
                     group.Registration.ExpiryDate))
                 .ForMember(vm => vm.ExamDate, options => options.MapFrom(group =>

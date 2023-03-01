@@ -9,6 +9,8 @@ namespace Application.ViewModels
         [Required]
         public string EncryptedID { get; set; }
 
+        public int PEPassportID { get; set; }
+
         public char Letter { get; set; }
 
         [Display(Name = "AV Number")]
@@ -30,90 +32,109 @@ namespace Application.ViewModels
 
         // Current Certificate
         [Display(Name = "Company")]
-        public int CurrentCertificateCompanyID { get; set; }
+        public int CompanyID { get; set; }
         public SelectList CompanyNameItems { get; set; }
 
-        private DateTime? currentCertificateExamDate;
+        private DateTime? examDate;
         [DataType(DataType.Date)]
         [Display(Name = "Examination Date")]
-        public DateTime? CurrentCertificateExamDate
+        public DateTime? ExamDate
         {
             get
             {
-                if (currentCertificateExamDate != null)
-                    return currentCertificateExamDate.Value.Date;
+                if (examDate != null)
+                    return examDate.Value.Date;
                 else
                     return null;
             }
             set
             {
                 if (value != null)
-                    currentCertificateExamDate = value.Value.Date;
+                    examDate = value.Value.Date;
                 else
-                    currentCertificateExamDate = null;
+                    examDate = null;
             }
         }
 
-        private DateTime? currentCertificateExpiryDate;
+        private DateTime? expiryDate;
         [DataType(DataType.Date)]
         [Display(Name = "Expiry Date")]
-        public DateTime? CurrentCertificateExpiryDate
+        public DateTime? ExpiryDate
         {
             get
             {
-                if (currentCertificateExpiryDate != null)
-                    return currentCertificateExpiryDate.Value.Date;
+                if (expiryDate != null)
+                    return expiryDate.Value.Date;
                 else
                     return null;
             }
             set
             {
                 if (value != null)
-                    currentCertificateExpiryDate = value.Value.Date;
+                    expiryDate = value.Value.Date;
                 else
-                    currentCertificateExpiryDate = null;
+                    expiryDate = null;
+            }
+        }
+
+        private DateTime? maxExpiryDate;
+        public DateTime? MaxExpiryDate
+        {
+            get
+            {
+                if (maxExpiryDate != null)
+                    return maxExpiryDate.Value.Date;
+                else
+                    return null;
+            }
+            set
+            {
+                if (value != null)
+                    maxExpiryDate = value.Value.Date;
+                else
+                    maxExpiryDate = null;
             }
         }
 
         [Display(Name = "Registration Type")]
-        public int CurrentCertificateRegistrationTypeID { get; set; }
+        public int RegistrationTypeID { get; set; }
         public SelectList RegistrationTypeNameItems { get; set; }
 
         [Display(Name = "Passed")]
-        public bool? CurrentCertificateHasPassed { get; set; }
+        public bool? HasPassed { get; set; }
 
         [Display(Name = "Exam Center")]
-        public string CurrentCertificateExamCenterName { get; set; }
+        public string ExamCenterName { get; set; }
 
         public bool HasNext { get; set; }
 
         [Display(Name = "Revoked By")]
-        public int? CurrentCertificateRevokedByCompanyContactID { get; set; }
+        public int? RevokedByCompanyContactID { get; set; }
         public SelectList CompanyContactNameItems { get; set; }
 
-        private DateTime? currentCertificateRevokeDate;
+        private DateTime? revokeDate;
         [DataType(DataType.Date)]
         [Display(Name = "Revoke Date")]
-        public DateTime? CurrentCertificateRevokeDate
+        public DateTime? RevokeDate
         {
             get
             {
-                if (currentCertificateRevokeDate != null)
-                    return currentCertificateRevokeDate.Value.Date;
+                if (revokeDate != null)
+                    return revokeDate.Value.Date;
                 else
                     return null;
             }
             set
             {
                 if (value != null)
-                    currentCertificateRevokeDate = value.Value.Date;
+                    revokeDate = value.Value.Date;
                 else
-                    currentCertificateRevokeDate = null;
+                    revokeDate = null;
             }
         }
 
         [Display(Name = "Revoke Comment")]
-        public string CurrentCertificateRevokeComment { get; set; }
+        public string RevokeComment { get; set; }
 
         // Previous Certificate
         private DateTime? previousCertificateExpiryDate;

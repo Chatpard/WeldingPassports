@@ -20,13 +20,13 @@ namespace Application.Profiles
 
             CreateMap<ExamCenter, ExamCenterIndexViewModel>()
                 .ForMember(ecvm => ecvm.EncryptedID, options => options.MapFrom(ec => 
-                    _protector.Protect(ec.ID.ToString())))
+                    _protector.Protect(Convert.ToString(ec.ID))))
                 .ForMember(ecvm => ecvm.CompanyName, options => options.MapFrom(ec =>
                     ec.Company.CompanyName));
 
             CreateMap<ExamCenter, ExamCenterDetailsViewModel>()
                 .ForMember(ecvm => ecvm.EncryptedID, options => options.MapFrom(ec =>
-                    _protector.Protect(ec.ID.ToString())))
+                    _protector.Protect(Convert.ToString(ec.ID))))
                 .ForMember(ecvm => ecvm.CompanyName, options => options.MapFrom(ec =>
                     ec.Company.CompanyName));
             
@@ -34,7 +34,7 @@ namespace Application.Profiles
 
             CreateMap<ExamCenter, ExamCenterEditViewModel>()
                 .ForMember(ecvm => ecvm.EncryptedID, options => options.MapFrom(ec =>
-                    _protector.Protect(ec.ID.ToString())));
+                    _protector.Protect(Convert.ToString(ec.ID))));
 
             CreateMap<ExamCenterEditViewModel, ExamCenter>()
                 .ForMember(ec => ec.ID, options => options.MapFrom(ecvm =>

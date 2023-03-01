@@ -10,6 +10,7 @@ namespace Application.ViewModels
     {
         [NotMapped]
         public string EncryptedID { get; set; }
+        
         private DateTime? expiryDate;
         [DataType(DataType.Date)]
         [Display(Name = "Expiry Date")]
@@ -31,6 +32,7 @@ namespace Application.ViewModels
             }
         }
         private DateTime? examDate;
+        
         [DataType(DataType.Date)]
         [Display(Name = "Exam Date")]
         public DateTime? ExamDate
@@ -50,16 +52,24 @@ namespace Application.ViewModels
                     examDate = null;
             }
         }
+        
         [Display(Name = "Company")]
         public string CompanyName { get; set; }
+        
         [Display(Name = "Process")]
         public string ProcessName { get; set; }
+        
         [Display(Name = "Registration Type")]
         public string RegistrationTypeName { get; set; }
+        
+        [UIHint("HasPassed")]
         [Display(Name = "Passed")]
         public bool? HasPassed { get; set; }
+        
         public bool IsRevoked { get; set; }
+        
         public string Color { get; set; }
+        
         public bool HasNext { get; set; }
     }
 }

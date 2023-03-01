@@ -6,7 +6,7 @@
     ViewBag.Title = @Localizer["User Login"];
 }
 
-<h1>@Localizer["External Login"]</h1>
+<h1>@Localizer["Welding Passports App"]</h1>
 <hr />
 @{
     if (Model.ExternalLogins.Count == 0)
@@ -15,9 +15,11 @@
     }
     else
     {
-        <form method="post" asp-controller="@typeof(AccountController).GetNameOfController()"
-              asp-action="@nameof(AccountController.ExternalLogin)" asp-route-returnUrl="@Model.ReturnUrl">
-            <div>
+        <div class="row align-items-center" style="min-height: 75vh">
+            <form class="col-md-12 " method="post" asp-controller="@typeof(AccountController).GetNameOfController()"
+            asp-action="@nameof(AccountController.ExternalLogin)" asp-route-returnUrl="@Model.ReturnUrl">
+            <div class="text-center">
+                <h1>@Localizer["External Login"]</h1>
                 @foreach (var provider in Model.ExternalLogins)
                 {
                     <button type="submit" class="btn btn-primary" style="width:auto"
@@ -29,5 +31,6 @@
                 }
             </div>
         </form>
+        </div>
     }
 }

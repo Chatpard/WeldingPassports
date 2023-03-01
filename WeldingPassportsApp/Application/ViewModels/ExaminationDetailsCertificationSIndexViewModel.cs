@@ -27,7 +27,8 @@ namespace Application.ViewModels
         [Display(Name = "Registration Type")] 
         public string RegistrationTypeName { get; set; }
 
-        [Display(Name = "Passed")] 
+        [UIHint("HasPassed")]
+        [Display(Name = "Passed")]
         public bool? HasPassed { get; set; }
 
         public bool IsRevoked { get; set; }

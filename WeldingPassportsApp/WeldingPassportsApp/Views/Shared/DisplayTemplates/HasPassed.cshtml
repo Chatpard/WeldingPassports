@@ -1,0 +1,28 @@
+﻿@model bool?
+@{
+    var name = ViewData.TemplateInfo.HtmlFieldPrefix;
+    var id = name.Replace("[", "_").Replace("].", "__");
+}
+
+<select class="tri-state list-box" id="@id" name="@name" disabled="disabled">
+    @if (Model == null)
+    {
+        <option value="" selected="selected">@Localizer["Not Set"]</option>
+        <option value="false">@Localizer["Failed"]</option>
+        <option value="true">@Localizer["Success"]</option>
+    }
+    else
+    {
+        <option value="">@Localizer["Not Set"]</option>
+        if (Model.Value)
+        {
+            <option value="false">@Localizer["Failed"]</option>
+            <option value="true" selected="selected">@Localizer["Success"]</option>
+        }
+        else
+        {
+            <option value="false" selected="selected">@Localizer["Failed"]</option>
+            <option value="true">@Localizer["Success"]</option>
+        }
+    }
+</select>

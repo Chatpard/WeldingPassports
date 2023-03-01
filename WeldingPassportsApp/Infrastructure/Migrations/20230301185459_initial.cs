@@ -567,6 +567,12 @@ namespace Infrastructure.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Registrations_Registrations_PreviousRegistrationID",
+                        column: x => x.PreviousRegistrationID,
+                        principalTable: "Registrations",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Registrations_Processes_ProcessID",
                         column: x => x.ProcessID,
                         principalTable: "Processes",
@@ -870,10 +876,18 @@ namespace Infrastructure.Migrations
                     { 2, null, 19, 1, new DateTime(2022, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 9, null, 2, 1 },
                     { 3, null, 13, 2, new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 3, null, 1, 1 },
                     { 5, null, 21, 2, new DateTime(2021, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, null, 2, 1 },
-                    { 4, null, 13, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 3, 3, 1, 3 },
-                    { 6, null, 21, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, 5, 2, 3 },
                     { 7, null, 23, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 13, null, 1, 1 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Registrations",
+                columns: new[] { "ID", "CertificatePath", "CompanyID", "ExaminationID", "ExpiryDate", "HasPassed", "PEPassportID", "PreviousRegistrationID", "ProcessID", "RegistrationTypeID" },
+                values: new object[] { 4, null, 13, 3, new DateTime(2022, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 3, 3, 1, 3 });
+
+            migrationBuilder.InsertData(
+                table: "Registrations",
+                columns: new[] { "ID", "CertificatePath", "CompanyID", "ExaminationID", "ExpiryDate", "HasPassed", "PEPassportID", "PreviousRegistrationID", "ProcessID", "RegistrationTypeID" },
+                values: new object[] { 6, null, 21, 3, new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 11, 5, 2, 1 });
 
             migrationBuilder.InsertData(
                 table: "Revokes",
@@ -1033,6 +1047,11 @@ namespace Infrastructure.Migrations
                 name: "IX_Registrations_PEPassportID",
                 table: "Registrations",
                 column: "PEPassportID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Registrations_PreviousRegistrationID",
+                table: "Registrations",
+                column: "PreviousRegistrationID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Registrations_ProcessID",

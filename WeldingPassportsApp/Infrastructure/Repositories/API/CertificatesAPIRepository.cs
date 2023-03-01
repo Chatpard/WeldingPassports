@@ -1,23 +1,9 @@
 ﻿using Application.Interfaces.Repositories.API;
 using Application.Interfaces.Repositories.SQL;
-using Application.Security;
 using Application.SQLModels;
-using Domain.Models;
-using System.Threading;
 using Infrastructure.Services.Persistence;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Microsoft.VisualBasic;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
-using SendGrid.Helpers.Mail;
 
 namespace Infrastructure.Repositories.API
 {

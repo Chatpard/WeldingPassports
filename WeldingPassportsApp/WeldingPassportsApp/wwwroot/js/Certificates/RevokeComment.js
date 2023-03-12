@@ -13,9 +13,6 @@
         revokeComment.rules("add", { required: true });
         revokeComment.attr("data-val", true);
 
-        revokeComment.rules("add", { messages: { required: "My message" } });
-        revokeComment.attr("data-val-required", "My message");
-
         revokeComment.removeAttr("disabled");
     }
 }

@@ -45,7 +45,7 @@ export function GetProcessIDSelectList(processID, examinationEncryptedID, pePass
                 for (var i = 0; i < response.processNamesSelectList.length; i++) {
                     processID.append(new Option(response.processNamesSelectList[i].text, response.processNamesSelectList[i].value));
                 }
-                if (response.processNamesSelectList.length = 1) {
+                if (response.processNamesSelectList.length == 1) {
                     processID.val(response.processNamesSelectList[0].value);
                 }
                 processID.trigger("onchange");

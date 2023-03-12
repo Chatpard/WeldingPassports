@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,6 +58,7 @@ namespace Infrastructure.Repositories.SQL
                 registration.PreviousRegistrationID = _context.Registrations
                     .Include(registration => registration.PEPassport)
                     .Where(anyRegistration => anyRegistration.PEPassport.PEWelderID == registration.PEPassport.PEWelderID)
+                    .Where(anyRegistration => anyRegistration.ProcessID == registration.ProcessID)
                     .OrderByDescending(registration => registration.Examination.ExamDate)
                     .FirstOrDefault()?.ID;
                 _context.Registrations.Add(registration);
@@ -102,25 +105,27 @@ namespace Infrastructure.Repositories.SQL
                 }).ToListAsync();
             vm.CompanyNameItems = new SelectList(companies, nameof(Company.ID), nameof(Company.CompanyName));
 
-            var passports = await _context.PEPassports
-                .OrderBy(passport => passport.AVNumber)
-                .Where(passport => passport.TrainingCenterID == trainingCenterID)
-                .Where(passport => ! passport.Registrations.Where(registration => registration.ExaminationID == examinationDecryptedID).Any())
-                .Where(passport => ! passport.Registrations.Where(registration => (
-                        (registration.Revoke == null) && 
-                        (((DateTime) registration.ExpiryDate).AddDays(-1 * appSettings.MaxInAdvanceDays) > vm.ExamDate))
-                    ).Any())
-                .Where(passport => ! passport.Registrations.Where(registration =>
-                    registration.Revoke.RevokeDate > vm.ExamDate).Any())
-                .Select(passport => new {
-                    ID = passport.ID,
-                    AVNumber = $"{passport.TrainingCenter.Letter} {passport.AVNumber.ToString("D5")} ({passport.PEWelder.FirstName} {passport.PEWelder.LastName})"
-                }).ToListAsync();
-            vm.PEPassportAVNumberItems = new SelectList(passports, nameof(PEPassport.ID), nameof(PEPassport.AVNumber));
+            //todo: PEPassportSelectList remove if ok
+            //var passports = await _context.PEPassports
+            //    .OrderBy(passport => passport.AVNumber)
+            //    .Where(passport => passport.TrainingCenterID == trainingCenterID)
+            //    .Where(passport => ! passport.Registrations.Where(registration => registration.ExaminationID == examinationDecryptedID).Any())
+            //    .Where(passport => ! passport.Registrations.Where(registration => (
+            //            (registration.Revoke == null) && 
+            //            (((DateTime) registration.ExpiryDate).AddDays(-1 * appSettings.MaxInAdvanceDays) > vm.ExamDate))
+            //        ).Any())
+            //    .Where(passport => ! passport.Registrations.Where(registration =>
+            //        registration.Revoke.RevokeDate > vm.ExamDate).Any())
+            //    .Select(passport => new {
+            //        ID = passport.ID,
+            //        AVNumber = $"{passport.TrainingCenter.Letter} {passport.AVNumber.ToString("D5")} ({passport.PEWelder.FirstName} {passport.PEWelder.LastName})"
+            //    }).ToListAsync();
+            vm.PEPassportAVNumberItems = await GetPEPassportSelectList(examinationDecryptedID);
 
             var processes = await _context.Processes
                 .OrderBy(process => process.ProcessName)
-                .Select(process => new {
+                .Select(process => new
+                {
                     ID = process.ID,
                     ProcessName = process.ProcessName
                 }).ToListAsync();
@@ -257,13 +262,15 @@ namespace Infrastructure.Repositories.SQL
 
             vm.EncryptedID = encryptedID;
 
-            var processes = _context.Processes
-                .OrderBy(process => process.ProcessName)
-                .Select(process => new {
-                    ID = process.ID,
-                    ProcessName = process.ProcessName
-                });
-            vm.ProcessNameItems = new SelectList(processes, nameof(Domain.Models.Process.ID), nameof(Domain.Models.Process.ProcessName));
+            //todo: ProcessNameItems remove if ok
+            //var processes = _context.Processes
+            //    .OrderBy(process => process.ProcessName)
+            //    .Select(process => new {
+            //        ID = process.ID,
+            //        ProcessName = process.ProcessName
+            //    });
+            //vm.ProcessNameItems = new SelectList(processes, nameof(Domain.Models.Process.ID), nameof(Domain.Models.Process.ProcessName));
+            vm.ProcessNameItems = await GetProcessNamesSelectList(registration.ExaminationID, registration.PEPassportID, registration.ID);
 
             var companies = _context.Companies
                 .OrderBy(company => company.CompanyName)
@@ -330,6 +337,7 @@ namespace Infrastructure.Repositories.SQL
                     RegistrationTypeID = (int?)registration.RegistrationTypeID,
                     ExtendableStatus =
                             registration.Revoke != null ? ExtendableStatus.Revoked :
+                            registration.ExpiryDate == null ? ExtendableStatus.NoMoreExtendable :
                             EF.Functions.DateDiffDay(registration.ExpiryDate, examDate) < (app.MaxInAdvanceDays * -1) ? ExtendableStatus.NotYetExtendable :
                             EF.Functions.DateDiffDay(registration.ExpiryDate, examDate) < (app.MaxExtensionDays + 1) ? ExtendableStatus.Extendable : ExtendableStatus.NoMoreExtendable,
                     HasPassed = registration.HasPassed
@@ -421,64 +429,352 @@ namespace Infrastructure.Repositories.SQL
             {
                 currentRegistration = _mapper.Map<CurrentRegistration>(previousRegistration);
             }
-            else
-            {
-                if (pePassportID != null)
-                {
-                    PEPassport pePassport = await _context.PEPassports
-                        .Where(pePassport => pePassport.ID == pePassportID)
-                        .Include(pePassport => pePassport.PEWelder)
-                        .SingleOrDefaultAsync();
+            //Todo: Remove if not used
+            //else
+            //{
+            //    if (pePassportID != null)
+            //    {
+            //        PEPassport pePassport = await _context.PEPassports
+            //            .Where(pePassport => pePassport.ID == pePassportID)
+            //            .Include(pePassport => pePassport.PEWelder)
+            //            .SingleOrDefaultAsync();
 
-                    if (pePassport == null)
-                    {
-                        return null;
-                    }
+            //        if (pePassport == null)
+            //        {
+            //            return null;
+            //        }
 
-                    var registrations = _context.Registrations
-                        .Where(registration => registration.HasPassed != null);
+            //        var registrations = _context.Registrations
+            //            .Where(registration => registration.HasPassed != null);
 
-                    if (processID!= null)
-                    {
-                        registrations = registrations
-                            .Where(registration => registration.ProcessID == processID);
-                    }
+            //        if (processID!= null)
+            //        {
+            //            registrations = registrations
+            //                .Where(registration => registration.ProcessID == processID);
+            //        }
 
-                    registrations = registrations
-                        .Where(registration => registration.PEPassport.PEWelderID == pePassport.PEWelderID)
-                        .Where(registration => _context.Revokes.All(revoke => revoke.RegistrationID != registration.ID));
+            //        registrations = registrations
+            //            .Where(registration => registration.PEPassport.PEWelderID == pePassport.PEWelderID)
+            //            .Where(registration => _context.Revokes.All(revoke => revoke.RegistrationID != registration.ID));
 
-                    if (registrations.Count() != 0)
-                    {
+            //        if (registrations.Count() != 0)
+            //        {
 
-                        currentRegistration = registrations
-                        .Join(
-                                _context.Examinations.DefaultIfEmpty(),
-                                registration => new
-                                {
-                                    ExaminationID = registration.ExaminationID
-                                },
-                                examination => new
-                                {
-                                    ExaminationID = examination.ID
-                                },
-                                (registration, examination) => new CurrentRegistration
-                                {
-                                    RegistrationTypeID = registration.RegistrationTypeID,
-                                    ProcessID = registration.ProcessID,
-                                    CompanyID = registration.CompanyID,
-                                    ExpiryDate= registration.ExpiryDate,
-                                    Examination = examination,
-                                    HasPassed = registration.HasPassed,
-                                    Revoke = registration.Revoke
-                                })
-                            .OrderByDescending(registration => registration.Examination.ExamDate)
-                            .FirstOrDefault();
-                    }
-                }
-            }
+            //            currentRegistration = registrations
+            //            .Join(
+            //                    _context.Examinations.DefaultIfEmpty(),
+            //                    registration => new
+            //                    {
+            //                        ExaminationID = registration.ExaminationID
+            //                    },
+            //                    examination => new
+            //                    {
+            //                        ExaminationID = examination.ID
+            //                    },
+            //                    (registration, examination) => new CurrentRegistration
+            //                    {
+            //                        RegistrationTypeID = registration.RegistrationTypeID,
+            //                        ProcessID = registration.ProcessID,
+            //                        CompanyID = registration.CompanyID,
+            //                        ExpiryDate= registration.ExpiryDate,
+            //                        Examination = examination,
+            //                        HasPassed = registration.HasPassed,
+            //                        Revoke = registration.Revoke
+            //                    })
+            //                .OrderByDescending(registration => registration.Examination.ExamDate)
+            //                .FirstOrDefault();
+            //        }
+            //    }
+            //}
             return currentRegistration;
         }
 
+        private async Task<SelectList> GetPEPassportSelectList(int examinationDecryptedID)
+        {
+            AppSettings appSettings = await _context.AppSettings.FirstAsync();
+
+            IQueryable PEPassportsQuery = _context.PEWelders
+                 .Join(_context.PEPassports,
+                 pewelder => new
+                 {
+                     PEWelderID = pewelder.ID
+                 },
+                 pepassport => new
+                 {
+                     PEWelderID = pepassport.PEWelderID
+                 },
+                 (pewelder, pepassport) => new
+                 {
+                     pewelder = pewelder,
+                     pepassport = pepassport
+                 })
+                .Join(_context.TrainingCenters,
+                peWelderPEPassport => new
+                {
+                    TrainingCenterID = peWelderPEPassport.pepassport.TrainingCenterID
+                },
+                trainingCenter => new
+                {
+                    TrainingCenterID = trainingCenter.ID,
+                },
+                (peWelderPEPassport, trainingCenter) => new
+                {
+                    pewelder = peWelderPEPassport.pewelder,
+                    pepassport = peWelderPEPassport.pepassport,
+                    trainingCenter = trainingCenter
+                })
+                .Join(_context.Processes.DefaultIfEmpty(),
+                peWelderPEPassportTrainingCenter => new
+                {
+                    Link = 1
+                },
+                process => new
+                {
+                    Link = 1
+                },
+                (peWelderPEPassportTrainingCenter, process) => new
+                {
+                    pewelder = peWelderPEPassportTrainingCenter.pewelder,
+                    pepassport = peWelderPEPassportTrainingCenter.pepassport,
+                    trainingCenter = peWelderPEPassportTrainingCenter.trainingCenter,
+                    anyProcess = process
+                })
+                .GroupJoin(_context.Registrations,
+                peWelderPEPassportTrainingCenterProcess => new
+                {
+                    PEPassportID = peWelderPEPassportTrainingCenterProcess.pepassport.ID,
+                    ProcessID = peWelderPEPassportTrainingCenterProcess.anyProcess.ID,
+                    HasPassed = true
+                },
+                registration => new
+                {
+                    PEPassportID = registration.PEPassportID,
+                    ProcessID = registration.ProcessID,
+                    HasPassed = (bool)registration.HasPassed || registration.ExaminationID == examinationDecryptedID
+                },
+                (peWelderPEPassportTrainingCenterProcess, registration) => new
+                {
+                    pewelder = peWelderPEPassportTrainingCenterProcess.pewelder,
+                    pepassport = peWelderPEPassportTrainingCenterProcess.pepassport,
+                    trainingCenter = peWelderPEPassportTrainingCenterProcess.trainingCenter,
+                    anyProcess = peWelderPEPassportTrainingCenterProcess.anyProcess,
+                    registration = registration
+                })
+                .SelectMany(peWelderPEPassportTrainingCenterProcess => peWelderPEPassportTrainingCenterProcess.registration.DefaultIfEmpty(),
+                (peWelderPEPassportTrainingCenterProcess, registration) => new
+                {
+                    pewelder = peWelderPEPassportTrainingCenterProcess.pewelder,
+                    pepassport = peWelderPEPassportTrainingCenterProcess.pepassport,
+                    trainingCenter = peWelderPEPassportTrainingCenterProcess.trainingCenter,
+                    anyProcess = peWelderPEPassportTrainingCenterProcess.anyProcess,
+                    registration = registration
+                })
+                .GroupJoin(_context.Examinations,
+                peWelderPEPassportTrainingCenterProcessRegistration => new
+                {
+                    ExaminationID = peWelderPEPassportTrainingCenterProcessRegistration.registration.ExaminationID
+                },
+                examination => new
+                {
+                    ExaminationID = examination.ID
+                },
+                (peWelderPEPassportTrainingCenterProcessRegistration, examination) => new
+                {
+                    pewelder = peWelderPEPassportTrainingCenterProcessRegistration.pewelder,
+                    pepassport = peWelderPEPassportTrainingCenterProcessRegistration.pepassport,
+                    trainingCenter = peWelderPEPassportTrainingCenterProcessRegistration.trainingCenter,
+                    anyProcess = peWelderPEPassportTrainingCenterProcessRegistration.anyProcess,
+                    registration = peWelderPEPassportTrainingCenterProcessRegistration.registration,
+                    examination = examination
+                })
+                .SelectMany(peWelderPEPassportTrainingCenterProcessRegistration => peWelderPEPassportTrainingCenterProcessRegistration.examination.DefaultIfEmpty(),
+                (peWelderPEPassportTrainingCenterProcessRegistration, examination) => new
+                {
+                    pewelder = peWelderPEPassportTrainingCenterProcessRegistration.pewelder,
+                    pepassport = peWelderPEPassportTrainingCenterProcessRegistration.pepassport,
+                    trainingCenter = peWelderPEPassportTrainingCenterProcessRegistration.trainingCenter,
+                    anyProcess = peWelderPEPassportTrainingCenterProcessRegistration.anyProcess,
+                    registration = peWelderPEPassportTrainingCenterProcessRegistration.registration,
+                    examination = examination
+                })
+                .GroupJoin(_context.Processes.DefaultIfEmpty(),
+                peWelderPEPassportTrainingCenterProcessRegistrationExamination => new
+                {
+                    ProcessID = peWelderPEPassportTrainingCenterProcessRegistrationExamination.registration.ProcessID
+                },
+                process => new
+                {
+                    ProcessID = process.ID
+                },
+                (peWelderPEPassportTrainingCenterProcessRegistrationExamination, process) => new
+                {
+                    pewelder = peWelderPEPassportTrainingCenterProcessRegistrationExamination.pewelder,
+                    pepassport = peWelderPEPassportTrainingCenterProcessRegistrationExamination.pepassport,
+                    trainingCenter = peWelderPEPassportTrainingCenterProcessRegistrationExamination.trainingCenter,
+                    anyProcess = peWelderPEPassportTrainingCenterProcessRegistrationExamination.anyProcess,
+                    registration = peWelderPEPassportTrainingCenterProcessRegistrationExamination.registration,
+                    examination = peWelderPEPassportTrainingCenterProcessRegistrationExamination.examination,
+                    process = process,
+                })
+                .SelectMany(peWelderPEPassportTrainingCenterProcessRegistrationExamination => peWelderPEPassportTrainingCenterProcessRegistrationExamination.process.DefaultIfEmpty(),
+                (peWelderPEPassportTrainingCenterProcessRegistrationExamination, process) => new
+                {
+                    pewelder = peWelderPEPassportTrainingCenterProcessRegistrationExamination.pewelder,
+                    pepassport = peWelderPEPassportTrainingCenterProcessRegistrationExamination.pepassport,
+                    trainingCenter = peWelderPEPassportTrainingCenterProcessRegistrationExamination.trainingCenter,
+                    anyProcess = peWelderPEPassportTrainingCenterProcessRegistrationExamination.anyProcess,
+                    registration = peWelderPEPassportTrainingCenterProcessRegistrationExamination.registration,
+                    examination = peWelderPEPassportTrainingCenterProcessRegistrationExamination.examination,
+                    process = process,
+                })
+                .Where(wptpre => wptpre.trainingCenter.ID == _context.Examinations.Where(examination => examination.ID == examinationDecryptedID).SingleOrDefault().TrainingCenterID
+                    && (wptpre.registration.ExpiryDate == null ||
+                    (_context.Registrations
+                    .Join(_context.PEPassports,
+                    registration => new
+                    {
+                        PEPassportID = registration.PEPassportID
+                    },
+                    pePassport => new
+                    {
+                        PEPassportID = pePassport.ID
+                    },
+                    (registration, pePassport) => new
+                    {
+                        pePassport = pePassport,
+                        registration = registration
+                    })
+                    .Join(_context.PEWelders,
+                    pePassportRegistration => new
+                    {
+                        peWelderID = pePassportRegistration.pePassport.PEWelderID
+                    },
+                    peWelder => new
+                    {
+                        peWelderID = peWelder.ID
+                    },
+                    (pePassprotRegistration, peWelder) => new
+                    {
+                        pePassport = pePassprotRegistration.pePassport,
+                        registration = pePassprotRegistration.registration,
+                        peWelder = peWelder
+                    })
+                    .Where(pePassprotRegistrationpeWelder =>
+                        pePassprotRegistrationpeWelder.registration.ProcessID == wptpre.anyProcess.ID
+                        && (pePassprotRegistrationpeWelder.registration.HasPassed == true || pePassprotRegistrationpeWelder.registration.ExaminationID == examinationDecryptedID)
+                        && pePassprotRegistrationpeWelder.peWelder.ID == wptpre.pewelder.ID)
+                    .Max(pePassprotRegistrationpeWelder => pePassprotRegistrationpeWelder.registration.ExpiryDate)
+                    == wptpre.registration.ExpiryDate) &&
+                    wptpre.registration.ExpiryDate < ((DateTime)_context.Examinations.Where(examination => examination.ID == examinationDecryptedID).SingleOrDefault().ExamDate).AddDays(appSettings.MaxInAdvanceDays*-1)))
+                .Select(wptpre => new
+                {
+                    ID = wptpre.pepassport.ID,
+                    Name = wptpre.trainingCenter.Letter.ToString() + " " + wptpre.pepassport.AVNumber + " " + wptpre.pewelder.FirstName + " " + wptpre.pewelder.LastName
+                }).Distinct();
+            return new SelectList(PEPassportsQuery, "ID", "Name");
+        }
+
+        public async Task<SelectList> GetProcessNamesSelectList(int? examinationID, int? pePassportID, int? registrationID)
+        {
+            if(examinationID == null || pePassportID == null)
+            {
+                return null;
+            }
+
+            AppSettings appSettings = await _context.AppSettings.FirstAsync();
+
+            IQueryable ProcessNamesQuery = _context.PEPassports
+                .Join(_context.Processes,
+                pePassport => new
+                {
+                    IsActive = true
+                },
+                process => new
+                {
+                    IsActive = process.IsActive
+                },
+                (pePassport, process) => new
+                {
+                    PEPassport = pePassport,
+                    Process = process
+                })
+                .Join(_context.PEPassports,
+                pePassportProcess => new
+                {
+                    PEWelderID = pePassportProcess.PEPassport.PEWelderID
+                },
+                pePassport => new
+                {
+                    PEWelderID = pePassport.PEWelderID
+                },
+                (pePassportProcess, pePassport) => new
+                {
+                    PEPassport = pePassportProcess.PEPassport,
+                    Process = pePassportProcess.Process,
+                    PEPassport2 = pePassport
+                })
+                .GroupJoin(_context.Registrations,
+                pePassportProcessPEPassport2 => new
+                {
+                    PEPassportID = pePassportProcessPEPassport2.PEPassport.ID,
+                    ProcessID = pePassportProcessPEPassport2.Process.ID
+                },
+                registration => new
+                {
+                    PEPassportID = registration.PEPassportID,
+                    ProcessID = registration.ProcessID
+                },
+                (pePassportProcessPEPassport2, registration) => new
+                {
+                    PEPassport = pePassportProcessPEPassport2.PEPassport,
+                    Process = pePassportProcessPEPassport2.Process,
+                    PEPassport2 = pePassportProcessPEPassport2.PEPassport2,
+                    Registration = registration
+                })
+                .SelectMany(pePassportProcessPEPassport2 => pePassportProcessPEPassport2.Registration.DefaultIfEmpty(),
+                (pePassportProcessPEPassport2, registration) => new
+                {
+                    PEPassport = pePassportProcessPEPassport2.PEPassport,
+                    Process = pePassportProcessPEPassport2.Process,
+                    PEPassport2 = pePassportProcessPEPassport2.PEPassport2,
+                    Registration = registration
+                })
+                .Where(pprp2r => pprp2r.PEPassport.ID == pePassportID //todo: replace pePassportID with select ???
+                    && (pprp2r.Registration.ExpiryDate == null
+                        || (_context.Registrations
+                            .Join(_context.PEPassports,
+                            registration => new 
+                            {
+                                PEPassportID = registration.PEPassportID,
+                                ProcessID = registration.ProcessID
+                            },
+                            pePassport => new 
+                            {
+                                PEPassportID = pePassport.ID,
+                                ProcessID = pprp2r.Process.ID
+                            },
+                            (registration,pePassport) => new 
+                            {
+                                Registration = registration,
+                                PEPassport = pePassport
+                            })
+                            .Where(registrationPEPassport => registrationPEPassport.PEPassport.PEWelderID == pprp2r.PEPassport.PEWelderID)
+                            .Max(registrationPEPassport => registrationPEPassport.Registration.ExpiryDate)
+                            == pprp2r.Registration.ExpiryDate
+                            && (pprp2r.Registration.ExpiryDate < ((DateTime) _context.Examinations
+                                .Where(examination => examination.ID == examinationID)
+                                .SingleOrDefault()
+                                .ExamDate).AddDays(appSettings.MaxInAdvanceDays*-1))
+                            || (pprp2r.Registration.ID == registrationID || pprp2r.Registration.ID == null)
+                        )
+                    )
+                )
+                .Select(pprp2r => new
+                {
+                    ID = pprp2r.Process.ID,
+                    Name = pprp2r.Process.ProcessName
+                });
+            return new SelectList(ProcessNamesQuery, "ID", "Name");
+        }
     }
 }

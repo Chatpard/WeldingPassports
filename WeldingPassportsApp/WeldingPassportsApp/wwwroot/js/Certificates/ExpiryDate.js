@@ -6,7 +6,6 @@
         expiryDate.val(null);
         expiryDate.prop("readonly", true);
         expiryDateClearButton.prop("disabled", true);
-        expiryDateError.remove();
     }
     else {
         if (hasPassed.val() == "" || hasPassed.val() == null) {
@@ -16,9 +15,9 @@
         else {
             expiryDate.prop("readonly", true);
             expiryDateClearButton.prop("disabled", true);
-            expiryDateError.remove();
         }
     }
+    expiryDateError.remove();
 }
 
 export function GetMaxExpiryDate(expiryDate, revokeDate, examDate, pePassportID, processID, registrationTypeID) {

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230301185459_initial")]
+    [Migration("20230303222225_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1395,8 +1395,6 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("PEPassportID");
 
-                    b.HasIndex("PreviousRegistrationID");
-
                     b.HasIndex("ProcessID");
 
                     b.HasIndex("RegistrationTypeID");
@@ -2206,11 +2204,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PEPassportID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Domain.Models.Registration", "PreviousRegistration")
-                        .WithMany()
-                        .HasForeignKey("PreviousRegistrationID")
-                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Process", "Process")
                         .WithMany("Registrations")

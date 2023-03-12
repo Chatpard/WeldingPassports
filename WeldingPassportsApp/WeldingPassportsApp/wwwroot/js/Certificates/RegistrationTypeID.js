@@ -26,8 +26,7 @@ export function SetRegistrationTypeIDSelectList(registrationTypeID, examDate, pe
         "pePassportID = " + pePassportID.val(),
         "processID = " + processID.val(),
     );
-    if (pePassportID.val() != null && processID != null && examDate != null) {
-
+    if (pePassportID.val() != null && processID.val() != null && examDate != null) {
         $.getJSON("/../../api/CertificatesApi/GetRegistrationTypesFromPEPassport", {
             pePassportID: pePassportID.val(),
             processID: processID.val(),
@@ -49,7 +48,9 @@ export function SetRegistrationTypeIDSelectList(registrationTypeID, examDate, pe
             for (var i = 0; i < data.registrationsSelectList.length; i++) {
                 registrationTypeID.append(new Option(data.registrationsSelectList[i].text, data.registrationsSelectList[i].value));
             }
-            registrationTypeID.val(data.registrationsSelectList.length);
+            if (data.registrationsSelectList.length = 1) {
+                registrationTypeID.val(data.registrationsSelectList[0].value);
+            }
             registrationTypeID.trigger("onchange");
         });
 

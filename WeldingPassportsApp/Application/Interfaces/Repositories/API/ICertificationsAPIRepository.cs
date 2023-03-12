@@ -1,4 +1,5 @@
-﻿using Application.SQLModels;
+﻿using Application.APIModels;
+using Application.SQLModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace Application.Interfaces.Repositories.API
         Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesSelectListFromPEPassport(int? pePassportID, int? processID, DateTime examDate);
         int DeleteRevokeByEncryptedID(string pePassportID);
         Task<DateTime?> GetCertificateMaxExpirationDate(int? pePassportID, int? processID);
+        Task<GetProcessNamesReponse> GetProcessNamesSelectList(string examinationEncryptedID, int? pePassportID, int? registrationID);
     }
 }

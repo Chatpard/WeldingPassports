@@ -1,6 +1,7 @@
 ﻿using Application.SQLModels;
 using Application.ViewModels;
 using Domain.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,9 @@ namespace Application.Interfaces.Repositories.SQL
         Task<CertificateEditViewModel> GetCertificateEditAsync(string encryptedID);
         Task<CertificateDetailsViewModel> GetCertificateDetailsAsync(string encryptedID);
         Task<EntityEntry<Registration>> DeleteByEncryptedID(string encryptedID);
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
         Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesSelectListFromPEPassport(int? pePassportID, int? processID, DateTime examDate, Registration previousRegistration = null);
         Task<DateTime?> GetCertificateMaxExpirationDate(int? pePassportID, int? processID, DateTime? examDate = null);
+        Task<SelectList> GetProcessNamesSelectList(int? examinationEncryptedID, int? pePassportID, int? registrationID);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

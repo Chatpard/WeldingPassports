@@ -26,6 +26,13 @@ namespace WeldingPassportsApp.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet(nameof(GetProcessNames))]
+        public async Task<ActionResult<GetProcessNamesReponse>>GetProcessNames(string examinationEncryptedID, int? pePassportID, int? registrationID = null)
+        {
+            var query = new GetProcessNamesRequest(examinationEncryptedID, pePassportID, registrationID);
+            return await _mediator.Send(query);
+        }
+
         [HttpGet(nameof(GetRegistrationTypesFromPEPassport))]
         public async Task<ActionResult<GetRegistrationTypesFromPEPassportReponse>> GetRegistrationTypesFromPEPassport(int? pePassportID, int? processID, DateTime examDate)
         {

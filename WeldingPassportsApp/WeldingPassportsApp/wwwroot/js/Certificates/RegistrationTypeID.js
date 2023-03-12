@@ -48,7 +48,7 @@ export function SetRegistrationTypeIDSelectList(registrationTypeID, examDate, pe
             for (var i = 0; i < data.registrationsSelectList.length; i++) {
                 registrationTypeID.append(new Option(data.registrationsSelectList[i].text, data.registrationsSelectList[i].value));
             }
-            if (data.registrationsSelectList.length = 1) {
+            if (data.registrationsSelectList.length == 1) {
                 registrationTypeID.val(data.registrationsSelectList[0].value);
             }
             registrationTypeID.trigger("onchange");

@@ -676,7 +676,7 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<SelectList> GetProcessNamesSelectList(int? examinationID, int? pePassportID, int? registrationID)
         {
-            if(examinationID == null || pePassportID == null)
+            if (examinationID == null || pePassportID == null)
             {
                 return null;
             }
@@ -739,21 +739,21 @@ namespace Infrastructure.Repositories.SQL
                     PEPassport2 = pePassportProcessPEPassport2.PEPassport2,
                     Registration = registration
                 })
-                .Where(pprp2r => pprp2r.PEPassport.ID == pePassportID //todo: replace pePassportID with select ???
+                .Where(pprp2r => pprp2r.PEPassport.ID == pePassportID
                     && (pprp2r.Registration.ExpiryDate == null
                         || (_context.Registrations
                             .Join(_context.PEPassports,
-                            registration => new 
+                            registration => new
                             {
                                 PEPassportID = registration.PEPassportID,
                                 ProcessID = registration.ProcessID
                             },
-                            pePassport => new 
+                            pePassport => new
                             {
                                 PEPassportID = pePassport.ID,
                                 ProcessID = pprp2r.Process.ID
                             },
-                            (registration,pePassport) => new 
+                            (registration, pePassport) => new
                             {
                                 Registration = registration,
                                 PEPassport = pePassport
@@ -761,11 +761,11 @@ namespace Infrastructure.Repositories.SQL
                             .Where(registrationPEPassport => registrationPEPassport.PEPassport.PEWelderID == pprp2r.PEPassport.PEWelderID)
                             .Max(registrationPEPassport => registrationPEPassport.Registration.ExpiryDate)
                             == pprp2r.Registration.ExpiryDate
-                            && (pprp2r.Registration.ExpiryDate < ((DateTime) _context.Examinations
+                            && (pprp2r.Registration.ExpiryDate < ((DateTime)_context.Examinations
                                 .Where(examination => examination.ID == examinationID)
                                 .SingleOrDefault()
-                                .ExamDate).AddDays(appSettings.MaxInAdvanceDays*-1))
-                            || (pprp2r.Registration.ID == registrationID || pprp2r.Registration.ID == null)
+                                .ExamDate).AddDays(appSettings.MaxInAdvanceDays)
+                            || (pprp2r.Registration.ID == registrationID || pprp2r.Registration.ID == null) || pprp2r.Registration.HasPassed != true)
                         )
                     )
                 )

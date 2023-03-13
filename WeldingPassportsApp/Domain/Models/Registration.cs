@@ -44,7 +44,6 @@ namespace Domain.Models
 
         public Process Process { get; set; }
 
-        //[NotMapped]
         public Registration PreviousRegistration { get; set; }
 
         public Company Company { get; set; }

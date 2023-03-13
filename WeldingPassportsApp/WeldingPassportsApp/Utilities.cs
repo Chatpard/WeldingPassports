@@ -53,17 +53,19 @@ namespace WeldingPassportsApp
                 IWebHostEnvironment env = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
                 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 if (env.IsDevelopment() || env.IsStaging())
+                {
                     await context.Database.EnsureDeletedAsync();
-                await context.Database.MigrateAsync();
+                    await context.Database.MigrateAsync();
 
-                UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-                RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                    UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+                    RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                await AddRolesAsync(roleManager);
-                await AddUserWithRoleAsync(adminEmail, RolesStore.Admin, userManager);
-                await AddTestUsersAsync(userManager, env);
-                await AddCompanyContactIdentityUserId(context, "leen.dezillie@v-c-l.be", "tc.trainingcenter@outlook.com");
-                await AddCompanyContactIdentityUserId(context, "guy.doms@vincotte.be", "ec.examcenter@outlook.com");
+                    await AddRolesAsync(roleManager);
+                    await AddUserWithRoleAsync(adminEmail, RolesStore.Admin, userManager);
+                    await AddTestUsersAsync(userManager, env);
+                    await AddCompanyContactIdentityUserId(context, "leen.dezillie@v-c-l.be", "tc.trainingcenter@outlook.com");
+                    await AddCompanyContactIdentityUserId(context, "guy.doms@vincotte.be", "ec.examcenter@outlook.com");
+                }
             }
         }
 

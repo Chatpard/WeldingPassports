@@ -255,7 +255,7 @@ namespace Infrastructure.Repositories.SQL
                         PreviousRegistration = registration.PreviousRegistration,
                         Company = registration.Company,
                         Revoke = registration.Revoke,
-                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID && anyRegistration.HasPassed != null && anyRegistration.ProcessID == registration.ProcessID && anyRegistration.ProcessID != null)
+                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID && anyRegistration.HasPassed != null && anyRegistration.ProcessID == registration.ProcessID)
                     })
                 .SingleOrDefaultAsync();
             var vm = _mapper.Map<CertificateEditViewModel>(registration);
@@ -429,63 +429,62 @@ namespace Infrastructure.Repositories.SQL
             {
                 currentRegistration = _mapper.Map<CurrentRegistration>(previousRegistration);
             }
-            //Todo: Remove if not used
-            //else
-            //{
-            //    if (pePassportID != null)
-            //    {
-            //        PEPassport pePassport = await _context.PEPassports
-            //            .Where(pePassport => pePassport.ID == pePassportID)
-            //            .Include(pePassport => pePassport.PEWelder)
-            //            .SingleOrDefaultAsync();
+            else
+            {
+                if (pePassportID != null)
+                {
+                    PEPassport pePassport = await _context.PEPassports
+                        .Where(pePassport => pePassport.ID == pePassportID)
+                        .Include(pePassport => pePassport.PEWelder)
+                        .SingleOrDefaultAsync();
 
-            //        if (pePassport == null)
-            //        {
-            //            return null;
-            //        }
+                    if (pePassport == null)
+                    {
+                        return null;
+                    }
 
-            //        var registrations = _context.Registrations
-            //            .Where(registration => registration.HasPassed != null);
+                    var registrations = _context.Registrations
+                        .Where(registration => registration.HasPassed != null);
 
-            //        if (processID!= null)
-            //        {
-            //            registrations = registrations
-            //                .Where(registration => registration.ProcessID == processID);
-            //        }
+                    if (processID!= null)
+                    {
+                        registrations = registrations
+                            .Where(registration => registration.ProcessID == processID);
+                    }
 
-            //        registrations = registrations
-            //            .Where(registration => registration.PEPassport.PEWelderID == pePassport.PEWelderID)
-            //            .Where(registration => _context.Revokes.All(revoke => revoke.RegistrationID != registration.ID));
+                    registrations = registrations
+                        .Where(registration => registration.PEPassport.PEWelderID == pePassport.PEWelderID)
+                        .Where(registration => _context.Revokes.All(revoke => revoke.RegistrationID != registration.ID));
 
-            //        if (registrations.Count() != 0)
-            //        {
+                    if (registrations.Count() != 0)
+                    {
 
-            //            currentRegistration = registrations
-            //            .Join(
-            //                    _context.Examinations.DefaultIfEmpty(),
-            //                    registration => new
-            //                    {
-            //                        ExaminationID = registration.ExaminationID
-            //                    },
-            //                    examination => new
-            //                    {
-            //                        ExaminationID = examination.ID
-            //                    },
-            //                    (registration, examination) => new CurrentRegistration
-            //                    {
-            //                        RegistrationTypeID = registration.RegistrationTypeID,
-            //                        ProcessID = registration.ProcessID,
-            //                        CompanyID = registration.CompanyID,
-            //                        ExpiryDate= registration.ExpiryDate,
-            //                        Examination = examination,
-            //                        HasPassed = registration.HasPassed,
-            //                        Revoke = registration.Revoke
-            //                    })
-            //                .OrderByDescending(registration => registration.Examination.ExamDate)
-            //                .FirstOrDefault();
-            //        }
-            //    }
-            //}
+                        currentRegistration = registrations
+                        .Join(
+                                _context.Examinations.DefaultIfEmpty(),
+                                registration => new
+                                {
+                                    ExaminationID = registration.ExaminationID
+                                },
+                                examination => new
+                                {
+                                    ExaminationID = examination.ID
+                                },
+                                (registration, examination) => new CurrentRegistration
+                                {
+                                    RegistrationTypeID = registration.RegistrationTypeID,
+                                    ProcessID = registration.ProcessID,
+                                    CompanyID = registration.CompanyID,
+                                    ExpiryDate= registration.ExpiryDate,
+                                    Examination = examination,
+                                    HasPassed = registration.HasPassed,
+                                    Revoke = registration.Revoke
+                                })
+                            .OrderByDescending(registration => registration.Examination.ExamDate)
+                            .FirstOrDefault();
+                    }
+                }
+            }
             return currentRegistration;
         }
 

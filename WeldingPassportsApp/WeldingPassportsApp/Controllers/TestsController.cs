@@ -37,7 +37,7 @@ namespace WeldingPassportsApp.Controllers
         {
             if (_env.IsDevelopment())
             {
-                IdentityUser user = null;
+                IdentityUser user = new IdentityUser();
 
                 if (role == RolesStore.Admin)
                     user = await _userManager.FindByEmailAsync("it.pepassportsapp@outlook.com");

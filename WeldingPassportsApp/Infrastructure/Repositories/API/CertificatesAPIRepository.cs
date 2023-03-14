@@ -14,19 +14,14 @@ namespace Infrastructure.Repositories.API
     public class CertificatesAPIRepository : ICertificationsAPIRepository
     {
         private readonly AppDbContext _context;
-        private readonly IAppSettingsSQLRepository _appSettingsSQLRepository;
         private readonly ICertificatesSQLRepository _certificatesSQLRepository;
-        private readonly IDataProtectionProvider _dataProtectionProvider;
-        private readonly IDataProtectionPurposeStrings _dataProtectionPurposeStrings;
         private readonly IDataProtector _protector;
 
-        public CertificatesAPIRepository(AppDbContext context, IAppSettingsSQLRepository appSettingsSQLRepository, ICertificatesSQLRepository certificatesSQLRepository,
+        public CertificatesAPIRepository(AppDbContext context, ICertificatesSQLRepository certificatesSQLRepository,
             IDataProtectionProvider dataProtectionProvider, IDataProtectionPurposeStrings dataProtectionPurposeStrings)
         {
             _context=context;
-            _appSettingsSQLRepository=appSettingsSQLRepository;
             _certificatesSQLRepository=certificatesSQLRepository;
-            _dataProtectionProvider=dataProtectionProvider;
             _protector = dataProtectionProvider
                 .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
         }

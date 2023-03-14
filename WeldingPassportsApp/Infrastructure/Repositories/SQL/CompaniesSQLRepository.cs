@@ -129,7 +129,7 @@ namespace Infrastructure.Repositories.SQL
                 {
                     ID = contact.ID,
                     Name = contact.CompanyName,
-                });https://localhost:44315/Companies
+                }); //https://localhost:44315/Companies
 
             return new SelectList(companySelectList, nameof(CompanySelectListSQLModel.ID), nameof(CompanySelectListSQLModel.Name));
         }

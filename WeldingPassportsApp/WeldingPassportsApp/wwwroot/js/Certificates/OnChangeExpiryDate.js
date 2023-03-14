@@ -2,13 +2,15 @@
 import * as ExpiryDate from "./ExpiryDate.js"
 import * as HasPassed from "./HasPassed.js"
 
-window.OnChangeExpiryDate = () => {
-    RegistrationTypeID.ToggleDisable(
-        $("#RegistrationTypeID"),
-        $("#RegistrationTypeIDClearButton"),
-        $("#ProcessID"),
-        $("#HasPassed")
-    );
+window.OnChangeExpiryDate = (UserCanEdit) => {
+    if (UserCanEdit) {
+        RegistrationTypeID.ToggleDisable(
+            $("#RegistrationTypeID"),
+            $("#RegistrationTypeIDClearButton"),
+            $("#ProcessID"),
+            $("#HasPassed")
+        );
+    }
     ExpiryDate.ToggleDisable(
         $("#ExpiryDate"),
         $("#ExpiryDateClearButton"),

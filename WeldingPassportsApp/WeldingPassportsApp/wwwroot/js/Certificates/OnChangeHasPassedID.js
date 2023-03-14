@@ -3,13 +3,15 @@ import * as ExpiryDate from "./ExpiryDate.js"
 import * as Revoke from "./Revoke.js"
 import * as RevokedByCompanyContactID from "./RevokedByCompanyContactID.js"
 
-window.OnChangeHasPassedID = () => {
-    RegistrationTypeID.ToggleDisable(
-        $("#RegistrationTypeID"),
-        $("#RegistrationTypeIDClearButton"),
-        $("#ProcessID"),
-        $("#HasPassed")
-    );
+window.OnChangeHasPassedID = (UserCanEdit) => {
+    if (UserCanEdit) {
+        RegistrationTypeID.ToggleDisable(
+            $("#RegistrationTypeID"),
+            $("#RegistrationTypeIDClearButton"),
+            $("#ProcessID"),
+            $("#HasPassed")
+        );
+    }
     ExpiryDate.ToggleDisable(
         $("#ExpiryDate"),
         $("#ExpiryDateClearButton"),

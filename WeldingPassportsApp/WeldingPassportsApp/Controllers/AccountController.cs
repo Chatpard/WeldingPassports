@@ -55,7 +55,7 @@ namespace WeldingPassportsApp.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = "", string remoteError = "")
+        public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
         {
             try
             {

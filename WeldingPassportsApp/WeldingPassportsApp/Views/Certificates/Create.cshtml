@@ -9,10 +9,28 @@
 
 }
 
+<div class="modal" id="modalDialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Certificates overwrite</h5>
+                <button class="btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>@Localizer["This opperation will overright a previous certificate. Please, confirm."]</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal" onclick="OnSave()">Save</button>
+                <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h1>@Localizer["Create Certificate"]</h1>
 <hr />
 <form asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Create)"
-      asp-route-returnUrl="@returnUrl" method="post" class="mt-3" onsubmit="PrepareFormOnsubmit()">
+      asp-route-returnUrl="@returnUrl" method="post" class="mt-3" id="form" onsubmit="PrepareFormOnsubmit()">
     <input hidden asp-for="ExaminationEncryptedID" />
     <div class="form-group row">
         <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
@@ -133,7 +151,7 @@
     </div>
     <div class="form-group row">
         <div class="col-sm-10">
-            <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+            <button type="button" class="btn btn-primary" style="width:auto" onclick="OnSubmit()">@Localizer["Save"]</button>
             <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
         </div>
     </div>
@@ -148,4 +166,6 @@
     <script type="module" src="~/js/Certificates/OnChangeProcessID.js"></script>
     <script type="module" src="~/js/Certificates/OnChangeRegistrationTypeID.js"></script>
     <script type="module" src="~/js/Certificates/OnChangeExpiryDate.js"></script>
+    <script type="module" src="~/js/Certificates/OnSubmit.js"></script>
+    <script type="module" src="~/js//Certificates/OnSave.js"></script>
 }

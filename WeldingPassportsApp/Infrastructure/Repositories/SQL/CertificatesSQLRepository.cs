@@ -51,19 +51,24 @@ namespace Infrastructure.Repositories.SQL
         
         public async Task PostCertificateCreateAsync(CertificateCreateViewModel vm, CancellationToken cancellationToken)
         {
-            var registration = _mapper.Map<Registration>(vm);
-            registration.PEPassport = await _context.PEPassports.Where(pePassport => pePassport.ID == registration.PEPassportID).SingleOrDefaultAsync();
-            if(registration.PEPassport != null)
+            if (vm == null) throw new ArgumentNullException();
+            Registration currentRegistration = await CurrentRegistration(vm.PEPassportID, vm.ProcessID, HasPassedNotNull: false);
+            Registration newRegistration = _mapper.Map<Registration>(vm);
+            if (currentRegistration != null && currentRegistration?.HasPassed == null)
             {
-                registration.PreviousRegistrationID = _context.Registrations
-                    .Include(registration => registration.PEPassport)
-                    .Where(anyRegistration => anyRegistration.PEPassport.PEWelderID == registration.PEPassport.PEWelderID)
-                    .Where(anyRegistration => anyRegistration.ProcessID == registration.ProcessID)
-                    .OrderByDescending(registration => registration.Examination.ExamDate)
-                    .FirstOrDefault()?.ID;
-                _context.Registrations.Add(registration);
-               await SaveChangesAsync(cancellationToken);
+                Registration registration = await _context.Registrations.Where(certification => certification.ID == currentRegistration.ID).FirstOrDefaultAsync();
+                registration.ExaminationID = newRegistration.ExaminationID;
+                registration.CompanyID = newRegistration.CompanyID;
+                registration.ExpiryDate = newRegistration.ExpiryDate;
+                registration.CertificatePath = newRegistration.CertificatePath;
+                _context.Update(registration);
             }
+            else
+            {
+                newRegistration.PreviousRegistrationID = currentRegistration?.ID;
+                _context.Registrations.Add(newRegistration);
+            }
+            await SaveChangesAsync(cancellationToken);
         }
 
         public async Task<CertificateCreateViewModel> GetCertificateCreateAsync(string examinationEncryptedID)
@@ -85,7 +90,7 @@ namespace Infrastructure.Repositories.SQL
                 .Select(e => e.ExamDate)
                 .SingleOrDefaultAsync();
 
-            vm.ExpiryDate = ((DateTime)vm.ExamDate).AddDays(appSettings.MaxExpiryDays);
+            vm.ExpiryDate = null; // ((DateTime)vm.ExamDate).AddDays(appSettings.MaxExpiryDays);
 
             vm.ExamCenterName = await _context.Examinations
                 .Where(e => e.ID == examinationDecryptedID)
@@ -255,7 +260,7 @@ namespace Infrastructure.Repositories.SQL
                         PreviousRegistration = registration.PreviousRegistration,
                         Company = registration.Company,
                         Revoke = registration.Revoke,
-                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID && anyRegistration.HasPassed != null && anyRegistration.ProcessID == registration.ProcessID)
+                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID && anyRegistration.ProcessID == registration.ProcessID)
                     })
                 .SingleOrDefaultAsync();
             var vm = _mapper.Map<CertificateEditViewModel>(registration);
@@ -280,7 +285,7 @@ namespace Infrastructure.Repositories.SQL
                 });
             vm.CompanyNameItems = new SelectList(companies, nameof(Company.ID), nameof(Company.CompanyName));
 
-            var getRegistrationTypesSelectListResponse = await GetRegistrationTypesSelectListFromPEPassport(registration.PEPassportID, vm.ProcessID, (DateTime)vm.ExamDate, registration.PreviousRegistration);
+            var getRegistrationTypesSelectListResponse = await GetRegistrationTypesSelectListFromRegistration(registration);
             var registrationTypeNameItems = getRegistrationTypesSelectListResponse.RegistrationsSelectList;
             vm.RegistrationTypeNameItems = registrationTypeNameItems;
 
@@ -325,51 +330,88 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesSelectListFromPEPassport(int? pePassportID, int? processID, DateTime examDate, Registration previousRegistration = null)
         {
-            CurrentRegistration currentRegistration = await CurrentRegistration(pePassportID, processID, previousRegistration);
-            IEnumerable<CurrentRegistration> currentRegistrationsList = new List<CurrentRegistration>() { currentRegistration };
+            Registration currentRegistration = await CurrentRegistration(pePassportID, processID, previousRegistration);
+            if (currentRegistration == null)
+            {
+                currentRegistration = new Registration()
+                {
+                    PEPassportID = (int) pePassportID,
+                    ProcessID = (int) processID,
+                };
+            }
 
-            if (pePassportID != null)
+            return await GetRegistrationTypesSelectListByCurrentRegistration(currentRegistration);
+        }
+
+        private async Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesSelectListFromRegistration(Registration registration)
+        {
+            return await GetRegistrationTypesSelectListByCurrentRegistration(registration);
+        }
+
+        private async Task<GetRegistrationTypesFromPEPassportReponse> GetRegistrationTypesSelectListByCurrentRegistration(Registration registration) {
+            if (registration?.PEPassportID != null)
             {
                 AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
+                IEnumerable<Registration> currentRegistrationsList = new List<Registration>() { registration };
+
                 var allowedRegistrationTypesQ = currentRegistrationsList.Select(registration => new
                 {
-                    RegistrationTypeID = (int?)registration.RegistrationTypeID,
+                    PreviousRegistrationTypeID = (int?) registration.PreviousRegistration?.RegistrationTypeID,
                     ExtendableStatus =
-                            registration.Revoke != null ? ExtendableStatus.Revoked :
-                            registration.ExpiryDate == null ? ExtendableStatus.NoMoreExtendable :
-                            EF.Functions.DateDiffDay(registration.ExpiryDate, examDate) < (app.MaxInAdvanceDays * -1) ? ExtendableStatus.NotYetExtendable :
-                            EF.Functions.DateDiffDay(registration.ExpiryDate, examDate) < (app.MaxExtensionDays + 1) ? ExtendableStatus.Extendable : ExtendableStatus.NoMoreExtendable,
-                    HasPassed = registration.HasPassed
+                            registration.PreviousRegistration?.Revoke != null ? ExtendableStatus.Revoked :
+                            registration.PreviousRegistration?.ExpiryDate == null ? ExtendableStatus.NoMoreExtendable :
+                            EF.Functions.DateDiffDay(registration.PreviousRegistration?.ExpiryDate, registration.Examination?.ExamDate) < (app.MaxInAdvanceDays * -1) ? ExtendableStatus.NotYetExtendable :
+                            EF.Functions.DateDiffDay(registration.PreviousRegistration?.ExpiryDate, registration.Examination?.ExamDate) < (app.MaxExtensionDays + 1) ? ExtendableStatus.Extendable : ExtendableStatus.NoMoreExtendable,
+                    HasPassed = registration.PreviousRegistration?.HasPassed,
+                    IsNew = (bool?) (registration.ID == 0),
+                    CurrentRegistrationTypeID = (int?) registration.RegistrationTypeID
                 });
 
-                //IEnumerable<RegistrationType> allowedRegistrationTypes = _context.RegistrationTypes.AsEnumerable();
+                IEnumerable<RegistrationType> allowedRegistrationT = _context.AllowedRegistrationTypes
+                    .Include(allowedRegistrationTypes => allowedRegistrationTypes.AvailableRegistrationType)
+                    .Where(registrationType =>
+                        registrationType.ExtendableStatus == 0 &&
+                        registrationType.HasPassed == null &&
+                        registrationType.PreviousRegistrationTypeID == null &&
+                        registrationType.IsNew == false &&
+                        registrationType.CurrentRegistrationTypeID == 1)
+                    .Select(registrationType => new RegistrationType
+                        {
+                            ID = registrationType.AvailableRegistrationType.ID,
+                            RegistrationTypeName = registrationType.AvailableRegistrationType.RegistrationTypeName
+                        }
+                    );
 
                 IEnumerable<RegistrationType> allowedRegistrationTypes = allowedRegistrationTypesQ
                     .Join(
-                        _context.AllowedRegistrationTypes.Include(allowedRegistrationTypes => allowedRegistrationTypes.AvailableRegistrationType).DefaultIfEmpty(),
-                        registration => new
+                        _context.AllowedRegistrationTypes.Include(allowedRegistrationTypes => allowedRegistrationTypes.AvailableRegistrationType),
+                        registrationType => new
                         {
-                            RegistrationTypeID = registration.RegistrationTypeID,
-                            ExtendableStatus = registration.ExtendableStatus,
-                            HasPassed = registration.HasPassed
+                            PreviousRegistrationTypeID = registrationType.PreviousRegistrationTypeID != null ? registrationType.PreviousRegistrationTypeID : 0,
+                            ExtendableStatus = registrationType.ExtendableStatus,
+                            HasPassed = registrationType.HasPassed != null ? registrationType.HasPassed : false,
+                            IsNew = registrationType.IsNew,
+                            CurrentRegistrationTypeID = registrationType.CurrentRegistrationTypeID != null ? registrationType.CurrentRegistrationTypeID : 0
                         },
-                        allowedRegistrationTypes => new
+                        allowedRegistrationType => new
                         {
-                            RegistrationTypeID = allowedRegistrationTypes.RegistrationTypeID,
-                            ExtendableStatus = allowedRegistrationTypes.ExtendableStatus,
-                            HasPassed = allowedRegistrationTypes.HasPassed
+                            PreviousRegistrationTypeID = allowedRegistrationType.PreviousRegistrationTypeID != null ? allowedRegistrationType.PreviousRegistrationTypeID : 0,
+                            ExtendableStatus = allowedRegistrationType.ExtendableStatus,
+                            HasPassed = allowedRegistrationType.HasPassed != null ? allowedRegistrationType.HasPassed : false,
+                            IsNew = allowedRegistrationType.IsNew,
+                            CurrentRegistrationTypeID = allowedRegistrationType.CurrentRegistrationTypeID != null ? allowedRegistrationType.CurrentRegistrationTypeID : 0
                         },
-                        (registration, allowedRegistrationTypes) => new RegistrationType
+                (registrationType, allowedRegistrationType) => new RegistrationType
                         {
-                            ID = allowedRegistrationTypes.AvailableRegistrationType.ID,
-                            RegistrationTypeName = allowedRegistrationTypes.AvailableRegistrationType.RegistrationTypeName
-                        });
+                            ID = allowedRegistrationType.AvailableRegistrationType.ID,
+                            RegistrationTypeName = allowedRegistrationType.AvailableRegistrationType.RegistrationTypeName,
+                            CurrentRegistrationTypeID = allowedRegistrationType.CurrentRegistrationTypeID,
+                            AllowedRegistrationTypeID = allowedRegistrationType.ID
+                });
 
                 return new GetRegistrationTypesFromPEPassportReponse
                 {
-                    CompanyID = currentRegistration?.CompanyID,
-                    ProcessID = currentRegistration?.ProcessID ?? processID,
                     RegistrationsSelectList = new SelectList(allowedRegistrationTypes, nameof(RegistrationType.ID), nameof(RegistrationType.RegistrationTypeName))
                 };
             }
@@ -385,8 +427,6 @@ namespace Infrastructure.Repositories.SQL
 
                 return new GetRegistrationTypesFromPEPassportReponse
                 {
-                    CompanyID = currentRegistration?.CompanyID,
-                    ProcessID = currentRegistration?.ProcessID ?? processID,
                     RegistrationsSelectList = new SelectList(allowedRegistrationTypes, nameof(RegistrationType.ID), nameof(RegistrationType.RegistrationTypeName))
                 };
             }
@@ -396,7 +436,7 @@ namespace Infrastructure.Repositories.SQL
         {
             AppSettings appSettings = await _context.AppSettings.FirstAsync();
 
-            CurrentRegistration currentRegistration = await CurrentRegistration(pePassportID, processID);
+            Registration currentRegistration = await CurrentRegistration(pePassportID, processID);
 
             DateTime? maxExpiryDate = new DateTime();
 
@@ -412,80 +452,75 @@ namespace Infrastructure.Repositories.SQL
             return maxExpiryDate?.AddDays(appSettings.MaxExpiryDays);
         }
 
-        private async Task<CurrentRegistration> CurrentRegistration(int? pePassportID, int? processID, Registration previousRegistration = null)
+        private async Task<Registration> CurrentRegistration(int? pePassportID, int? processID, Registration previousRegistration = null, bool HasPassedNotNull = true )
         {
-            CurrentRegistration currentRegistration = new CurrentRegistration()
+            if (pePassportID == null)
             {
-                RegistrationTypeID = null,
-                ProcessID = null,
-                CompanyID = null,
-                ExpiryDate = null,
-                Examination = null,
-                HasPassed = null,
-                Revoke = null
-            };
+                return null;
+            }
 
             if(previousRegistration != null)
             {
-                currentRegistration = _mapper.Map<CurrentRegistration>(previousRegistration);
+                return previousRegistration;
             }
-            else
+
+            PEPassport pePassport = await _context.PEPassports
+                .Where(pePassport => pePassport.ID == pePassportID)
+                .Include(pePassport => pePassport.PEWelder)
+                .SingleOrDefaultAsync();
+
+            if (pePassport == null)
             {
-                if (pePassportID != null)
-                {
-                    PEPassport pePassport = await _context.PEPassports
-                        .Where(pePassport => pePassport.ID == pePassportID)
-                        .Include(pePassport => pePassport.PEWelder)
-                        .SingleOrDefaultAsync();
-
-                    if (pePassport == null)
-                    {
-                        return null;
-                    }
-
-                    var registrations = _context.Registrations
-                        .Where(registration => registration.HasPassed != null);
-
-                    if (processID!= null)
-                    {
-                        registrations = registrations
-                            .Where(registration => registration.ProcessID == processID);
-                    }
-
-                    registrations = registrations
-                        .Where(registration => registration.PEPassport.PEWelderID == pePassport.PEWelderID)
-                        .Where(registration => _context.Revokes.All(revoke => revoke.RegistrationID != registration.ID));
-
-                    if (registrations.Count() != 0)
-                    {
-
-                        currentRegistration = registrations
-                        .Join(
-                                _context.Examinations.DefaultIfEmpty(),
-                                registration => new
-                                {
-                                    ExaminationID = registration.ExaminationID
-                                },
-                                examination => new
-                                {
-                                    ExaminationID = examination.ID
-                                },
-                                (registration, examination) => new CurrentRegistration
-                                {
-                                    RegistrationTypeID = registration.RegistrationTypeID,
-                                    ProcessID = registration.ProcessID,
-                                    CompanyID = registration.CompanyID,
-                                    ExpiryDate= registration.ExpiryDate,
-                                    Examination = examination,
-                                    HasPassed = registration.HasPassed,
-                                    Revoke = registration.Revoke
-                                })
-                            .OrderByDescending(registration => registration.Examination.ExamDate)
-                            .FirstOrDefault();
-                    }
-                }
+                return null;
             }
-            return currentRegistration;
+
+            IQueryable<Registration> registrations = _context.Registrations;
+
+            if (HasPassedNotNull)
+            {
+                registrations = registrations
+                    .Where(registration => registration.HasPassed != null);
+            }
+
+            if (processID!= null)
+            {
+                registrations = registrations
+                    .Where(registration => registration.ProcessID == processID);
+            }
+
+            registrations = registrations
+                .Where(registration => registration.PEPassport.PEWelderID == pePassport.PEWelderID)
+                .Where(registration => _context.Revokes.All(revoke => revoke.RegistrationID != registration.ID));
+
+            if (registrations.Count() == 0)
+            {
+                return null;
+            }
+
+            return registrations
+                .Join(
+                        _context.Examinations.DefaultIfEmpty(),
+                        registration => new
+                        {
+                            ExaminationID = registration.ExaminationID
+                        },
+                        examination => new
+                        {
+                            ExaminationID = examination.ID
+                        },
+                        (registration, examination) => new Registration
+                        {
+                            ID = registration.ID,
+                            RegistrationTypeID = registration.RegistrationTypeID,
+                            ProcessID = registration.ProcessID,
+                            CompanyID = registration.CompanyID,
+                            ExpiryDate= registration.ExpiryDate,
+                            Examination = examination,
+                            HasPassed = registration.HasPassed,
+                            Revoke = registration.Revoke
+                        })
+                    .OrderByDescending(registration => registration.Examination.ExamDate)
+                    .FirstOrDefault();
         }
 
         private async Task<SelectList> GetPEPassportSelectList(int examinationDecryptedID)
@@ -738,8 +773,36 @@ namespace Infrastructure.Repositories.SQL
                     PEPassport2 = pePassportProcessPEPassport2.PEPassport2,
                     Registration = registration
                 })
-                .Where(pprp2r => pprp2r.PEPassport.ID == pePassportID
-                    && (pprp2r.Registration.ExpiryDate == null
+                .GroupJoin(_context.Revokes,
+                pePassportProcessPEPassport2Registration => new
+                {
+                    RegistrationID = pePassportProcessPEPassport2Registration.Registration.ID
+                },
+                revoke => new
+                {
+                    RegistrationID = revoke.RegistrationID
+                },
+                (pePassportProcessPEPassport2Registration, revoke) => new
+                {
+                    PEPassport = pePassportProcessPEPassport2Registration.PEPassport,
+                    Process = pePassportProcessPEPassport2Registration.Process,
+                    PEPassport2 = pePassportProcessPEPassport2Registration.PEPassport2,
+                    Registration = pePassportProcessPEPassport2Registration.Registration,
+                    Revoke = revoke
+                }
+                )
+                .SelectMany(pePassportProcessPEPassport2Registration => pePassportProcessPEPassport2Registration.Revoke.DefaultIfEmpty(),
+                (pePassportProcessPEPassport2Registration, revoke) => new
+                {
+                    PEPassport = pePassportProcessPEPassport2Registration.PEPassport,
+                    Process = pePassportProcessPEPassport2Registration.Process,
+                    PEPassport2 = pePassportProcessPEPassport2Registration.PEPassport2,
+                    Registration = pePassportProcessPEPassport2Registration.Registration,
+                    Revoke = revoke
+                }
+                )
+                .Where(pprp2rr => pprp2rr.PEPassport.ID == pePassportID
+                    && (pprp2rr.Registration.ExpiryDate == null  || ((pprp2rr.Registration.HasPassed == null || pprp2rr.Revoke != null) && pprp2rr.Registration.ExaminationID != examinationID) 
                         || (_context.Registrations
                             .Join(_context.PEPassports,
                             registration => new
@@ -750,21 +813,21 @@ namespace Infrastructure.Repositories.SQL
                             pePassport => new
                             {
                                 PEPassportID = pePassport.ID,
-                                ProcessID = pprp2r.Process.ID
+                                ProcessID = pprp2rr.Process.ID
                             },
                             (registration, pePassport) => new
                             {
                                 Registration = registration,
                                 PEPassport = pePassport
                             })
-                            .Where(registrationPEPassport => registrationPEPassport.PEPassport.PEWelderID == pprp2r.PEPassport.PEWelderID)
+                            .Where(registrationPEPassport => registrationPEPassport.PEPassport.PEWelderID == pprp2rr.PEPassport.PEWelderID)
                             .Max(registrationPEPassport => registrationPEPassport.Registration.ExpiryDate)
-                            == pprp2r.Registration.ExpiryDate
-                            && (pprp2r.Registration.ExpiryDate < ((DateTime)_context.Examinations
+                            == pprp2rr.Registration.ExpiryDate
+                            && (pprp2rr.Registration.ExpiryDate < ((DateTime)_context.Examinations
                                 .Where(examination => examination.ID == examinationID)
                                 .SingleOrDefault()
                                 .ExamDate).AddDays(appSettings.MaxInAdvanceDays)
-                            || (pprp2r.Registration.ID == registrationID || pprp2r.Registration.ID == null) || pprp2r.Registration.HasPassed != true)
+                            || registrationID != null && (pprp2rr.Registration.ID == registrationID || pprp2rr.Registration.ID == null || pprp2rr.Registration.HasPassed != true))
                         )
                     )
                 )

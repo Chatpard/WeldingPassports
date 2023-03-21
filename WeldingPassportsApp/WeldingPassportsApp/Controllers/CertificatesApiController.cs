@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -51,6 +52,20 @@ namespace WeldingPassportsApp.Controllers
         public async Task<ExpiryDateAPIModel> GetMaxCertificateExpirationDate(string examDateString, int pePassportID, int processID, int? registrationTypeID = null)
         {
             var query = new GetCertificateMaxExpirationDateRequest(pePassportID, processID, registrationTypeID, examDateString);
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(nameof(GetCompanyID))]
+        public async Task<ActionResult<int?>> GetCompanyID(int pePassportID)
+        {
+            var query = new GetCompanyIDByPEPassportRequest(pePassportID, this);
+            return await _mediator.Send(query);
+        }
+
+        [HttpGet(nameof(GetHasNotSet))]
+        public async Task<ActionResult<bool?>> GetHasNotSet(int pePassportID, int processID)
+        {
+            var query = new GetHasNotSet(pePassportID, processID, this);
             return await _mediator.Send(query);
         }
     }

@@ -9,6 +9,7 @@ window.OnChangeProcessID = () => {
     );
     RegistrationTypeID.SetRegistrationTypeIDSelectList(
         $("#RegistrationTypeID"),
+        $("#RegistrationTypeID-error"),
         $("#ExamDate"),
         $("#PEPassportID"),
         $("#CompanyID"),

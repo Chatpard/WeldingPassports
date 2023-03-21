@@ -1107,15 +1107,19 @@ namespace Infrastructure.SeedData
                     ID = 1,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
                     HasPassed = null,
-                    RegistrationTypeID = null, // No Registration
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
                     ID = 2,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 1, // Training
+                    HasPassed = null,
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
@@ -1123,229 +1127,2205 @@ namespace Infrastructure.SeedData
                     ID = 3,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
                     HasPassed = true,
-                    RegistrationTypeID = 2, // Extension
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
                     ID = 4,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 3, // Re-Examination1
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
                     ID = 5,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 4, // Re-Examination2
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
                     AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 6,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 7,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 8,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 9,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 10,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 11,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 12,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 13,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 14,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 15,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 16,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 17,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 18,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 19,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 20,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 21,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 22,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 23,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 24,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 25,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 26,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 27,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 28,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 29,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 30,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 31,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 32,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 33,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 34,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 35,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 36,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 37,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 38,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 39,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 40,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 41,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 42,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 43,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 44,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 45,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 46,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 47,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 48,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 49,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 50,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 51,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 52,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 53,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 54,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 55,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 56,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 57,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 58,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 59,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 60,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 61,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 62,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 63,
+                    ExtendableStatus = ExtendableStatus.NotYetExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
                 },
             #endregion
 
                 #region Extendable
                 new AllowedRegistrationType()
                 {
-                    ID = 6,
+                    ID = 64,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = null,
-                    RegistrationTypeID = null, // No Registration
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 7,
+                    ID = 65,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = null,
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 66,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = false,
-                    RegistrationTypeID = 1, // Training
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1  // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 8,
+                    ID = 67,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = false,
-                    RegistrationTypeID = 2, // Extension
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1  // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 68,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1  // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 69,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1  // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 70,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1  // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 71,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 9,
+                    ID = 72,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = false,
-                    RegistrationTypeID = 2, // Extension
-                    AvailableRegistrationTypeID = 3, // Re-Examination1
-                },
-                new AllowedRegistrationType()
-                {
-                    ID = 10,
-                    ExtendableStatus = ExtendableStatus.Extendable,
-                    HasPassed = false,
-                    RegistrationTypeID = 3, // Re-Examination1
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 11,
+                    ID = 73,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = false,
-                    RegistrationTypeID = 3, // Re-Examination1
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 74,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 75,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 76,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 77,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 78,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 79,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 80,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 81,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 82,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 83,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 84,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 85,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 86,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 87,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 88,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 89,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 90,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 4 // Re-Examination2
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 12,
+                    ID = 91,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = false,
-                    RegistrationTypeID = 4, // Re-Examination2
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 92,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 93,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 94,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 95,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 13,
+                    ID = 96,
                     ExtendableStatus = ExtendableStatus.Extendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 1, // Training
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 14,
+                    ID = 97,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 98,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 99,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 100,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    RegistrationTypeID = 1, // Training
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 101,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 102,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 103,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 104,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 105,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 2 // Extension
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 15,
+                    ID = 106,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    RegistrationTypeID = 1, // Training
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 107,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 108,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 109,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 110,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 3 // Re-Examination1
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 16,
+                    ID = 111,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    RegistrationTypeID = 2, // Extension
-                    AvailableRegistrationTypeID = 1 // Training
-                },
-                new AllowedRegistrationType()
-                {
-                    ID = 17,
-                    ExtendableStatus = ExtendableStatus.Extendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 2, // Extension
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 3 // Re-Examination1
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 18,
+                    ID = 112,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    RegistrationTypeID = 3, // Re-Examination1
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 113,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 114,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 115,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 19,
+                    ID = 116,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    RegistrationTypeID = 3, // Re-Examination1
-                    AvailableRegistrationTypeID = 2 // Extension
-                },
-                new AllowedRegistrationType()
-                {
-                    ID = 20,
-                    ExtendableStatus = ExtendableStatus.Extendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 4, // Re-Examination2
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 21,
+                    ID = 117,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    RegistrationTypeID = 4, // Re-Examination2
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 118,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 119,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 120,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 121,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 122,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 123,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 124,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 125,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 126,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 127,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 128,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 129,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 130,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 131,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 132,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 133,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 134,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 135,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 136,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 137,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 138,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 139,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 140,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 141,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 142,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 143,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 144,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 145,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 146,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 147,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 148,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 149,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 150,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 151,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 152,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 153,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 154,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 155,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 156,
+                    ExtendableStatus = ExtendableStatus.Extendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
                 },
             #endregion
 
                 #region NoMoreExtendable
                 new AllowedRegistrationType()
                 {
-                    ID = 22,
+                    ID = 157,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = null,
-                    RegistrationTypeID = null, // No Registration
-                    AvailableRegistrationTypeID = 1, // Training
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 23,
+                    ID = 158,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = null,
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 159,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = false,
-                    RegistrationTypeID = 1, // Training
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 24,
+                    ID = 160,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = false,
-                    RegistrationTypeID = 2, // Extension
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 25,
+                    ID = 161,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = false,
-                    RegistrationTypeID = 3, // Re-Examination1
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 26,
+                    ID = 162,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = false,
-                    RegistrationTypeID = 4, // Re-Examination2
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 27,
+                    ID = 163,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 1, // Training
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 28,
+                    ID = 164,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 2, // Extension
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 29,
+                    ID = 165,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
-                    HasPassed = true,
-                    RegistrationTypeID = 3, // Re-Examination1
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 30,
+                    ID = 166,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 167,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 168,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 169,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 170,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 171,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 172,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 173,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 174,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 175,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 176,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 177,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 178,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 179,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 180,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 181,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew= true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 182,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 183,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 184,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 185,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 186,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 187,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 188,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 189,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 190,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = false,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 191,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = true,
-                    RegistrationTypeID = 4, // Re-Examination2
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 192,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 193,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 194,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 195,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 196,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 197,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 198,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 199,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 200,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 201,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 202,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 203,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 204,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 205,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 206,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 207,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 208,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 209,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 210,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 211,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 212,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 213,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 214,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 215,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 216,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 217,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 218,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 219,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 220,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 221,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 222,
+                    ExtendableStatus = ExtendableStatus.NoMoreExtendable,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
             #endregion
@@ -1353,42 +3333,312 @@ namespace Infrastructure.SeedData
                 #region Revoked
                 new AllowedRegistrationType()
                 {
-                    ID = 31,
+                    ID = 223,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = null,
-                    RegistrationTypeID = null, // No Registration
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 32,
+                    ID = 224,
                     ExtendableStatus = ExtendableStatus.Revoked,
-                    HasPassed = true,
-                    RegistrationTypeID = 1, // Training
+                    HasPassed = null,
+                    PreviousRegistrationTypeID = null, // No Registration
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 33,
+                    ID = 225,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
-                    RegistrationTypeID = 2, // Extension
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 34,
+                    ID = 226,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
-                    RegistrationTypeID = 3, // Re-Examination1
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
                     AvailableRegistrationTypeID = 1 // Training
                 },
                 new AllowedRegistrationType()
                 {
-                    ID = 35,
+                    ID = 227,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
-                    RegistrationTypeID = 4, // Re-Examination2
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 228,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 229,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 1, // Training
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 230,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 231,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 232,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 233,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 234,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 235,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 236,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 237,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 2 // Extension
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 238,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 2, // Extension
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 239,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 240,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 241,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 242,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 243,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 3 // Re-Examination1
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 244,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 3, // Re-Examination1
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 245,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 246,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 247,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 248,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 1 // Training
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 249,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 1,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 250,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 2,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 251,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 3,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 252,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = false,
+                    CurrentRegistrationTypeID = 4,
+                    AvailableRegistrationTypeID = 4 // Re-Examination2
+                },
+                new AllowedRegistrationType()
+                {
+                    ID = 253,
+                    ExtendableStatus = ExtendableStatus.Revoked,
+                    HasPassed = true,
+                    PreviousRegistrationTypeID = 4, // Re-Examination2
+                    IsNew = true,
+                    CurrentRegistrationTypeID = null,
                     AvailableRegistrationTypeID = 1 // Training
                 }
                 #endregion

@@ -5,8 +5,11 @@ using Application.Security;
 using Application.SQLModels;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.API
@@ -49,6 +52,30 @@ namespace Infrastructure.Repositories.API
         public async Task<DateTime?> GetCertificateMaxExpirationDate(int? pePassportID, int? processID)
         {
             return await _certificatesSQLRepository.GetCertificateMaxExpirationDate(pePassportID, processID);
+        }
+
+        public async Task<int?> GetCompanyIDByPEPassport(int? pePassportID)
+        {
+            var registration = await _context.Registrations
+                .Include(registration => registration.PEPassport)
+                .Where(registration => registration.PEPassport.PEWelderID == _context.PEPassports
+                    .Where(pePassport => pePassport.ID == pePassportID)
+                    .SingleOrDefault().PEWelderID)
+                .Include(registration => registration.Examination)
+                .OrderByDescending(registration => registration.Examination.ExamDate)
+                .FirstOrDefaultAsync();
+
+            return registration?.CompanyID;
+        }
+
+        public async Task<bool?> GetHasNotSet(int? pePassportID, int? processID)
+        {
+            return _context.Registrations
+                .Include(certificate => certificate.PEPassport)
+                .Where(certificate => certificate.PEPassport.PEWelderID == _context.PEPassports
+                    .Where(pePassport => pePassport.ID == pePassportID).SingleOrDefault().PEWelderID)
+                .Where(certificate => certificate.ProcessID == processID)
+                .Any(certificate => certificate.HasPassed == null);
         }
     }
 }

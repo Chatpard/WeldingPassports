@@ -11,6 +11,7 @@ window.OnChangeExpiryDate = (UserCanEdit) => {
             $("#HasPassed")
         );
     }
+
     ExpiryDate.ToggleDisable(
         $("#ExpiryDate"),
         $("#ExpiryDateClearButton"),
@@ -18,6 +19,7 @@ window.OnChangeExpiryDate = (UserCanEdit) => {
         $("#RegistrationTypeID"),
         $("#HasPassed")
     );
+
     HasPassed.ToggleDisable(
         $("#HasPassed"),
         $("#HasPassedClearButton"),

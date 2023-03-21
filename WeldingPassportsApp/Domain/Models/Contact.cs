@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Domain.Models
@@ -11,9 +13,11 @@ namespace Domain.Models
 
         public int ID { get; set; }
 
+        [Column(TypeName = "varchar(64)")]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+        [Column(TypeName = "varchar(64)")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
@@ -41,3 +45,5 @@ namespace Domain.Models
         public ICollection<CompanyContact> CompanyContacts { get; set; }
     }
 }
+
+// Field length from https://www.manageengine.com/microsoft-365-management-reporting/help/management/csv-instructions.html

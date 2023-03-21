@@ -1,8 +1,9 @@
 ﻿//todo: implement ajax ProcessSelectList
-export function ToggleDisable(processID, processIDClearButton, pePassportID, registrationTypeID) {
+export function ToggleDisable(processID, processIDClearButton, processIDError, pePassportID, registrationTypeID) {
     if(pePassportID.val() == null) {
         processID.prop("disabled", true);
         processIDClearButton.prop("disabled", true);
+        processIDError.remove();
     }
     else {
         if (registrationTypeID.val() == null) {
@@ -12,16 +13,17 @@ export function ToggleDisable(processID, processIDClearButton, pePassportID, reg
         else {
             processID.prop("disabled", true);
             processIDClearButton.prop("disabled", true);
+            processIDError.remove();
         }
     }
 }
 
-export function GetProcessIDSelectList(processID, examinationEncryptedID, pePassportID, registrationID = null) {
+export function GetProcessIDSelectList(processID, processIDError, examinationEncryptedID, pePassportID, registrationID = null) {
     console.log("GetProcessIDSelectList: ",
         "ExaminationEncryptedID = " + examinationEncryptedID.val(),
         "pePassportID = " + pePassportID.val(),
         "registrationID = " + registrationID.val()
-    )
+    );
     if (examinationEncryptedID.val() != null && pePassportID.val() != null) {
         $.ajax({
             type: "GET",
@@ -41,11 +43,11 @@ export function GetProcessIDSelectList(processID, examinationEncryptedID, pePass
                     chooseOption.hidden = true;
                 }
                 processID.append(chooseOption);
-                console.log("processID = " + processID.val());
                 for (var i = 0; i < response.processNamesSelectList.length; i++) {
                     processID.append(new Option(response.processNamesSelectList[i].text, response.processNamesSelectList[i].value));
                 }
                 if (response.processNamesSelectList.length == 1) {
+                    processIDError.remove();
                     processID.val(response.processNamesSelectList[0].value);
                 }
                 processID.trigger("onchange");
@@ -54,5 +56,5 @@ export function GetProcessIDSelectList(processID, examinationEncryptedID, pePass
                 console.log(errorThrown);
             }
         });
-    }
-}
+    };
+};

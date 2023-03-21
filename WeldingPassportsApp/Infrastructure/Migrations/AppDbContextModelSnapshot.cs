@@ -27,16 +27,16 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("BusinessAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("BusinessAddressCity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("BusinessAddressCountry")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("BusinessAddressPostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(40)");
 
                     b.HasKey("ID");
 
@@ -148,7 +148,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AvailableRegistrationTypeID")
+                    b.Property<int?>("AvailableRegistrationTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CurrentRegistrationTypeID")
                         .HasColumnType("int");
 
                     b.Property<int>("ExtendableStatus")
@@ -157,14 +160,19 @@ namespace Infrastructure.Migrations
                     b.Property<bool?>("HasPassed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("RegistrationTypeID")
+                    b.Property<bool?>("IsNew")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PreviousRegistrationTypeID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
                     b.HasIndex("AvailableRegistrationTypeID");
 
-                    b.HasIndex("RegistrationTypeID");
+                    b.HasIndex("CurrentRegistrationTypeID");
+
+                    b.HasIndex("PreviousRegistrationTypeID");
 
                     b.ToTable("AllowedRegistrationTypes");
 
@@ -173,15 +181,16 @@ namespace Infrastructure.Migrations
                         {
                             ID = 1,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 0
+                            ExtendableStatus = 0,
+                            IsNew = true
                         },
                         new
                         {
                             ID = 2,
                             AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
                             ExtendableStatus = 0,
-                            HasPassed = true,
-                            RegistrationTypeID = 1
+                            IsNew = false
                         },
                         new
                         {
@@ -189,257 +198,2461 @@ namespace Infrastructure.Migrations
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 2
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 4,
                             AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
                             ExtendableStatus = 0,
-                            HasPassed = true,
-                            RegistrationTypeID = 3
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 5,
                             AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
                             ExtendableStatus = 0,
-                            HasPassed = true,
-                            RegistrationTypeID = 4
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 6,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 7,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
                             HasPassed = false,
-                            RegistrationTypeID = 1
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 8,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
-                            HasPassed = false,
-                            RegistrationTypeID = 2
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 9,
-                            AvailableRegistrationTypeID = 3,
-                            ExtendableStatus = 1,
-                            HasPassed = false,
-                            RegistrationTypeID = 2
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 10,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
-                            HasPassed = false,
-                            RegistrationTypeID = 3
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 11,
-                            AvailableRegistrationTypeID = 4,
-                            ExtendableStatus = 1,
-                            HasPassed = false,
-                            RegistrationTypeID = 3
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
                         },
                         new
                         {
                             ID = 12,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
-                            HasPassed = false,
-                            RegistrationTypeID = 4
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 13,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 1
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 14,
-                            AvailableRegistrationTypeID = 2,
-                            ExtendableStatus = 1,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 1
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 15,
-                            AvailableRegistrationTypeID = 3,
-                            ExtendableStatus = 1,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 1
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 16,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 2
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 17,
-                            AvailableRegistrationTypeID = 3,
-                            ExtendableStatus = 1,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 2
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 18,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 3
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 19,
                             AvailableRegistrationTypeID = 2,
-                            ExtendableStatus = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 3
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
                         },
                         new
                         {
                             ID = 20,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 1,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 4
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 21,
-                            AvailableRegistrationTypeID = 2,
-                            ExtendableStatus = 1,
-                            HasPassed = true,
-                            RegistrationTypeID = 4
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 22,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 23,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
                             HasPassed = false,
-                            RegistrationTypeID = 1
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 24,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
                             HasPassed = false,
-                            RegistrationTypeID = 2
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 25,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
                             HasPassed = false,
-                            RegistrationTypeID = 3
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 26,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
                             HasPassed = false,
-                            RegistrationTypeID = 4
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 27,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
-                            HasPassed = true,
-                            RegistrationTypeID = 1
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 28,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
-                            HasPassed = true,
-                            RegistrationTypeID = 2
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
                         },
                         new
                         {
                             ID = 29,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 3
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
                         },
                         new
                         {
                             ID = 30,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 4
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
                         },
                         new
                         {
                             ID = 31,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 3
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
                         },
                         new
                         {
                             ID = 32,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 1
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
                         },
                         new
                         {
                             ID = 33,
                             AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 2
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
                         },
                         new
                         {
                             ID = 34,
-                            AvailableRegistrationTypeID = 1,
-                            ExtendableStatus = 3,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
                             HasPassed = true,
-                            RegistrationTypeID = 3
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
                         },
                         new
                         {
                             ID = 35,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 36,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 37,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 38,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 39,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 40,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 41,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 42,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 43,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 44,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 45,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 46,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 47,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 48,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 49,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 50,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 51,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 52,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 53,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 54,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 55,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 56,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 57,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 58,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 59,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 60,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 61,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 62,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 63,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 0,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 64,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            IsNew = true
+                        },
+                        new
+                        {
+                            ID = 65,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            IsNew = false
+                        },
+                        new
+                        {
+                            ID = 66,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 67,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 68,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 69,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 70,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 71,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 72,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 73,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 74,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 75,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 76,
+                            AvailableRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 77,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 78,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 79,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 80,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 81,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 82,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 83,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 84,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 85,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 86,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 87,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 88,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 89,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 90,
+                            AvailableRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 91,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 92,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 93,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 94,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 95,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 96,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 97,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 98,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 99,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 100,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 101,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 102,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 103,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 104,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 105,
+                            AvailableRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 106,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 107,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 108,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 109,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 110,
+                            AvailableRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 111,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 112,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 113,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 114,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 115,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 116,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 117,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 118,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 119,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 120,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 121,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 122,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 123,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 124,
+                            AvailableRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 125,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 126,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 127,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 128,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 129,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 130,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 131,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 132,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 133,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 134,
+                            AvailableRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 135,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 136,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 137,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 138,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 139,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 140,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 141,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 142,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 143,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 144,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 145,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 146,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 147,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 148,
+                            AvailableRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 149,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 150,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 151,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 152,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 153,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 154,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 155,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 156,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 1,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 157,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            IsNew = false
+                        },
+                        new
+                        {
+                            ID = 158,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            IsNew = true
+                        },
+                        new
+                        {
+                            ID = 159,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 160,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 161,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 162,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 163,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 164,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 165,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 166,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 167,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 168,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 169,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 170,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 171,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 172,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 173,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 174,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 175,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 176,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 177,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 178,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 179,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 180,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 181,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 182,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 183,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 184,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 185,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 186,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 187,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 188,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 189,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 190,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = false,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 191,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 192,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 193,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 194,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 195,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 196,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 197,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 198,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 199,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 200,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 201,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 202,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 203,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 204,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 205,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 206,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 207,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 208,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 209,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 210,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 211,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 212,
+                            AvailableRegistrationTypeID = 3,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 213,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 214,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 215,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 216,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 217,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 218,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 219,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 220,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 221,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 222,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 2,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 223,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            IsNew = false
+                        },
+                        new
+                        {
+                            ID = 224,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            IsNew = true
+                        },
+                        new
+                        {
+                            ID = 225,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 226,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 227,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 228,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 229,
                             AvailableRegistrationTypeID = 1,
                             ExtendableStatus = 3,
                             HasPassed = true,
-                            RegistrationTypeID = 4
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 1
+                        },
+                        new
+                        {
+                            ID = 230,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 231,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 232,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 233,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 234,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 235,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 236,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 237,
+                            AvailableRegistrationTypeID = 2,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 238,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 2
+                        },
+                        new
+                        {
+                            ID = 239,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 240,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 241,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 242,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 243,
+                            AvailableRegistrationTypeID = 3,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 244,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 3
+                        },
+                        new
+                        {
+                            ID = 245,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 246,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 247,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 248,
+                            AvailableRegistrationTypeID = 1,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 249,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 250,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 2,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 251,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 3,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 252,
+                            AvailableRegistrationTypeID = 4,
+                            CurrentRegistrationTypeID = 4,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = false,
+                            PreviousRegistrationTypeID = 4
+                        },
+                        new
+                        {
+                            ID = 253,
+                            AvailableRegistrationTypeID = 1,
+                            ExtendableStatus = 3,
+                            HasPassed = true,
+                            IsNew = true,
+                            PreviousRegistrationTypeID = 4
                         });
                 });
 
@@ -484,16 +2697,16 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CompanyEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("CompanyMainPhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("WebPage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.HasKey("ID");
 
@@ -722,7 +2935,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BusinessPhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<int?>("CompanyID")
                         .HasColumnType("int");
@@ -731,16 +2944,16 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("JobTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("MobilePhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.HasKey("ID");
 
@@ -821,10 +3034,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.HasKey("ID");
 
@@ -1178,19 +3391,19 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("IdNumber")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("NationalNumber")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("PhotoPath")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("ID");
 
@@ -1330,7 +3543,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProcessName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.HasKey("ID");
 
@@ -1392,6 +3605,8 @@ namespace Infrastructure.Migrations
                     b.HasIndex("ExaminationID");
 
                     b.HasIndex("PEPassportID");
+
+                    b.HasIndex("PreviousRegistrationID");
 
                     b.HasIndex("ProcessID");
 
@@ -1486,11 +3701,17 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AllowedRegistrationTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CurrentRegistrationTypeID")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("RegistrationTypeName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.HasKey("ID");
 
@@ -1531,7 +3752,7 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<int>("CompanyContactID")
                         .HasColumnType("int");
@@ -1577,7 +3798,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Letter")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("varchar(1)");
 
                     b.HasKey("ID");
 
@@ -1656,7 +3877,7 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<int>("ExtendableStatus")
                         .HasColumnType("int");
@@ -1734,52 +3955,53 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BusinessAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(1024)");
 
                     b.Property<string>("BusinessAddressCity")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("BusinessAddressCountry")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(128)");
 
                     b.Property<string>("BusinessAddressPostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(40)");
 
                     b.Property<string>("BusinessPhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("CompanyEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("CompanyMainPhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("CompanyName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                    b.Property<string>("EmailConfirmed")
+                        .IsRequired()
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("EmailLanguage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("JobTitle")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MobilePhone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(64)");
 
                     b.Property<string>("WebPage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(2048)");
 
                     b.HasKey("ID");
 
@@ -1799,7 +4021,7 @@ namespace Infrastructure.Migrations
                             CompanyMainPhone = "+32 2 520 56 58",
                             CompanyName = "VCL",
                             Email = "john.doe@hotmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = "1",
                             EmailLanguage = "en",
                             FirstName = "John",
                             JobTitle = "CEO",
@@ -1820,7 +4042,7 @@ namespace Infrastructure.Migrations
                             CompanyMainPhone = "+32 2 856 45 82",
                             CompanyName = "Sibelga Academy",
                             Email = "alice.smith@hotmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = "1",
                             EmailLanguage = "en",
                             FirstName = "Alice",
                             JobTitle = "CEO",
@@ -1841,7 +4063,7 @@ namespace Infrastructure.Migrations
                             CompanyMainPhone = "+32 4 382 45 72",
                             CompanyName = "Technifutur",
                             Email = "james.bond@outlook.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = "1",
                             EmailLanguage = "en",
                             FirstName = "James",
                             JobTitle = "CEO",
@@ -1862,7 +4084,7 @@ namespace Infrastructure.Migrations
                             CompanyMainPhone = "+32 3 230 05 28",
                             CompanyName = "Technifutur",
                             Email = "antoine.m1996@hotmail.com",
-                            EmailConfirmed = true,
+                            EmailConfirmed = "1",
                             EmailLanguage = "nl",
                             FirstName = "Antoine",
                             JobTitle = "CEO",
@@ -2071,14 +4293,18 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Models.AllowedRegistrationType", b =>
                 {
                     b.HasOne("Domain.Models.RegistrationType", "AvailableRegistrationType")
-                        .WithMany("PreviousRegistrationTypes")
-                        .HasForeignKey("AvailableRegistrationTypeID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.RegistrationType", "RegistrationType")
                         .WithMany("AvailableRegistrationTypes")
-                        .HasForeignKey("RegistrationTypeID")
+                        .HasForeignKey("AvailableRegistrationTypeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Models.RegistrationType", "CurrentRegistrationType")
+                        .WithMany("CurrentRegistrationTypes")
+                        .HasForeignKey("CurrentRegistrationTypeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Models.RegistrationType", "PreviousRegistrationType")
+                        .WithMany("PreviousRegistrationTypes")
+                        .HasForeignKey("PreviousRegistrationTypeID")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -2202,6 +4428,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("PEPassportID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Domain.Models.Registration", "PreviousRegistration")
+                        .WithMany()
+                        .HasForeignKey("PreviousRegistrationID")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Models.Process", "Process")
                         .WithMany("Registrations")

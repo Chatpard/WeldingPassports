@@ -7,6 +7,7 @@ window.OnChangeRegistrationTypeID = () => {
     ProcessID.ToggleDisable(
         $("#ProcessID"),
         $("#ProcessIDClearButton"),
+        $("#ProcessID-error"),
         $("#PEPassportID"),
         $("#RegistrationTypeID")
     );

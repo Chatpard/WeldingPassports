@@ -19,7 +19,7 @@
     }
 }
 
-export function SetRegistrationTypeIDSelectList(registrationTypeID, examDate, pePassportID, companyID, processID) {
+export function SetRegistrationTypeIDSelectList(registrationTypeID, registrationTypeIDError, examDate, pePassportID, companyID, processID) {
     console.log("SetRegistrationTypesIDSelectList :",
         "registrationTypeID = " + registrationTypeID.val(),
         "examDate = " + examDate.val(),
@@ -33,9 +33,6 @@ export function SetRegistrationTypeIDSelectList(registrationTypeID, examDate, pe
             examDate: examDate.val()
         }, function () { }
         ).done(function (data) {
-            if (data.companyID != null) {
-                companyID.val(data.companyID);
-            }
             registrationTypeID.find("option").remove();
             var chooseOption = new Option("Choose Registration Type", "");
             chooseOption.disabled = true;
@@ -49,6 +46,7 @@ export function SetRegistrationTypeIDSelectList(registrationTypeID, examDate, pe
                 registrationTypeID.append(new Option(data.registrationsSelectList[i].text, data.registrationsSelectList[i].value));
             }
             if (data.registrationsSelectList.length == 1) {
+                registrationTypeIDError.remove();
                 registrationTypeID.val(data.registrationsSelectList[0].value);
             }
             registrationTypeID.trigger("onchange");

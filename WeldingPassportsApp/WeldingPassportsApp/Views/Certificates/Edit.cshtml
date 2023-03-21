@@ -282,7 +282,7 @@
             </div>
         </div>
 
-        <div id="Revoke" style=@(Model.HasPassed == true?"":"display:none;")>
+        <div id="Revoke" style=@((Model.HasPassed == true && (EnableRevokeByCompanyContactID || Model.RevokedByCompanyContactID != null)) ? "":"display:none;")>
             <div class="form-group row">
                 <label asp-for="RevokedByCompanyContactID" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">

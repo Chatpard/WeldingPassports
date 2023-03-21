@@ -71,7 +71,7 @@ namespace WeldingPassportsApp.Controllers
             catch (Exception e)
             {
                 await Task.CompletedTask; 
-                return Utilities.ErrorView(_env, this, e, "Error in GetCertificatesCreate");
+                return Utilities.ErrorView(_env, this, e, "Error in PostCertificatesCreate");
             }
         }
 

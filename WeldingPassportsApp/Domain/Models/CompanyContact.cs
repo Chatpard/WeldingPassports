@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Domain.Models
@@ -17,12 +18,16 @@ namespace Domain.Models
 
         public int? AddressID { get; set; }
 
+        [Column(TypeName = "varchar(64)")]
         public string JobTitle { get; set; }
 
+        [Column(TypeName = "varchar(64)")]
         public string BusinessPhone { get; set; }
 
+        [Column(TypeName = "varchar(64)")]
         public string MobilePhone { get; set; }
 
+        [Column(TypeName = "varchar(64)")]
         public string Email { get; set; }
 
         // Navigation Properties
@@ -35,3 +40,5 @@ namespace Domain.Models
         public ICollection<Revoke> Revokes { get; set; }
     }
 }
+
+// Field length from https://www.manageengine.com/microsoft-365-management-reporting/help/management/csv-instructions.html

@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Domain.Models
@@ -11,6 +13,7 @@ namespace Domain.Models
 
         public int CompanyID { get; set; }
 
+        [Column(TypeName = "varchar(1)")]
         public char Letter { get; set; }
 
         public bool IsActive { get; set; }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Domain.Models
@@ -27,6 +29,8 @@ namespace Domain.Models
                     revokeDate = null;
             }
         }
+
+        [Column(TypeName = "varchar(1024)")]
         public string Comment { get; set; }
 
         // Navigation Properties

@@ -8,12 +8,17 @@ namespace Domain.Models
     public class Registration : IDomainModel
     {
         public int ID { get; set; }
-        public int? PreviousRegistrationID { get; set; }
+
         public int ExaminationID { get; set; }
+
         public int PEPassportID { get; set; }
+
         public int RegistrationTypeID { get; set; }
+
         public int ProcessID { get; set; }
+
         public int CompanyID { get; set; }
+
         private DateTime? expiryDate;
         public DateTime? ExpiryDate
         {
@@ -32,8 +37,12 @@ namespace Domain.Models
                     expiryDate = null;
             }
         }
+
         public bool? HasPassed { get; set; }
+
         public string CertificatePath { get; set; }
+
+        public int? PreviousRegistrationID { get; set; }
 
         // Navigation Properties
         public Examination Examination { get; set; }

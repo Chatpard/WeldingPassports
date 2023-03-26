@@ -1,16 +1,13 @@
 ﻿using Application.Requests.PEPassports;
-using Application.Requests.Welders;
 using Application.Security;
 using Application.ViewModels;
-using Domain;
+using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -21,11 +18,13 @@ namespace WeldingPassportsApp.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IWebHostEnvironment _env;
+        private readonly UserManager<AppUser> _userManager;
 
-        public PEPassportsController(IMediator mediator, IWebHostEnvironment env)
+        public PEPassportsController(IMediator mediator, IWebHostEnvironment env, UserManager<AppUser> userManager)
         {
             _mediator = mediator;
             _env = env;
+            _userManager=userManager;
         }
 
         [HttpGet]
@@ -38,7 +37,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new GetPEPassportsIndexRequest(sortOrder, currentFilter, searchString, pageNumber, this);
+                var query = new GetPEPassportsIndexRequest(sortOrder, currentFilter, searchString, pageNumber, _userManager, this);
 
                 return await _mediator.Send(query);
             }
@@ -56,7 +55,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new GetPEPassportCreateRequest(returnUrl, this);
+                var query = new GetPEPassportCreateRequest(returnUrl, _userManager, this);
 
                 return await _mediator.Send(query);
             }

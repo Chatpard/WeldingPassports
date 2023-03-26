@@ -1,14 +1,11 @@
 ﻿using Application.Interfaces.Repositories.SQL;
 using Application.ViewModels;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,12 +14,10 @@ namespace Application.Requests.Account
     public class GetAccountRegisterRequestHandler : IRequestHandler<GetAccountRegisterRequest, IActionResult>
     {
         private readonly ICompaniesSQLRepository _repository;
-        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public GetAccountRegisterRequestHandler(ICompaniesSQLRepository repository, SignInManager<IdentityUser> signInManager)
+        public GetAccountRegisterRequestHandler(ICompaniesSQLRepository repository)
         {
             _repository = repository;
-            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> Handle(GetAccountRegisterRequest request, CancellationToken cancellationToken)
@@ -31,7 +26,7 @@ namespace Application.Requests.Account
 
             UserRegistrationViewModel vm = new UserRegistrationViewModel();
 
-            var info = await _signInManager.GetExternalLoginInfoAsync();
+            var info = await request.SignInManager.GetExternalLoginInfoAsync();
             if (info != null)
             {
                 var emailClaim = info.Principal.Claims.ToList().Find(c => c.Type == ClaimTypes.Email);

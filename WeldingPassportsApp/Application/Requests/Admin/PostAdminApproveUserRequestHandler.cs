@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Repositories.SQL;
+using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -32,7 +33,7 @@ namespace Application.Requests.Admin
         {
             var language = await _repository.GetUserToApproveEmailLanguageByEncryptedIDAsync(request.UserToApproveEncryptedID);
 
-            IdentityUser user = await _repository
+            AppUser user = await _repository
                 .InsertAppUserByEncryptedIDAsync(request.UserToApproveEncryptedID, request.Role, cancellationToken);
             await _repository.SaveChangesAsync(cancellationToken);
 

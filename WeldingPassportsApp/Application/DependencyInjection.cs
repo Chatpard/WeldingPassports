@@ -21,6 +21,7 @@ namespace Application
 
             services.AddSingleton(provider => new MapperConfiguration(config =>
             {
+                config.AddProfile(new AppRoleProfile());
                 config.AddProfile(new AppSettingsProfile());
                 config.AddProfile(new UserToApproveProfile());
                 config.AddProfile(new AddressProfile(provider.GetService<IDataProtectionProvider>(),

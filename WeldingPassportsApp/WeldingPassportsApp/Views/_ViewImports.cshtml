@@ -1,4 +1,5 @@
 ﻿@using Domain
+@using Domain.Models;
 @using Infrastructure
 @using Application.ViewModels
 @using Application.Security
@@ -11,4 +12,5 @@
 
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-@inject SignInManager<IdentityUser> signInManager
+
+@inject SignInManager<AppUser> signInManager

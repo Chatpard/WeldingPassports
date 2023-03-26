@@ -16,13 +16,23 @@ namespace Application.Requests.CompanyContacts
         private readonly IContactsSQLRepository _contactsSQLRepository;
         private readonly ICompaniesSQLRepository _companiesSQLRepository;
         private readonly IAddressesSQLRepository _addressesSQLRepository;
+        private readonly IUsersSQLRepository _appUsersSQLRepository;
+        private readonly IAppRolesSQLRepository _appRolesSQLRepository;
 
-        public GetCompanyContactEditRequestHandler(ICompanyContactsSQLRepository repository, IContactsSQLRepository contactsSQLRepository, ICompaniesSQLRepository companiesSQLRepository, IAddressesSQLRepository addressesSQLRepository)
+        public GetCompanyContactEditRequestHandler(
+            ICompanyContactsSQLRepository repository, 
+            IContactsSQLRepository contactsSQLRepository, 
+            ICompaniesSQLRepository companiesSQLRepository, 
+            IAddressesSQLRepository addressesSQLRepository,
+            IUsersSQLRepository appUsersSQLRepository,
+            IAppRolesSQLRepository appRolesSQLRepository)
         {
             _repository = repository;
             _contactsSQLRepository = contactsSQLRepository;
             _companiesSQLRepository = companiesSQLRepository;
             _addressesSQLRepository = addressesSQLRepository;
+            _appUsersSQLRepository=appUsersSQLRepository;
+            _appRolesSQLRepository=appRolesSQLRepository;
         }
 
         public async Task<IActionResult> Handle(GetCompanyContactEditRequest request, CancellationToken cancellationToken)
@@ -36,6 +46,8 @@ namespace Application.Requests.CompanyContacts
             vm.ContactSelectList = _contactsSQLRepository.ContactSelectList();
             vm.CompanySelectList = _companiesSQLRepository.CompanySelectList();
             vm.AddressSelectList = _addressesSQLRepository.AddressSelectList();
+            vm.AppUsersSelectList = _appUsersSQLRepository.AppUsersSelectList(vm.AppUserID);
+            vm.RoleNamesSelectList = _appRolesSQLRepository.RoleNamesSelectList();
 
             return request.Controller.View(vm);
         }

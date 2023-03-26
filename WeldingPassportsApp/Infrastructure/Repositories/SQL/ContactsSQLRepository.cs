@@ -35,7 +35,9 @@ namespace Infrastructure.Repositories.SQL
 
         private IQueryable<CompanyContactIndexViewModel> GetContactsIndex()
         {
-            IQueryable<CompanyContact> query = _context.CompanyContacts.AsQueryable();
+            IQueryable<CompanyContact> query = _context.CompanyContacts
+                .Include(companyContact => companyContact.AppUser)
+                .AsQueryable();
 
             return query.ProjectTo<CompanyContactIndexViewModel>(_mapper.ConfigurationProvider);
         }
@@ -93,17 +95,17 @@ namespace Infrastructure.Repositories.SQL
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             var companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.ID == decryptedID).Include(companyContact => companyContact.Contact).AsNoTracking().SingleOrDefaultAsync();
             var contact = companyContact.Contact;
-            var user = companyContact?.IdentityUser;
+            //var user = companyContact?.IdentityUser;
 
-            if (user == null)
-            {
+            //if (user == null)
+            //{
                 _context.Remove(new CompanyContact { ID = decryptedID });
 
                 var count = await _context.CompanyContacts.Where(companyContact => companyContact.ContactID == contact.ID).SelectMany(companyContact => companyContact.Contact.CompanyContacts).CountAsync();
 
                 if (count == 1)
                     _context.Contacts.Remove(new Contact { ID = contact.ID });
-            }
+            //}
 
             return await SaveChangesAsync(token);
         }
@@ -144,6 +146,12 @@ namespace Infrastructure.Repositories.SQL
                     return contactsQuery;
                 case "Email_asc":
                     contactsQuery = contactsQuery.OrderBy(contact => contact.Email);
+                    return contactsQuery;
+                case "RoleName_desc":
+                    contactsQuery = contactsQuery.OrderByDescending(contact => contact.RoleName);
+                    return contactsQuery;
+                case "RoleName_asc":
+                    contactsQuery = contactsQuery.OrderBy(contact => contact.RoleName);
                     return contactsQuery;
                 default:
                     throw new InvalidOperationException("SortOrder nout found.");

@@ -22,15 +22,13 @@ namespace Application.Requests.Examinations
         private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
         private readonly IExamCentersSQLRepository _examCentersSQLRepository;
         private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public GetExaminationsIndexRequestHandler(IExaminationsSQLRepository repository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IExamCentersSQLRepository examCentersSQLRepository, IMapper mapper, UserManager<IdentityUser> userManager)
+        public GetExaminationsIndexRequestHandler(IExaminationsSQLRepository repository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IExamCentersSQLRepository examCentersSQLRepository, IMapper mapper)
         {
             _repository = repository;
             _trainingCentersSQLRepository = trainingCentersSQLRepository;
             _examCentersSQLRepository = examCentersSQLRepository;
             _mapper = mapper;
-            _userManager = userManager;
         }
 
         private const string EncryptedExaminationID = "EncryptedExaminationID";
@@ -61,7 +59,7 @@ namespace Application.Requests.Examinations
             else
                 request.SearchString = request.CurrentFilter;
 
-            string userId = _userManager.GetUserId(request.Controller.User);
+            string userId = request.UserManager.GetUserId(request.Controller.User);
             TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
             int? trainingCenterId = trainingCenter?.ID;
             ExamCenter examCenter = await _examCentersSQLRepository.GetExamCenterByUserId(userId);

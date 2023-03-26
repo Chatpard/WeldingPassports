@@ -4,6 +4,7 @@ using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading;
@@ -15,11 +16,15 @@ namespace WeldingPassportsApp.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IWebHostEnvironment _env;
+        private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AccountController(IMediator mediator, IWebHostEnvironment env)
+        public AccountController(IMediator mediator, IWebHostEnvironment env, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
             _mediator = mediator;
             _env = env;
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [AllowAnonymous]
@@ -28,7 +33,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new GetAccountLoginRequest(returnUrl, this);
+                var query = new GetAccountLoginRequest(returnUrl, _signInManager, this);
 
                 return await _mediator.Send(query);
             }
@@ -44,7 +49,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new PostAccountExternalLoginRequest(provider, returnUrl, nameof(ExternalLoginCallback), this);
+                var query = new PostAccountExternalLoginRequest(provider, returnUrl, nameof(ExternalLoginCallback), _signInManager, this);
 
                 return await _mediator.Send(query);
             }
@@ -60,7 +65,7 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new GetAccountExternalLoginCallbackRequest(returnUrl, remoteError, nameof(Register),
-                    nameof(Login), nameof(RegistrationSuccess), nameof(EmailConfirmed), this);
+                    nameof(Login), nameof(RegistrationSuccess), nameof(EmailConfirmed), _signInManager, _userManager, this);
 
                 return await _mediator.Send(query);
             }
@@ -76,7 +81,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new GetAccountRegisterRequest(this);
+                var query = new GetAccountRegisterRequest(_signInManager, this);
 
                 return await _mediator.Send(query);
             }
@@ -157,7 +162,7 @@ namespace WeldingPassportsApp.Controllers
             try
             {
                 var query = new PostAccountLogoutRequest(nameof(PEPassportsController.Index),
-                    typeof(PEPassportsController).GetNameOfController(), this);
+                    typeof(PEPassportsController).GetNameOfController(), _signInManager, this);
 
                 return await _mediator.Send(query);
             }

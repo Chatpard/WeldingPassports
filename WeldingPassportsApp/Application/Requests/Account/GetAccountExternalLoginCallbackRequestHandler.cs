@@ -1,14 +1,12 @@
 ﻿using Application.Interfaces.Repositories.SQL;
 using Application.ViewModels;
+using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,15 +14,10 @@ namespace Application.Requests.Account
 {
     public class GetAccountExternalLoginCallbackRequestHandler : IRequestHandler<GetAccountExternalLoginCallbackRequest, IActionResult>
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IUserToApproveRepository _userToApproveRepository;
 
-        public GetAccountExternalLoginCallbackRequestHandler(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-            IUserToApproveRepository userToApproveRepository)
+        public GetAccountExternalLoginCallbackRequestHandler(IUserToApproveRepository userToApproveRepository)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _userToApproveRepository = userToApproveRepository;
         }
 
@@ -35,7 +28,7 @@ namespace Application.Requests.Account
             LoginViewModel loginViewModel = new LoginViewModel
             {
                 ReturnUrl = request.ReturnUrl,
-                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+                ExternalLogins = (await request.SignInManager.GetExternalAuthenticationSchemesAsync()).ToList()
             };
 
             if (request.RemoteError != null)
@@ -45,7 +38,7 @@ namespace Application.Requests.Account
                 return request.Controller.View(request.NameOfLoginAction, loginViewModel);
             }
 
-            var info = await _signInManager.GetExternalLoginInfoAsync();
+            var info = await request.SignInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 request.Controller.ModelState.AddModelError(string.Empty, "Error loading external login information.");
@@ -53,7 +46,7 @@ namespace Application.Requests.Account
                 return request.Controller.View(request.NameOfLoginAction, loginViewModel);
             }
 
-            var signInResult = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
+            var signInResult = await request.SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
                                         isPersistent: false, bypassTwoFactor: true);
 
             if (signInResult.Succeeded)
@@ -64,7 +57,7 @@ namespace Application.Requests.Account
 
                 if (email != null)
                 {
-                    IdentityUser user = await _userManager.FindByEmailAsync(email);
+                    AppUser user = await request.UserManager.FindByEmailAsync(email);
 
                     if (user == null)
                     {
@@ -103,8 +96,8 @@ namespace Application.Requests.Account
                             request.Controller.ControllerContext.ActionDescriptor.ControllerName);
                     }
 
-                    await _userManager.AddLoginAsync(user, info);
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    await request.UserManager.AddLoginAsync(user, info);
+                    await request.SignInManager.SignInAsync(user, isPersistent: false);
 
                     return request.Controller.LocalRedirect(request.ReturnUrl);
                 }

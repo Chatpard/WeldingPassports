@@ -20,12 +20,12 @@ namespace Infrastructure.Repositories.SQL
     {
         private readonly AppDbContext _context;
         private readonly ICompaniesSQLRepository _companiesSQLRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IDataProtector _protector;
 
         public UserToApproveSQLRepository(AppDbContext context, ICompaniesSQLRepository companiesSQLRepository,
-            UserManager<IdentityUser> userManager, IMapper mapper,
+            UserManager<AppUser> userManager, IMapper mapper,
             IDataProtectionProvider dataProtectionProvider,
             IDataProtectionPurposeStrings dataProtectionPurposeStrings) : base(context)
         {
@@ -85,14 +85,14 @@ namespace Infrastructure.Repositories.SQL
             return _context.Remove(await _context.UsersToApprove.FindAsync(userToApproveID));
         }
 
-        public async Task<IdentityUser> InsertAppUserByEncryptedIDAsync(string userToApproveEncryptedID, string role, CancellationToken cancellationToken)
+        public async Task<AppUser> InsertAppUserByEncryptedIDAsync(string userToApproveEncryptedID, string role, CancellationToken cancellationToken)
         {
             var userToApproveID = Convert.ToInt32(_protector.Unprotect(userToApproveEncryptedID));
             var userToApprove = await _context.UsersToApprove.FindAsync(userToApproveID);
 
             if (userToApprove != null)
             {
-                var user = new IdentityUser { UserName = userToApprove.Email, Email = userToApprove.Email, EmailConfirmed = true };
+                var user = new AppUser { UserName = userToApprove.Email, Email = userToApprove.Email, EmailConfirmed = true };
                 await _userManager.CreateAsync(user);
                 await _userManager.AddToRoleAsync(user, role);
                 user = await _userManager.FindByEmailAsync(user.Email);
@@ -135,7 +135,7 @@ namespace Infrastructure.Repositories.SQL
                     Email = userToApprove.Email,
                     Contact = contact,
                     Company = company,
-                    IdentityUser = user,
+                    AppUser = user,
                     Address = address
                 };
 

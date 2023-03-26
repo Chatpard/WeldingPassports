@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Repositories.API;
 using Application.Interfaces.Repositories.SQL;
+using Domain.Models;
 using Infrastructure.Repositories.API;
 using Infrastructure.Repositories.SQL;
 using Infrastructure.Services;
@@ -11,10 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace Infrastructure
 {
@@ -32,9 +30,9 @@ namespace Infrastructure
                 }
             );
 
-            services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
+            services.AddScoped(provider => provider.GetService<IAppDbContext>());
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<AppUser, AppRole>(options =>
             {
                 options.SignIn.RequireConfirmedEmail = true;
             })
@@ -54,6 +52,8 @@ namespace Infrastructure
         {
             services.AddScoped<IAppSettingsSQLRepository, AppSettingsSQLRepository>();
             services.AddScoped<IUserToApproveRepository, UserToApproveSQLRepository>();
+            services.AddScoped<IUsersSQLRepository, UsersSQLRepository>();
+            services.AddScoped<IAppRolesSQLRepository, AppRolesSQLRepository>();
             services.AddScoped<IPEPassportsSQLRepository, PEPassportsSQLRepository>();
             services.AddScoped<IPEPassportsSQLRepository, PEPassportsSQLRepository>();
             services.AddScoped<IPEWeldersSQLRepository, PEWeldersSQLRepository>();

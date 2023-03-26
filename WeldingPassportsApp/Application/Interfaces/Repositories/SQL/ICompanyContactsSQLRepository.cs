@@ -21,7 +21,7 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<CompanyContactEditViewModel> GetCompanyContactEditAsync(string encryptedID);
 
-        EntityEntry<CompanyContact> PostCompanyContactEdit(CompanyContact contactChanges);
+        Task<EntityEntry<CompanyContact>> PostCompanyContactEdit(CompanyContact contactChanges, AppRole appRole);
 
         Task<int> DeleteCompanyContactByEncryptedIDAsync(string encryptedID, CancellationToken token);
 

@@ -32,6 +32,7 @@ namespace Application.Requests.CompanyContacts
             request.Controller.ViewData["FirstName"] = request.SortOrder == "FirstName_desc" ? "FirstName_asc" : "FirstName_desc";
             request.Controller.ViewData["LastName"] = request.SortOrder == "LastName_desc" ? "LastName_asc" : "LastName_desc";
             request.Controller.ViewData["Email"] = request.SortOrder == "Email_desc" ? "Email_asc" : "Email_desc";
+            request.Controller.ViewData["RoleName"] = request.SortOrder == "RoleName_desc" ? "RoleName_asc" : "RoleName_desc";
 
             if (request.SearchString != null)
                 request.PageNumber = 1;

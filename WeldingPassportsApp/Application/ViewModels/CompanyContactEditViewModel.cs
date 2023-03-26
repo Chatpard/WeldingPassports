@@ -18,6 +18,8 @@ namespace Application.ViewModels
             ContactSelectList = new SelectList(new List<ContactSelectListSQLModel>());
             CompanySelectList = new SelectList(new List<CompanySelectListSQLModel>());
             AddressSelectList = new SelectList(new List<AddressSelectListSQLModel>());
+            AppUsersSelectList = new SelectList(new List<AppUsersSelectListSQLModel>());
+            RoleNamesSelectList = new SelectList(new List<RoleNamesSelectListSQLModel>());
         }
 
         public string EncryptedID { get; set; }
@@ -28,6 +30,18 @@ namespace Application.ViewModels
 
         [JsonIgnore]
         public SelectList ContactSelectList { get; set; }
+
+        [Display(Name = "User")]
+        public string AppUserID { get; set; }
+
+        [JsonIgnore]
+        public SelectList AppUsersSelectList { get; set; }
+
+        [Display(Name = "Role")]
+        public string AppRoleID { get; set; }
+
+        [JsonIgnore]
+        public SelectList RoleNamesSelectList { get; set; }
 
         [Display(Name = "Company Name")]
         public int? CompanyID { get; set; }

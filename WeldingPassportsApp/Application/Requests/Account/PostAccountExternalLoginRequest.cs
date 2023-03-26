@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Domain.Models;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,13 +13,15 @@ namespace Application.Requests.Account
         public string Provider { get; }
         public string ReturnUrl { get; }
         public string NameOfExternalLoginCallbackAction { get; }
+        public SignInManager<AppUser> SignInManager { get; }
         public Controller Controller { get; }
 
-        public PostAccountExternalLoginRequest(string provider, string returnUrl, string nameOfExternalLoginCallbackAction, Controller controller)
+        public PostAccountExternalLoginRequest(string provider, string returnUrl, string nameOfExternalLoginCallbackAction, SignInManager<AppUser> signInManager, Controller controller)
         {
             Provider = provider;
             ReturnUrl = returnUrl;
             NameOfExternalLoginCallbackAction = nameOfExternalLoginCallbackAction;
+            SignInManager = signInManager;
             Controller = controller;
         }
     }

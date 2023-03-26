@@ -1,7 +1,7 @@
 ﻿@using Application.Interfaces.Repositories.SQL;
 @using Microsoft.AspNetCore.DataProtection;
 @inject IViewLocalizer Localizer
-@inject UserManager<IdentityUser> userManager
+@inject UserManager<AppUser> userManager
 @inject IExamCentersSQLRepository examCentersSQLRepository
 @inject IDataProtectionProvider dataProtectionProvider
 @inject IDataProtectionPurposeStrings dataProtectionPurposeString

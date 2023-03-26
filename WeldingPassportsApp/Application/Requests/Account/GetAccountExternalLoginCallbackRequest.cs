@@ -1,8 +1,7 @@
-﻿using MediatR;
+﻿using Domain.Models;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Requests.Account
 {
@@ -14,11 +13,13 @@ namespace Application.Requests.Account
         public string NameOfLoginAction { get; }
         public string NameOfRegistrationSuccessAction { get; }
         public string NameOfEmailConfirmedAction { get; }
+        public SignInManager<AppUser> SignInManager { get; }
+        public UserManager<AppUser> UserManager { get; }
         public Controller Controller { get; }
 
         public GetAccountExternalLoginCallbackRequest(string returnUrl, string remoteError, string nameOfRegisterAction,
-            string nameOfLoginAction, string nameOfRegistrationSuccessAction, string nameOfEmailConfirmedAction,
-            Controller controller)
+            string nameOfLoginAction, string nameOfRegistrationSuccessAction, string nameOfEmailConfirmedAction, 
+            SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, Controller controller)
         {
             ReturnUrl = returnUrl;
             RemoteError = remoteError;
@@ -26,6 +27,8 @@ namespace Application.Requests.Account
             NameOfLoginAction = nameOfLoginAction;
             NameOfRegistrationSuccessAction = nameOfRegistrationSuccessAction;
             NameOfEmailConfirmedAction = nameOfEmailConfirmedAction;
+            SignInManager = signInManager;
+            UserManager = userManager;
             Controller = controller;
         }
     }

@@ -2,6 +2,7 @@
 using Application.SQLModels;
 using Application.ViewModels;
 using AutoMapper;
+using AutoMapper.Internal;
 using Domain.Models;
 using Microsoft.AspNetCore.DataProtection;
 using System;
@@ -53,11 +54,17 @@ namespace Application.Profiles
 
             CreateMap<CompanyContact, CompanyContactEditViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(group =>
-                    _protector.Protect(Convert.ToString(group.ID))));
+                    _protector.Protect(Convert.ToString(group.ID))))
+                .ForMember(vm => vm.AppUserID, options => options.MapFrom(CompanyContact =>
+                    CompanyContact.AppUserId))
+                .ForMember(vm => vm.AppRoleID, options => options.MapFrom(companyContact =>
+                    companyContact.AppUser.AppUserRoles.FirstOrDefault().RoleId));
 
             CreateMap<CompanyContactEditViewModel, CompanyContact>()
                 .ForMember(vm => vm.ID, options => options.MapFrom(group =>
-                    _protector.Unprotect(group.EncryptedID)));
+                    _protector.Unprotect(group.EncryptedID)))
+                .ForMember(companyContact => companyContact.AppUserId, options => options.MapFrom(vm =>
+                    vm.AppUserID));
 
             CreateMap<CompanyContact, CompanyContactIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(companyContact =>
@@ -71,7 +78,9 @@ namespace Application.Profiles
                 .ForMember(index => index.BusinessPhone, options => options.MapFrom(companyContact =>
                         companyContact.BusinessPhone))
                 .ForMember(index => index.MobilePhone, options => options.MapFrom(companyContact =>
-                        companyContact.MobilePhone));
+                        companyContact.MobilePhone))
+                .ForMember(index => index.RoleName, options => options.MapFrom(companyContact =>
+                    companyContact.AppUser.AppUserRoles.FirstOrDefault().AppRole.RoleName));
         }
     }
 }

@@ -11,11 +11,9 @@ namespace Application.Requests.Account
 {
     public class PostAccountExternalLoginRequestHandler : IRequestHandler<PostAccountExternalLoginRequest, ChallengeResult>
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-
-        public PostAccountExternalLoginRequestHandler(SignInManager<IdentityUser> signInManager)
+        public PostAccountExternalLoginRequestHandler()
         {
-            _signInManager = signInManager;
+
         }
 
         public Task<ChallengeResult> Handle(PostAccountExternalLoginRequest request, CancellationToken cancellationToken)
@@ -25,7 +23,7 @@ namespace Application.Requests.Account
             var redirectUrl = controller.Url.Action(request.NameOfExternalLoginCallbackAction,
                 controller.ControllerContext.ActionDescriptor.ControllerName, new { request.ReturnUrl });
 
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties(request.Provider, redirectUrl);
+            var properties = request.SignInManager.ConfigureExternalAuthenticationProperties(request.Provider, redirectUrl);
 
             var challengeResult = new ChallengeResult(request.Provider, properties);
 

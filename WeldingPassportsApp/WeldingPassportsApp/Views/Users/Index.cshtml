@@ -1,0 +1,52 @@
+﻿@model PaginatedList<UserIndexViewModel>;
+
+@{
+    ViewData["Title"] = Localizer["User Index"];
+}
+
+<h1>@Localizer["User Index"]</h1>
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(i => i.FirstOrDefault().FirstName);
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.FirstOrDefault().LastName);
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.FirstOrDefault().CompanyName);
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.FirstOrDefault().Email);
+            </th>
+            <th>
+                @Html.DisplayNameFor(i => i.FirstOrDefault().RoleName);
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(UserIndexViewModel user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(vm => user.FirstName);
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => user.LastName);
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => user.CompanyName);
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => user.Email);
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => user.RoleName);
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

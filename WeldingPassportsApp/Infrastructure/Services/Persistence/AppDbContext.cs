@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
@@ -15,12 +16,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services.Persistence
 {
-    public class AppDbContext : IdentityDbContext, IAppDbContext
+    public class AppDbContext : IdentityDbContext<AppUser, AppRole, string, IdentityUserClaim<string>, AppUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>, IAppDbContext
     {
-        private readonly IWebHostEnvironment _env;
-        
+        private readonly IWebHostEnvironment _env;       
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AppSettings> AppSettings { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<AppUserRole> AppUserRole { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<CompanyContact> CompanyContacts { get; set; }
         public DbSet<Contact> Contacts { get; set; }
@@ -35,7 +37,7 @@ namespace Infrastructure.Services.Persistence
         public DbSet<RegistrationType> RegistrationTypes { get; set; }
         public DbSet<UIColor> UIColors { get; set; }
         public DbSet<Revoke> Revokes { get; set; }
-        public DbSet<TrainingCenter> TrainingCenters { get; set; }
+        public DbSet<TrainingCenter> TrainingCenters { get; set; }       
         public DbSet<UserToApprove> UsersToApprove { get; set; }
         public DbSet<AllowedRegistrationType> AllowedRegistrationTypes { get; set; }
 
@@ -48,22 +50,24 @@ namespace Infrastructure.Services.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<AppUser>(b => 
+            {
+                b.HasMany(appUser => appUser.AppUserRoles)
+                .WithOne(appUserRole => appUserRole.AppUser)
+                .HasForeignKey(appUserRole => appUserRole.UserId);
+            });
+
+            modelBuilder.Entity<AppRole>(b =>
+            {
+                b.HasMany(appRole => appRole.AppUserRoles)
+                .WithOne(appUserRole => appUserRole.AppRole)
+                .HasForeignKey(appUserRole => appUserRole.RoleId);
+            });
+
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            // Todo onlyLeafRegistrationDelete
-            // https://onthedrift.com/posts/efcore-triggered-part1/
-            //foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())){
-            //if(foreignKey.PrincipalEntityType.Name != "Domain.Models."+nameof(Registration))
-            //{
-            //        foreignKey.DeleteBehavior = DeleteBehavior.Cascade;
-            //}
-            //else
-            //{
-            //        foreignKey.DeleteBehavior = DeleteBehavior.Cascade;
-            //}
 
             modelBuilder.Entity<PEPassport>().HasIndex(pePassport => new { pePassport.TrainingCenterID, pePassport.AVNumber }).IsUnique();
             modelBuilder.Entity<PEWelder>().HasIndex(peWelder => peWelder.NationalNumber).IsUnique();
@@ -72,29 +76,6 @@ namespace Infrastructure.Services.Persistence
 
             modelBuilder.Seed(_env);
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    using (var command = Database.GetDbConnection().CreateCommand())
-        //    {
-        //        command.CommandText = @"
-        //                CREATE TRIGGER tr_OnlyLeafNodesCertificatesDelete
-        //                   on dbo."+nameof(Registration)+@"
-        //                   INSTEAD OF DELETE
-        //                   AS
-        //                   BEGIN
-        //                        DECLARE @ID INT;
-        //                        SELECT @ID = ID
-        //                        FROM deleted;
-        //                        IF EXIST (SELECT 1 FROM"+nameof(Registration)+@"WHERE PrevID = @ID)
-        //                        BEGIN
-        //                            ROLLBACK TRANSACTION;
-        //                        END;
-        //                   END;
-        //            ";
-        //        command.ExecuteNonQuery();
-        //    }
-        //}
 
         override async public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {

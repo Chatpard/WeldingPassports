@@ -3,11 +3,9 @@ using AutoMapper;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Requests.PEPassports
 {
@@ -16,14 +14,12 @@ namespace Application.Requests.PEPassports
         private readonly IPEPassportsSQLRepository _pePassportsSQLRepository;
         private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
         private readonly IMapper _mapper;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public GetPEPassportsIndexRequestHandler(IPEPassportsSQLRepository pePassportsSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IMapper mapper, UserManager<IdentityUser> userManager)
+        public GetPEPassportsIndexRequestHandler(IPEPassportsSQLRepository pePassportsSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository, IMapper mapper)
         {
             _pePassportsSQLRepository = pePassportsSQLRepository;
             _trainingCentersSQLRepository = trainingCentersSQLRepository;
             _mapper = mapper;
-            _userManager = userManager;
         }
 
         public async Task<IActionResult> Handle(GetPEPassportsIndexRequest request, CancellationToken cancellationToken)
@@ -40,7 +36,7 @@ namespace Application.Requests.PEPassports
             else
                 request.SearchString = request.CurrentFilter;
 
-            string userId = _userManager.GetUserId(request.Controller.User);
+            string userId = request.UserManager.GetUserId(request.Controller.User);
             TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
             int? trainingCenterId = trainingCenter?.ID;
 

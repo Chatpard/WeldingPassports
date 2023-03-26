@@ -111,7 +111,7 @@ namespace Infrastructure.Repositories.SQL
         
         public async Task<ExamCenter> GetExamCenterByUserId(string userId)
         {
-            CompanyContact companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.IdentityUserId == userId).SingleOrDefaultAsync();
+            CompanyContact companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.AppUserId == userId).SingleOrDefaultAsync();
             if(companyContact == null) { return null; }
 
             ExamCenter examCenter = await _context.ExamCenters.Where(examCenter => examCenter.CompanyID == companyContact.CompanyID).SingleOrDefaultAsync();

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -56,18 +57,18 @@ namespace WeldingPassportsApp
                     await context.Database.EnsureDeletedAsync();
                 await context.Database.MigrateAsync();
 
-                UserManager<IdentityUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
-                RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                UserManager<AppUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                RoleManager<AppRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
 
                 await AddRolesAsync(roleManager);
                 await AddUserWithRoleAsync(adminEmail, RolesStore.Admin, userManager);
                 await AddTestUsersAsync(userManager, env);
-                await AddCompanyContactIdentityUserId(context, "leen.dezillie@v-c-l.be", "tc.trainingcenter@outlook.com");
-                await AddCompanyContactIdentityUserId(context, "guy.doms@vincotte.be", "ec.examcenter@outlook.com");
+                await AddCompanyContactAppUserId(context, "leen.dezillie@v-c-l.be", "tc.trainingcenter@outlook.com");
+                await AddCompanyContactAppUserId(context, "guy.doms@vincotte.be", "ec.examcenter@outlook.com");
             }
         }
 
-        private static async Task AddTestUsersAsync(UserManager<IdentityUser> userManager,
+        private static async Task AddTestUsersAsync(UserManager<AppUser> userManager,
             IWebHostEnvironment env)
         {
             if (env.IsDevelopment() || env.IsStaging())
@@ -86,13 +87,13 @@ namespace WeldingPassportsApp
             }
         }
 
-        private static async Task AddUserWithRoleAsync(string userEmail, string role, UserManager<IdentityUser> userManager)
+        private static async Task AddUserWithRoleAsync(string userEmail, string role, UserManager<AppUser> userManager)
         {
             var user = await userManager.FindByEmailAsync(userEmail);
 
             if (user == null)
             {
-                user = new IdentityUser { UserName = userEmail, Email = userEmail };
+                user = new AppUser { UserName = userEmail, Email = userEmail };
 
                 await userManager.CreateAsync(user);
                 await userManager.ConfirmEmailAsync(user, await userManager.GenerateEmailConfirmationTokenAsync(user));
@@ -101,28 +102,28 @@ namespace WeldingPassportsApp
             }
         }
 
-        private static async Task AddRolesAsync(RoleManager<IdentityRole> roleManager)
+        private static async Task AddRolesAsync(RoleManager<AppRole> roleManager)
         {
             foreach (var role in RolesStore.Roles)
             {
-                var identityRole = new IdentityRole { Name = role };
-                await roleManager.CreateAsync(identityRole);
+                var AppRole = new AppRole { Name = role, RoleName = RolesStore.ViewRoles.GetValueOrDefault(role) };
+                await roleManager.CreateAsync(AppRole);
                 foreach (var permission in ClaimsTypesStore.Claims(role))
                 {
-                    await roleManager.AddClaimAsync(identityRole, new Claim(permission.Key, permission.Value));
+                    await roleManager.AddClaimAsync(AppRole, new Claim(permission.Key, permission.Value));
                 }
             }
         }
     
-        private static async Task AddCompanyContactIdentityUserId(AppDbContext context, string companyContactEmail, string identityUserEmail)
+        private static async Task AddCompanyContactAppUserId(AppDbContext context, string companyContactEmail, string AppUserEmail)
         {
             CompanyContact companyContact = await context.CompanyContacts.Where(companyContact => companyContact.Email == companyContactEmail).FirstOrDefaultAsync();
             if (companyContact == null) return;
 
-            IdentityUser identityUser = context.Users.Where(user => user.Email == identityUserEmail).FirstOrDefault();
-            if (identityUser == null) return;
+            AppUser AppUser = context.Users.Where(user => user.Email == AppUserEmail).FirstOrDefault();
+            if (AppUser == null) return;
 
-            companyContact.IdentityUserId = identityUser.Id;
+            companyContact.AppUserId = AppUser.Id;
             context.Update(companyContact);
             await context.SaveChangesAsync(new System.Threading.CancellationToken());
         }

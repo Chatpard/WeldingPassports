@@ -20,19 +20,17 @@ namespace Application.Requests.PEPassports
         private readonly IPEPassportsSQLRepository _pePassportsSQLRepository;
         private readonly IPEWeldersSQLRepository _peWeldersSQLRepository;
         private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
-        private readonly UserManager<IdentityUser> _userManager;
 
-        public GetPEPassportCreateRequestHandler(IPEPassportsSQLRepository pePassportsSQLRepository, IPEWeldersSQLRepository peWeldersSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository, UserManager<IdentityUser> userManager)
+        public GetPEPassportCreateRequestHandler(IPEPassportsSQLRepository pePassportsSQLRepository, IPEWeldersSQLRepository peWeldersSQLRepository, ITrainingCentersSQLRepository trainingCentersSQLRepository)
         {
             _pePassportsSQLRepository = pePassportsSQLRepository;
             _peWeldersSQLRepository = peWeldersSQLRepository;
             _trainingCentersSQLRepository = trainingCentersSQLRepository;
-            _userManager = userManager;
         }
 
         public async Task<IActionResult> Handle(GetPEPassportCreateRequest request, CancellationToken cancellationToken)
         {
-            string userId = _userManager.GetUserId(request.Controller.User);
+            string userId = request.UserManager.GetUserId(request.Controller.User);
             TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
             int? trainingCenterId = trainingCenter?.ID;
 

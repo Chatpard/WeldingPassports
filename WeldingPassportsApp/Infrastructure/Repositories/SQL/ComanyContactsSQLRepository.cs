@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using Domain.Models;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -21,13 +22,17 @@ namespace Infrastructure.Repositories.SQL
     public class CompanyContactsSQLRepository : SaveChangesSQL, ICompanyContactsSQLRepository
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IDataProtector _protector;
 
-        public CompanyContactsSQLRepository(AppDbContext context, IMapper mapper,
+        public CompanyContactsSQLRepository(AppDbContext context, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IMapper mapper,
             IDataProtectionProvider dataProtectionProvider, IDataProtectionPurposeStrings dataProtectionPurposeStrings) : base(context)
         {
             _context = context;
+            _userManager=userManager;
+            _roleManager = roleManager;
             _mapper = mapper;
             _protector = dataProtectionProvider
                 .CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
@@ -74,18 +79,76 @@ namespace Infrastructure.Repositories.SQL
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
             IQueryable<CompanyContact> query = _context.CompanyContacts
-                .Where(companyContact => companyContact.ID == decryptedID);
+                .Where(companyContact => companyContact.ID == decryptedID)
+                .Include(companyContact => companyContact.AppUser);
 
             CompanyContactEditViewModel companyContactEditViewModel = await query.ProjectTo<CompanyContactEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 
             return companyContactEditViewModel;
         }
 
-        public EntityEntry<CompanyContact> PostCompanyContactEdit(CompanyContact contactChanges)
+        public async Task<EntityEntry<CompanyContact>> PostCompanyContactEdit(CompanyContact contactChanges, AppRole roleChanges)
         {
-            EntityEntry<CompanyContact> companyContact = _context.Entry<CompanyContact>(contactChanges);
-            companyContact.State = EntityState.Modified;
-            return companyContact;
+            if (contactChanges == null) return null;
+
+            EntityEntry<CompanyContact> companyContactEntity = _context.Entry<CompanyContact>(contactChanges);
+            CompanyContact companyContact = await _context.CompanyContacts
+                .Where(companyContact => companyContact.ID == contactChanges.ID)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            
+            if (companyContact == null) return null;
+            
+            companyContactEntity.State = EntityState.Modified;
+
+            AppUser appUser = null;
+
+            if (contactChanges.AppUserId != null)
+            {
+                appUser = await _userManager.FindByIdAsync(contactChanges.AppUserId);
+            }
+            else
+            {
+                if (companyContact.AppUserId != null)
+                {
+                    appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+                };
+            };
+
+            if (appUser == null) return null;
+
+            if (roleChanges?.Id == null)
+            {
+                IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
+                await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                if (contactChanges.AppUserId != companyContact.AppUserId)
+                {
+                    appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+                    roleNames = await _userManager.GetRolesAsync(appUser);
+                    await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                }
+            }
+            else
+            {
+                AppRole appRole = await _roleManager.FindByIdAsync(roleChanges.Id);
+                if (!await _userManager.IsInRoleAsync(appUser, appRole.Name))
+                {
+                    if (contactChanges.AppUserId == companyContact.AppUserId)
+                    {
+                        IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
+                        await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                    }
+                    await _userManager.AddToRoleAsync(appUser, appRole.Name);
+                    if (contactChanges.AppUserId != companyContact.AppUserId)
+                    {
+                        appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+                        IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
+                        await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                    }
+                }
+            }
+
+            return companyContactEntity;
         }
 
         public async Task<int> DeleteCompanyContactByEncryptedIDAsync(string encryptedID, CancellationToken token)
@@ -93,17 +156,17 @@ namespace Infrastructure.Repositories.SQL
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
             var companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.ID == decryptedID).Include(companyContact => companyContact.Contact).AsNoTracking().SingleOrDefaultAsync();
             var contact = companyContact.Contact;
-            var user = companyContact?.IdentityUser;
+            //var user = companyContact?.IdentityUser;
 
-            if (user == null)
-            {
+            //if (user == null)
+            //{
                 _context.Remove(new CompanyContact { ID = decryptedID });
 
                 var count = await _context.CompanyContacts.Where(companyContact => companyContact.ContactID == contact.ID).SelectMany(companyContact => companyContact.Contact.CompanyContacts).CountAsync();
 
                 if (count == 1)
                     _context.Contacts.Remove(new Contact { ID = contact.ID });
-            }
+            //}
 
             return await SaveChangesAsync(token);
         }
@@ -173,6 +236,12 @@ namespace Infrastructure.Repositories.SQL
                     return contactsQuery;
                 case "Email_asc":
                     contactsQuery = contactsQuery.OrderBy(contact => contact.Email);
+                    return contactsQuery;
+                case "RoleName_desc":
+                    contactsQuery = contactsQuery.OrderByDescending(contact => contact.RoleName);
+                    return contactsQuery;
+                case "RoleName_asc":
+                    contactsQuery = contactsQuery.OrderBy(contact => contact.RoleName);
                     return contactsQuery;
                 default:
                     throw new InvalidOperationException("SortOrder nout found.");

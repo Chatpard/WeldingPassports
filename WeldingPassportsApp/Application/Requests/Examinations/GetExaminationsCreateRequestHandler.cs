@@ -5,9 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,19 +15,18 @@ namespace Application.Requests.Examinations
     {
         private readonly IExamCentersSQLRepository _examCentersSQLRepository;
         private readonly ITrainingCentersSQLRepository _trainingCentersSQLRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<AppUser> _userManager;
 
         public GetExaminationsCreateRequestHandler(IExamCentersSQLRepository examCentersSQLRepository,
-            ITrainingCentersSQLRepository trainingCentersSQLRepository, UserManager<IdentityUser> userManager)
+            ITrainingCentersSQLRepository trainingCentersSQLRepository)
         {
             _examCentersSQLRepository = examCentersSQLRepository;
             _trainingCentersSQLRepository = trainingCentersSQLRepository;
-            _userManager=userManager;
         }
 
         public async Task<IActionResult> Handle(GetExaminationsCreateRequest request, CancellationToken cancellationToken)
         {
-            string userId = _userManager.GetUserId(request.Controller.User);
+            string userId = request.UserManager.GetUserId(request.Controller.User);
             TrainingCenter userTrainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
             int? userTrainingCenterId = userTrainingCenter?.ID;
 

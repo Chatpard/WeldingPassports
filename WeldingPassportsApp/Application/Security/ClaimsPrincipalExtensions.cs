@@ -1,15 +1,11 @@
 ﻿using Application.Interfaces.Repositories.SQL;
-using Domain;
 using Domain.Models;
-using MediatR;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Security
@@ -81,7 +77,7 @@ namespace Application.Security
             return CanDeleteClaimValues.Contains(claimsPrincipal.FindFirst(ClaimsType)?.Value);
         }
 
-        public static async Task<string?> GetTrainingCenterID(this ClaimsPrincipal claimsPrincipal, UserManager<IdentityUser> userManager, ITrainingCentersSQLRepository trainingCentersSQLRepository, IDataProtector protector)
+        public static async Task<string?> GetTrainingCenterID(this ClaimsPrincipal claimsPrincipal, UserManager<AppUser> userManager, ITrainingCentersSQLRepository trainingCentersSQLRepository, IDataProtector protector)
         {
             string userId = userManager.GetUserId(claimsPrincipal);
             TrainingCenter trainingCenter = await trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
@@ -91,7 +87,7 @@ namespace Application.Security
             return Convert.ToString(trainingCenter.ID);
         }
 
-        public static async Task<string?> GetExamCenterID(this ClaimsPrincipal claimsPrincipal, UserManager<IdentityUser> userManager, IExamCentersSQLRepository examCentersSQLRepository)
+        public static async Task<string?> GetExamCenterID(this ClaimsPrincipal claimsPrincipal, UserManager<AppUser> userManager, IExamCentersSQLRepository examCentersSQLRepository)
         {
             string userId = userManager.GetUserId(claimsPrincipal);
             ExamCenter examCenter = await examCentersSQLRepository.GetExamCenterByUserId(userId);

@@ -11,15 +11,13 @@ namespace Application.Requests.Account
 {
     public class PostAccountLogoutRequestHandler : IRequestHandler<PostAccountLogoutRequest, IActionResult>
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-
-        public PostAccountLogoutRequestHandler(SignInManager<IdentityUser> signInManager)
+        public PostAccountLogoutRequestHandler()
         {
-            _signInManager = signInManager;
+            
         }
         public async Task<IActionResult> Handle(PostAccountLogoutRequest request, CancellationToken cancellationToken)
         {
-            await _signInManager.SignOutAsync();
+            await request.SignInManager.SignOutAsync();
             return request.Controller.RedirectToAction(request.NameOfIndexAction, request.NameOfPEPassportsController);
         }
     }

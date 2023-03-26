@@ -8,13 +8,15 @@ namespace Domain.Models
 {
     public class CompanyContact : IDomainModel
     {
+        
         public int ID { get; set; }
 
         public int ContactID { get; set; }
 
         public int? CompanyID { get; set; }
 
-        public string IdentityUserId { get; set; }
+        [ForeignKey(nameof(AppUser))]
+        public string AppUserId { get; set; }
 
         public int? AddressID { get; set; }
 
@@ -33,7 +35,7 @@ namespace Domain.Models
         // Navigation Properties
         public Contact Contact { get; set; }
         public Company Company { get; set; }
-        public IdentityUser IdentityUser { get; set; }
+        public AppUser AppUser { get; set; }
         public Address Address { get; set; }
         public ListExamCenter ListExamCenter { get; set; }
         public ListTrainingCenter ListTrainingCenter { get; set; }

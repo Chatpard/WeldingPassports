@@ -1,10 +1,11 @@
 ﻿using Application.Requests.Examinations;
 using Application.Security;
 using Application.ViewModels;
-using Domain;
+using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -16,11 +17,13 @@ namespace WeldingPassportsApp.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IWebHostEnvironment _env;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ExaminationsController(IMediator mediator, IWebHostEnvironment env)
+        public ExaminationsController(IMediator mediator, IWebHostEnvironment env, UserManager<AppUser> userManager)
         {
             _mediator = mediator;
             _env = env;
+            _userManager=userManager;
         }
 
         [HttpGet]
@@ -33,7 +36,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new GetExaminationsIndexRequest(sortOrder, currentFilter, searchString, pageNumber, typeof(ExaminationsController).GetNameOfController(), nameof(ExaminationsController.Details), this);
+                var query = new GetExaminationsIndexRequest(sortOrder, currentFilter, searchString, pageNumber, typeof(ExaminationsController).GetNameOfController(), nameof(ExaminationsController.Details), _userManager, this);
 
                 return await _mediator.Send(query);
             }
@@ -49,7 +52,7 @@ namespace WeldingPassportsApp.Controllers
         {
             try
             {
-                var query = new GetExaminationsCreateRequest(returnUrl, this);
+                var query = new GetExaminationsCreateRequest(returnUrl, _userManager, this);
 
                 return await _mediator.Send(query);
             }

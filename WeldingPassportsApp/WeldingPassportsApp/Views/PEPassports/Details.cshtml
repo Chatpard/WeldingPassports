@@ -118,7 +118,7 @@
                         <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Edit)"
                                   asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
                     }
-                    @if (userCanDeleteCertificates && !certification.IsRevoked && !certification.HasNext)
+                    @if (userCanDeleteCertificates && !certification.IsRevoked && !certification.HasNextOrRevoked)
                     {
                         <text>|</text> <a asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Delete)" asp-route-id="@certification.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
                     }
@@ -131,7 +131,7 @@
     @if(userCanUpdateCertificates && Model.Certifications.Count() != 0)
     {
         <a asp-controller="@typeof(PEPassportsController).GetNameOfController()" asp-action="@nameof(PEPassportsController.Update)"
-            asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Update"]</a>
+            asp-route-id="@Model.EncryptedID" asp-route-returnUrl="@currentUrl" class="btn btn-primary" style="width:auto">@Localizer["Grade"]</a>
     }
     <a class="btn btn-primary" style="width:auto" href="@returnUrl">
         @Localizer["Back"]

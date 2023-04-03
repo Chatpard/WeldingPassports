@@ -62,6 +62,76 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["BusinessAddressPostalCode"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(t => t.FirstOrDefault().BusinessAddressPostalCode)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "BusinessAddressPostalCode_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "BusinessAddressPostalCode_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["BusinessAddressCity"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(t => t.FirstOrDefault().BusinessAddressCity)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "BusinessAddressCity_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "BusinessAddressCity_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["Contact"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(t => t.FirstOrDefault().Contact)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Contact_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Contact_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["Email"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(t => t.FirstOrDefault().Email)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Email_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "Email_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
+                   asp-route-sortOrder="@ViewData["MobilePhone"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(t => t.FirstOrDefault().MobilePhone)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "MobilePhone_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "MobilePhone_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
                    asp-route-sortOrder="@ViewData["IsActive"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().IsActive)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "IsActive_desc")
@@ -81,30 +151,45 @@
         @foreach (var examCenter in Model)
         {
             <tr>
-            <td>
-                @Html.DisplayFor(vm => examCenter.CompanyName)<br>
-            </td>
-            <td>
+                <td>
+                    @Html.DisplayFor(vm => examCenter.CompanyName)<br>
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examCenter.BusinessAddressPostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examCenter.BusinessAddressCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examCenter.Contact)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examCenter.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => examCenter.MobilePhone)
+                </td>
+                <td>
                 @Html.DisplayFor(vm => examCenter.IsActive)
-            </td>
-            <td>
-                @if (userCanReadExamCenters)
-                {
-                    <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Details)"
-                        asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
-                }
-                @if (userCanEditExamCenters && (userExamCenterID == null || userExamCenterID == protector.Unprotect(examCenter.EncryptedID)))
-                {
-                    <text>|</text> <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Edit)"
-                                asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
-                }
-                @if (userCanDeleteExamCenters)
-                {
-                    <text>|</text> <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Delete)"
-                                asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
-                }
-            </td>
-        </tr>
+                </td>
+                <td>
+                    @if (userCanReadExamCenters)
+                    {
+                        <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Details)"
+                            asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                    }
+                    @if (userCanEditExamCenters && (userExamCenterID == null || userExamCenterID == protector.Unprotect(examCenter.EncryptedID)))
+                    {
+                        <text>|</text> <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Edit)"
+                                    asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                    }
+                    @if (userCanDeleteExamCenters)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Delete)"
+                                    asp-route-id="@examCenter.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>

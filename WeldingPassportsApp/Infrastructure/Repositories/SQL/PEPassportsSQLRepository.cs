@@ -12,12 +12,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories.SQL
 {
@@ -110,7 +112,16 @@ namespace Infrastructure.Repositories.SQL
 
         public async Task<PEPassportEditViewModel> GetPEPassportEditAsync(string encryptedID)
         {
+
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
+
+            var test =
+                _context.PEPassports.Select(x => new { RowNumber = EF.Functions.RowNumber(x.AVNumber) });
+            var test1 = await test.FirstOrDefaultAsync();
+            if (test1 != null)
+            {
+                var num = test1.RowNumber;
+            }
 
             IQueryable<PEPassport> query =
                 _context.PEPassports.Where(passport => passport.ID == decryptedID);
@@ -163,7 +174,7 @@ namespace Infrastructure.Repositories.SQL
                                             EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
                                             (EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
                                             ExtendableStatus.NoMoreExtendable),
-                                        HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID)
+                                        HasNextOrRevoked = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID) || registration.Revoke != null
                                     })
                                 .Join(
                                     _context.UIColors.DefaultIfEmpty(),
@@ -181,7 +192,7 @@ namespace Infrastructure.Repositories.SQL
                                     {
                                         Registration = registrationExtendableStatus.Registration,
                                         UIColor = uicolor,
-                                        HasNext = registrationExtendableStatus.HasNext
+                                        HasNextOrRevoked = registrationExtendableStatus.HasNextOrRevoked
                                     }
                                 )
                         }
@@ -251,7 +262,8 @@ namespace Infrastructure.Repositories.SQL
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                passportsQuery = passportsQuery.Where(passport => passport.Letter.ToString().ToLower().Contains(searchString.ToLower())
+                passportsQuery = passportsQuery.Where(passport => (passport.Letter.ToString() + passport.AVNumber.ToString()).ToLower().Contains(searchString.ToLower())
+                    || passport.Letter.ToString().ToLower().Contains(searchString.ToLower())
                     || passport.AVNumber.ToString().ToLower().Contains(searchString.ToLower())
                     || passport.FirstName.ToLower().Contains(searchString.ToLower())
                     || passport.LastName.ToLower().Contains(searchString.ToLower())

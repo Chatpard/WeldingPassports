@@ -8,6 +8,7 @@
 
     bool userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);
     bool userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
+    bool userCanCreateCompanyContacts = User.CanCreate(ClaimsTypesStore.CompanyContacts);
 
     if (TempData.ContainsKey(nameof(ExamCenterEditViewModel.CompanyID)))
         Model.CompanyID = (int) TempData[nameof(ExamCenterEditViewModel.CompanyID)];
@@ -22,7 +23,7 @@
             <div class="form-group row">
                 <label asp-for="@Model.CompanyID" class="col-sm-2 col-form-label"></label>
                 <div class="input-group col-sm-10 align-self-center">
-                    <select asp-for="@Model.CompanyID" class="form-control align-self-center" asp-items="@Model.CompanySelectList">
+                    <select asp-for="@Model.CompanyID" class="form-control align-self-center" asp-items="@Model.CompanySelectList" onchange="OnChangeCompanyID()">
                         <option value="" selected disabled hidden>@Localizer["Choose a company"]</option>
                     </select>
                     @if(userCanEditCompanies || userCanCreateCompanies)
@@ -44,10 +45,35 @@
                         </div>
                     }
                     <div class="input-group-append">
-                        <input type="button" class="btn btn-primary reset" value="@Localizer["Clear"]" /> 
+                        <input type="button" class="btn btn-primary" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" />
                     </div>
                 </div>
-                <span asp-validation-for="@Model.CompanyID" class="col-sm-12 text-danger"></span>
+                <span asp-validation-for="CompanyID" class="col-sm-12 text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="CompanyContactID" class="col-sm-2 col-form-label"></label>
+                <div class="input-group col-sm-10">
+                    <select asp-for="CompanyContactID" class="form-control" asp-items="@Model.CompanyContactSelectList">
+                        @if (Model.CompanyContactSelectList.Count() == 0)
+                        {
+                            <option value="" selected disabled>@Localizer["No contacts"]</option>
+                        }
+                        else
+                        {
+                            <option value="" selected disabled hidden>@Localizer["Choose a contact"]</option>
+                        }
+                    </select>
+                    @if (userCanCreateCompanyContacts)
+                    {
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" id="CompanyContactIDCreateButton" type="button" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
+                        </div>
+                    }
+                    <div class="input-group-append">
+                        <input class="btn btn-primary" id="CompanyContactIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyContactID'))" />
+                    </div>
+                </div>
+                <span asp-validation-for="CompanyContactID" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <label asp-for="@Model.IsActive" class="col-sm-2 col-form-label"></label>
@@ -69,5 +95,6 @@
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/ActionBtn.js"></script>
-    <script src="~/js/ResetSelect.js"></script>
+    <script src="~/js/OnClickClear.js"></script>
+    <script type="module" src="~/js/ExamCenter/OnChangeCompanyID.js"></script>
 }

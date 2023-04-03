@@ -11,7 +11,17 @@ namespace Infrastructure.Services.Persistence
     {
         public SqlExpression Operand { get; private set; }
 
+        protected override Expression VisitAtTimeZone(AtTimeZoneExpression atTimeZoneExpression)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override Expression VisitCase(CaseExpression caseExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Expression VisitCollate(CollateExpression collateExpression)
         {
             throw new NotImplementedException();
         }
@@ -28,6 +38,16 @@ namespace Infrastructure.Services.Persistence
         }
 
         protected override Expression VisitCrossJoin(CrossJoinExpression crossJoinExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Expression VisitDelete(DeleteExpression deleteExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Expression VisitDistinct(DistinctExpression distinctExpression)
         {
             throw new NotImplementedException();
         }
@@ -62,6 +82,11 @@ namespace Infrastructure.Services.Persistence
             throw new NotImplementedException();
         }
 
+        protected override Expression VisitJsonScalar(JsonScalarExpression jsonScalarExpression)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override Expression VisitLeftJoin(LeftJoinExpression leftJoinExpression)
         {
             throw new NotImplementedException();
@@ -88,6 +113,11 @@ namespace Infrastructure.Services.Persistence
         }
 
         protected override Expression VisitRowNumber(Microsoft.EntityFrameworkCore.Query.SqlExpressions.RowNumberExpression rowNumberExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Expression VisitScalarSubquery(ScalarSubqueryExpression scalarSubqueryExpression)
         {
             throw new NotImplementedException();
         }
@@ -129,17 +159,22 @@ namespace Infrastructure.Services.Persistence
             return sqlCastExpression;
         }
 
-        protected override Expression VisitSubSelect(ScalarSubqueryExpression scalarSubqueryExpression)
+         protected override Expression VisitTable(TableExpression tableExpression)
         {
             throw new NotImplementedException();
         }
 
-        protected override Expression VisitTable(TableExpression tableExpression)
+        protected override Expression VisitTableValuedFunction(TableValuedFunctionExpression tableValuedFunctionExpression)
         {
             throw new NotImplementedException();
         }
 
         protected override Expression VisitUnion(UnionExpression unionExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override Expression VisitUpdate(UpdateExpression updateExpression)
         {
             throw new NotImplementedException();
         }

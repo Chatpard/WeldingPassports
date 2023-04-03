@@ -17,7 +17,7 @@ namespace Application
     {
         public static IServiceCollection RegisterApplication(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
             services.AddSingleton(provider => new MapperConfiguration(config =>
             {

@@ -79,7 +79,7 @@ namespace Infrastructure.Services.Persistence
 
         }
 
-        public override void Print(ExpressionPrinter expressionPrinter)
+        protected override void Print(ExpressionPrinter expressionPrinter)
         {
             throw new NotImplementedException();
         }

@@ -16,7 +16,7 @@ namespace Infrastructure.Services.Persistence
 
         public override string LogFragment => "Using SqlServer Extension";
 
-        public override long GetServiceProviderHashCode()
+        public override int GetServiceProviderHashCode()
         {
             return 0;
         }
@@ -24,6 +24,11 @@ namespace Infrastructure.Services.Persistence
         public override void PopulateDebugInfo([NotNullAttribute] IDictionary<string, string> debugInfo)
         {
             
+        }
+
+        public override bool ShouldUseSameServiceProvider(DbContextOptionsExtensionInfo other)
+        {
+            return true;
         }
     }
 }

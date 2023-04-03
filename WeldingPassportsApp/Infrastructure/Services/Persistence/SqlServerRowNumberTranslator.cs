@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Infrastructure.Services.Persistence
 {
@@ -24,7 +25,7 @@ namespace Infrastructure.Services.Persistence
             
         }
 
-        public SqlExpression Translate(SqlExpression instance, MethodInfo method, IReadOnlyList<SqlExpression> arguments)
+        public SqlExpression Translate(SqlExpression instance, MethodInfo method, IReadOnlyList<SqlExpression> arguments, IDiagnosticsLogger<DbLoggerCategory.Query> logger)
         {
             if (method != _rowNumberMethod)
                 return null;
@@ -53,6 +54,11 @@ namespace Infrastructure.Services.Persistence
             }
 
             return new List<SqlExpression> { parameter }.AsReadOnly();
+        }
+
+        public SqlExpression Translate(SqlExpression instance, MethodInfo method, IReadOnlyList<SqlExpression> arguments)
+        {
+            throw new NotImplementedException();
         }
     }
 }

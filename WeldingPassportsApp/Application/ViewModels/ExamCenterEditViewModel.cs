@@ -1,11 +1,5 @@
-﻿using Application.Interfaces.Controllers;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Xml.Linq;
 
 namespace Application.ViewModels
 {
@@ -19,6 +13,12 @@ namespace Application.ViewModels
 
         public SelectList CompanySelectList { get; set; }
 
+        [Display(Name = "Contact Name")]
+        public int? CompanyContactID { get; set; }
+
+        public SelectList CompanyContactSelectList { get; set; }
+
+        [Display(Name = "Active")]
         public bool IsActive { get; set; }
     }
 }

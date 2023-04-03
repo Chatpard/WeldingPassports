@@ -15,3 +15,4 @@ namespace Domain.Models
         public CompanyContact CompanyContact { get; set; }
     }
 }
+//Todo: To be deleted

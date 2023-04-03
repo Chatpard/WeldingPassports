@@ -97,7 +97,7 @@ namespace Application.Profiles
                 .ForMember(vm => vm.Color, options => options.MapFrom(group =>
                     group.UIColor.Color))
                 .ForMember(vm => vm.HasNext, options => options.MapFrom(group =>
-                    group.HasNext));
+                    group.HasNextOrRevoked));
         }
     }
 }

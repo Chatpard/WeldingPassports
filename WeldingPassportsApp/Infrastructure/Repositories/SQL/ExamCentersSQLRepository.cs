@@ -130,6 +130,36 @@ namespace Infrastructure.Repositories.SQL
                 case "":
                     examCentersQuery = examCentersQuery.OrderBy(examCenter => examCenter.CompanyName);
                     return examCentersQuery;
+                case "BusinessAddressPostalCode_desc":
+                    examCentersQuery = examCentersQuery.OrderByDescending(trainingCenter => trainingCenter.BusinessAddressPostalCode);
+                    return examCentersQuery;
+                case "BusinessAddressPostalCode_asc":
+                    examCentersQuery = examCentersQuery.OrderBy(trainingCenter => trainingCenter.BusinessAddressPostalCode);
+                    return examCentersQuery;
+                case "BusinessAddressCity_desc":
+                    examCentersQuery = examCentersQuery.OrderByDescending(trainingCenter => trainingCenter.BusinessAddressCity);
+                    return examCentersQuery;
+                case "BusinessAddressCity_asc":
+                    examCentersQuery = examCentersQuery.OrderBy(trainingCenter => trainingCenter.BusinessAddressCity);
+                    return examCentersQuery;
+                case "Contact_desc":
+                    examCentersQuery = examCentersQuery.OrderByDescending(trainingCenter => trainingCenter.Contact);
+                    return examCentersQuery;
+                case "Contact_asc":
+                    examCentersQuery = examCentersQuery.OrderBy(trainingCenter => trainingCenter.Contact);
+                    return examCentersQuery;
+                case "Email_desc":
+                    examCentersQuery = examCentersQuery.OrderByDescending(trainingCenter => trainingCenter.Email);
+                    return examCentersQuery;
+                case "Email_asc":
+                    examCentersQuery = examCentersQuery.OrderBy(trainingCenter => trainingCenter.Email);
+                    return examCentersQuery;
+                case "MobilePhone_desc":
+                    examCentersQuery = examCentersQuery.OrderByDescending(trainingCenter => trainingCenter.MobilePhone);
+                    return examCentersQuery;
+                case "MobilePhone_asc":
+                    examCentersQuery = examCentersQuery.OrderBy(trainingCenter => trainingCenter.MobilePhone);
+                    return examCentersQuery;
                 case "IsActive_desc":
                     examCentersQuery = examCentersQuery.OrderByDescending(examCenter => examCenter.IsActive);
                     return examCentersQuery;

@@ -102,7 +102,7 @@ namespace Infrastructure.Repositories.SQL
                                             EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > app.MaxInAdvanceDays ? ExtendableStatus.NotYetExtendable :
                                             (EF.Functions.DateDiffDay(DateTime.Now, registration.ExpiryDate) > (app.MaxExtensionDays * -1) ? ExtendableStatus.Extendable :
                                             ExtendableStatus.NoMoreExtendable),
-                                HasNext = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID)
+                                HasNextOrRevoked = _context.Registrations.Any(anyRegistration => anyRegistration.PreviousRegistrationID == registration.ID) || registration.Revoke != null
                             })
                             .Join(
                                 _context.UIColors.DefaultIfEmpty(),
@@ -120,7 +120,7 @@ namespace Infrastructure.Repositories.SQL
                                 {
                                     Registration = registrationExtendableStatus.Registration,
                                     UIColor = uiColor,
-                                    HasNext = registrationExtendableStatus.HasNext
+                                    HasNextOrRevoked = registrationExtendableStatus.HasNextOrRevoked
                                 }
                             )
                     }

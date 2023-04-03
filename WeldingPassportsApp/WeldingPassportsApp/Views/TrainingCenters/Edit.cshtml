@@ -4,8 +4,9 @@
     ViewData["Title"] = "Training Center Edit";
     string returnUrl = ViewBag.ReturnUrl;
     string currentUrl = ViewBag.CurrentUrl;
-    var userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
-    var userCanCreateCompanyContacts = User.CanCreate(ClaimsTypesStore.CompanyContacts);
+
+    bool userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
+    bool userCanCreateCompanyContacts = User.CanCreate(ClaimsTypesStore.CompanyContacts);
 }
 
 <h1>@Localizer["Edit Training Center"]</h1>
@@ -22,12 +23,6 @@
                 <span asp-validation-for="Letter" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <label asp-for="IsActive" class="col-sm-2 col-form-label"></label>
-                <div class="input-group col-sm-10">
-                    <input asp-for="IsActive" class="form-check-input" style="margin-left : 0" />
-                </div>
-            </div>
-            <div class="form-group row">
                 <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
                 <div class="input-group col-sm-10">
                     <select asp-for="CompanyID" class="form-control" asp-items="@Model.CompanySelectList">
@@ -40,10 +35,10 @@
                         </div>
                     }
                     <div class="input-group-append">
-                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" />
                     </div>
+                    <span asp-validation-for="CompanyID" class="text-danger"></span>
                 </div>
-                <span asp-validation-for="CompanyID" class="text-danger"></span>
             </div>
             <div class="form-group row">
                 <label asp-for="CompanyContactID" class="col-sm-2 col-form-label"></label>
@@ -65,11 +60,17 @@
                     </div>
                 }
                 <div class="input-group-append">
-                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyContactID'))" />
+                </div>
+                <span asp-validation-for="CompanyContactID" class="text-danger"></span>
+            </div>
+        </div>
+            <div class="form-group row">
+                <label asp-for="IsActive" class="col-sm-2 col-form-label"></label>
+                <div class="input-group col-sm-10">
+                    <input asp-for="IsActive" class="form-check-input" style="margin-left : 0" />
                 </div>
             </div>
-            <span asp-validation-for="CompanyContactID" class="text-danger"></span>
-        </div>
         <div class="form-group row">
             <div class="col-sm-12">
                 <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
@@ -82,6 +83,6 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/OnClickClear.js"></script>
     <script src="~/js/TrainingCenters/GetCompanyContactsFromCompanyID.js"></script>
-    <script src="~/js/ResetSelect.js"></script>
 }

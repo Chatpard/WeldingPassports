@@ -1,7 +1,5 @@
 ﻿@using Application.Interfaces.Repositories.SQL;
 @using Microsoft.AspNetCore.DataProtection;
-@using Microsoft.AspNetCore.Mvc.Localization
-@using Application.Security
 @inject IViewLocalizer Localizer
 @inject UserManager<AppUser> userManager
 @inject ITrainingCentersSQLRepository trainingCentersSQLRepository
@@ -11,11 +9,11 @@
 
 @{
     ViewData["Title"] = Localizer["Training Centers Index"];
-    var currentUrl = ViewBag.CurrentUrl;
-    var userCanReadTrainingCenters = User.CanRead(ClaimsTypesStore.TrainingCenters);
-    var userCanEditTrainingCenters = User.CanEdit(ClaimsTypesStore.TrainingCenters);
-    var userCanCreateTrainingCenters = User.CanCreate(ClaimsTypesStore.TrainingCenters);
-    var userCanDeleteTrainingCenters = User.CanDelete(ClaimsTypesStore.TrainingCenters);
+    string currentUrl = ViewBag.CurrentUrl;
+    bool userCanReadTrainingCenters = User.CanRead(ClaimsTypesStore.TrainingCenters);
+    bool userCanEditTrainingCenters = User.CanEdit(ClaimsTypesStore.TrainingCenters);
+    bool userCanCreateTrainingCenters = User.CanCreate(ClaimsTypesStore.TrainingCenters);
+    bool userCanDeleteTrainingCenters = User.CanDelete(ClaimsTypesStore.TrainingCenters);
 
     var protector = dataProtectionProvider.CreateProtector(dataProtectionPurposeStrings.IdRouteValue);
     var userTrainingCenterID = await User.GetTrainingCenterID(userManager, trainingCentersSQLRepository, protector);
@@ -152,46 +150,46 @@
     <tbody>
         @foreach (var trainingCenter in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(vm => trainingCenter.Letter)
-            </td>
-            <td>
-                @Html.DisplayFor(vm => trainingCenter.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(vm => trainingCenter.BusinessAddressPostalCode)
-            </td>
-            <td>
-                @Html.DisplayFor(vm => trainingCenter.BusinessAddressCity)
-            </td>
-            <td>
-                @Html.DisplayFor(vm => trainingCenter.Contact)
-            </td>
-            <td>
-                @Html.DisplayFor(vm => trainingCenter.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(vm => trainingCenter.MobilePhone)
-            </td>
-            <td>
-                @if (userCanReadTrainingCenters)
-                {
-                    <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Details)"
-                        asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
-                }
-                @if (userCanEditTrainingCenters && (userTrainingCenterID == null || userTrainingCenterID == protector.Unprotect(trainingCenter.EncryptedId)))
-                {
-                    <text>|</text> <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Edit)"
-                        asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
-                }
-                @if (userCanDeleteTrainingCenters)
-                {
-                    <text>|</text> <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Delete)"
-                        asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
-                }
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(vm => trainingCenter.Letter)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => trainingCenter.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => trainingCenter.BusinessAddressPostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => trainingCenter.BusinessAddressCity)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => trainingCenter.Contact)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => trainingCenter.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(vm => trainingCenter.MobilePhone)
+                </td>
+                <td>
+                    @if (userCanReadTrainingCenters)
+                    {
+                        <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Details)"
+                            asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Details"]</a>
+                    }
+                    @if (userCanEditTrainingCenters && (userTrainingCenterID == null || userTrainingCenterID == protector.Unprotect(trainingCenter.EncryptedId)))
+                    {
+                        <text>|</text> <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Edit)"
+                            asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
+                    }
+                    @if (userCanDeleteTrainingCenters)
+                    {
+                        <text>|</text> <a asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Delete)"
+                            asp-route-id="@trainingCenter.EncryptedId" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 </table>

@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repositories.SQL;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories.SQL;
 using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
@@ -46,7 +47,7 @@ namespace Application.Requests.TrainingCenters
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetTrainingCentersIndexPaginatedAsync(7, request.PageNumber ?? 1,
+            IPaginatedList<TrainingCenterIndexViewModel> vm = await _repository.GetTrainingCentersIndexPaginatedAsync(7, request.PageNumber ?? 1,
                 request.SearchString, request.SortOrder);
 
             return request.Controller.View(vm);

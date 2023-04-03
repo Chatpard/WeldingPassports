@@ -6,6 +6,7 @@
 
         revokeDateError.remove();
         revokeDate.prop("readonly", true);
+        revokeDate.val(null);
     }
     else {
         revokeDate.rules("add", { required: true });

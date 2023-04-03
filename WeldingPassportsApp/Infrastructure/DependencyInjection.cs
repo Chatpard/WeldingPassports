@@ -9,6 +9,7 @@ using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +25,10 @@ namespace Infrastructure
             services.AddDbContext<AppDbContext>(
                 options =>
                 {
-                    options.UseSqlServer(config.GetConnectionString("WeldingPassportsDBConnection"));
+
+                    options.UseSqlServer(config.GetConnectionString("WeldingPassportsDBConnection"), 
+                        sqlServerOptions => sqlServerOptions.AddRowNumberSupport());
+
                     if (env.IsDevelopment())
                         options.EnableSensitiveDataLogging();
                 }
@@ -51,8 +55,8 @@ namespace Infrastructure
         private static void AddSQLRepositoriesToServices(this IServiceCollection services)
         {
             services.AddScoped<IAppSettingsSQLRepository, AppSettingsSQLRepository>();
-            services.AddScoped<IUserToApproveRepository, UserToApproveSQLRepository>();
             services.AddScoped<IUsersSQLRepository, UsersSQLRepository>();
+            services.AddScoped<IUserToApproveRepository, UserToApproveSQLRepository>();
             services.AddScoped<IAppRolesSQLRepository, AppRolesSQLRepository>();
             services.AddScoped<IPEPassportsSQLRepository, PEPassportsSQLRepository>();
             services.AddScoped<IPEPassportsSQLRepository, PEPassportsSQLRepository>();

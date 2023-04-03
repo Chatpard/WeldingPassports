@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.Repositories.SQL;
 using Application.Security;
+using Application.SQLModels;
 using Application.ViewModels;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -101,52 +102,148 @@ namespace Infrastructure.Repositories.SQL
             
             companyContactEntity.State = EntityState.Modified;
 
-            AppUser appUser = null;
-
-            if (contactChanges.AppUserId != null)
-            {
-                appUser = await _userManager.FindByIdAsync(contactChanges.AppUserId);
-            }
-            else
+            if (contactChanges.AppUserId == null)
             {
                 if (companyContact.AppUserId != null)
                 {
-                    appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
-                };
-            };
-
-            if (appUser == null) return null;
-
-            if (roleChanges?.Id == null)
-            {
-                IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
-                await _userManager.RemoveFromRolesAsync(appUser, roleNames);
-                if (contactChanges.AppUserId != companyContact.AppUserId)
-                {
-                    appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
-                    roleNames = await _userManager.GetRolesAsync(appUser);
-                    await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                    AppUser appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+                    if (appUser != null)
+                    {
+                        IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
+                        IList<AppUser> adminUsers = await _userManager.GetUsersInRoleAsync(RolesStore.Admin);
+                        if (!roleNames.Contains(RolesStore.Admin) || (roleNames.Contains(RolesStore.Admin) && adminUsers.Count > 1))
+                        {
+                            await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                        }
+                        else
+                        {
+                            contactChanges.AppUserId = companyContact.AppUserId;
+                        }
+                    }
                 }
             }
             else
             {
-                AppRole appRole = await _roleManager.FindByIdAsync(roleChanges.Id);
-                if (!await _userManager.IsInRoleAsync(appUser, appRole.Name))
+                if (companyContact.AppUserId == null)
                 {
-                    if (contactChanges.AppUserId == companyContact.AppUserId)
+                    AppUser appUser = await _userManager.FindByIdAsync(contactChanges.AppUserId);
+                    if (appUser != null)
                     {
                         IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
-                        await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                        IList<AppUser> adminUsers = await _userManager.GetUsersInRoleAsync(RolesStore.Admin);
+                        if (!roleNames.Contains(RolesStore.Admin) || (roleNames.Contains(RolesStore.Admin) && adminUsers.Count > 1))
+                        {
+                            await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                            AppRole appRole = await _roleManager.FindByIdAsync(roleChanges.Id);
+                            if (appRole != null)
+                            {
+                                await _userManager.AddToRoleAsync(appUser, appRole.Name);
+                            }
+                        }
                     }
-                    await _userManager.AddToRoleAsync(appUser, appRole.Name);
-                    if (contactChanges.AppUserId != companyContact.AppUserId)
+                }
+                else
+                {
+                    AppUser appUser = await _userManager.FindByIdAsync(contactChanges.AppUserId);
+                    if (appUser != null)
                     {
-                        appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
                         IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
-                        await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                        IList<AppUser> adminUsers = await _userManager.GetUsersInRoleAsync(RolesStore.Admin);
+                        if (!roleNames.Contains(RolesStore.Admin) || (roleNames.Contains(RolesStore.Admin) && adminUsers.Count > 1))
+                        {
+                            await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                            if (roleChanges.Id != null)
+                            {
+                                AppRole appRole = await _roleManager.FindByIdAsync(roleChanges.Id);
+                                if (appRole != null)
+                                {
+                                    await _userManager.AddToRoleAsync(appUser, appRole.Name);
+                                }
+                            }
+                            if(contactChanges.AppUserId != companyContact.AppUserId)
+                            {
+                                appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+                                await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+                            }
+                        }
                     }
                 }
             }
+
+            //AppUser appUser = null;
+
+            //if (contactChanges.AppUserId != null)
+            //{
+            //    appUser = await _userManager.FindByIdAsync(contactChanges.AppUserId);
+            //}
+            //else
+            //{
+            //    if (companyContact.AppUserId != null)
+            //    {
+            //        appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+            //    };
+            //};
+
+            //if (appUser == null) return null;
+
+            //if (roleChanges?.Id == null)
+            //{
+            //    IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
+            //    if (roleNames.Count() != 0)
+            //    {
+            //        if (roleNames[0] != RolesStore.Admin || (await _userManager.GetUsersInRoleAsync(RolesStore.Admin)).Count() > 1)
+            //        {
+            //            await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+            //        }
+            //        else
+            //        {
+            //            contactChanges.AppUserId = companyContact.AppUserId;
+            //        }
+            //    }
+            //    if (companyContact.AppUserId != null && contactChanges.AppUserId != companyContact.AppUserId)
+            //    {
+            //        appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+            //        roleNames = await _userManager.GetRolesAsync(appUser);
+            //        if (roleNames.Count() != 0)
+            //        {
+            //            if (roleNames[0] != RolesStore.Admin || (await _userManager.GetUsersInRoleAsync(RolesStore.Admin)).Count() > 1)
+            //            {
+            //                await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    AppRole appRole = await _roleManager.FindByIdAsync(roleChanges.Id);
+            //    if (!await _userManager.IsInRoleAsync(appUser, appRole.Name))
+            //    {
+            //        if (contactChanges.AppUserId == companyContact.AppUserId)
+            //        {
+            //            IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
+            //            if(roleNames.Count() != 0)
+            //            {
+            //                if (roleNames[0] != RolesStore.Admin || (await _userManager.GetUsersInRoleAsync(RolesStore.Admin)).Count() > 1)
+            //                {
+            //                    await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+            //                    await _userManager.AddToRoleAsync(appUser, appRole.Name);
+            //                }
+            //            }
+            //        }
+            //        if (companyContact.AppUserId != null && contactChanges.AppUserId != companyContact.AppUserId)
+            //        {
+            //            appUser = await _userManager.FindByIdAsync(companyContact.AppUserId);
+            //            IList<string> roleNames = await _userManager.GetRolesAsync(appUser);
+            //            if (roleNames != null)
+            //            {
+            //                if (roleNames[0] != RolesStore.Admin || (await _userManager.GetUsersInRoleAsync(RolesStore.Admin)).Count() > 1)
+            //                {
+            //                    await _userManager.RemoveFromRolesAsync(appUser, roleNames);
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
             return companyContactEntity;
         }
@@ -154,19 +251,26 @@ namespace Infrastructure.Repositories.SQL
         public async Task<int> DeleteCompanyContactByEncryptedIDAsync(string encryptedID, CancellationToken token)
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
-            var companyContact = await _context.CompanyContacts.Where(companyContact => companyContact.ID == decryptedID).Include(companyContact => companyContact.Contact).AsNoTracking().SingleOrDefaultAsync();
-            var contact = companyContact.Contact;
-            //var user = companyContact?.IdentityUser;
+            CompanyContact companyContact = await _context.CompanyContacts
+                .Where(companyContact => companyContact.ID == decryptedID)
+                .Include(companyContact => companyContact.Contact)
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
+            Contact contact = companyContact?.Contact;
+            string userId = companyContact?.AppUserId;
 
-            //if (user == null)
-            //{
+            if (userId == null)
+            {
                 _context.Remove(new CompanyContact { ID = decryptedID });
 
-                var count = await _context.CompanyContacts.Where(companyContact => companyContact.ContactID == contact.ID).SelectMany(companyContact => companyContact.Contact.CompanyContacts).CountAsync();
+                var count = await _context.CompanyContacts
+                    .Where(companyContact => companyContact.ContactID == contact.ID)
+                    .SelectMany(companyContact => companyContact.Contact.CompanyContacts)
+                    .CountAsync();
 
                 if (count == 1)
                     _context.Contacts.Remove(new Contact { ID = contact.ID });
-            //}
+            }
 
             return await SaveChangesAsync(token);
         }
@@ -176,6 +280,29 @@ namespace Infrastructure.Repositories.SQL
             return await _context.CompanyContacts.FindAsync(id);
         }
 
+        public SelectList CompanyContactExamCenterSelectList(string? encryotedExamCenterID)
+        {
+            IQueryable companyContacts = null;
+
+            if (encryotedExamCenterID != null)
+            {
+                int examCenterID = Convert.ToInt32(_protector.Unprotect(encryotedExamCenterID));
+                companyContacts = _context.CompanyContacts.Where(x => true)
+                    .Where(companyContacts => companyContacts.Company.ExamCenter.ID == examCenterID)
+                    .OrderBy(companyContact => companyContact.Contact.LastName).ThenBy(companyContact => companyContact.Contact.FirstName)
+                    .Select(companyContact => new
+                    {
+                        ID = companyContact.ID,
+                        NameEmail = (companyContact.Contact.FirstName??"") + (((companyContact.Contact.FirstName != null) && (companyContact.Contact.LastName != null)) ? " " : "") +
+                                    (companyContact.Contact.LastName??"") + (((companyContact.Contact.LastName != null) && (companyContact.Email != null)) ? " " : "") +
+                                    (companyContact.Email??"")
+                    });
+            }
+
+            return new SelectList(companyContacts, nameof(CompanyContact.ID), "NameEmail");
+        }
+
+        //Todo: What is this CompanyContactSelectList
         public SelectList CompanyContactSelectList(string? encryptedTrainingCenterID, int? companyContactID)
         {
             var companyContactsIQ = _context.CompanyContacts.Where(x => true);
@@ -203,7 +330,8 @@ namespace Infrastructure.Repositories.SQL
 
             var companyContacts = companyContactsIQ
                 .OrderBy(companyContact => companyContact.Contact.LastName).ThenBy(companyContact => companyContact.Contact.FirstName)
-                .Select(companyContact => new {
+                .Select(companyContact => new CompanyContactSelectListSQLModel
+                {
                     ID = companyContact.ID,
                     NameEmail = (companyContact.Contact.FirstName??"") + (((companyContact.Contact.FirstName != null) && (companyContact.Contact.LastName != null))?" ":"") + 
                                 (companyContact.Contact.LastName??"") + (((companyContact.Contact.LastName != null) && (companyContact.Email != null)) ? " " : "") + 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Application.SQLModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +9,13 @@ namespace Application.ViewModels
 {
     public class CompanyContactCreateViewModel
     {
+        public CompanyContactCreateViewModel()
+        {
+            ContactSelectList = new SelectList(new List<ContactSelectListSQLModel>());
+            CompanySelectList = new SelectList(new List<CompanySelectListSQLModel>());
+            AddressSelectList = new SelectList(new List<AddressSelectListSQLModel>());
+        }
+
         [Display(Name = "Contact Name")]
         public int ContactID { get; set; }
 

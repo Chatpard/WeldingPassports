@@ -47,7 +47,7 @@ namespace Application.Requests.CompanyContacts
             vm.CompanySelectList = _companiesSQLRepository.CompanySelectList();
             vm.AddressSelectList = _addressesSQLRepository.AddressSelectList();
             vm.AppUsersSelectList = _appUsersSQLRepository.AppUsersSelectList(vm.AppUserID);
-            vm.RoleNamesSelectList = _appRolesSQLRepository.RoleNamesSelectList();
+            vm.RoleNamesSelectList = _appRolesSQLRepository.RoleNamesSelectList(vm.CompanyID);
 
             return request.Controller.View(vm);
         }

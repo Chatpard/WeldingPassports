@@ -45,6 +45,7 @@ namespace Infrastructure.SeedData
                 }
             };
         }
+        //Todo: To be deleted
 
         private static ListTrainingCenter[] GetListTrainingCenters()
         {
@@ -55,9 +56,22 @@ namespace Infrastructure.SeedData
                     ID = 1,
                     TrainingCenterID = 1,
                     CompanyContactID = 1
+                },
+                new ListTrainingCenter()
+                {
+                    ID = 2,
+                    TrainingCenterID = 4,
+                    CompanyContactID = 2
+                },
+                new ListTrainingCenter()
+                {
+                    ID = 3,
+                    TrainingCenterID = 2,
+                    CompanyContactID = 3
                 }
             };
         }
+        //Todo: To be deleted
 
         private static Revoke[] GetRevokes()
         {
@@ -236,6 +250,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 1,
                     CompanyID = 9,
+                    CompanyContactID = 5,
                     IsActive = true
                 }
             };
@@ -283,7 +298,7 @@ namespace Infrastructure.SeedData
                     ID = 4,
                     ContactID = 4,
                     CompanyID = 4,
-                    JobTitle = "CEO",
+                    JobTitle = "Manager",
                     BusinessPhone = "+32 2 274 39 09",
                     MobilePhone = "+32 486 82 46 82",
                     Email = "academy-pe@sibelga.be"
@@ -297,6 +312,26 @@ namespace Infrastructure.SeedData
                     BusinessPhone = "+32 2 274 39 09",
                     MobilePhone = "+32 486 82 46 82",
                     Email = "guy.doms@vincotte.be"
+                },
+                new CompanyContact()
+                {
+                    ID = 6,
+                    ContactID = 6,
+                    CompanyID = 24,
+                    JobTitle = "Officer",
+                    BusinessPhone = "+32 3 237 11 09",
+                    MobilePhone = "+32 475 92 05 78",
+                    Email = "christian.moenaert@synergrid.be"
+                },
+                new CompanyContact()
+                {
+                    ID = 7,
+                    ContactID = 7,
+                    CompanyID = 21,
+                    JobTitle = "Officer",
+                    BusinessPhone = "+32 9 263 56 00",
+                    MobilePhone = "+32 472 92 20 17",
+                    Email = "davy.gijsels@fluvius.be"
                 }
             };
         }
@@ -675,6 +710,15 @@ namespace Infrastructure.SeedData
                     CompanyMainPhone = "+32 2 378 50 04",
                     CompanyEmail = "info@dalcom.be",
                     WebPage = "https://dalcom.be"
+                },
+                new Company()
+                {
+                    ID = 24,
+                    AddressID = null,
+                    CompanyName = "Synergrid",
+                    CompanyMainPhone = "+32 2 237 11 09",
+                    CompanyEmail = "info@synergrid.be",
+                    WebPage = "https://synergrid.be"
                 }
             };
         }
@@ -820,6 +864,20 @@ namespace Infrastructure.SeedData
                     FirstName = "Guy",
                     LastName = "Doms",
                     Birthday = new DateTime(1962, 8, 5)
+                },
+                new Contact()
+                {
+                    ID = 6,
+                    FirstName = "Christian",
+                    LastName = "Moenaert",
+                    Birthday = new DateTime(1966, 3, 23)
+                },
+                new Contact()
+                {
+                    ID = 7,
+                    FirstName = "Davy",
+                    LastName = "Gijsels",
+                    Birthday = new DateTime(1986, 6, 15)
                 }
             };
         }

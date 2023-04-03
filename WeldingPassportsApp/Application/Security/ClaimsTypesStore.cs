@@ -53,7 +53,7 @@ namespace Application.Security
                             {Examinations, ClaimsValuesStore.CanReadEditCreateDelete },
                             {Certificates, ClaimsValuesStore.CanReadEditCreateDelete },
                             {ExamCenters, ClaimsValuesStore.CanRead },
-                            {CompanyContacts, ClaimsValuesStore.CanReadEditCreateDelete },
+                            {CompanyContacts, ClaimsValuesStore.CanRead },
                             {Companies, ClaimsValuesStore.CanReadEditCreateDelete },
                             {Addresses, ClaimsValuesStore.CanReadEditCreateDelete },
                             {Contacts, ClaimsValuesStore.CanReadEditCreateDelete }
@@ -81,7 +81,7 @@ namespace Application.Security
                             {Examinations, ClaimsValuesStore.CanRead },
                             {Certificates, ClaimsValuesStore.CanUpdate },
                             {ExamCenters, ClaimsValuesStore.CanReadEdit },
-                            {CompanyContacts, ClaimsValuesStore.CanReadEdit },
+                            {CompanyContacts, ClaimsValuesStore.CanRead },
                             {Companies, ClaimsValuesStore.CanReadEdit},
                             {Addresses, ClaimsValuesStore.CanReadEditCreateDelete },
                             {Contacts, ClaimsValuesStore.CanReadEditCreateDelete }

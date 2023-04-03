@@ -147,6 +147,12 @@ namespace Infrastructure.Repositories.SQL
                 case "Email_asc":
                     contactsQuery = contactsQuery.OrderBy(contact => contact.Email);
                     return contactsQuery;
+                case "UserName_desc":
+                    contactsQuery = contactsQuery.OrderByDescending(contact => contact.UserName);
+                    return contactsQuery;
+                case "UserName_asc":
+                    contactsQuery = contactsQuery.OrderBy(contact => contact.UserName);
+                    return contactsQuery;
                 case "RoleName_desc":
                     contactsQuery = contactsQuery.OrderByDescending(contact => contact.RoleName);
                     return contactsQuery;

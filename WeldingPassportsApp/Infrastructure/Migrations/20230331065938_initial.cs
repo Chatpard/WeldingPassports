@@ -394,26 +394,6 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExamCenters",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyID = table.Column<int>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExamCenters", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ExamCenters_Companies_CompanyID",
-                        column: x => x.CompanyID,
-                        principalTable: "Companies",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TrainingCenters",
                 columns: table => new
                 {
@@ -435,54 +415,28 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ListExamCenter",
+                name: "ExamCenters",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ExamCenterID = table.Column<int>(nullable: false),
-                    CompanyContactID = table.Column<int>(nullable: false)
+                    CompanyID = table.Column<int>(nullable: false),
+                    CompanyContactID = table.Column<int>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListExamCenter", x => x.ID);
+                    table.PrimaryKey("PK_ExamCenters", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_ListExamCenter_CompanyContacts_CompanyContactID",
+                        name: "FK_ExamCenters_CompanyContacts_CompanyContactID",
                         column: x => x.CompanyContactID,
                         principalTable: "CompanyContacts",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ListExamCenter_ExamCenters_ExamCenterID",
-                        column: x => x.ExamCenterID,
-                        principalTable: "ExamCenters",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Examinations",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainingCenterID = table.Column<int>(nullable: false),
-                    ExamCenterID = table.Column<int>(nullable: false),
-                    ExamDate = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Examinations", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Examinations_ExamCenters_ExamCenterID",
-                        column: x => x.ExamCenterID,
-                        principalTable: "ExamCenters",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Examinations_TrainingCenters_TrainingCenterID",
-                        column: x => x.TrainingCenterID,
-                        principalTable: "TrainingCenters",
+                        name: "FK_ExamCenters_Companies_CompanyID",
+                        column: x => x.CompanyID,
+                        principalTable: "Companies",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -536,6 +490,59 @@ namespace Infrastructure.Migrations
                         name: "FK_PEPassports_TrainingCenters_TrainingCenterID",
                         column: x => x.TrainingCenterID,
                         principalTable: "TrainingCenters",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Examinations",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainingCenterID = table.Column<int>(nullable: false),
+                    ExamCenterID = table.Column<int>(nullable: false),
+                    ExamDate = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Examinations", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Examinations_ExamCenters_ExamCenterID",
+                        column: x => x.ExamCenterID,
+                        principalTable: "ExamCenters",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Examinations_TrainingCenters_TrainingCenterID",
+                        column: x => x.TrainingCenterID,
+                        principalTable: "TrainingCenters",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ListExamCenter",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExamCenterID = table.Column<int>(nullable: false),
+                    CompanyContactID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ListExamCenter", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ListExamCenter_CompanyContacts_CompanyContactID",
+                        column: x => x.CompanyContactID,
+                        principalTable: "CompanyContacts",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ListExamCenter_ExamCenters_ExamCenterID",
+                        column: x => x.ExamCenterID,
+                        principalTable: "ExamCenters",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -650,6 +657,11 @@ namespace Infrastructure.Migrations
                 values: new object[] { 1, 365, 270, 30 });
 
             migrationBuilder.InsertData(
+                table: "Companies",
+                columns: new[] { "ID", "AddressID", "CompanyEmail", "CompanyMainPhone", "CompanyName", "WebPage" },
+                values: new object[] { 24, null, "info@synergrid.be", "+32 2 237 11 09", "Synergrid", "https://synergrid.be" });
+
+            migrationBuilder.InsertData(
                 table: "Contacts",
                 columns: new[] { "ID", "Birthday", "FirstName", "LastName" },
                 values: new object[,]
@@ -658,7 +670,9 @@ namespace Infrastructure.Migrations
                     { 2, new DateTime(1977, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Fabrice", "Vermeiren" },
                     { 3, new DateTime(1984, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Koen", "Nies" },
                     { 4, new DateTime(1982, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bastien", "De Spiegelaere" },
-                    { 5, new DateTime(1962, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Guy", "Doms" }
+                    { 5, new DateTime(1962, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Guy", "Doms" },
+                    { 6, new DateTime(1966, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Christian", "Moenaert" },
+                    { 7, new DateTime(1986, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Davy", "Gijsels" }
                 });
 
             migrationBuilder.InsertData(
@@ -673,13 +687,13 @@ namespace Infrastructure.Migrations
                     { 10, "Mitt", "015-5256893-85", "Romney", "63.98.45-682-63", null },
                     { 9, "Kamala", "872-5256587-69", "Harris", "55.63.45-856-63", null },
                     { 8, "Bernie", "682-6826789-54", "Sanders", "92.23.58-638-83", null },
-                    { 7, "Elizabeth", "853-5456783-85", "Warren", "37.23.86-578-98", null },
                     { 6, "Ted", "862-6386789-65", "Cruz", "86.86.56-463-99", null },
                     { 5, "Sarah", "834-3467289-85", "Palin", "86.58.45-669-45", null },
                     { 4, "Mike", "634-6916789-85", "Pence", "08.23.45-127-89", null },
                     { 3, "Donald", "012-3456789-99", "Trump", "01.23.45-678-99", null },
                     { 2, "Hillary", "983-3456569-80", "Clinton", "12.23.71-678-05", null },
-                    { 1, "Nancy", "452-3456789-84", "Pelosi", "05.23.45-768-99", null }
+                    { 1, "Nancy", "452-3456789-84", "Pelosi", "05.23.45-768-99", null },
+                    { 7, "Elizabeth", "853-5456783-85", "Warren", "37.23.86-578-98", null }
                 });
 
             migrationBuilder.InsertData(
@@ -696,8 +710,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ID", "AllowedRegistrationTypeID", "CurrentRegistrationTypeID", "IsActive", "RegistrationTypeName" },
                 values: new object[,]
                 {
-                    { 3, null, null, true, "Re-Examination1" },
                     { 4, null, null, true, "Re-Examination2" },
+                    { 3, null, null, true, "Re-Examination1" },
                     { 1, null, null, true, "Training" },
                     { 2, null, null, true, "Extension" }
                 });
@@ -707,14 +721,14 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ID", "Color", "ExtendableStatus", "HasPassed" },
                 values: new object[,]
                 {
+                    { 8, "table-danger", 3, true },
                     { 1, null, 0, false },
                     { 2, "table-success", 0, true },
                     { 3, null, 1, false },
                     { 4, "table-warning", 1, true },
                     { 5, null, 2, false },
                     { 6, null, 2, true },
-                    { 7, "table-danger", 3, false },
-                    { 8, "table-danger", 3, true }
+                    { 7, "table-danger", 3, false }
                 });
 
             migrationBuilder.InsertData(
@@ -722,9 +736,9 @@ namespace Infrastructure.Migrations
                 columns: new[] { "ID", "Birthday", "BusinessAddress", "BusinessAddressCity", "BusinessAddressCountry", "BusinessAddressPostalCode", "BusinessPhone", "CompanyEmail", "CompanyMainPhone", "CompanyName", "Email", "EmailConfirmed", "EmailLanguage", "FirstName", "JobTitle", "LastName", "MobilePhone", "WebPage" },
                 values: new object[,]
                 {
+                    { 2, new DateTime(1985, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rue d'Alice 16", "Brussel", "Belgium", "1000", "+32 2 634 72 81", "info@sibelga.be", "+32 2 856 45 82", "Sibelga Academy", "alice.smith@hotmail.com", "1", "en", "Alice", "CEO", "Smith", "+32 482 93 71 09", "academy.sibelga.be" },
                     { 3, new DateTime(1975, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rue de James 60", "Brussel", "Belgium", "1000", "+32 2 456 92 71", "info@technifutur.be", "+32 4 382 45 72", "Technifutur", "james.bond@outlook.com", "1", "en", "James", "CEO", "Bond", "+32 457 76 24 82", "technifutur.be" },
                     { 1, new DateTime(1990, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rue de John 10", "Brussel", "Belgium", "1000", "+32 2 165 45 85", "info@v-c-l.be", "+32 2 520 56 58", "VCL", "john.doe@hotmail.com", "1", "en", "John", "CEO", "Doe", "+32 495 25 12 37", "v-c-l.be" },
-                    { 2, new DateTime(1985, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rue d'Alice 16", "Brussel", "Belgium", "1000", "+32 2 634 72 81", "info@sibelga.be", "+32 2 856 45 82", "Sibelga Academy", "alice.smith@hotmail.com", "1", "en", "Alice", "CEO", "Smith", "+32 482 93 71 09", "academy.sibelga.be" },
                     { 4, new DateTime(1996, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Leopold III-lei 16", "Edegem", "Belgium", "2650", "+32 2 485 73 04", "info@info.be", "+32 3 230 05 28", "Technifutur", "antoine.m1996@hotmail.com", "1", "nl", "Antoine", "CEO", "Moenaert", "+32 487 10 73 64", "info.be" }
                 });
 
@@ -734,6 +748,7 @@ namespace Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 136, 2, 2, 1, true, false, 3 },
+                    { 24, 1, 4, 0, false, false, 2 },
                     { 28, 2, 4, 0, false, false, 2 },
                     { 33, 1, 4, 0, true, false, 3 },
                     { 37, 3, 4, 0, true, false, 3 },
@@ -747,9 +762,9 @@ namespace Infrastructure.Migrations
                     { 52, 4, 2, 0, true, false, 4 },
                     { 53, 4, 3, 0, true, false, 4 },
                     { 54, 4, 4, 0, true, false, 4 },
+                    { 20, 2, 4, 0, true, false, 2 },
                     { 55, 1, null, 0, false, true, 4 },
-                    { 24, 1, 4, 0, false, false, 2 },
-                    { 56, 1, 1, 0, false, false, 4 },
+                    { 57, 1, 2, 0, false, false, 4 },
                     { 58, 1, 3, 0, false, false, 4 },
                     { 59, 1, 4, 0, false, false, 4 },
                     { 60, 4, 1, 0, false, false, 4 },
@@ -763,11 +778,11 @@ namespace Infrastructure.Migrations
                     { 89, 3, 4, 1, false, false, 3 },
                     { 90, 4, null, 1, false, true, 3 },
                     { 91, 4, 1, 1, false, false, 3 },
-                    { 92, 4, 2, 1, false, false, 3 },
-                    { 57, 1, 2, 0, false, false, 4 },
-                    { 20, 2, 4, 0, true, false, 2 },
+                    { 56, 1, 1, 0, false, false, 4 },
                     { 16, 1, 4, 0, true, false, 2 },
                     { 11, 1, 4, 0, true, false, 1 },
+                    { 7, 1, 4, 0, false, false, 1 },
+                    { 139, 3, 1, 1, true, false, 3 },
                     { 140, 3, 2, 1, true, false, 3 },
                     { 141, 3, 3, 1, true, false, 3 },
                     { 161, 1, 3, 2, false, false, 1 },
@@ -784,25 +799,25 @@ namespace Infrastructure.Migrations
                     { 198, 1, 3, 2, true, false, 2 },
                     { 202, 2, 3, 2, true, false, 2 },
                     { 205, 1, 1, 2, true, false, 3 },
-                    { 206, 1, 2, 2, true, false, 3 },
-                    { 7, 1, 4, 0, false, false, 1 },
                     { 244, 1, null, 3, true, true, 3 },
                     { 243, 3, null, 3, true, true, 3 },
                     { 241, 1, 3, 3, true, false, 3 },
                     { 240, 1, 2, 3, true, false, 3 },
                     { 239, 1, 1, 3, true, false, 3 },
-                    { 93, 4, 3, 1, false, false, 3 },
                     { 236, 2, 3, 3, true, false, 2 },
-                    { 227, 1, 3, 3, true, false, 1 },
+                    { 92, 4, 2, 1, false, false, 3 },
+                    { 232, 1, 3, 3, true, false, 2 },
                     { 213, 1, null, 2, true, true, 3 },
                     { 211, 3, 3, 2, true, false, 3 },
                     { 210, 3, 2, 2, true, false, 3 },
                     { 209, 3, 1, 2, true, false, 3 },
                     { 207, 1, 3, 2, true, false, 3 },
-                    { 232, 1, 3, 3, true, false, 2 },
-                    { 139, 3, 1, 1, true, false, 3 },
+                    { 206, 1, 2, 2, true, false, 3 },
+                    { 227, 1, 3, 3, true, false, 1 },
+                    { 93, 4, 3, 1, false, false, 3 },
                     { 94, 4, 4, 1, false, false, 3 },
-                    { 96, 1, 1, 1, false, false, 4 },
+                    { 95, 1, null, 1, false, true, 4 },
+                    { 185, 1, 4, 2, false, false, 4 },
                     { 186, 4, 1, 2, false, false, 4 },
                     { 187, 4, 2, 2, false, false, 4 },
                     { 188, 4, 3, 2, false, false, 4 },
@@ -817,26 +832,27 @@ namespace Infrastructure.Migrations
                     { 215, 1, 2, 2, true, false, 4 },
                     { 216, 1, 3, 2, true, false, 4 },
                     { 217, 1, 4, 2, true, false, 4 },
-                    { 185, 1, 4, 2, false, false, 4 },
                     { 218, 4, 1, 2, true, false, 4 },
-                    { 220, 4, 3, 2, true, false, 4 },
-                    { 221, 4, 4, 2, true, false, 4 },
-                    { 222, 1, null, 2, true, true, 4 },
-                    { 228, 1, 4, 3, true, false, 1 },
-                    { 233, 1, 4, 3, true, false, 2 },
-                    { 237, 2, 4, 3, true, false, 2 },
-                    { 242, 1, 4, 3, true, false, 3 },
-                    { 245, 1, 1, 3, true, false, 4 },
-                    { 246, 1, 2, 3, true, false, 4 },
-                    { 247, 1, 3, 3, true, false, 4 },
-                    { 248, 1, 4, 3, true, false, 4 },
-                    { 249, 4, 1, 3, true, false, 4 },
-                    { 250, 4, 2, 3, true, false, 4 },
-                    { 251, 4, 3, 3, true, false, 4 },
                     { 219, 4, 2, 2, true, false, 4 },
+                    { 251, 4, 3, 3, true, false, 4 },
+                    { 250, 4, 2, 3, true, false, 4 },
+                    { 249, 4, 1, 3, true, false, 4 },
+                    { 248, 1, 4, 3, true, false, 4 },
+                    { 247, 1, 3, 3, true, false, 4 },
+                    { 246, 1, 2, 3, true, false, 4 },
                     { 184, 1, 3, 2, false, false, 4 },
+                    { 245, 1, 1, 3, true, false, 4 },
+                    { 237, 2, 4, 3, true, false, 2 },
+                    { 233, 1, 4, 3, true, false, 2 },
+                    { 228, 1, 4, 3, true, false, 1 },
+                    { 222, 1, null, 2, true, true, 4 },
+                    { 221, 4, 4, 2, true, false, 4 },
+                    { 220, 4, 3, 2, true, false, 4 },
+                    { 242, 1, 4, 3, true, false, 3 },
+                    { 137, 2, 3, 1, true, false, 3 },
                     { 183, 1, 2, 2, false, false, 4 },
-                    { 182, 1, 1, 2, false, false, 4 },
+                    { 180, 3, 4, 2, false, false, 3 },
+                    { 96, 1, 1, 1, false, false, 4 },
                     { 97, 1, 2, 1, false, false, 4 },
                     { 98, 1, 3, 1, false, false, 4 },
                     { 99, 4, 4, 1, false, false, 4 },
@@ -853,25 +869,24 @@ namespace Infrastructure.Migrations
                     { 144, 1, 1, 1, true, false, 4 },
                     { 145, 1, 2, 1, true, false, 4 },
                     { 146, 1, 3, 1, true, false, 4 },
-                    { 147, 1, 4, 1, true, false, 4 },
-                    { 180, 3, 4, 2, false, false, 3 },
                     { 176, 1, 4, 2, false, false, 3 },
                     { 171, 2, 4, 2, false, false, 2 },
                     { 167, 1, 4, 2, false, false, 2 },
                     { 162, 1, 4, 2, false, false, 1 },
                     { 156, 4, 4, 1, true, false, 4 },
-                    { 95, 1, null, 1, false, true, 4 },
                     { 155, 4, 3, 1, true, false, 4 },
-                    { 153, 4, 1, 1, true, false, 4 },
+                    { 182, 1, 1, 2, false, false, 4 },
+                    { 154, 4, 2, 1, true, false, 4 },
                     { 152, 2, 4, 1, true, false, 4 },
                     { 151, 2, 3, 1, true, false, 4 },
                     { 150, 2, 2, 1, true, false, 4 },
                     { 149, 2, 1, 1, true, false, 4 },
                     { 148, 2, null, 1, true, true, 4 },
-                    { 154, 4, 2, 1, true, false, 4 },
-                    { 137, 2, 3, 1, true, false, 3 },
+                    { 147, 1, 4, 1, true, false, 4 },
+                    { 153, 4, 1, 1, true, false, 4 },
+                    { 252, 4, 4, 3, true, false, 4 },
                     { 253, 1, null, 3, true, true, 4 },
-                    { 135, 2, 1, 1, true, false, 3 },
+                    { 134, 2, null, 1, true, true, 3 },
                     { 22, 1, 2, 0, false, false, 2 },
                     { 25, 2, 1, 0, false, false, 2 },
                     { 26, 2, 2, 0, false, false, 2 },
@@ -887,8 +902,8 @@ namespace Infrastructure.Migrations
                     { 116, 1, 1, 1, true, false, 2 },
                     { 117, 1, 2, 1, true, false, 2 },
                     { 120, 2, 1, 1, true, false, 2 },
-                    { 121, 2, 2, 1, true, false, 2 },
-                    { 252, 4, 4, 3, true, false, 4 },
+                    { 135, 2, 1, 1, true, false, 3 },
+                    { 160, 1, 2, 2, false, false, 1 },
                     { 164, 1, 1, 2, false, false, 2 },
                     { 165, 1, 2, 2, false, false, 2 },
                     { 168, 2, 1, 2, false, false, 2 },
@@ -928,8 +943,9 @@ namespace Infrastructure.Migrations
                     { 13, 1, 1, 0, true, false, 2 },
                     { 17, 2, 1, 0, true, false, 2 },
                     { 201, 2, 2, 2, true, false, 2 },
-                    { 160, 1, 2, 2, false, false, 1 },
+                    { 121, 2, 2, 1, true, false, 2 },
                     { 226, 1, 2, 3, true, false, 1 },
+                    { 78, 3, 2, 1, false, false, 2 },
                     { 79, 3, 3, 1, false, false, 2 },
                     { 81, 1, null, 1, false, true, 3 },
                     { 82, 1, 1, 1, false, false, 3 },
@@ -954,13 +970,12 @@ namespace Infrastructure.Migrations
                     { 130, 1, 1, 1, true, false, 3 },
                     { 131, 1, 2, 1, true, false, 3 },
                     { 132, 1, 3, 1, true, false, 3 },
-                    { 134, 2, null, 1, true, true, 3 },
-                    { 78, 3, 2, 1, false, false, 2 },
                     { 77, 3, 1, 1, false, false, 2 },
-                    { 103, 1, 3, 1, true, false, 1 },
-                    { 74, 1, 3, 1, false, false, 2 },
-                    { 230, 1, 1, 3, true, false, 2 },
                     { 76, 3, null, 1, false, true, 2 },
+                    { 103, 1, 3, 1, true, false, 1 },
+                    { 69, 1, 3, 1, false, false, 1 },
+                    { 74, 1, 3, 1, false, false, 2 },
+                    { 231, 1, 2, 3, true, false, 2 },
                     { 234, 2, 1, 3, true, false, 2 },
                     { 235, 2, 2, 3, true, false, 2 },
                     { 238, 1, null, 3, true, true, 2 },
@@ -971,21 +986,20 @@ namespace Infrastructure.Migrations
                     { 23, 1, 3, 0, false, false, 2 },
                     { 27, 2, 3, 0, false, false, 2 },
                     { 29, 1, null, 0, true, true, 3 },
-                    { 30, 1, 1, 0, true, false, 3 },
-                    { 231, 1, 2, 3, true, false, 2 },
-                    { 32, 1, 3, 0, true, false, 3 },
+                    { 230, 1, 1, 3, true, false, 2 },
                     { 31, 1, 2, 0, true, false, 3 },
-                    { 45, 3, 3, 0, false, false, 3 },
+                    { 30, 1, 1, 0, true, false, 3 },
                     { 44, 3, 2, 0, false, false, 3 },
                     { 43, 3, 1, 0, false, false, 3 },
                     { 41, 1, 3, 0, false, false, 3 },
-                    { 69, 1, 3, 1, false, false, 1 },
-                    { 39, 1, 1, 0, false, false, 3 },
+                    { 40, 1, 2, 0, false, false, 3 },
+                    { 45, 3, 3, 0, false, false, 3 },
                     { 38, 1, null, 0, false, true, 3 },
                     { 36, 3, 3, 0, true, false, 3 },
                     { 35, 3, 2, 0, true, false, 3 },
                     { 34, 3, 1, 0, true, false, 3 },
-                    { 40, 1, 2, 0, false, false, 3 }
+                    { 32, 1, 3, 0, true, false, 3 },
+                    { 39, 1, 1, 0, false, false, 3 }
                 });
 
             migrationBuilder.InsertData(
@@ -994,17 +1008,17 @@ namespace Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 10, 10, "info@denestor.be", "+32 9 375 31 69", "De Nestor", "https://denestor.be" },
-                    { 2, 2, "info@tcz.be", "+32 2 564 52 87", "TCZ", "https://tcz.be" },
-                    { 3, 3, "info@technifutur.be", "+32 4 382 45 72", "Technifutur", "https://technifutur.be" },
-                    { 4, 4, "info@sibelga.be", "+32 2 856 45 82", "Sibelga Academy", "https://academy.sibelga.be" },
-                    { 5, 5, "info@technocampus.be", "+32 2 754 83 19", "Technocampus", "https://technocampus.be" },
-                    { 6, 6, "info@formation-polygone-eau.be", "+32 8 778 93 30", "Polygone de l'eau", "https://formation-polygone-eau.be" },
-                    { 7, 7, "info@kcbrugge.be", "+32 5 069 63 74", "Kwalificatiecentrum Brugge bvba", "https://kcbrugge.be" },
-                    { 8, 8, "info@ores.be", "+32 2 683 57 32", "Ores", "https://ores.be" },
                     { 9, 9, "info@vinçotte.be", "+32 2 364 87 54", "Vinçotte", "https://vinçotte.be" },
+                    { 8, 8, "info@ores.be", "+32 2 683 57 32", "Ores", "https://ores.be" },
+                    { 7, 7, "info@kcbrugge.be", "+32 5 069 63 74", "Kwalificatiecentrum Brugge bvba", "https://kcbrugge.be" },
+                    { 5, 5, "info@technocampus.be", "+32 2 754 83 19", "Technocampus", "https://technocampus.be" },
+                    { 4, 4, "info@sibelga.be", "+32 2 856 45 82", "Sibelga Academy", "https://academy.sibelga.be" },
+                    { 3, 3, "info@technifutur.be", "+32 4 382 45 72", "Technifutur", "https://technifutur.be" },
+                    { 2, 2, "info@tcz.be", "+32 2 564 52 87", "TCZ", "https://tcz.be" },
                     { 11, 11, "info@lascentrum.be", "+32 2 954 74 85", "Lascentrum", "https://lascentrum.be" },
+                    { 6, 6, "info@formation-polygone-eau.be", "+32 8 778 93 30", "Polygone de l'eau", "https://formation-polygone-eau.be" },
+                    { 12, 12, "info@hydrogaz.be", "+32 2 456 81 37", "Hydrogaz", "https://hydrogaz.be" },
                     { 18, 12, "info@canalco.be", "+32 2 507 74 19", "Canalco", "https://canalco.be" },
-                    { 13, 12, "info@fabricom.be", "+32 2 793 98 07", "Fabricom", "https://fabricom.be" },
                     { 14, 12, "info@ltc.be", "+32 2 951 72 19", "LTC", "https://ltc.be" },
                     { 15, 12, "info@verhoeven.be", "+32 2 837 49 27", "Verhoeven", "https://verhoeven.be" },
                     { 16, 12, "info@alkabel.be", "+32 2 864 92 47", "Alkabel", "https://alkabel.be" },
@@ -1014,9 +1028,14 @@ namespace Infrastructure.Migrations
                     { 21, 12, "info@fluvius.be", "+32 2 907 43 67", "Fluvius", "https://fluvius.be" },
                     { 22, 12, "info@infra.be", "+32 2 703 09 84", "Infra", "https://infra.be" },
                     { 23, 12, "info@dalcom.be", "+32 2 378 50 04", "Dalcom", "https://dalcom.be" },
-                    { 12, 12, "info@hydrogaz.be", "+32 2 456 81 37", "Hydrogaz", "https://hydrogaz.be" },
+                    { 13, 12, "info@fabricom.be", "+32 2 793 98 07", "Fabricom", "https://fabricom.be" },
                     { 1, 1, "info@v-c-l.be", "+32 2 520 56 58", "VCL", "https://v-c-l.be" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "CompanyContacts",
+                columns: new[] { "ID", "AddressID", "AppUserId", "BusinessPhone", "CompanyID", "ContactID", "Email", "JobTitle", "MobilePhone" },
+                values: new object[] { 6, null, null, "+32 3 237 11 09", 24, 6, "christian.moenaert@synergrid.be", "Officer", "+32 475 92 05 78" });
 
             migrationBuilder.InsertData(
                 table: "CompanyContacts",
@@ -1025,15 +1044,11 @@ namespace Infrastructure.Migrations
                 {
                     { 1, 1, null, "+32 2 520 56 58", 1, 1, "leen.dezillie@v-c-l.be ", "Manager", "+32 486 64 45 52" },
                     { 3, 2, null, "+32 5 050 08 29", 2, 3, "koen@atriumopleidingen.be", "Manager", "+32 496 56 87 24" },
-                    { 4, null, null, "+32 2 274 39 09", 4, 4, "academy-pe@sibelga.be", "CEO", "+32 486 82 46 82" },
+                    { 4, null, null, "+32 2 274 39 09", 4, 4, "academy-pe@sibelga.be", "Manager", "+32 486 82 46 82" },
                     { 2, 5, null, "+32 2 845 89 47", 5, 2, "fabrice.vermeiren@technocampus.be", "Manager", "+32 486 64 45 52" },
-                    { 5, null, null, "+32 2 274 39 09", 9, 5, "guy.doms@vincotte.be", "Examinator", "+32 486 82 46 82" }
+                    { 5, null, null, "+32 2 274 39 09", 9, 5, "guy.doms@vincotte.be", "Examinator", "+32 486 82 46 82" },
+                    { 7, null, null, "+32 9 263 56 00", 21, 7, "davy.gijsels@fluvius.be", "Officer", "+32 472 92 20 17" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "ExamCenters",
-                columns: new[] { "ID", "CompanyID", "IsActive" },
-                values: new object[] { 1, 9, true });
 
             migrationBuilder.InsertData(
                 table: "TrainingCenters",
@@ -1051,50 +1066,60 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Examinations",
-                columns: new[] { "ID", "ExamCenterID", "ExamDate", "TrainingCenterID" },
-                values: new object[,]
-                {
-                    { 7, 1, new DateTime(2022, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 8 },
-                    { 8, 1, new DateTime(2023, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 5 },
-                    { 6, 1, new DateTime(2022, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 },
-                    { 4, 1, new DateTime(2021, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 3, 1, new DateTime(2021, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
-                    { 2, 1, new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 7 },
-                    { 1, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 5, 1, new DateTime(2022, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 6 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ListExamCenter",
-                columns: new[] { "ID", "CompanyContactID", "ExamCenterID" },
-                values: new object[] { 1, 4, 1 });
+                table: "ExamCenters",
+                columns: new[] { "ID", "CompanyContactID", "CompanyID", "IsActive" },
+                values: new object[] { 1, 5, 9, true });
 
             migrationBuilder.InsertData(
                 table: "ListTrainingCenter",
                 columns: new[] { "ID", "CompanyContactID", "TrainingCenterID" },
-                values: new object[] { 1, 1, 1 });
+                values: new object[,]
+                {
+                    { 2, 2, 4 },
+                    { 3, 3, 2 },
+                    { 1, 1, 1 }
+                });
 
             migrationBuilder.InsertData(
                 table: "PEPassports",
                 columns: new[] { "ID", "AVNumber", "PEWelderID", "TrainingCenterID" },
                 values: new object[,]
                 {
-                    { 2, 470, 2, 4 },
+                    { 6, 474, 6, 1 },
+                    { 3, 471, 3, 3 },
+                    { 5, 473, 5, 3 },
+                    { 8, 476, 8, 3 },
+                    { 12, 480, 12, 5 },
                     { 13, 481, 13, 3 },
+                    { 14, 482, 14, 3 },
+                    { 1, 469, 1, 1 },
+                    { 2, 470, 2, 4 },
+                    { 4, 472, 4, 4 },
                     { 10, 478, 10, 4 },
                     { 7, 475, 7, 5 },
-                    { 12, 480, 12, 5 },
-                    { 11, 479, 11, 3 },
-                    { 8, 476, 8, 3 },
-                    { 5, 473, 5, 3 },
-                    { 3, 471, 3, 3 },
                     { 9, 477, 9, 1 },
-                    { 6, 474, 6, 1 },
-                    { 1, 469, 1, 1 },
-                    { 14, 482, 14, 3 },
-                    { 4, 472, 4, 4 }
+                    { 11, 479, 11, 3 }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Examinations",
+                columns: new[] { "ID", "ExamCenterID", "ExamDate", "TrainingCenterID" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2021, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, 1, new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 7 },
+                    { 3, 1, new DateTime(2021, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
+                    { 4, 1, new DateTime(2021, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 5, 1, new DateTime(2022, 3, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 6 },
+                    { 6, 1, new DateTime(2022, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 },
+                    { 7, 1, new DateTime(2022, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 8 },
+                    { 8, 1, new DateTime(2023, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), 5 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ListExamCenter",
+                columns: new[] { "ID", "CompanyContactID", "ExamCenterID" },
+                values: new object[] { 1, 4, 1 });
 
             migrationBuilder.InsertData(
                 table: "Registrations",
@@ -1205,6 +1230,11 @@ namespace Infrastructure.Migrations
                 column: "ContactID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExamCenters_CompanyContactID",
+                table: "ExamCenters",
+                column: "CompanyContactID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExamCenters_CompanyID",
                 table: "ExamCenters",
                 column: "CompanyID",
@@ -1229,8 +1259,7 @@ namespace Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ListExamCenter_ExamCenterID",
                 table: "ListExamCenter",
-                column: "ExamCenterID",
-                unique: true);
+                column: "ExamCenterID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListTrainingCenter_CompanyContactID",
@@ -1365,16 +1394,7 @@ namespace Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "CompanyContacts");
-
-            migrationBuilder.DropTable(
                 name: "Registrations");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Contacts");
 
             migrationBuilder.DropTable(
                 name: "Examinations");
@@ -1398,7 +1418,16 @@ namespace Infrastructure.Migrations
                 name: "TrainingCenters");
 
             migrationBuilder.DropTable(
+                name: "CompanyContacts");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "Contacts");
 
             migrationBuilder.DropTable(
                 name: "Addresses");

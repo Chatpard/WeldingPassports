@@ -31,7 +31,7 @@ namespace Application.ViewModels
         [JsonIgnore]
         public SelectList ContactSelectList { get; set; }
 
-        [Display(Name = "User")]
+        [Display(Name = "Login")]
         public string AppUserID { get; set; }
 
         [JsonIgnore]

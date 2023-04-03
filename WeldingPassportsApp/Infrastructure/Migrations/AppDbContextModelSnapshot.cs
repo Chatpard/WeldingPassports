@@ -3031,6 +3031,14 @@ namespace Infrastructure.Migrations
                             CompanyMainPhone = "+32 2 378 50 04",
                             CompanyName = "Dalcom",
                             WebPage = "https://dalcom.be"
+                        },
+                        new
+                        {
+                            ID = 24,
+                            CompanyEmail = "info@synergrid.be",
+                            CompanyMainPhone = "+32 2 237 11 09",
+                            CompanyName = "Synergrid",
+                            WebPage = "https://synergrid.be"
                         });
                 });
 
@@ -3120,7 +3128,7 @@ namespace Infrastructure.Migrations
                             CompanyID = 4,
                             ContactID = 4,
                             Email = "academy-pe@sibelga.be",
-                            JobTitle = "CEO",
+                            JobTitle = "Manager",
                             MobilePhone = "+32 486 82 46 82"
                         },
                         new
@@ -3132,6 +3140,26 @@ namespace Infrastructure.Migrations
                             Email = "guy.doms@vincotte.be",
                             JobTitle = "Examinator",
                             MobilePhone = "+32 486 82 46 82"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            BusinessPhone = "+32 3 237 11 09",
+                            CompanyID = 24,
+                            ContactID = 6,
+                            Email = "christian.moenaert@synergrid.be",
+                            JobTitle = "Officer",
+                            MobilePhone = "+32 475 92 05 78"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            BusinessPhone = "+32 9 263 56 00",
+                            CompanyID = 21,
+                            ContactID = 7,
+                            Email = "davy.gijsels@fluvius.be",
+                            JobTitle = "Officer",
+                            MobilePhone = "+32 472 92 20 17"
                         });
                 });
 
@@ -3190,6 +3218,20 @@ namespace Infrastructure.Migrations
                             Birthday = new DateTime(1962, 8, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Guy",
                             LastName = "Doms"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Birthday = new DateTime(1966, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Christian",
+                            LastName = "Moenaert"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Birthday = new DateTime(1986, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Davy",
+                            LastName = "Gijsels"
                         });
                 });
 
@@ -3200,6 +3242,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CompanyContactID")
+                        .HasColumnType("int");
+
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
 
@@ -3207,6 +3252,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CompanyContactID");
 
                     b.HasIndex("CompanyID")
                         .IsUnique();
@@ -3217,6 +3264,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ID = 1,
+                            CompanyContactID = 5,
                             CompanyID = 9,
                             IsActive = true
                         });
@@ -3323,8 +3371,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("CompanyContactID")
                         .IsUnique();
 
-                    b.HasIndex("ExamCenterID")
-                        .IsUnique();
+                    b.HasIndex("ExamCenterID");
 
                     b.ToTable("ListExamCenter");
 
@@ -3366,6 +3413,18 @@ namespace Infrastructure.Migrations
                             ID = 1,
                             CompanyContactID = 1,
                             TrainingCenterID = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CompanyContactID = 2,
+                            TrainingCenterID = 4
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CompanyContactID = 3,
+                            TrainingCenterID = 2
                         });
                 });
 
@@ -4362,6 +4421,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.ExamCenter", b =>
                 {
+                    b.HasOne("Domain.Models.CompanyContact", "CompanyContact")
+                        .WithMany()
+                        .HasForeignKey("CompanyContactID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Domain.Models.Company", "Company")
                         .WithOne("ExamCenter")
                         .HasForeignKey("Domain.Models.ExamCenter", "CompanyID")
@@ -4393,8 +4457,8 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Models.ExamCenter", "ExamCenter")
-                        .WithOne("ListExamCenter")
-                        .HasForeignKey("Domain.Models.ListExamCenter", "ExamCenterID")
+                        .WithMany()
+                        .HasForeignKey("ExamCenterID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

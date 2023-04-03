@@ -16,8 +16,8 @@ namespace WeldingPassportsApp
     {
         public static async Task Main(string[] args)
         {
-            await (await CreateHostBuilder(args).Build().MigrateAsync("it@synergrid.be")).RunAsync();
-            //await (CreateHostBuilder(args).Build()).RunAsync();
+            //await (await CreateHostBuilder(args).Build().MigrateAsync("it@synergrid.be")).RunAsync();
+            await (CreateHostBuilder(args).Build()).RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -32,7 +32,7 @@ namespace Application.Requests.PEPassports
 
                 foreach(PEPassportDetailsRegistrationsIndexViewModel registrationIndexViewModel in request.PePassportUpdates.Certifications)
                 {
-                    if(!registrationIndexViewModel.HasNext)
+                    if(!registrationIndexViewModel.HasNextOrRevoked)
                     {
                         await _repository.PostCertificateUpdateAsync(registrationIndexViewModel.EncryptedID, registrationIndexViewModel.HasPassed, cancellationToken);
                     }

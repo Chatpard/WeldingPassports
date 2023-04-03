@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories.SQL;
+using Application.Security;
 using Application.ViewModels;
 using AutoMapper;
 using Domain.Models;
@@ -59,11 +60,47 @@ namespace Application.Requests.Examinations
             else
                 request.SearchString = request.CurrentFilter;
 
-            string userId = request.UserManager.GetUserId(request.Controller.User);
-            TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
-            int? trainingCenterId = trainingCenter?.ID;
-            ExamCenter examCenter = await _examCentersSQLRepository.GetExamCenterByUserId(userId);
-            int? examCenterId = examCenter?.ID;
+            int? trainingCenterId = 0;
+            if (request.Controller.User.IsInRole(RolesStore.TC))
+            {
+                string userId = request.UserManager.GetUserId(request.Controller.User);
+                TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
+                if (trainingCenter != null)
+                {
+                    trainingCenterId = trainingCenter?.ID;
+                }
+            }
+            else if (request.Controller.User.IsInRole(RolesStore.Admin)
+                || request.Controller.User.IsInRole(RolesStore.DSO))
+            {
+                trainingCenterId = null;
+            }
+
+            int? examCenterId = 0;
+            if (request.Controller.User.IsInRole(RolesStore.EC))
+            {
+                string userId = request.UserManager.GetUserId(request.Controller.User);
+                ExamCenter examCenter = await _examCentersSQLRepository.GetExamCenterByUserId(userId);
+                if (examCenter != null)
+                {
+                    examCenterId = examCenter?.ID;
+                }
+            }
+            else if (request.Controller.User.IsInRole(RolesStore.Admin)
+                || request.Controller.User.IsInRole(RolesStore.DSO))
+            {
+                examCenterId = null;
+            }
+
+            if(trainingCenterId != 0 && examCenterId == 0)
+            {
+                examCenterId = null;
+            }
+
+            if(examCenterId != 0 && trainingCenterId == 0)
+            {
+                trainingCenterId = null;
+            }
 
             request.Controller.ViewData["CurrentFilter"] = request.SearchString;
 

@@ -100,8 +100,8 @@
                             @Html.DisplayFor(modelItem => Model.Certifications[i].RegistrationTypeName)
                         </td>
                         <td>
-                            <input asp-for="Certifications[i].HasNext" hidden />
-                            @if (Model.Certifications[i].HasNext)
+                            <input asp-for="Certifications[i].HasNextOrRevoked" hidden />
+                            @if (Model.Certifications[i].HasNextOrRevoked)
                             {
                                 @Html.DisplayFor(modelItem => Model.Certifications[i].HasPassed)
                             }

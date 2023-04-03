@@ -21,10 +21,6 @@ namespace Application.Requests.API.CertificatesAPI
         public async Task<ActionResult<int?>> Handle(GetCompanyIDByPEPassportRequest request, CancellationToken cancellationToken)
         {
             int? companyID = await _repository.GetCompanyIDByPEPassport(request.PePassportID);
-            if (companyID == null)
-            {
-                return request.Controller.NotFound(companyID);
-            }
             return request.Controller.Ok(companyID);
         }
     }

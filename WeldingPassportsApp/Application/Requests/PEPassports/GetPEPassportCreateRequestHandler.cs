@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Security;
 
 namespace Application.Requests.PEPassports
 {
@@ -30,9 +31,20 @@ namespace Application.Requests.PEPassports
 
         public async Task<IActionResult> Handle(GetPEPassportCreateRequest request, CancellationToken cancellationToken)
         {
-            string userId = request.UserManager.GetUserId(request.Controller.User);
-            TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
-            int? trainingCenterId = trainingCenter?.ID;
+            int? trainingCenterId = 0;
+            if (request.Controller.User.IsInRole(RolesStore.TC))
+            {
+                string userId = request.UserManager.GetUserId(request.Controller.User);
+                TrainingCenter trainingCenter = await _trainingCentersSQLRepository.GetTrainingCenterByUserId(userId);
+                if (trainingCenter != null)
+                {
+                    trainingCenterId = trainingCenter?.ID;
+                }
+            }
+            else if (request.Controller.User.IsInRole(RolesStore.Admin))
+            {
+                trainingCenterId = null;
+            }
 
             if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                 request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;

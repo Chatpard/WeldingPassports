@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.PEPassports
 {
-    internal class GetPEPassportUpdateHandler : IRequestHandler<GetPEPassportUpdateRequest, IActionResult>
+    internal class GetPEPassportUpdateRequestHandler : IRequestHandler<GetPEPassportUpdateRequest, IActionResult>
     {
         private readonly IPEPassportsSQLRepository _repository;
 
-        public GetPEPassportUpdateHandler(IPEPassportsSQLRepository repository)
+        public GetPEPassportUpdateRequestHandler(IPEPassportsSQLRepository repository)
         {
             _repository = repository;
         }

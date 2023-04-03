@@ -132,7 +132,9 @@ namespace Application.Profiles
                 .ForMember(vm => vm.IsRevoked, options => options.MapFrom(group =>
                     group.Registration.Revoke != null))
                 .ForMember(vm => vm.Color, options => options.MapFrom(group =>
-                    group.UIColor.Color));
+                    group.UIColor.Color))
+                .ForMember(vm => vm.HasNextOrRevoked, options => options.MapFrom(group =>
+                    group.HasNextOrRevoked));
         }
     }
 }

@@ -80,6 +80,20 @@
             </th>
             <th>
                 <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
+                   asp-route-sortOrder="@ViewData["UserName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    @Html.DisplayNameFor(p => p.FirstOrDefault().UserName)
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "UserName_desc")
+                    {
+                        @Html.Raw(" ▲")
+                    }
+                    @if (Convert.ToString(ViewData["CurrentSort"]) == "UserName_asc")
+                    {
+                        @Html.Raw(" ▼")
+                    }
+                </a>
+            </th>
+            <th>
+                <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
                    asp-route-sortOrder="@ViewData["RoleName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().RoleName)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "RoleName_desc")
@@ -109,6 +123,9 @@
                     @Html.DisplayFor(vm => contact.Email)
                 </td>
                 <td>
+                    @Html.DisplayFor(vm => contact.UserName)
+                </td>
+                <td>
                     @Html.DisplayFor(vm => contact.RoleName)
                 </td>
                 <td>
@@ -122,7 +139,7 @@
                         <text>|</text> <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Edit)"
                            asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Edit"]</a>
                     }
-                    @if (UserCanDeleteCompanyContacts)
+                    @if (UserCanDeleteCompanyContacts && contact.RoleName == null)
                     {
                         <text>|</text> <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Delete)"
                            asp-route-id="@contact.EncryptedID" asp-route-returnUrl="@currentUrl">@Localizer["Delete"]</a>

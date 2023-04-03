@@ -42,6 +42,11 @@ namespace Application.Requests.ExamCenters
             request.Controller.ViewData["CurrentSort"] = request.SortOrder ?? "CompanyName_asc";
             request.Controller.ViewData["CompanyName"] = request.SortOrder == "CompanyName_desc" ? "CompanyName_asc" : "CompanyName_desc";
             request.Controller.ViewData["IsActive"] = request.SortOrder == "IsActive_desc" ? "IsActive_asc" : "IsActive_desc";
+            request.Controller.ViewData["BusinessAddressPostalCode"] = request.SortOrder == "BusinessAddressPostalCode_desc" ? "BusinessAddressPostalCode_asc" : "BusinessAddressPostalCode_desc";
+            request.Controller.ViewData["BusinessAddressCity"] = request.SortOrder == "BusinessAddressCity_desc" ? "BusinessAddressCity_asc" : "BusinessAddressCity_desc";
+            request.Controller.ViewData["Contact"] = request.SortOrder == "Contact_desc" ? "Contact_asc" : "Contact_desc";
+            request.Controller.ViewData["Email"] = request.SortOrder == "Email_desc" ? "Email_asc" : "Email_desc";
+            request.Controller.ViewData["MobilePhone"] = request.SortOrder == "MobilePhone_desc" ? "MobilePhone_asc" : "MobilePhone_desc";
 
             if (request.SearchString != null)
                 request.PageNumber = 1;
@@ -52,7 +57,8 @@ namespace Application.Requests.ExamCenters
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            IPaginatedList<ExamCenterIndexViewModel> vm = await _repository.GetExamCentersIndexPaginatedAsync(7, request.PageNumber ?? 1, request.SearchString, request.SortOrder);
+            IPaginatedList<ExamCenterIndexViewModel> vm = await _repository.GetExamCentersIndexPaginatedAsync(7, request.PageNumber ?? 1, 
+                request.SearchString, request.SortOrder);
 
             return request.Controller.View(vm);
         }

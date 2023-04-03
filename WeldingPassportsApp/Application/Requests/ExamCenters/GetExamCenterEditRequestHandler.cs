@@ -3,9 +3,7 @@ using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,11 +13,16 @@ namespace Application.Requests.ExamCenters
     {
         private readonly IExamCentersSQLRepository _repository;
         private readonly ICompaniesSQLRepository _companiesSQLRepository;
+        private readonly ICompanyContactsSQLRepository _companyContactsSQLRepository;
 
-        public GetExamCenterEditRequestHandler(IExamCentersSQLRepository repository, ICompaniesSQLRepository companiesSQLRepository)
+        public GetExamCenterEditRequestHandler(
+            IExamCentersSQLRepository repository, 
+            ICompaniesSQLRepository companiesSQLRepository,
+            ICompanyContactsSQLRepository companyContactsSQLRepository)
         {
             _repository=repository;
             _companiesSQLRepository=companiesSQLRepository;
+            _companyContactsSQLRepository=companyContactsSQLRepository;
         }
 
         public async Task<IActionResult> Handle(GetExamCenterEditRequest request, CancellationToken cancellationToken)
@@ -37,7 +40,8 @@ namespace Application.Requests.ExamCenters
             ExamCenterEditViewModel vm = await _repository.GetExamCentersEdit(request.EncryptedID);
             //Todo: CompanySelectList unused Companies
             vm.CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned:true, vm.CompanyID);
-            
+            vm.CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactExamCenterSelectList(vm.EncryptedID);
+
             return request.Controller.View(vm);
         }
     }

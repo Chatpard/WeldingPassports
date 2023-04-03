@@ -7,6 +7,6 @@ namespace Application.Interfaces.Repositories.SQL
 {
     public interface IAppRolesSQLRepository
     {
-        SelectList RoleNamesSelectList();
+        SelectList RoleNamesSelectList(int? companyID = null);
     }
 }

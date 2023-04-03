@@ -831,6 +831,7 @@ namespace Infrastructure.Repositories.SQL
                         )
                     )
                 )
+                .Distinct()
                 .Select(pprp2r => new
                 {
                     ID = pprp2r.Process.ID,

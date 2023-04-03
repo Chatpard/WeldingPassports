@@ -76,9 +76,11 @@ namespace Application.Profiles
                 .ForMember(index => index.Email, options => options.MapFrom(companyContact =>
                     companyContact.Email))
                 .ForMember(index => index.BusinessPhone, options => options.MapFrom(companyContact =>
-                        companyContact.BusinessPhone))
+                    companyContact.BusinessPhone))
                 .ForMember(index => index.MobilePhone, options => options.MapFrom(companyContact =>
-                        companyContact.MobilePhone))
+                    companyContact.MobilePhone))
+                .ForMember(index => index.UserName, options => options.MapFrom(companyContact =>
+                    companyContact.AppUser.UserName))
                 .ForMember(index => index.RoleName, options => options.MapFrom(companyContact =>
                     companyContact.AppUser.AppUserRoles.FirstOrDefault().AppRole.RoleName));
         }

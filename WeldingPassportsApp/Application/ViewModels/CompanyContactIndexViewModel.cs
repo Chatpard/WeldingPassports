@@ -23,7 +23,10 @@ namespace Application.ViewModels
         
         [Display(Name = "Mobile Phone")]
         public string MobilePhone { get; set; }
-        
+
+        [Display(Name = "Login")]
+        public string UserName { get; set; }
+
         [Display(Name = "Role")]
         public string RoleName { get; set; }
     }

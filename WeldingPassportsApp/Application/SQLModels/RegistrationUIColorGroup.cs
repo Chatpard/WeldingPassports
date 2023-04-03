@@ -11,6 +11,6 @@ namespace Application.SQLModels
         public Registration Registration { get; set; }
         public UIColor UIColor { get; set; }
 
-        public bool HasNext { get; set; }
+        public bool HasNextOrRevoked { get; set; }
     }
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Application.SQLModels;
+using Application.Security;
+using Domain.Models;
 
 namespace Infrastructure.Repositories.SQL
 {
@@ -18,14 +20,37 @@ namespace Infrastructure.Repositories.SQL
             _context = context;
         }
 
-        public SelectList RoleNamesSelectList()
+        public SelectList RoleNamesSelectList(int? companyID = null)
         {
-            var RoleNames = _context.Roles.Select(role => new RoleNamesSelectListSQLModel
+            IQueryable<AppRole> roles = _context.Roles;
+
+            if(companyID != null)
+            {
+                if(_context.TrainingCenters.Any(trainingCenter => trainingCenter.CompanyID == companyID))
+                {
+                    roles = roles.Where(role => role.Name == RolesStore.TC);
+                }
+                else
+                {
+                    roles = roles.Where(role => role.Name != RolesStore.TC);
+                }
+                
+                if (_context.ExamCenters.Any(examCenter => examCenter.CompanyID == companyID))
+                {
+                    roles = roles.Where(role => role.Name == RolesStore.EC);
+                }
+                else
+                {
+                    roles = roles.Where(role => role.Name != RolesStore.EC);
+                }
+            }
+
+            var roleNames = roles.Select(role => new RoleNamesSelectListSQLModel
             {
                 ID = role.Id,
                 RoleName = role.RoleName,
             });
-            return new SelectList(RoleNames, nameof(RoleNamesSelectListSQLModel.ID), nameof(RoleNamesSelectListSQLModel.RoleName));
+            return new SelectList(roleNames, nameof(RoleNamesSelectListSQLModel.ID), nameof(RoleNamesSelectListSQLModel.RoleName));
         }
     }
 }

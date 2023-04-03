@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,8 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
+            ListTrainingCenter listTrainingCenter = await _context.ListTrainingCenter.Where(listTrainingCenter => listTrainingCenter.TrainingCenterID == decryptedID).SingleOrDefaultAsync();
+            _context.ListTrainingCenter.Remove(listTrainingCenter);
             _context.TrainingCenters.Remove(new TrainingCenter { ID = decryptedID });
 
             return await SaveChangesAsync(token);

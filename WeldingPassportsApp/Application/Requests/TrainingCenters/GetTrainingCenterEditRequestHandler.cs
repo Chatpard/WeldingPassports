@@ -2,9 +2,6 @@
 using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using Application.Interfaces.Repositories.SQL;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -17,7 +14,10 @@ namespace Application.Requests.TrainingCenters
         private readonly ICompaniesSQLRepository _companiesSQLRepository;
         private readonly ICompanyContactsSQLRepository _companyContactsSQLRepository;
 
-        public GetTrainingCenterEditRequestHandler(ITrainingCentersSQLRepository repository, ICompaniesSQLRepository companiesSQLRepository, ICompanyContactsSQLRepository companyContactsSQLRepository)
+        public GetTrainingCenterEditRequestHandler(
+            ITrainingCentersSQLRepository repository, 
+            ICompaniesSQLRepository companiesSQLRepository, 
+            ICompanyContactsSQLRepository companyContactsSQLRepository)
         {
             _repository = repository;
             _companiesSQLRepository = companiesSQLRepository;
@@ -26,7 +26,12 @@ namespace Application.Requests.TrainingCenters
 
         public async Task<ActionResult> Handle(GetTrainingCenterEditRequest request, CancellationToken cancellationToken)
         {
-            if(request.Controller.Url.IsLocalUrl(request.ReturnUrl))
+            if (request.EncryptedID == "null")
+            {
+                return request.Controller.LocalRedirect(request.ReturnUrl);
+            }
+
+            if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                 request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();

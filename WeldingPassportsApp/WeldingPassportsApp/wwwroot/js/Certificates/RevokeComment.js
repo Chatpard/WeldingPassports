@@ -8,6 +8,7 @@
 
         revokeCommentError.remove();
         revokeComment.prop("disabled", true);
+        revokeComment.val("");
     }
     else {
         revokeComment.rules("add", { required: true });

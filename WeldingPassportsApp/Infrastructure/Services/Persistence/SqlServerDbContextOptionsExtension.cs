@@ -15,7 +15,7 @@ namespace Infrastructure.Services.Persistence
 
         public void ApplyServices(IServiceCollection services)
         {
-            services.AddSingleton<IMethodCallTranslatorPlugin, SqlServerMethodCallTranslatorPlugin>();
+            services.AddSingleton<IMethodCallTranslatorPlugin, RelationalMethodCallTranslatorPlugin>();
         }
 
         public long GetServiceProviderHashCode()

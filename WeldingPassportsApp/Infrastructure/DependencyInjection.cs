@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure
@@ -25,9 +26,9 @@ namespace Infrastructure
             services.AddDbContext<AppDbContext>(
                 options =>
                 {
-
-                    options.UseSqlServer(config.GetConnectionString("WeldingPassportsDBConnection"), 
-                        sqlServerOptions => sqlServerOptions.AddRowNumberSupport());
+                    options
+                       .UseSqlServer(config.GetConnectionString("WeldingPassportsDBConnection"),
+                            sqlServerOptions => sqlServerOptions.AddRowNumberSupport());
 
                     if (env.IsDevelopment())
                         options.EnableSensitiveDataLogging();

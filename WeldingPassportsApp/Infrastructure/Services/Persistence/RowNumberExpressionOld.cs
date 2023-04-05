@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Infrastructure.Services.Persistence
 {
-    public class RowNumberExpression : SqlExpression
+    public class RowNumberExpressionOld : SqlExpression
     {
         private readonly IReadOnlyCollection<SqlExpression> _orderBy;
 
@@ -19,7 +19,7 @@ namespace Infrastructure.Services.Persistence
         public override Type Type => typeof(long);
         public override bool CanReduce => false;
 
-        public RowNumberExpression(IReadOnlyCollection<SqlExpression> orderBy) : base(orderBy.FirstOrDefault().Type, orderBy.FirstOrDefault().TypeMapping)
+        public RowNumberExpressionOld(IReadOnlyCollection<SqlExpression> orderBy) : base(orderBy.FirstOrDefault().Type, orderBy.FirstOrDefault().TypeMapping)
         {
             //ICollection<SqlExpression> _orderByTemp = new Collection<SqlExpression>();
             //var operantVisitor = new OperandVisitor();
@@ -40,7 +40,7 @@ namespace Infrastructure.Services.Persistence
             if (ReferenceEquals(_orderBy, visitedOrderBy))
                 return this;
 
-            return new RowNumberExpression(visitedOrderBy);
+            return new RowNumberExpressionOld(visitedOrderBy);
         }
 
         protected override Expression Accept(ExpressionVisitor visitor)

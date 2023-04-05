@@ -5,15 +5,15 @@ using System.Text;
 
 namespace Infrastructure.Services.Persistence
 {
-    public class SqlServerMethodCallTranslatorPlugin : IMethodCallTranslatorPlugin
+    public class RelationalMethodCallTranslatorPlugin : IMethodCallTranslatorPlugin
     {
         public IEnumerable<IMethodCallTranslator> Translators { get;  }
 
-        public SqlServerMethodCallTranslatorPlugin()
+        public RelationalMethodCallTranslatorPlugin(ISqlExpressionFactory sqlExpressionFactory)
         {
             Translators = new List<IMethodCallTranslator>
             {
-                new SqlServerRowNumberTranslator()
+                new RationalRowNumberTranslator(sqlExpressionFactory)
             };
         }
     }

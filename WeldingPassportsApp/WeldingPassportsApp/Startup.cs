@@ -15,7 +15,9 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -27,10 +29,11 @@ namespace WeldingPassportsApp
     {
         private readonly IConfiguration _config;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger<Startup> _logger;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public Startup(IConfiguration config, IWebHostEnvironment env)
         {
-            _config = configuration;
+            _config = config ?? throw new ArgumentNullException(nameof(config));
             _env = env;
         }
 
@@ -50,6 +53,8 @@ namespace WeldingPassportsApp
             services.Configure<CookieTempDataProviderOptions>(options => {
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddLogging(builder => builder.AddConsole());
 
             services.RegisterInfrastructure(_config, _env);
 

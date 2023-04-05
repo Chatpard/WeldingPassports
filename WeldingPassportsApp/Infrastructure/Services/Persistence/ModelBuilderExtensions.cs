@@ -13,7 +13,7 @@ namespace Infrastructure.Services.Persistence
 {
     public static class ModelBuilderExtensions
     {
-        private static readonly MethodInfo _rowNumberMethod = typeof(DbFunctionsExtensions).GetMethod(nameof(DbFunctionsExtensions.RowNumber), new[] { typeof(object) });
+        private static readonly MethodInfo _rowNumberMethod = typeof(RelationalDbFunctionsExtensions).GetMethod(nameof(RelationalDbFunctionsExtensions.RowNumber), new[] { typeof(object) });
 
         public static ModelBuilder AddRowNumberSupport(this ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Infrastructure.Services.Persistence
                         .HasTranslation(expression =>
                         {
                             ReadOnlyCollection<SqlExpression> orderByParams = ExtractParams(expression.First());
-                            return new RowNumberExpression(orderByParams);
+                            return new RowNumberExpressionOld(orderByParams);
                         });
 
             return modelBuilder;

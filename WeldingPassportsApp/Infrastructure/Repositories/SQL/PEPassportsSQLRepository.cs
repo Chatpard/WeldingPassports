@@ -116,7 +116,7 @@ namespace Infrastructure.Repositories.SQL
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
             var test =
-                _context.PEPassports.Select(x => new { RowNumber = EF.Functions.RowNumber(x.AVNumber) });
+                _context.PEPassports.Select(x => new { RowNumber = EF.Functions.RowNumber(EF.Functions.OrderBy(x.AVNumber)) });
             var test1 = await test.FirstOrDefaultAsync();
             if (test1 != null)
             {

@@ -7,7 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -21,7 +24,8 @@ namespace Infrastructure.Services.Persistence
 {
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, string, IdentityUserClaim<string>, AppUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>, IAppDbContext
     {
-        private readonly IWebHostEnvironment _env;       
+        private readonly IWebHostEnvironment _env;
+
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AppSettings> AppSettings { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
@@ -46,8 +50,13 @@ namespace Infrastructure.Services.Persistence
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IWebHostEnvironment env) : base(options)
         {
-            _env = env;
-            
+            _env = env ?? throw new ArgumentNullException(nameof(env));
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.LogTo(Console.WriteLine);
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

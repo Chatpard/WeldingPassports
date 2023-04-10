@@ -7,21 +7,30 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Process = Domain.Models.Process;
 
 namespace Infrastructure.Services.Persistence
 {
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, string, IdentityUserClaim<string>, AppUserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>, IAppDbContext
     {
-        private readonly IWebHostEnvironment _env;       
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
+
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AppSettings> AppSettings { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
@@ -44,17 +53,42 @@ namespace Infrastructure.Services.Persistence
         public DbSet<UserToApprove> UsersToApprove { get; set; }
         public DbSet<AllowedRegistrationType> AllowedRegistrationTypes { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IWebHostEnvironment env) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration config, IWebHostEnvironment env) : base(options)
         {
-            _env = env;
-            
+            _config=config ?? throw new ArgumentNullException(nameof(config));
+            _env = env ?? throw new ArgumentNullException(nameof(env));
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_config.GetConnectionString("WeldingPassportsDBConnection"));
+
+            if (_env.IsDevelopment())
+                optionsBuilder
+                    .LogTo(message => Debug.WriteLine(message))
+                    .EnableSensitiveDataLogging();
+
+            base.OnConfiguring(optionsBuilder);
+        }
+
+        //https://learn.microsoft.com/en-us/ef/core/querying/user-defined-function-mapping
+        public static string Format(int number, string format)
+        {
+            throw new NotImplementedException("This method is for us with Entity Framework Core only and has no in-memory implementation.");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.AddRowNumberSupport();
+            modelBuilder
+                .HasDbFunction(typeof(AppDbContext).GetMethod(nameof(AppDbContext.Format)))
+                .HasTranslation(args =>
+                    new SqlFunctionExpression(
+                        functionName: "FORMAT",
+                        arguments: args,
+                        nullable: true,
+                        argumentsPropagateNullability: new[] {true, true},
+                        type: typeof(string),
+                        typeMapping: null));
 
             modelBuilder.Entity<AppUser>(b => 
             {
@@ -81,6 +115,8 @@ namespace Infrastructure.Services.Persistence
             modelBuilder.Entity<TrainingCenter>().HasIndex(trainingCenter => trainingCenter.Letter).IsUnique();
 
             modelBuilder.Seed(_env);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         override async public Task<int> SaveChangesAsync(CancellationToken cancellationToken)

@@ -15,7 +15,9 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -28,9 +30,12 @@ namespace WeldingPassportsApp
         private readonly IConfiguration _config;
         private readonly IWebHostEnvironment _env;
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public Startup(IConfiguration config, IWebHostEnvironment env)
         {
-            _config = configuration;
+            ArgumentNullException.ThrowIfNull(config, nameof(config));
+            ArgumentNullException.ThrowIfNull(env, nameof(env));
+
+            _config = config;
             _env = env;
         }
 
@@ -51,7 +56,7 @@ namespace WeldingPassportsApp
                 options.Cookie.IsEssential = true;
             });
 
-            services.RegisterInfrastructure(_config, _env);
+            services.RegisterInfrastructure();
 
             services.RegisterApplication();
 
@@ -102,8 +107,8 @@ namespace WeldingPassportsApp
             services.AddAuthentication()
                 .AddMicrosoftAccount(options =>
                 {
-                    options.ClientId = _config["Authentication:Microsoft:ClientId"];
-                    options.ClientSecret = _config["Authentication:Microsoft:ClientSecret"];
+                    options.ClientId = _config["Authentication:Microsoft:ClientId"] ?? throw new InvalidOperationException($"Microsoft Authentication CliendId is missing at '{nameof(Startup)}'.");
+                    options.ClientSecret = _config["Authentication:Microsoft:ClientSecret"] ?? throw new InvalidOperationException($"Microsoft Authentication CliendSecret is missing at '{nameof(Startup)}'.");
                 });
 
             services.AddAuthorization(options =>
@@ -146,7 +151,10 @@ namespace WeldingPassportsApp
             app.UseCors(options => options.AllowAnyOrigin());
 
             var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
+            if(options !=  null)
+                app.UseRequestLocalization(options.Value);
+            else
+                app.UseRequestLocalization();
 
             app.UseAuthentication();
             app.UseAuthorization();

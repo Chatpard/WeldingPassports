@@ -8,12 +8,9 @@ using Infrastructure.Services;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Infrastructure
@@ -21,19 +18,9 @@ namespace Infrastructure
     [ExcludeFromCodeCoverage]
     public static class DependencyInjection
     {
-        public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env)
+        public static IServiceCollection RegisterInfrastructure(this IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(
-                options =>
-                {
-                    options
-                       .UseSqlServer(config.GetConnectionString("WeldingPassportsDBConnection"),
-                            sqlServerOptions => sqlServerOptions.AddRowNumberSupport());
-
-                    if (env.IsDevelopment())
-                        options.EnableSensitiveDataLogging();
-                }
-            );
+            services.AddDbContext<AppDbContext>();
 
             services.AddScoped(provider => provider.GetService<IAppDbContext>());
 

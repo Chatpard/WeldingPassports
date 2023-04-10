@@ -115,14 +115,6 @@ namespace Infrastructure.Repositories.SQL
 
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
-            var test =
-                _context.PEPassports.Select(x => new { RowNumber = EF.Functions.RowNumber(EF.Functions.OrderBy(x.AVNumber)) });
-            var test1 = await test.FirstOrDefaultAsync();
-            if (test1 != null)
-            {
-                var num = test1.RowNumber;
-            }
-
             IQueryable<PEPassport> query =
                 _context.PEPassports.Where(passport => passport.ID == decryptedID);
     
@@ -262,7 +254,7 @@ namespace Infrastructure.Repositories.SQL
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                passportsQuery = passportsQuery.Where(passport => (passport.Letter.ToString() + passport.AVNumber.ToString()).ToLower().Contains(searchString.ToLower())
+                passportsQuery = passportsQuery.Where(passport => (passport.Letter.ToString() + AppDbContext.Format(passport.AVNumber,"D5")).ToLower().Contains(searchString.ToLower())
                     || passport.Letter.ToString().ToLower().Contains(searchString.ToLower())
                     || passport.AVNumber.ToString().ToLower().Contains(searchString.ToLower())
                     || passport.FirstName.ToLower().Contains(searchString.ToLower())

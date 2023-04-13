@@ -17,10 +17,10 @@ namespace Application.Requests.CompanyContacts
 {
     public class GetCompanyContactsIndexRequestHandler : IRequestHandler<GetCompanyContactsIndexRequest, IActionResult>
     {
-        private readonly IContactsSQLRepository _repository;
+        private readonly ICompanyContactsSQLRepository _repository;
         private readonly IMapper _mapper;
 
-        public GetCompanyContactsIndexRequestHandler(IContactsSQLRepository repository, IMapper mapper)
+        public GetCompanyContactsIndexRequestHandler(ICompanyContactsSQLRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -44,7 +44,7 @@ namespace Application.Requests.CompanyContacts
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetContactsIndexPaginatedAsync(7, request.PageNumber ?? 1,
+            var vm = await _repository.GetCompanyContactsIndexPaginatedAsync(7, request.PageNumber ?? 1,
                 request.SearchString, request.SortOrder);
 
             request.Controller.TempData.Clear();

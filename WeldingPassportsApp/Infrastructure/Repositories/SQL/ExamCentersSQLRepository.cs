@@ -4,6 +4,7 @@ using Application.Requests.ExamCenters;
 using Application.Security;
 using Application.ViewModels;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain.Models;
 using Infrastructure.Services.Persistence;
 using Microsoft.AspNetCore.DataProtection;
@@ -52,20 +53,20 @@ namespace Infrastructure.Repositories.SQL
             return await PaginatedList<ExamCenterIndexViewModel>.CreateAsync(examCentersQuery.AsNoTracking(), pageIndex, pageSize);
         }
 
-        public async Task<ExamCenterDetailsViewModel> GetExamCentersDetails(string encryptedID)
+        public async Task<ExamCenterDetailsViewModel> GetExamCentersDetailsAsync(string encryptedID)
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
-            ExamCenter examCenter = await _context.ExamCenters.Where(ec => ec.ID == decryptedID).Include(examCenter => examCenter.Company).FirstOrDefaultAsync();
+            IQueryable<ExamCenter> query = _context.ExamCenters.Where(ec => ec.ID == decryptedID);
 
-            return _mapper.Map<ExamCenterDetailsViewModel>(examCenter);
+            return await query.ProjectTo<ExamCenterDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
-        public async Task<EntityEntry> PostExamCentersCreateAsync(ExamCenter examCenter)
+        public EntityEntry<ExamCenter> PostExamCentersCreate(ExamCenter newExamCenter)
         {
-            EntityEntry newExamCenter = await _context.ExamCenters.AddAsync(examCenter);
-            newExamCenter.State = EntityState.Added;
-            return newExamCenter;
+            EntityEntry<ExamCenter> newExamCenterEntityEntry = _context.Entry(newExamCenter);
+            newExamCenterEntityEntry.State = EntityState.Added;
+            return newExamCenterEntityEntry;
         }
 
         public async Task<ExamCenterEditViewModel> GetExamCentersEdit(string encryptedID)

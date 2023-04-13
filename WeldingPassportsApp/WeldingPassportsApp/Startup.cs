@@ -1,6 +1,7 @@
 using Application;
 using Application.Security;
 using Domain;
+using Domain.Models;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -97,7 +98,7 @@ namespace WeldingPassportsApp
 
             if (_env.IsDevelopment())
                 mvcBuilder.AddRazorRuntimeCompilation();
-
+            
             /*
              * Microsoft Account external login setup with ASP.NET Core
              * https://docs.microsoft.com/en-us/aspnet/core/security/authentication/social/microsoft-logins?view=aspnetcore-6.0

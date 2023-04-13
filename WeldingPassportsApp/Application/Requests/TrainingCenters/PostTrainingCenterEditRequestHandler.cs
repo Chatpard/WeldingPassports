@@ -11,14 +11,12 @@ namespace Application.Requests.TrainingCenters
     class PostTrainingCenterEditRequestHandler : IRequestHandler<PostTrainingCenterEditRequest, ActionResult>
     {
         private readonly ITrainingCentersSQLRepository _repository;
-        private readonly IListTrainingCentersSQLRepository _listTrainingCentersSQLRepository;
         private readonly IMapper _mapper;
 
-        public PostTrainingCenterEditRequestHandler(ITrainingCentersSQLRepository repository, IListTrainingCentersSQLRepository listTrainingCentersSQLRepository, IMapper mapper)
+        public PostTrainingCenterEditRequestHandler(ITrainingCentersSQLRepository repository, IMapper mapper)
         {
-            _repository = repository;
-            _listTrainingCentersSQLRepository = listTrainingCentersSQLRepository;
-            _mapper = mapper;
+            _repository=repository;
+            _mapper=mapper;
         }
 
         public async Task<ActionResult> Handle(PostTrainingCenterEditRequest request, CancellationToken cancellationToken)
@@ -28,17 +26,14 @@ namespace Application.Requests.TrainingCenters
                 if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
-                TrainingCenter trainingCenterChanges = _mapper.Map<TrainingCenter>(request.TrainingCenterChanges);
-                _repository.PostTrainingCenterEditAsync(trainingCenterChanges);
-                await _repository.SaveChangesAsync(cancellationToken);
-
-                await _listTrainingCentersSQLRepository.Edit(trainingCenterChanges.ID, request.TrainingCenterChanges.CompanyContactID);
+                TrainingCenter trainingCenterChanges = _mapper.Map<TrainingCenter>(request.TrainingCenterEditVM);
+                _repository.PostTrainingCenterEdit(trainingCenterChanges);
                 await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }
 
-            return request.Controller.View();
+            return request.Controller.View(request.TrainingCenterEditVM);
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<TrainingCenterEditViewModel> GetTrainingCenterEditAsync(string encryptedID);
 
-        Task<EntityEntry<TrainingCenter>> PostTrainingCenterCreateAsync(TrainingCenter trainingCenterChanges);
+        EntityEntry<TrainingCenter> PostTrainingCenterCreate(TrainingCenter newTrainingCenter);
 
-        EntityEntry<TrainingCenter> PostTrainingCenterEditAsync(TrainingCenter trainingCenterChanges);
+        EntityEntry<TrainingCenter> PostTrainingCenterEdit(TrainingCenter trainingCenterChanges);
 
         Task<int> DeleteTrainingCenterByEncryptedIDAsync(string encryptedID, CancellationToken token);
 

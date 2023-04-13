@@ -17,20 +17,6 @@
     }
     var adminUsers = await _userManager.GetUsersInRoleAsync(RolesStore.Admin);
 
-    //Todo: deserialize TempData
-    //if(TempData.ContainsKey(nameof(CompanyContactEditViewModel)))
-    //{
-    //    CompanyContactEditViewModel viewData = JsonSerializer.Deserialize<CompanyContactEditViewModel>(TempData[nameof(CompanyContactEditViewModel)].ToString());
-
-    //    Model.ContactID = viewData.ContactID;
-    //    Model.CompanyID = viewData.CompanyID;
-    //    Model.JobTitle = viewData.JobTitle;
-    //    Model.BusinessPhone = viewData.BusinessPhone;
-    //    Model.MobilePhone = viewData.MobilePhone;
-    //    Model.Email = viewData.Email;
-    //    Model.AddressID = viewData.AddressID;
-    //}
-
     if (TempData.ContainsKey(nameof(CompanyContactEditViewModel.ContactID)))
         if (TempData[nameof(CompanyContactEditViewModel.ContactID)] != null)
             Model.ContactID = (int) TempData[nameof(CompanyContactEditViewModel.ContactID)];
@@ -63,207 +49,184 @@
 
 <h1>@Localizer["Edit Contact"]</h1>
 <hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Edit)" asp-route-returnUrl="@returnUrl" asp-route-currentUrl="@currentUrl" method="post" onsubmit="PrepareFormOnsubmit()">
-            <input asp-for="EncryptedID" title="EncryptedID" placeholder="EncryptedID" hidden />
-            <div class="form-group row">
-                <label asp-for="ContactID" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="input-group align-self-center">
-                        <select asp-for="ContactID" class="form-control align-self-center" asp-items="@Model.ContactSelectList">
-                            <option value="" selected disabled hidden>@Localizer["Choose a Contact"]</option>
-                        </select>
-                        @if (userCanEditContacts || userCanCreateContacts)
+<form asp-action="@nameof(CompanyContactsController.Edit)" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" 
+      asp-route-returnUrl="@returnUrl" asp-route-currentUrl="@currentUrl" method="post" onsubmit="PrepareFormOnsubmit()">
+    <input asp-for="EncryptedID" title="@nameof(Model.EncryptedID)" placeholder="@nameof(Model.EncryptedID)" hidden />
+    <div class="form-group row mb-3">
+        <label asp-for="ContactID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10 align-self-center">
+            <div class="input-group">
+                <select asp-for="ContactID" class="form-control align-self-center" asp-items="@Model.ContactSelectList">
+                    <option value="" selected disabled hidden>@Localizer["Choose a Contact"]</option>
+                </select>
+                @if (userCanEditContacts || userCanCreateContacts)
+                {
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetContactEditBtnID')">
+                        @Localizer["Action"]
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        @if (userCanEditContacts)
                         {
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetContactEditBtnID')">
-                                    @Localizer["Action"]
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    @if (userCanEditContacts)
-                                    {
-                                        <button class="dropdown-item" type="submit" name="submit" value="@CompanyContactIDStore.GetContactEditBtnID" id="@CompanyContactIDStore.GetContactEditBtnID" style="width:auto">@Localizer["Edit"]</button>
-                                    }
-                                    @if (userCanCreateContacts)
-                                    {
-                                        <a class="dropdown-item" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
-                                    }
-                                </div>
-                            </div>
+                            <li><button class="dropdown-item" type="submit" name="submit" value="@CompanyContactIDStore.GetContactEditBtnID" id="@CompanyContactIDStore.GetContactEditBtnID" style="width:auto">@Localizer["Edit"]</button></li>
                         }
-                        <div class="input-group-append">
-                            <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
-                        </div>
-                    </div>
-                    <span asp-validation-for="ContactID" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="input-group align-self-center">
-                        <select asp-for="CompanyID" class="form-control align-self-center" asp-items="@Model.CompanySelectList">
-                            <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
-                        </select>
-                        @if (userCanEditCompanies || userCanCreateCompanies)
+                        @if (userCanCreateContacts)
                         {
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetCompanyEditBtnID')">
-                                    @Localizer["Action"]
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    @if(userCanEditCompanies)
-                                    {
-                                        <button type="submit" name="submit" value="@CompanyContactIDStore.GetCompanyEditBtnID" id="@CompanyContactIDStore.GetCompanyEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
-                                    }
-                                    @if (userCanCreateCompanies)
-                                    {
-                                        <a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a>
-                                    }
-                                </div>
-                            </div>
+                            <li><a class="dropdown-item" asp-controller="@typeof(ContactsController).GetNameOfController()" asp-action="@nameof(ContactsController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a></li>
                         }
-                        <div class="input-group-append">
-                            <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
-                        </div>
-                    </div>
-                    <span asp-validation-for="CompanyID" class="text-danger"></span>
-                </div>
+                    </ul>
+                }
+                <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ContactID'))" />
             </div>
-            <div class="form-group row">
-                <label asp-for="JobTitle" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="align-self-center">
-                        <input asp-for="JobTitle" class="form-control" placeholder=@Localizer["Job Title"] />
-                    </div>
-                    <span asp-validation-for="JobTitle" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="BusinessPhone" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="align-self-center">
-                        <input asp-for="BusinessPhone" class="form-control" placeholder=@Localizer["Business Phone"] />
-                    </div>
-                    <span asp-validation-for="BusinessPhone" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="MobilePhone" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="align-self-center">
-                        <input asp-for="MobilePhone" class="form-control" placeholder=@Localizer["Mobile Phone"] />
-                    </div>
-                    <span asp-validation-for="MobilePhone" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label asp-for="Email" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="align-self-center">
-                        <input asp-for="Email" class="form-control" placeholder=@Localizer["Email"] />
-                    </div>
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-            </div>
-            <h4>@Localizer["Business Address"]</h4>
-            <div class="form-group row">
-                <label asp-for="AddressID" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10">
-                    <div class="input-group align-self-center">
-                        <select asp-for="AddressID" class="form-control" asp-items="@Model.AddressSelectList">
-                            <option value="" selected disabled hidden>@Localizer["Choose an Address"]</option>
-                        </select>
-                        @if(userCanEditAddresses || userCanCreateAddresses)
-                        {
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetAddressEditBtnID')">
-                                    @Localizer["Action"]
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    @if(userCanEditAddresses)
-                                    {
-                                        <button type="submit" name="submit" value="@CompanyContactIDStore.GetAddressEditBtnID" id="@CompanyContactIDStore.GetAddressEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button>
-                                    }
-                                    @if(userCanCreateAddresses)
-                                    {
-                                        <a class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">Create</a>
-                                    }
-                                </div>
-                            </div>
-                        }
-                        <div class="input-group-append">
-                            <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AddressID'))" />
-                        </div>
-                    </div>
-                    <span asp-validation-for="AddressID" class="text-danger"></span>
-                </div>
-            </div>
-            @if (User.IsInRole(RolesStore.Admin))
-            {
-                <h4>@Localizer["User"]</h4>
-                <div class="form-group row">
-                    <label asp-for="AppUserID" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <div class="input-group align-self-center">
-                            @if(Model.AppRoleID == null)
-                            {
-                                <select asp-for="AppUserID" class="form-control" asp-items="@Model.AppUsersSelectList" onchange="OnChangeAppUserID()">
-                                    <option value="" selected disabled hidden>@Localizer["Choose a User"]</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <input class="btn btn-primary" id="AppUserIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppUserID'))" />
-                                </div>
-                            }
-                            else
-                            {
-                                <select asp-for="AppUserID" class="form-control" asp-items="@Model.AppUsersSelectList" disabled="disabled" onchange="OnChangeAppUserID()">
-                                    <option value="" selected disabled hidden>@Localizer["Choose a User"]</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <input class="btn btn-primary" id="AppUserIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppUserID'))" disabled="disabled" />
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label asp-for="AppRoleID" class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <div class="input-group align-self-center">
-                            @if (Model.AppUserID == null || (appRole.Name == RolesStore.Admin && adminUsers.Count() < 2))
-                            {
-                                <select asp-for="AppRoleID" class="form-control" asp-items="@Model.RoleNamesSelectList" disabled="disabled" onchange="OnChangeAppRoleID()">
-                                    <option value="" selected disabled hidden>@Localizer["Choose a Role"]</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <input class="btn btn-primary" id="AppRoleIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppRoleID'))" disabled="disabled" />
-                                </div>
-                            }
-                            else
-                            {
-                                <select asp-for="AppRoleID" class="form-control" asp-items="@Model.RoleNamesSelectList" onchange="OnChangeAppRoleID()">
-                                    <option value="" selected disabled hidden>@Localizer["Choose a Role"]</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <input class="btn btn-primary" id="AppRoleIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppRoleID'))" />
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
-            <div class="form-group row">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
-                    <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
-                </div>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            </div>
-        </form>
+            <span asp-validation-for="ContactID" class="text-danger"></span>
+        </div>
     </div>
-</div>
+    <div class="form-group row mb-3">
+        <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10 align-self-center">
+            <div class="input-group">
+                <select asp-for="CompanyID" class="form-control align-self-center" asp-items="@Model.CompanySelectList">
+                    <option value="" selected disabled hidden>@Localizer["Choose a Company"]</option>
+                </select>
+                @if (userCanEditCompanies || userCanCreateCompanies)
+                {
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetCompanyEditBtnID')">
+                        @Localizer["Action"]
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        @if(userCanEditCompanies)
+                        {
+                            <li><button type="submit" name="submit" value="@CompanyContactIDStore.GetCompanyEditBtnID" id="@CompanyContactIDStore.GetCompanyEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button></li>
+                        }
+                        @if (userCanCreateCompanies)
+                        {
+                            <li><a class="dropdown-item" type="button" asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a></li>
+                        }
+                    </ul>
+                }
+                <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" />
+            </div>
+            <span asp-validation-for="CompanyID" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="JobTitle" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="align-self-center">
+                <input asp-for="JobTitle" class="form-control" placeholder=@Localizer["Job Title"] />
+            </div>
+            <span asp-validation-for="JobTitle" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="BusinessPhone" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="align-self-center">
+                <input asp-for="BusinessPhone" class="form-control" placeholder=@Localizer["Business Phone"] />
+            </div>
+            <span asp-validation-for="BusinessPhone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="MobilePhone" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="align-self-center">
+                <input asp-for="MobilePhone" class="form-control" placeholder=@Localizer["Mobile Phone"] />
+            </div>
+            <span asp-validation-for="MobilePhone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row mb-3">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="align-self-center">
+                <input asp-for="Email" class="form-control" placeholder=@Localizer["Email"] />
+            </div>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <h4>@Localizer["Business Address"]</h4>
+    <div class="form-group row mb-3">
+        <label asp-for="AddressID" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="input-group align-self-center">
+                <select asp-for="AddressID" class="form-control" asp-items="@Model.AddressSelectList">
+                    <option value="" selected disabled hidden>@Localizer["Choose an Address"]</option>
+                </select>
+                @if(userCanEditAddresses || userCanCreateAddresses)
+                {
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="ActionDisableEdit('@CompanyContactIDStore.GetAddressEditBtnID')">
+                        @Localizer["Action"]
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        @if(userCanEditAddresses)
+                        {
+                            <li><button type="submit" name="submit" value="@CompanyContactIDStore.GetAddressEditBtnID" id="@CompanyContactIDStore.GetAddressEditBtnID" class="dropdown-item" style="width:auto">@Localizer["Edit"]</button></li>
+                        }
+                        @if(userCanCreateAddresses)
+                        {
+                            <li><a class="dropdown-item" type="button" asp-controller="@typeof(AddressesController).GetNameOfController()" asp-action="@nameof(AddressesController.Create)" asp-route-returnUrl="@currentUrl">@Localizer["Create"]</a></li>
+                        }
+                    </ul>
+                }
+                <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AddressID'))" />
+            </div>
+            <span asp-validation-for="AddressID" class="text-danger"></span>
+        </div>
+    </div>
+    @if (User.IsInRole(RolesStore.Admin))
+    {
+        <h4>@Localizer["User"]</h4>
+        <div class="form-group row mb-3">
+            <label asp-for="AppUserID" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <div class="input-group align-self-center">
+                    @if(Model.AppRoleID == null)
+                    {
+                        <select asp-for="AppUserID" class="form-control" asp-items="@Model.AppUsersSelectList" onchange="OnChangeAppUserID()">
+                            <option value="" selected disabled hidden>@Localizer["Choose a User"]</option>
+                        </select>
+                        <input class="btn btn-primary" id="AppUserIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppUserID'))" />
+                    }
+                    else
+                    {
+                        <select asp-for="AppUserID" class="form-control" asp-items="@Model.AppUsersSelectList" disabled="disabled" onchange="OnChangeAppUserID()">
+                            <option value="" selected disabled hidden>@Localizer["Choose a User"]</option>
+                        </select>
+                        <input class="btn btn-primary" id="AppUserIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppUserID'))" disabled="disabled" />
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="form-group row mb-3">
+            <label asp-for="AppRoleID" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <div class="input-group align-self-center">
+                    @if (Model.AppUserID == null || (appRole.Name == RolesStore.Admin && adminUsers.Count() < 2))
+                    {
+                        <select asp-for="AppRoleID" class="form-control" asp-items="@Model.RoleNamesSelectList" disabled="disabled" onchange="OnChangeAppRoleID()">
+                            <option value="" selected disabled hidden>@Localizer["Choose a Role"]</option>
+                        </select>
+                        <input class="btn btn-primary" id="AppRoleIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppRoleID'))" disabled="disabled" />
+                    }
+                    else
+                    {
+                        <select asp-for="AppRoleID" class="form-control" asp-items="@Model.RoleNamesSelectList" onchange="OnChangeAppRoleID()">
+                            <option value="" selected disabled hidden>@Localizer["Choose a Role"]</option>
+                        </select>
+                        <input class="btn btn-primary" id="AppRoleIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#AppRoleID'))" />
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
+            <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

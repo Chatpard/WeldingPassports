@@ -1,14 +1,12 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer Localizer
-@model PaginatedList<CompanyIndexViewModel>
+﻿@model PaginatedList<CompanyIndexViewModel>
 
 @{
     ViewData["Title"] = Localizer["Companies Index"];
-    var currentUrl = ViewBag.CurrentUrl;
-    var userCanReadCompanies = User.CanRead(ClaimsTypesStore.Companies);
-    var userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);
-    var userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
-    var userCanDeleteCompanies = User.CanDelete(ClaimsTypesStore.Companies);
+    string currentUrl = ViewBag.CurrentUrl;
+    bool userCanReadCompanies = User.CanRead(ClaimsTypesStore.Companies);
+    bool userCanEditCompanies = User.CanEdit(ClaimsTypesStore.Companies);
+    bool userCanCreateCompanies = User.CanCreate(ClaimsTypesStore.Companies);
+    bool userCanDeleteCompanies = User.CanDelete(ClaimsTypesStore.Companies);
 }
 
 <h1>@Localizer["Companies Index"]</h1>
@@ -22,7 +20,8 @@
     </p>
 }
 
-<form asp-controller="@typeof(CompaniesController).GetNameOfController()" asp-action="@nameof(CompaniesController.Index)" method="get" id="SearchForm">
+<form asp-action="@nameof(CompaniesController.Index)" asp-controller="@typeof(CompaniesController).GetNameOfController()" 
+      method="get" id="SearchForm">
     <div class="form-actions no-color">
         <p>
             <label for="SearchInput">@Localizer["Find Company:"]</label>

@@ -5,26 +5,27 @@
     ViewData["Title"] = Localizer["App Settings"];
 }
 <h1>@Localizer["Edit App Settings"]</h1>
+<hr />
 <form enctype="multipart/form-data" asp-controller="@typeof(AdminController).GetNameOfController()"
       asp-action="@nameof(AdminController.AppSettingsEdit)" method="post" class="mt-3">
     <input hidden asp-for="ID" />
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="MaxExpiryDays" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="col-sm-10 align-self-center">
             <input asp-for="MaxExpiryDays" class="form-control" placeholder="Days">
             <span asp-validation-for="MaxExpiryDays" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="MaxExtensionDays" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="col-sm-10 align-self-center">
             <input asp-for="MaxExtensionDays" class="form-control" placeholder="Days">
             <span asp-validation-for="MaxExtensionDays" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="MaxInAdvanceDays" class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-10">
+        <div class="col-sm-10 align-self-center">
             <input asp-for="MaxInAdvanceDays" class="form-control" placeholder="Days">
             <span asp-validation-for="MaxInAdvanceDays" class="text-danger"></span>
         </div>

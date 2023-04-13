@@ -264,6 +264,5 @@ namespace Infrastructure.Repositories.SQL
 
             return passportsQuery;
         }
-
     }
 }

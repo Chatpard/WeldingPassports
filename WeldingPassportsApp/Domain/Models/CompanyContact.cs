@@ -37,8 +37,8 @@ namespace Domain.Models
         public Company Company { get; set; }
         public AppUser AppUser { get; set; }
         public Address Address { get; set; }
-        public ListExamCenter ListExamCenter { get; set; }
-        public ListTrainingCenter ListTrainingCenter { get; set; }
+        public ICollection<TrainingCenter> TrainingCenters { get; set; }
+        public ICollection<ExamCenter> ExamCenters { get; set; }
         public ICollection<Revoke> Revokes { get; set; }
     }
 }

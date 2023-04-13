@@ -26,7 +26,7 @@
 
 <div>
     <h1 class="d-inline">@Localizer["Edit Certificate"]</h1>
-    <a class="collapseArrow" data-toggle="collapse" href="#collapseEditCertificate" role="button" aria-expanded="false" aria-controls="collapseEditCertificate">
+    <a class="collapseArrow" data-bs-toggle="collapse" href="#collapseEditCertificate" role="button" aria-expanded="false" aria-controls="collapseEditCertificate">
         ▼
     </a>
 </div>
@@ -35,21 +35,21 @@
       asp-action="@nameof(CertificatesController.Edit)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3" onsubmit="PrepareFormOnsubmit()">
     <div class="collapse" id="collapseEditCertificate">
         <input hidden asp-for="EncryptedID" />
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="ExamDate" class="form-control" placeholder="Examination Date" readonly>
                 <span asp-validation-for="ExamDate" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="ExamCenterName" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="ExamCenterName" class="form-control" readonly>
                 <span asp-validation-for="ExamCenterName" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="TrainingCenterName" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="TrainingCenterName" class="form-control" readonly>
@@ -60,40 +60,38 @@
 
     <div>
         <h2 class="d-inline">@Localizer["Current Certificate"]</h2>
-        <a class="collapseArrow" data-toggle="collapse" href="#collapseCurrentCertificate" role="button" aria-expanded="true" aria-controls="collapseCurrentCertificate">
+        <a class="collapseArrow" data-bs-toggle="collapse" href="#collapseCurrentCertificate" role="button" aria-expanded="true" aria-controls="collapseCurrentCertificate">
             ▲
         </a>
     </div>
     <hr />
     <div class="collapse show" id="collapseCurrentCertificate">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <input hidden asp-for="PEPassportID" />
             <label asp-for="AVNumber" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span id="Letter" class="input-group-text">@Model.Letter</span>
-                    </div>
+                    <span id="Letter" class="input-group-text">@Model.Letter</span>
                     <input asp-for="AVNumber" asp-format="{0:D5}" class="form-control" placeholder="AV number" readonly>
                 </div>
                 <span asp-validation-for="AVNumber" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="FirstName" class="form-control" placeholder="First Name" readonly>
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="LastName" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="LastName" class="form-control" placeholder="Last Name" readonly>
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <div class="input-group">
@@ -109,9 +107,7 @@
                                 <option value="" selected disabled>@Localizer["Choose Company"]</option>
                             }
                         </select>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="CurrentCertificateCompanyIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" />
-                        </div>
+                        <input class="btn btn-primary" id="CurrentCertificateCompanyIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" />
                     }
                     else
                     {
@@ -125,15 +121,13 @@
                                 <option value="" selected disabled>@Localizer["Choose Company"]</option>
                             }
                         </select>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="CurrentCertificateCompanyIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" disabled="disabled" />
-                        </div>
+                        <input class="btn btn-primary" id="CurrentCertificateCompanyIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" disabled="disabled" />
                     }
                 </div>
                 <span asp-validation-for="CompanyID" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <div class="input-group">
@@ -149,9 +143,7 @@
                                 <option value="" selected disabled>@Localizer["Choose Process"]</option>
                             }
                         </select>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="ProcessIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ProcessID'))" />
-                        </div>
+                        <input class="btn btn-primary" id="ProcessIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ProcessID'))" />
                     }
                     else
                     {
@@ -165,15 +157,13 @@
                                 <option value="" selected disabled>@Localizer["Choose Process"]</option>
                             }
                         </select>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="ProcessIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ProcessID'))" disabled="disabled" />
-                        </div>
+                        <input class="btn btn-primary" id="ProcessIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ProcessID'))" disabled="disabled" />
                     }
                 </div>
                 <span asp-validation-for="ProcessID" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="RegistrationTypeID" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <div class="input-group">
@@ -189,9 +179,7 @@
                                 <option value="" selected disabled>@Localizer["Choose Registration Type"]</option>
                             }
                         </select>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="RegistrationTypeIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RegistrationTypeID'))" />
-                        </div>
+                        <input class="btn btn-primary" id="RegistrationTypeIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RegistrationTypeID'))" />
                     }
                     else
                     {
@@ -205,36 +193,30 @@
                                 <option value="" selected disabled>@Localizer["Choose Registration Type"]</option>
                             }
                         </select>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="RegistrationTypeIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RegistrationTypeID'))" disabled="disabled" />
-                        </div>
+                        <input class="btn btn-primary" id="RegistrationTypeIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RegistrationTypeID'))" disabled="disabled" />
                     }
                 </div>
                 <span asp-validation-for="RegistrationTypeID" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="ExpiryDate" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <div class="input-group">
                     @if(userCanUpdateCertificates && EnableExpiryDate && Model.HasPassed == null){
                         <input asp-for="ExpiryDate" class="form-control" placeholder="Expiry Date" onchange="OnChangeExpiryDate(@($"{(userCanEditCertificates?"true":"false")}"))" min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.MaxExpiryDate?.ToString("yyyy-MM-dd")">
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ExpiryDate'))" />
-                        </div>
+                        <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ExpiryDate'))" />
                     }
                     else
                     {
                         <input asp-for="ExpiryDate" class="form-control" placeholder="Expiry Date" onchange="OnChangeExpiryDate(@($"{(userCanEditCertificates?"true":"false")}"))" min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.MaxExpiryDate?.ToString("yyyy-MM-dd")" readonly>
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ExpiryDate'))" disabled />
-                        </div>
+                        <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ExpiryDate'))" disabled />
                     }
                 </div>
                 <span asp-validation-for="ExpiryDate" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label asp-for="HasPassed" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <div class="input-group">
@@ -253,9 +235,7 @@
                             @class = "form-control",
                             @onchange = $"OnChangeHasPassedID({(userCanEditCertificates?"true":"false")})"
                         })
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="HasPassedClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#HasPassed'))" />
-                        </div>
+                        <input class="btn btn-primary" id="HasPassedClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#HasPassed'))" />
                     }
                     else
                     {
@@ -273,9 +253,7 @@
                             @onchange = $"OnChangeHasPassedID({(userCanEditCertificates?"true":"false")})",
                             @disabled =  "disabled" 
                         })
-                        <div class="input-group-append">
-                            <input class="btn btn-primary" id="HasPassedClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#HasPassed'))" disabled="disabled" />
-                        </div>
+                        <input class="btn btn-primary" id="HasPassedClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#HasPassed'))" disabled="disabled" />
                     }
                 </div>
                 <span asp-validation-for="HasPassed" class="text-danger"></span>
@@ -283,7 +261,7 @@
         </div>
 
         <div id="Revoke" style=@((Model.HasPassed == true && (EnableRevokeByCompanyContactID || Model.RevokedByCompanyContactID != null)) ? "":"display:none;")>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="RevokedByCompanyContactID" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <div class="input-group">
@@ -292,24 +270,20 @@
                             <select asp-for="RevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems" onchange="OnChangeRevokedBy()">
                                 <option value="" selected disabled hidden>Not Revoked</option>
                             </select>
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" id="RevokedByCompanyContactIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RevokedByCompanyContactID'))" />
-                            </div>
+                            <input class="btn btn-primary" id="RevokedByCompanyContactIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RevokedByCompanyContactID'))" />
                         }
                         else
                         {
                             <select asp-for="RevokedByCompanyContactID" class="form-control" asp-items="Model.CompanyContactNameItems" onchange="OnChangeRevokedBy()" disabled>
                                 <option value="" selected disabled hidden>Not Revoked</option>
                             </select>
-                            <div class="input-group-append">
-                                <input class="btn btn-primary" id="RevokedByCompanyContactIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RevokedByCompanyContactID'))" disabled />
-                            </div>
+                            <input class="btn btn-primary" id="RevokedByCompanyContactIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#RevokedByCompanyContactID'))" disabled />
                         }
                     </div>
                     <span asp-validation-for="RevokedByCompanyContactID" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="RevokeDate" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     @if (userCanRevokeCertificates && EnableRevokeDate)
@@ -323,7 +297,7 @@
                     <span asp-validation-for="RevokeDate" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="RevokeComment" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     @if (userCanRevokeCertificates && EnableRevokeComment)
@@ -344,20 +318,20 @@
         <div>
             <h2 class="d-inline">@Localizer["Previous Certificate"]
             </h2>
-            <a class="collapseArrow" data-toggle="collapse" href="#collapsePreviousCertificate" role="button" aria-expanded="false" aria-controls="collapsePreviousCertificate">
+            <a class="collapseArrow" data-bs-toggle="collapse" href="#collapsePreviousCertificate" role="button" aria-expanded="false" aria-controls="collapsePreviousCertificate">
                 ▼
             </a>
         </div>
         <hr />
         <div class="collapse" id="collapsePreviousCertificate">
-            <div class="form-group row ">
+            <div class="form-group row mb-3">
                 <label asp-for="PreviousCertificateExpiryDate" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <input asp-for="PreviousCertificateExpiryDate" class="form-control" readonly>
                     <span asp-validation-for="PreviousCertificateExpiryDate" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="PreviousCertificateHasPassed" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     @if (Model.PreviousCertificateHasPassed == null)
@@ -377,21 +351,21 @@
             </div>
             @if (Model.PreviousCertificateRevokeDate != null)
             {
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label asp-for="PreviousCertificateRevokeDate" class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
                         <input asp-for="PreviousCertificateRevokeDate" class="form-control" readonly>
                         <span asp-validation-for="PreviousCertificateRevokeDate" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label asp-for="PreviousCertificateRevokedBy" class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
                         <input asp-for="PreviousCertificateRevokedBy" class="form-control" readonly>
                         <span asp-validation-for="PreviousCertificateRevokedBy" class="text-danger"></span>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label asp-for="PreviousCertificateRevokeComment" class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
                         <input asp-for="PreviousCertificateRevokeComment" class="form-control" placeholder="Revoke Comment" readonly>

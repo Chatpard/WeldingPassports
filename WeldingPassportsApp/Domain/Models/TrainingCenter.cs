@@ -13,6 +13,8 @@ namespace Domain.Models
 
         public int CompanyID { get; set; }
 
+        public int? CompanyContactID { get; set; }
+
         [Column(TypeName = "varchar(1)")]
         public char Letter { get; set; }
 
@@ -21,9 +23,9 @@ namespace Domain.Models
         // Navigation Properties
         public Company Company { get; set; }
 
-        public ICollection<Examination> Examinations { get; set; }
+        public CompanyContact CompanyContact { get; set; }
 
-        public ListTrainingCenter ListTrainingCenter { get; set; }
+        public ICollection<Examination> Examinations { get; set; }
 
         public ICollection<PEPassport> PEPassports { get; set; }
     }

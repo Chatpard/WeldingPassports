@@ -23,55 +23,13 @@ namespace Infrastructure.SeedData
                 nameof(TrainingCenter) => (T[])(object)GetTrainingCenters(),
                 nameof(PEPassport) => (T[])(object)GetPEPassports(),
                 nameof(CompanyContact) => (T[])(object)GetCompanyContacts(),
-                nameof(ExamCenter) => (T[])(object)GetExamCenter(),
+                nameof(ExamCenter) => (T[])(object)GetExamCenters(),
                 nameof(Examination) => (T[])(object)GetExaminations(),
                 nameof(Registration) => (T[])(object)GetRegistrations(),
                 nameof(Revoke) => (T[])(object)GetRevokes(),
-                nameof(ListTrainingCenter) => (T[])(object)GetListTrainingCenters(),
-                nameof(ListExamCenter) => (T[])(object)GetListExamCenters(),
-                _ => throw new Exception("Domain Model not found."),
+               _ => throw new Exception("Domain Model not found."),
             };
         }
-
-        private static ListExamCenter[] GetListExamCenters()
-        {
-            return new ListExamCenter[]
-            {
-                new ListExamCenter()
-                {
-                    ID = 1,
-                    ExamCenterID = 1,
-                    CompanyContactID = 4
-                }
-            };
-        }
-        //Todo: To be deleted
-
-        private static ListTrainingCenter[] GetListTrainingCenters()
-        {
-            return new ListTrainingCenter[]
-            {
-                new ListTrainingCenter()
-                {
-                    ID = 1,
-                    TrainingCenterID = 1,
-                    CompanyContactID = 1
-                },
-                new ListTrainingCenter()
-                {
-                    ID = 2,
-                    TrainingCenterID = 4,
-                    CompanyContactID = 2
-                },
-                new ListTrainingCenter()
-                {
-                    ID = 3,
-                    TrainingCenterID = 2,
-                    CompanyContactID = 3
-                }
-            };
-        }
-        //Todo: To be deleted
 
         private static Revoke[] GetRevokes()
         {
@@ -132,13 +90,13 @@ namespace Infrastructure.SeedData
                 {
                     ID = 4,
                     PreviousRegistrationID = 3,
-                    ExaminationID = 3, // 20-okt-21
+                    ExaminationID = 3, // 15-aug-21
                     PEPassportID = 3, // T00471
-                    RegistrationTypeID = 3, // Re-Examination1
+                    RegistrationTypeID = 1, // Training
                     ProcessID = 1, // Electro
                     CompanyID = 13, // Fabricom
-                    ExpiryDate = new DateTime(2022, 8, 20),
-                    HasPassed = null // TBC
+                    ExpiryDate = new DateTime(2022, 10, 20),
+                    HasPassed = true
                 },
                 new Registration()
                 {
@@ -150,13 +108,13 @@ namespace Infrastructure.SeedData
                     ProcessID = 2, // Butt
                     CompanyID = 21, // Fluvius
                     ExpiryDate = new DateTime(2021, 8, 20),
-                    HasPassed = true, // TBC
+                    HasPassed = true,
                 },
                 new Registration()
                 {
                     ID = 6,
                     PreviousRegistrationID = 5,
-                    ExaminationID = 3, // 20-okt-21
+                    ExaminationID = 3, // 15-aug-21
                     PEPassportID = 11, // T00479
                     RegistrationTypeID = 1, // Training
                     ProcessID = 2, // Butt
@@ -168,7 +126,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 7,
                     PreviousRegistrationID = null,
-                    ExaminationID = 3, // 20-okt-21
+                    ExaminationID = 3, // 15-aug-21
                     PEPassportID = 13, // T00481
                     RegistrationTypeID = 1, // Training
                     ProcessID = 1, // Electro
@@ -193,7 +151,7 @@ namespace Infrastructure.SeedData
                 new Examination()
                 {
                     ID = 2,
-                    TrainingCenterID = 7, // P
+                    TrainingCenterID = 3, // T
                     ExamCenterID = 1,
                     ExamDate = new DateTime(2020, 8, 20)
                 },
@@ -202,47 +160,47 @@ namespace Infrastructure.SeedData
                     ID = 3,
                     TrainingCenterID = 3, // T
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2021, 10, 20)
+                    ExamDate = new DateTime(2021, 8, 15)
                 },
                 new Examination()
                 {
                     ID = 4,
-                    TrainingCenterID = 2,
+                    TrainingCenterID = 2, // Z
                     ExamCenterID = 1,
                     ExamDate = new DateTime(2021, 11, 15)
                 },
                 new Examination()
                 {
                     ID = 5,
-                    TrainingCenterID = 6,
+                    TrainingCenterID = 6, // N
                     ExamCenterID = 1,
                     ExamDate = new DateTime(2022, 3, 4)
                 },
                 new Examination()
                 {
                     ID = 6,
-                    TrainingCenterID = 4,
+                    TrainingCenterID = 4, // S
                     ExamCenterID = 1,
                     ExamDate = new DateTime(2022, 8, 22)
                 },
                 new Examination()
                 {
                     ID = 7,
-                    TrainingCenterID = 8,
+                    TrainingCenterID = 8, // L
                     ExamCenterID = 1,
                     ExamDate = new DateTime(2022, 11, 15)
                 },
                 new Examination()
                 {
                     ID = 8,
-                    TrainingCenterID = 5,
+                    TrainingCenterID = 5, // K
                     ExamCenterID = 1,
                     ExamDate = new DateTime(2023, 1, 26)
                 }
             };
         }
 
-        private static ExamCenter[] GetExamCenter()
+        private static ExamCenter[] GetExamCenters()
         {
             return new ExamCenter[]
             {
@@ -445,6 +403,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 1,
                     CompanyID = 1,
+                    CompanyContactID = 1,
                     Letter = 'V',
                     IsActive = true
                 },
@@ -452,6 +411,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 2,
                     CompanyID = 2,
+                    CompanyContactID = 2,
                     Letter = 'Z',
                     IsActive = true
                 },
@@ -459,6 +419,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 3,
                     CompanyID = 3,
+                    CompanyContactID = null,
                     Letter = 'T',
                     IsActive = true
                 },
@@ -466,6 +427,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 4,
                     CompanyID = 5,
+                    CompanyContactID = 2,
                     Letter = 'S',
                     IsActive = true
                 },
@@ -473,6 +435,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 5,
                     CompanyID = 7,
+                    CompanyContactID = null,
                     Letter = 'K',
                     IsActive = true
                 },
@@ -480,6 +443,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 6,
                     CompanyID = 10,
+                    CompanyContactID = null,
                     Letter = 'N',
                     IsActive = true
                 },
@@ -487,6 +451,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 7,
                     CompanyID = 6,
+                    CompanyContactID = null,
                     Letter = 'P',
                     IsActive = true
                 },
@@ -494,6 +459,7 @@ namespace Infrastructure.SeedData
                 {
                     ID = 8,
                     CompanyID = 11,
+                    CompanyContactID = null,
                     Letter = 'L',
                     IsActive = true
                 }

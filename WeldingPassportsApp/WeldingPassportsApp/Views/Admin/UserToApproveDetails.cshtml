@@ -13,115 +13,150 @@
 <div class="row">
     <div class="col-md-12">
         <form method="post">
-            <div class="form-group row">
-                <label asp-for="Email" class="col-2"></label>
-                <input asp-for="Email" class="form-control col-10" readonly />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="form-group row mb-3">
+                <label asp-for="Email" class="form-label col-2"></label>
+                <div class="col-10">
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="FirstName" class="col-2"></label>
-                <input asp-for="FirstName" class="form-control col-10" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="LastName" class="col-2"></label>
-                <input asp-for="LastName" class="form-control col-10" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="Birthday" class="col-2"></label>
-                <input asp-for="Birthday" class="form-control col-10" />
-                <span asp-validation-for="Birthday" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="Birthday" class="form-control" />
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="JobTitle" class="col-2"></label>
-                <input asp-for="JobTitle" class="form-control col-10" />
-                <span asp-validation-for="JobTitle" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="JobTitle" class="form-control" />
+                    <span asp-validation-for="JobTitle" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="MobilePhone" class="col-2"></label>
-                <input asp-for="MobilePhone" class="form-control col-10" />
-                <span asp-validation-for="MobilePhone" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="MobilePhone" class="form-control" />
+                    <span asp-validation-for="MobilePhone" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="BusinessPhone" class="col-2"></label>
-                <input asp-for="BusinessPhone" class="form-control col-10" />
-                <span asp-validation-for="BusinessPhone" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="BusinessPhone" class="form-control" />
+                    <span asp-validation-for="BusinessPhone" class="text-danger"></span>
+                </div>
             </div>
 
             <h3>@Localizer["Company"]</h3>
             <hr />
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="CompanyName" class="col-2"></label>
-                <input asp-for="CompanyName" class="form-control col-10" list="CompanyNameOptions" />
-                <datalist id="CompanyNameOptions">
-                    @foreach (var item in Model.CompanyNameItems)
-                    {
-                        <option value="@item.Text"></option>
-                    }
-                </datalist>
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="CompanyName" class="form-control" list="CompanyNameOptions" />
+                    <datalist id="CompanyNameOptions">
+                        @foreach (var item in Model.CompanyNameItems)
+                        {
+                            <option value="@item.Text"></option>
+                        }
+                    </datalist>
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="BusinessAddress" class="col-2"></label>
-                <input asp-for="BusinessAddress" class="form-control col-10" />
-                <span asp-validation-for="BusinessAddress" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="BusinessAddress" class="form-control" />
+                    <span asp-validation-for="BusinessAddress" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="BusinessAddressPostalCode" class="col-2"></label>
-                <input asp-for="BusinessAddressPostalCode" class="form-control col-10" />
-                <span asp-validation-for="BusinessAddressPostalCode" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="BusinessAddressPostalCode" class="form-control" />
+                    <span asp-validation-for="BusinessAddressPostalCode" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="BusinessAddressCity" class="col-2"></label>
-                <input asp-for="BusinessAddressCity" class="form-control col-10" />
-                <span asp-validation-for="BusinessAddressCity" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="BusinessAddressCity" class="form-control" />
+                    <span asp-validation-for="BusinessAddressCity" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="BusinessAddressCountry" class="col-2"></label>
-                <input asp-for="BusinessAddressCountry" class="form-control col-10" />
-                <span asp-validation-for="BusinessAddressCountry" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="BusinessAddressCountry" class="form-control" />
+                    <span asp-validation-for="BusinessAddressCountry" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="CompanyMainPhone" class="col-2"></label>
-                <input asp-for="CompanyMainPhone" class="form-control col-10" />
-                <span asp-validation-for="CompanyMainPhone" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="CompanyMainPhone" class="form-control" />
+                    <span asp-validation-for="CompanyMainPhone" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="CompanyEmail" class="col-2"></label>
-                <input asp-for="CompanyEmail" class="form-control col-10" />
-                <span asp-validation-for="CompanyEmail" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="CompanyEmail" class="form-control" />
+                    <span asp-validation-for="CompanyEmail" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="WebPage" class="col-2"></label>
-                <input asp-for="WebPage" class="form-control col-10" />
-                <span asp-validation-for="WebPage" class="text-danger"></span>
+                <div class="col-10">
+                    <input asp-for="WebPage" class="form-control" />
+                    <span asp-validation-for="WebPage" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mb-3">
+                <label asp-for="Role" class="col-2"></label>
+                <div class="col-10">
+                    <select asp-for="Role" class="form-control" list="RoleOptions">
+                        <option value="" selected disabled hidden>@Localizer["Assign a Role"]</option>
+                        @foreach (var item in Model.RoleItems)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group row">
-                <label asp-for="Role" class="col-2"></label>
-                <select asp-for="Role" class="form-control col-10" list="RoleOptions">
-                    <option value="" selected disabled hidden>@Localizer["Assign a Role"]</option>
-                    @foreach (var item in Model.RoleItems)
-                    {
-                        <option value="@item.Value">@item.Text</option>
-                    }
-                </select>
-                <span asp-validation-for="Role" class="text-danger"></span>
+                <div class="col-12">
+                    <button class="btn btn-primary" style="width:auto" asp-controller="@typeof(AdminController).GetNameOfController()"
+                            asp-action="@nameof(AdminController.ApproveUser)" asp-route-id="@Model.EncryptedId">
+                        @Localizer["Approve"]
+                    </button>
+                    <a class="btn btn-danger" style="width:auto" asp-controller="@typeof(AdminController).GetNameOfController()"
+                            asp-action="@nameof(AdminController.DeleteUser)" asp-route-id="@Model.EncryptedId" asp-route-returnUrl="@returnUrl">
+                        @Localizer["Delete"]
+                    </a>
+                    <a class="btn btn-primary" style="width:auto" asp-controller="@typeof(AdminController).GetNameOfController()"
+                       asp-action="@nameof(AdminController.UsersToApproveIndex)">
+                        @Localizer["Back"]
+                    </a>
+                </div>
             </div>
-            <button class="btn btn-primary" style="width:auto" asp-controller="@typeof(AdminController).GetNameOfController()"
-                    asp-action="@nameof(AdminController.ApproveUser)" asp-route-id="@Model.EncryptedId">
-                @Localizer["Approve"]
-            </button>
-            <a class="btn btn-danger" style="width:auto" asp-controller="@typeof(AdminController).GetNameOfController()"
-                    asp-action="@nameof(AdminController.DeleteUser)" asp-route-id="@Model.EncryptedId" asp-route-returnUrl="@returnUrl">
-                @Localizer["Delete"]
-            </a>
-            <a class="btn btn-primary" style="width:auto" asp-controller="@typeof(AdminController).GetNameOfController()"
-               asp-action="@nameof(AdminController.UsersToApproveIndex)">
-                @Localizer["Back"]
-            </a>
-            <div asp-validation-summary="All" class="text-danger"></div>
         </form>
     </div>
 </div>

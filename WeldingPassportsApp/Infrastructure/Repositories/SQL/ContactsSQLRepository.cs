@@ -39,6 +39,8 @@ namespace Infrastructure.Repositories.SQL
                 .Include(companyContact => companyContact.AppUser)
                 .AsQueryable();
 
+            var test = query.ProjectTo<CompanyContactIndexViewModel>(_mapper.ConfigurationProvider).ToList();
+
             return query.ProjectTo<CompanyContactIndexViewModel>(_mapper.ConfigurationProvider);
         }
 

@@ -354,6 +354,7 @@ namespace Infrastructure.Repositories.SQL
                 AppSettings app = await _appSettingsSQLRepository.GetAppsetingsAsync();
 
                 IEnumerable<Registration> currentRegistrationsList = new List<Registration>() { registration };
+                //IEnumerable<Registration> currentRegistrationsList = _context.Registrations.Where(r => r.ID == registration.ID).AsNoTracking();
 
                 var allowedRegistrationTypesQ = currentRegistrationsList.Select(registration => new
                 {
@@ -361,8 +362,11 @@ namespace Infrastructure.Repositories.SQL
                     ExtendableStatus =
                             registration.PreviousRegistration?.Revoke != null ? ExtendableStatus.Revoked :
                             registration.PreviousRegistration?.ExpiryDate == null ? ExtendableStatus.NoMoreExtendable :
-                            EF.Functions.DateDiffDay(registration.PreviousRegistration?.ExpiryDate, registration.Examination?.ExamDate) < (app.MaxInAdvanceDays * -1) ? ExtendableStatus.NotYetExtendable :
-                            EF.Functions.DateDiffDay(registration.PreviousRegistration?.ExpiryDate, registration.Examination?.ExamDate) < (app.MaxExtensionDays + 1) ? ExtendableStatus.Extendable : ExtendableStatus.NoMoreExtendable,
+                            (registration.PreviousRegistration?.ExpiryDate - registration.Examination?.ExamDate)?.TotalDays < (app.MaxInAdvanceDays * -1) ? ExtendableStatus.NotYetExtendable :
+                            (registration.PreviousRegistration?.ExpiryDate - registration.Examination?.ExamDate)?.TotalDays < (app.MaxExtensionDays + 1) ? ExtendableStatus.Extendable :
+                            //EF.Functions.DateDiffDay(registration.PreviousRegistration?.ExpiryDate, registration.Examination?.ExamDate) < (app.MaxInAdvanceDays * -1) ? ExtendableStatus.NotYetExtendable :
+                            //EF.Functions.DateDiffDay(registration.PreviousRegistration?.ExpiryDate, registration.Examination?.ExamDate) < (app.MaxExtensionDays + 1) ? ExtendableStatus.Extendable :
+                            ExtendableStatus.NoMoreExtendable,
                     HasPassed = registration.PreviousRegistration?.HasPassed,
                     IsNew = (bool?) (registration.ID == 0),
                     CurrentRegistrationTypeID = (int?) registration.RegistrationTypeID

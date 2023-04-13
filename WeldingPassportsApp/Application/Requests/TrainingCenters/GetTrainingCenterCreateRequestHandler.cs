@@ -29,9 +29,12 @@ namespace Application.Requests.TrainingCenters
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            TrainingCenterCreateViewModel vm = new TrainingCenterCreateViewModel();
-            vm.CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned:true);
-            vm.CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactSelectList(null, null);
+            TrainingCenterCreateViewModel vm = new TrainingCenterCreateViewModel
+            {
+                CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned: true),
+                CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactTrainingCenterSelectList(),
+                IsActive = true
+            };
 
             return request.Controller.View(vm);
         }

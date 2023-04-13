@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
@@ -15,16 +17,18 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.20")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Domain.Models.Address", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("BusinessAddress")
                         .HasColumnType("varchar(1024)");
@@ -145,8 +149,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("AvailableRegistrationTypeID")
                         .HasColumnType("int");
@@ -2666,12 +2671,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("RoleName")
                         .HasColumnType("varchar(64)");
@@ -2680,18 +2685,19 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles");
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.AppSettings", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("MaxExpiryDays")
                         .HasColumnType("int");
@@ -2729,8 +2735,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -2742,12 +2748,12 @@ namespace Infrastructure.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -2765,20 +2771,20 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.AppUserRole", b =>
@@ -2793,15 +2799,16 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Company", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("AddressID")
                         .HasColumnType("int");
@@ -3046,8 +3053,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("AddressID")
                         .HasColumnType("int");
@@ -3167,8 +3175,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
@@ -3239,8 +3248,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("CompanyContactID")
                         .HasColumnType("int");
@@ -3274,8 +3284,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("ExamCenterID")
                         .HasColumnType("int");
@@ -3307,13 +3318,13 @@ namespace Infrastructure.Migrations
                             ID = 2,
                             ExamCenterID = 1,
                             ExamDate = new DateTime(2020, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            TrainingCenterID = 7
+                            TrainingCenterID = 3
                         },
                         new
                         {
                             ID = 3,
                             ExamCenterID = 1,
-                            ExamDate = new DateTime(2021, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExamDate = new DateTime(2021, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TrainingCenterID = 3
                         },
                         new
@@ -3353,87 +3364,13 @@ namespace Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Models.ListExamCenter", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompanyContactID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExamCenterID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CompanyContactID")
-                        .IsUnique();
-
-                    b.HasIndex("ExamCenterID");
-
-                    b.ToTable("ListExamCenter");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            CompanyContactID = 4,
-                            ExamCenterID = 1
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Models.ListTrainingCenter", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CompanyContactID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrainingCenterID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CompanyContactID")
-                        .IsUnique();
-
-                    b.HasIndex("TrainingCenterID")
-                        .IsUnique();
-
-                    b.ToTable("ListTrainingCenter");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            CompanyContactID = 1,
-                            TrainingCenterID = 1
-                        },
-                        new
-                        {
-                            ID = 2,
-                            CompanyContactID = 2,
-                            TrainingCenterID = 4
-                        },
-                        new
-                        {
-                            ID = 3,
-                            CompanyContactID = 3,
-                            TrainingCenterID = 2
-                        });
-                });
-
             modelBuilder.Entity("Domain.Models.PEPassport", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("AVNumber")
                         .HasColumnType("int");
@@ -3558,8 +3495,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("FirstName")
                         .HasColumnType("varchar(64)");
@@ -3707,8 +3645,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -3739,8 +3678,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CertificatePath")
                         .HasColumnType("nvarchar(max)");
@@ -3828,7 +3768,7 @@ namespace Infrastructure.Migrations
                             PEPassportID = 3,
                             PreviousRegistrationID = 3,
                             ProcessID = 1,
-                            RegistrationTypeID = 3
+                            RegistrationTypeID = 1
                         },
                         new
                         {
@@ -3869,8 +3809,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int?>("AllowedRegistrationTypeID")
                         .HasColumnType("int");
@@ -3919,8 +3860,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Comment")
                         .HasColumnType("varchar(1024)");
@@ -3958,8 +3900,12 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("CompanyContactID")
+                        .HasColumnType("int");
 
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
@@ -3973,6 +3919,8 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CompanyContactID");
+
                     b.HasIndex("CompanyID")
                         .IsUnique();
 
@@ -3985,6 +3933,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ID = 1,
+                            CompanyContactID = 1,
                             CompanyID = 1,
                             IsActive = true,
                             Letter = "V"
@@ -3992,6 +3941,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ID = 2,
+                            CompanyContactID = 2,
                             CompanyID = 2,
                             IsActive = true,
                             Letter = "Z"
@@ -4006,6 +3956,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             ID = 4,
+                            CompanyContactID = 2,
                             CompanyID = 5,
                             IsActive = true,
                             Letter = "S"
@@ -4044,8 +3995,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Color")
                         .HasColumnType("varchar(64)");
@@ -4119,8 +4071,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
@@ -4269,8 +4222,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -4286,15 +4240,16 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims");
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -4310,7 +4265,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -4332,7 +4287,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -4351,7 +4306,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.AllowedRegistrationType", b =>
@@ -4370,6 +4325,12 @@ namespace Infrastructure.Migrations
                         .WithMany("PreviousRegistrationTypes")
                         .HasForeignKey("PreviousRegistrationTypeID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AvailableRegistrationType");
+
+                    b.Navigation("CurrentRegistrationType");
+
+                    b.Navigation("PreviousRegistrationType");
                 });
 
             modelBuilder.Entity("Domain.Models.AppUserRole", b =>
@@ -4385,6 +4346,10 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("AppRole");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Domain.Models.Company", b =>
@@ -4393,6 +4358,8 @@ namespace Infrastructure.Migrations
                         .WithMany("Companies")
                         .HasForeignKey("AddressID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Domain.Models.CompanyContact", b =>
@@ -4417,12 +4384,20 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("ContactID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Contact");
                 });
 
             modelBuilder.Entity("Domain.Models.ExamCenter", b =>
                 {
                     b.HasOne("Domain.Models.CompanyContact", "CompanyContact")
-                        .WithMany()
+                        .WithMany("ExamCenters")
                         .HasForeignKey("CompanyContactID")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -4431,6 +4406,10 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Domain.Models.ExamCenter", "CompanyID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("CompanyContact");
                 });
 
             modelBuilder.Entity("Domain.Models.Examination", b =>
@@ -4446,36 +4425,10 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("TrainingCenterID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Domain.Models.ListExamCenter", b =>
-                {
-                    b.HasOne("Domain.Models.CompanyContact", "CompanyContact")
-                        .WithOne("ListExamCenter")
-                        .HasForeignKey("Domain.Models.ListExamCenter", "CompanyContactID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("ExamCenter");
 
-                    b.HasOne("Domain.Models.ExamCenter", "ExamCenter")
-                        .WithMany()
-                        .HasForeignKey("ExamCenterID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Models.ListTrainingCenter", b =>
-                {
-                    b.HasOne("Domain.Models.CompanyContact", "CompanyContact")
-                        .WithOne("ListTrainingCenter")
-                        .HasForeignKey("Domain.Models.ListTrainingCenter", "CompanyContactID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.TrainingCenter", "TrainingCenter")
-                        .WithOne("ListTrainingCenter")
-                        .HasForeignKey("Domain.Models.ListTrainingCenter", "TrainingCenterID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.Navigation("TrainingCenter");
                 });
 
             modelBuilder.Entity("Domain.Models.PEPassport", b =>
@@ -4491,6 +4444,10 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("TrainingCenterID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("PEWelder");
+
+                    b.Navigation("TrainingCenter");
                 });
 
             modelBuilder.Entity("Domain.Models.Registration", b =>
@@ -4529,6 +4486,18 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("RegistrationTypeID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Examination");
+
+                    b.Navigation("PEPassport");
+
+                    b.Navigation("PreviousRegistration");
+
+                    b.Navigation("Process");
+
+                    b.Navigation("RegistrationType");
                 });
 
             modelBuilder.Entity("Domain.Models.Revoke", b =>
@@ -4544,15 +4513,28 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Domain.Models.Revoke", "RegistrationID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("CompanyContact");
+
+                    b.Navigation("Registration");
                 });
 
             modelBuilder.Entity("Domain.Models.TrainingCenter", b =>
                 {
+                    b.HasOne("Domain.Models.CompanyContact", "CompanyContact")
+                        .WithMany("TrainingCenters")
+                        .HasForeignKey("CompanyContactID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Domain.Models.Company", "Company")
                         .WithOne("TrainingCenter")
                         .HasForeignKey("Domain.Models.TrainingCenter", "CompanyID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("CompanyContact");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -4589,6 +4571,96 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Models.Address", b =>
+                {
+                    b.Navigation("Companies");
+
+                    b.Navigation("CompanyContacts");
+                });
+
+            modelBuilder.Entity("Domain.Models.AppRole", b =>
+                {
+                    b.Navigation("AppUserRoles");
+                });
+
+            modelBuilder.Entity("Domain.Models.AppUser", b =>
+                {
+                    b.Navigation("AppUserRoles");
+
+                    b.Navigation("CompanyContact");
+                });
+
+            modelBuilder.Entity("Domain.Models.Company", b =>
+                {
+                    b.Navigation("CompanyContacts");
+
+                    b.Navigation("ExamCenter");
+
+                    b.Navigation("Registrations");
+
+                    b.Navigation("TrainingCenter");
+                });
+
+            modelBuilder.Entity("Domain.Models.CompanyContact", b =>
+                {
+                    b.Navigation("ExamCenters");
+
+                    b.Navigation("Revokes");
+
+                    b.Navigation("TrainingCenters");
+                });
+
+            modelBuilder.Entity("Domain.Models.Contact", b =>
+                {
+                    b.Navigation("CompanyContacts");
+                });
+
+            modelBuilder.Entity("Domain.Models.ExamCenter", b =>
+                {
+                    b.Navigation("Examinations");
+                });
+
+            modelBuilder.Entity("Domain.Models.Examination", b =>
+                {
+                    b.Navigation("Registrations");
+                });
+
+            modelBuilder.Entity("Domain.Models.PEPassport", b =>
+                {
+                    b.Navigation("Registrations");
+                });
+
+            modelBuilder.Entity("Domain.Models.PEWelder", b =>
+                {
+                    b.Navigation("PEPassports");
+                });
+
+            modelBuilder.Entity("Domain.Models.Process", b =>
+                {
+                    b.Navigation("Registrations");
+                });
+
+            modelBuilder.Entity("Domain.Models.Registration", b =>
+                {
+                    b.Navigation("Revoke");
+                });
+
+            modelBuilder.Entity("Domain.Models.RegistrationType", b =>
+                {
+                    b.Navigation("AvailableRegistrationTypes");
+
+                    b.Navigation("CurrentRegistrationTypes");
+
+                    b.Navigation("PreviousRegistrationTypes");
+                });
+
+            modelBuilder.Entity("Domain.Models.TrainingCenter", b =>
+                {
+                    b.Navigation("Examinations");
+
+                    b.Navigation("PEPassports");
                 });
 #pragma warning restore 612, 618
         }

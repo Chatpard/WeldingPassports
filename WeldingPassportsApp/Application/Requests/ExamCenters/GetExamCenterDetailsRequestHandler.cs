@@ -24,7 +24,7 @@ namespace Application.Requests.ExamCenters
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            ExamCenterDetailsViewModel vm = await _repository.GetExamCentersDetails(request.EncryptedID);
+            ExamCenterDetailsViewModel vm = await _repository.GetExamCentersDetailsAsync(request.EncryptedID);
 
             return request.Controller.View(vm);
         }

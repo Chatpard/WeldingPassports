@@ -33,13 +33,13 @@ namespace Application.Requests.ExamCenters
             }
 
             if(request.Controller.Url.IsLocalUrl(request.ReturnUrl))
-                request.Controller.ViewBag.returnUrl = request.ReturnUrl;
+                request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
-            request.Controller.ViewBag.currentUrl = request.Controller.Request.GetEncodedPathAndQuery();
+            request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
             ExamCenterEditViewModel vm = await _repository.GetExamCentersEdit(request.EncryptedID);
             //Todo: CompanySelectList unused Companies
-            vm.CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned:true, vm.CompanyID);
+            vm.CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned:true, CompanyID:vm.CompanyID);
             vm.CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactExamCenterSelectList(vm.EncryptedID);
 
             return request.Controller.View(vm);

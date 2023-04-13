@@ -48,10 +48,6 @@ namespace Infrastructure
                 modelBuilder.Entity<Registration>().HasData(SeedDataStore.GetSeedData<Registration>());
 
                 modelBuilder.Entity<Revoke>().HasData(SeedDataStore.GetSeedData<Revoke>());
-
-                modelBuilder.Entity<ListTrainingCenter>().HasData(SeedDataStore.GetSeedData<ListTrainingCenter>());
-
-                modelBuilder.Entity<ListExamCenter>().HasData(SeedDataStore.GetSeedData<ListExamCenter>());
             }
         }
     }

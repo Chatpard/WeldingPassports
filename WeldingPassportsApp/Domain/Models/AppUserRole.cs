@@ -9,5 +9,8 @@ namespace Domain.Models
     {
         public virtual AppUser AppUser { get; set; }
         public virtual AppRole AppRole { get; set; }
+        public override string UserId { get => base.UserId; set => base.UserId=value; }
+        public override string RoleId { get => base.RoleId; set => base.RoleId=value; }
+
     }
 }

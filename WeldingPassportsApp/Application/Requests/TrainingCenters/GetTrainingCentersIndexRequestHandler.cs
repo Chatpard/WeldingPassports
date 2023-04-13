@@ -23,8 +23,8 @@ namespace Application.Requests.TrainingCenters
 
         public GetTrainingCentersIndexRequestHandler(ITrainingCentersSQLRepository repository, IMapper mapper)
         {
-            _repository = repository;
-            _mapper = mapper;
+            _repository=repository;
+            _mapper=mapper;
         }
 
         public async Task<IActionResult> Handle(GetTrainingCentersIndexRequest request, CancellationToken cancellationToken)

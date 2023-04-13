@@ -12,11 +12,10 @@
 
 <h1>@Localizer["Edit Examination"]</h1>
 <hr />
-<br />
 <form asp-controller="@typeof(ExaminationsController).GetNameOfController()"
       asp-action="@nameof(ExaminationsController.Edit)" asp-route-returnUrl="@returnUrl" method="post" class="mt-3" onsubmit="PrepareFormOnsubmit()">
     <input type="hidden" asp-for="EncryptedID" />
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             @if(Model.HasCertificates){
@@ -29,7 +28,7 @@
         <span asp-validation-for="ExamDate" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="ExamCenterID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
@@ -38,48 +37,45 @@
                 </select>
                 @if (userCanCreateExamCenters)
                 {
-                    <div class="input-group-append">
-                        <a id="ExamCenterSelect" asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
-                    </div>
+                    <a id="ExamCenterSelect" asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
                 }
-                <div class="input-group-append">
-                    <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
-                </div>
+                <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ExamCenterID'))"/>
             </div>
             <span asp-validation-for="ExamCenterID" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
-            @if (Model.HasCertificates)
-            {
-                <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems" disabled="disabled">
-                    <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
-                </select>
-            }
-            else
-            {
                 <div class="input-group">
-                    <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems">
-                        <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
-                    </select>
-                    @if (userCanCreateTrainingCenters)
+                    @if (Model.HasCertificates)
+                    {
+                        <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems" disabled="disabled">
+                            <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
+                        </select>
+                        @if (userCanCreateTrainingCenters)
                         {
-                            <div class="input-group-append">
-                                <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
-                            </div>
+                            <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button" hidden>@Localizer["Create"]</a>
                         }
-                    <div class="input-group-append">
-                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
-                    </div>
-                </div>
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#TrainingCenterID'))" disabled />
+                    }
+                    else
+                    {
+                        <select asp-for="TrainingCenterID" class="form-control" asp-items="Model.TrainingCenterItems">
+                            <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
+                        </select>
+                        @if (userCanCreateTrainingCenters)
+                            {
+                                <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
+                            }
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#TrainingCenterID'))"/>
+                    }
                 <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
-            }
+                </div>
+            </div>
         </div>
-    </div>
     <div class="form-group row">
-        <div class="col-sm-10">
+        <div class="col-sm-12">
             <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
             <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
         </div>
@@ -88,6 +84,6 @@
 </form>
 
 @section Scripts {
-    <script src="~/js/ResetSelect.js"></script>
     <script src="~/js/Examinations/PrepareFormOnsubmit.js"></script>
+    <script src="~/js/OnClickClear.js"></script>
 }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,8 +41,6 @@ namespace Infrastructure.Services.Persistence
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ExamCenter> ExamCenters { get; set; }
         public DbSet<Examination> Examinations { get; set; }
-        public DbSet<ListExamCenter> ListExamCenter { get; set; }
-        public DbSet<ListTrainingCenter> ListTrainingCenter { get; set; }
         public DbSet<PEPassport> PEPassports { get; set; }
         public DbSet<PEWelder> PEWelders { get; set; }
         public DbSet<Process> Processes { get; set; }
@@ -79,6 +78,8 @@ namespace Infrastructure.Services.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder
                 .HasDbFunction(typeof(AppDbContext).GetMethod(nameof(AppDbContext.Format)))
                 .HasTranslation(args =>
@@ -90,18 +91,20 @@ namespace Infrastructure.Services.Persistence
                         type: typeof(string),
                         typeMapping: null));
 
-            modelBuilder.Entity<AppUser>(b => 
+            modelBuilder.Entity<AppUser>(b =>
             {
-                b.HasMany(appUser => appUser.AppUserRoles)
-                .WithOne(appUserRole => appUserRole.AppUser)
-                .HasForeignKey(appUserRole => appUserRole.UserId);
+                b.HasMany(u => u.AppUserRoles)
+                 .WithOne(ur => ur.AppUser)
+                 .HasForeignKey(ur => ur.UserId)
+                 .IsRequired();
             });
 
             modelBuilder.Entity<AppRole>(b =>
             {
-                b.HasMany(appRole => appRole.AppUserRoles)
-                .WithOne(appUserRole => appUserRole.AppRole)
-                .HasForeignKey(appUserRole => appUserRole.RoleId);
+                b.HasMany(r => r.AppUserRoles)
+                 .WithOne(ur => ur.AppRole)
+                 .HasForeignKey(ur => ur.RoleId)
+                 .IsRequired();
             });
 
             foreach (var foreignKey in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
@@ -116,7 +119,6 @@ namespace Infrastructure.Services.Persistence
 
             modelBuilder.Seed(_env);
 
-            base.OnModelCreating(modelBuilder);
         }
 
         override async public Task<int> SaveChangesAsync(CancellationToken cancellationToken)

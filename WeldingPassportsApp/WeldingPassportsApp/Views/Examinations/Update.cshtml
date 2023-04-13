@@ -14,7 +14,7 @@
 
 <h1>@Localizer["Examination Update"]</h1>
 <hr />
-<div>
+<div class="mb-3">
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ExamDate)
@@ -36,7 +36,6 @@
         </dd>
     </dl>
 </div>
-<br />
 <h2>@Localizer["PE Certificates"]</h2>
 <form enctype="multipart/form-data" asp-controller="@typeof(ExaminationsController).GetNameOfController()" 
     asp-action="@nameof(ExaminationsController.Update)" asp-route-returnUrl="@returnUrl" method="post">

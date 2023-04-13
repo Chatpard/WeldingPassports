@@ -27,7 +27,9 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<CompanyContact> GetCompanyContactById(int id);
 
-        SelectList CompanyContactExamCenterSelectList(string? encryotedExamCenterID);
+        SelectList CompanyContactExamCenterSelectList(string? encryotedExamCenterID = null);
+
+        SelectList CompanyContactTrainingCenterSelectList(string? encryotedTrainingCenterID = null);
 
         SelectList CompanyContactSelectList(string? encryptedCompanyID, int? companyContactID);
 

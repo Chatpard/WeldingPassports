@@ -6,14 +6,14 @@ namespace Application.Requests.TrainingCenters
 {
     public class PostTrainingCenterEditRequest : IRequest<ActionResult>
     {
-        public PostTrainingCenterEditRequest(TrainingCenterEditViewModel trainingCenterChanges, string returnUrl, Controller controller)
+        public PostTrainingCenterEditRequest(TrainingCenterEditViewModel trainingCenterEditVM, string returnUrl, Controller controller)
         {
-            TrainingCenterChanges = trainingCenterChanges;
+            TrainingCenterEditVM = trainingCenterEditVM;
             ReturnUrl = returnUrl;
             Controller = controller;
         }
 
-        public TrainingCenterEditViewModel TrainingCenterChanges { get; }
+        public TrainingCenterEditViewModel TrainingCenterEditVM { get; }
         public string ReturnUrl { get; }
         public Controller Controller { get; }
     }

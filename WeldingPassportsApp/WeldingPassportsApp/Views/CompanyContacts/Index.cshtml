@@ -5,10 +5,11 @@
 @{
     ViewData["Title"] = Localizer["Contacts Index"];
     var currentUrl = ViewBag.CurrentUrl;
-    var userCanReadCompanyContacts = User.CanRead(ClaimsTypesStore.CompanyContacts);
-    var userCanEditCompanyContacts = User.CanEdit(ClaimsTypesStore.CompanyContacts);
-    var UserCanCreateCompanyContacts = User.CanCreate(ClaimsTypesStore.CompanyContacts);
-    var UserCanDeleteCompanyContacts = User.CanDelete(ClaimsTypesStore.CompanyContacts);
+
+    bool userCanReadCompanyContacts = User.CanRead(ClaimsTypesStore.CompanyContacts);
+    bool userCanEditCompanyContacts = User.CanEdit(ClaimsTypesStore.CompanyContacts);
+    bool UserCanCreateCompanyContacts = User.CanCreate(ClaimsTypesStore.CompanyContacts);
+    bool UserCanDeleteCompanyContacts = User.CanDelete(ClaimsTypesStore.CompanyContacts);
 }
 
 <h1>@Localizer["Contacts Index"]</h1>
@@ -16,13 +17,13 @@
 @if (UserCanCreateCompanyContacts)
 {
     <p>
-        <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Create)" asp-route-returnUrl ="@currentUrl">
+        <a asp-action="@nameof(CompanyContactsController.Create)" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-route-returnUrl="@currentUrl">
             @Localizer["Create New"]
         </a>
     </p>
 }
 
-<form asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)" method="get" id="SearchForm">
+<form asp-action="@nameof(CompanyContactsController.Index)" asp-controller="@typeof(CompanyContactsController).GetNameOfController()" method="get" id="SearchForm">
     <div class="form-actions no-color">
         <p>
             <label for="SearchInput">@Localizer["Find Contact:"]</label>
@@ -37,7 +38,7 @@
     <thead>
         <tr>
             <th>
-                <a asp-controller="@typeof(CompanyContactsController).GetNameOfController()" asp-action="@nameof(CompanyContactsController.Index)"
+                <a asp-action="@nameof(CompanyContactsController.Index)" asp-controller="@typeof(CompanyContactsController).GetNameOfController()"
                    asp-route-sortOrder="@ViewData["FirstName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().FirstName)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "FirstName_desc")

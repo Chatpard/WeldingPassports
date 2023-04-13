@@ -9,7 +9,7 @@ namespace Application.ViewModels
 
         [Required]
         [Display(Name = "Company")]
-        public int CompanyID { get; set; }
+        public int? CompanyID { get; set; }
 
         public SelectList CompanySelectList { get; set; }
 

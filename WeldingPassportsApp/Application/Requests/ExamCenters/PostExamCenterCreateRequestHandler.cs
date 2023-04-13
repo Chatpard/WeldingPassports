@@ -27,8 +27,11 @@ namespace Application.Requests.ExamCenters
         {
             if(request.Controller.ModelState.IsValid)
             {
-                ExamCenter examCenter = _mapper.Map<ExamCenter>(request.ExamCenterCreateVM);
-                await _repository.PostExamCentersCreateAsync(examCenter);
+                if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
+                    request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
+
+                ExamCenter newExamCenter = _mapper.Map<ExamCenter>(request.ExamCenterCreateVM);
+                _repository.PostExamCentersCreate(newExamCenter);
                 await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);

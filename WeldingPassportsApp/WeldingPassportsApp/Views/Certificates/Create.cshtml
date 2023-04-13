@@ -32,28 +32,28 @@
 <form asp-controller="@typeof(CertificatesController).GetNameOfController()" asp-action="@nameof(CertificatesController.Create)"
       asp-route-returnUrl="@returnUrl" method="post" class="mt-3" id="form" onsubmit="PrepareFormOnsubmit()">
     <input hidden asp-for="ExaminationEncryptedID" />
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="ExamDate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <input asp-for="ExamDate" class="form-control" readonly>
             <span asp-validation-for="ExamDate" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="ExamCenterName" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <input asp-for="ExamCenterName" class="form-control" readonly>
             <span asp-validation-for="ExamCenterName" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="TrainingCenterName" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <input asp-for="TrainingCenterName" class="form-control" readonly>
             <span asp-validation-for="TrainingCenterName" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="PEPassportID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
@@ -67,14 +67,12 @@
                         <option value="" selected disabled>@Localizer["Choose PE Passport"]</option>
                     }
                 </select>
-                <div class="input-group-append">
-                    <input class="btn btn-primary" id="PEPassportIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#PEPassportID'))" />
-                </div>
+                <input class="btn btn-primary" id="PEPassportIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#PEPassportID'))" />
             </div>
             <span asp-validation-for="PEPassportID" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="CompanyID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
@@ -88,14 +86,12 @@
                         <option value="" selected disabled>@Localizer["Choose Company"]</option>
                     }
                 </select>
-                <div class="input-group-append">
-                    <input class="btn btn-primary" id="CompanyIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" />
-                </div>
+                <input class="btn btn-primary" id="CompanyIDClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#CompanyID'))" />
             </div>
             <span asp-validation-for="CompanyID" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="ProcessID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
@@ -109,14 +105,12 @@
                         <option value="" selected disabled>@Localizer["Choose Process"]</option>
                     }
                 </select>
-                <div class="input-group-append">
-                    <input class="btn btn-primary" id="ProcessIDClearButton" type="button" value="@Localizer["Clear"]" disabled onclick="OnClickClear($('#ProcessID'))" />
-                </div>
+                <input class="btn btn-primary" id="ProcessIDClearButton" type="button" value="@Localizer["Clear"]" disabled onclick="OnClickClear($('#ProcessID'))" />
             </div>
             <span asp-validation-for="ProcessID" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="RegistrationTypeID" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
@@ -130,21 +124,17 @@
                         <option value="" selected disabled>@Localizer["Choose Registration Type"]</option>
                     }
                 </select>
-                <div class="input-group-append">
-                    <input class="btn btn-primary reset" id="RegistrationTypeIDClearButton" type="button" value="@Localizer["Clear"]" disabled onclick="OnClickClear($('#RegistrationTypeID'))" />
-                </div>
+                <input class="btn btn-primary" id="RegistrationTypeIDClearButton" type="button" value="@Localizer["Clear"]" disabled onclick="OnClickClear($('#RegistrationTypeID'))" />
             </div>
             <span asp-validation-for="RegistrationTypeID" class="text-danger"></span>
         </div>
     </div>
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label asp-for="ExpiryDate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
                 <input asp-for="ExpiryDate" class="form-control" placeholder="Expiry Date" onchange="OnChangeExpiryDate()" min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.ExpiryDate?.ToString("yyyy-MM-dd")" readonly>
-                <div class="input-group-append">
-                    <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" disabled onclick="OnClickClear($('#ExpiryDate'))" />
-                </div>
+                <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" disabled onclick="OnClickClear($('#ExpiryDate'))" />
             </div>
             <span asp-validation-for="ExpiryDate" class="text-danger"></span>
         </div>

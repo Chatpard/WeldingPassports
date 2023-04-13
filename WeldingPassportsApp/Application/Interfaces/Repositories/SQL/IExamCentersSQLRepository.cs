@@ -19,11 +19,11 @@ namespace Application.Interfaces.Repositories.SQL
 
         Task<IPaginatedList<ExamCenterIndexViewModel>> GetExamCentersIndexPaginatedAsync(int pageSize, int pageIndex, string searchString, string sortOrder);
 
-        Task<ExamCenterDetailsViewModel> GetExamCentersDetails(string encryptedID);
+        Task<ExamCenterDetailsViewModel> GetExamCentersDetailsAsync(string encryptedID);
 
         EntityEntry<ExamCenter> PostExamCentersEdit(ExamCenter examCenterChanges);
 
-        Task<EntityEntry> PostExamCentersCreateAsync(ExamCenter examCenter);
+        EntityEntry<ExamCenter> PostExamCentersCreate(ExamCenter newExamCenter);
 
         Task<ExamCenterEditViewModel> GetExamCentersEdit(string encryptedID);
 

@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
-            IQueryable<TrainingCenter> query = _context.TrainingCenters.Where(trainingCenter => trainingCenter.ID == decryptedID);
+            IQueryable<TrainingCenter> query = _context.TrainingCenters.Where(tc => tc.ID == decryptedID);
 
             return await query.ProjectTo<TrainingCenterDetailsViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
@@ -59,19 +59,23 @@ namespace Infrastructure.Repositories.SQL
 
             IQueryable<TrainingCenter> query = _context.TrainingCenters.Where(trainingCenter => trainingCenter.ID == decryptedID);
 
-            return await query.ProjectTo<TrainingCenterEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+            var tcList = query.ToList();
+
+            var vm = await query.ProjectTo<TrainingCenterEditViewModel>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+
+            return vm;
         }
 
-        public async Task<EntityEntry<TrainingCenter>> PostTrainingCenterCreateAsync(TrainingCenter trainingCenterChanges)
+        public EntityEntry<TrainingCenter> PostTrainingCenterCreate(TrainingCenter newTrainingCenter)
         {
-            EntityEntry<TrainingCenter> trainingCenter = await _context.TrainingCenters.AddAsync(trainingCenterChanges);
-            trainingCenter.State = EntityState.Added;
-            return trainingCenter;
+            EntityEntry<TrainingCenter> newTrainingCenterEntityEntry = _context.Entry(newTrainingCenter);
+            newTrainingCenterEntityEntry.State = EntityState.Added;
+            return newTrainingCenterEntityEntry;
         }
 
-        public EntityEntry<TrainingCenter> PostTrainingCenterEditAsync(TrainingCenter trainingCenterChanges)
+        public EntityEntry<TrainingCenter> PostTrainingCenterEdit(TrainingCenter trainingCenterChanges)
         {
-            EntityEntry<TrainingCenter> trainingCenter = _context.TrainingCenters.Update(trainingCenterChanges);
+            EntityEntry<TrainingCenter> trainingCenter = _context.Entry(trainingCenterChanges);
             trainingCenter.State = EntityState.Modified;
             return trainingCenter;
         }
@@ -80,8 +84,6 @@ namespace Infrastructure.Repositories.SQL
         {
             int decryptedID = Convert.ToInt32(_protector.Unprotect(encryptedID));
 
-            ListTrainingCenter listTrainingCenter = await _context.ListTrainingCenter.Where(listTrainingCenter => listTrainingCenter.TrainingCenterID == decryptedID).SingleOrDefaultAsync();
-            _context.ListTrainingCenter.Remove(listTrainingCenter);
             _context.TrainingCenters.Remove(new TrainingCenter { ID = decryptedID });
 
             return await SaveChangesAsync(token);

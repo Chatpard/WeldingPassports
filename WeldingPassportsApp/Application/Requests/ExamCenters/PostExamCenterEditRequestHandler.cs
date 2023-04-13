@@ -21,9 +21,8 @@ namespace Application.Requests.ExamCenters
 
         public async Task<IActionResult> Handle(PostExamCenterEditRequest request, CancellationToken cancellationToken)
         {
-            //Todo: Validation Submit Invalid
-            //if(request.Controller.ModelState.IsValid)
-            //{
+            if(request.Controller.ModelState.IsValid)
+            {
                 if(request.Controller.Url.IsLocalUrl(request.ReturnUrl))
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
@@ -32,9 +31,9 @@ namespace Application.Requests.ExamCenters
                 await _repository.SaveChangesAsync(cancellationToken);
 
                 return request.Controller.LocalRedirect(request.ReturnUrl); 
-            //}
+            }
 
-            //return request.Controller.View(request.ExamCenterEditVM);
+            return request.Controller.View(request.ExamCenterEditVM);
         }
     }
 }

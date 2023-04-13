@@ -42,7 +42,7 @@ namespace Infrastructure.Repositories.SQL
         private IQueryable<CompanyContactIndexViewModel> GetCompanyContactsIndex()
         {
             IQueryable<CompanyContact> query = _context.CompanyContacts
-                .Select(companyContact => companyContact);
+                .Include(companyContact => companyContact.AppUser.AppUserRoles);
 
             return query.ProjectTo<CompanyContactIndexViewModel>(_mapper.ConfigurationProvider);
         }
@@ -54,6 +54,8 @@ namespace Infrastructure.Repositories.SQL
             contactsQuery = SearchContactIndex(contactsQuery, searchString);
 
             contactsQuery = SortContactIndex(contactsQuery, sortOrder);
+
+            var test = contactsQuery.ToList();
 
             return await PaginatedList<CompanyContactIndexViewModel>.CreateAsync(contactsQuery.AsNoTracking(), pageIndex, pageSize);
         }
@@ -280,15 +282,24 @@ namespace Infrastructure.Repositories.SQL
             return await _context.CompanyContacts.FindAsync(id);
         }
 
-        public SelectList CompanyContactExamCenterSelectList(string? encryotedExamCenterID)
+        public SelectList CompanyContactExamCenterSelectList(string? encryotedExamCenterID = null)
         {
-            IQueryable companyContacts = null;
+            var companyContactsIQ = _context.CompanyContacts.AsQueryable();
 
             if (encryotedExamCenterID != null)
             {
                 int examCenterID = Convert.ToInt32(_protector.Unprotect(encryotedExamCenterID));
-                companyContacts = _context.CompanyContacts.Where(x => true)
-                    .Where(companyContacts => companyContacts.Company.ExamCenter.ID == examCenterID)
+                companyContactsIQ = companyContactsIQ
+                    .Where(companyContacts => companyContacts.Company.ExamCenter.ID == examCenterID);
+            }
+            else
+            {
+                companyContactsIQ = companyContactsIQ
+                    .Where(companyContact => companyContact.Company.ExamCenter == null)
+                    .Where(companyContact => companyContact.Company.TrainingCenter == null);
+            }
+
+            var companyContacts = companyContactsIQ
                     .OrderBy(companyContact => companyContact.Contact.LastName).ThenBy(companyContact => companyContact.Contact.FirstName)
                     .Select(companyContact => new
                     {
@@ -297,7 +308,36 @@ namespace Infrastructure.Repositories.SQL
                                     (companyContact.Contact.LastName??"") + (((companyContact.Contact.LastName != null) && (companyContact.Email != null)) ? " " : "") +
                                     (companyContact.Email??"")
                     });
+
+            return new SelectList(companyContacts, nameof(CompanyContact.ID), "NameEmail");
+        }
+
+        public SelectList CompanyContactTrainingCenterSelectList(string? encryotedTrainingCenterID = null)
+        {
+            var companyContactsIQ = _context.CompanyContacts.AsQueryable();
+
+            if (encryotedTrainingCenterID != null)
+            {
+                int trainingCenterID = Convert.ToInt32(_protector.Unprotect(encryotedTrainingCenterID));
+                companyContactsIQ = companyContactsIQ
+                    .Where(companyContact => companyContact.Company.TrainingCenter.ID == trainingCenterID);
             }
+            else
+            {
+                companyContactsIQ = companyContactsIQ
+                    .Where(companyContact => companyContact.Company.ExamCenter == null)
+                    .Where(companyContact => companyContact.Company.TrainingCenter == null);
+            }
+
+            var companyContacts = companyContactsIQ
+                .OrderBy(companyContact => companyContact.Contact.LastName).ThenBy(companyContact => companyContact.Contact.FirstName)
+                .Select(companyContact => new
+                    {
+                        ID = companyContact.ID,
+                        NameEmail = (companyContact.Contact.FirstName??"") + (((companyContact.Contact.FirstName != null) && (companyContact.Contact.LastName != null)) ? " " : "") +
+                                    (companyContact.Contact.LastName??"") + (((companyContact.Contact.LastName != null) && (companyContact.Email != null)) ? " " : "") +
+                                    (companyContact.Email??"")
+                    });
 
             return new SelectList(companyContacts, nameof(CompanyContact.ID), "NameEmail");
         }
@@ -313,24 +353,11 @@ namespace Infrastructure.Repositories.SQL
                 companyContactsIQ = companyContactsIQ
                     .Where(companyContacts =>
                            companyContacts.Company.TrainingCenter.ID == trainingCenterID);   //of the same Company
-                if(companyContactID != null)
-                {
-                    companyContactsIQ = companyContactsIQ
-                        .Where(companyContacts =>
-                            companyContacts.ListTrainingCenter == null ||                               //not listed in ListTrainingCenter
-                            companyContacts.ListTrainingCenter.CompanyContactID == companyContactID);   //actual 
-                }
-                else
-                {
-                    companyContactsIQ = companyContactsIQ
-                    .Where(companyContacts =>
-                        companyContacts.ListTrainingCenter == null); //not listed in ListTrainingCenter
-                };
             }
 
             var companyContacts = companyContactsIQ
                 .OrderBy(companyContact => companyContact.Contact.LastName).ThenBy(companyContact => companyContact.Contact.FirstName)
-                .Select(companyContact => new CompanyContactSelectListSQLModel
+                .Select(companyContact => new
                 {
                     ID = companyContact.ID,
                     NameEmail = (companyContact.Contact.FirstName??"") + (((companyContact.Contact.FirstName != null) && (companyContact.Contact.LastName != null))?" ":"") + 

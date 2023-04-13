@@ -13,13 +13,11 @@ namespace Application.Requests.TrainingCenters
     class PostTrainingCenterCreateRequestHandler : IRequestHandler<PostTrainingCenterCreateRequest, ActionResult>
     {
         private readonly ITrainingCentersSQLRepository _repository;
-        private readonly IListTrainingCentersSQLRepository _listTrainingCentersSQLRepository;
         private readonly IMapper _mapper;
 
-        public PostTrainingCenterCreateRequestHandler(ITrainingCentersSQLRepository repository, IListTrainingCentersSQLRepository listTrainingCentersSQLRepository, IMapper mapper)
+        public PostTrainingCenterCreateRequestHandler(ITrainingCentersSQLRepository repository, IMapper mapper)
         {
             _repository = repository;
-            _listTrainingCentersSQLRepository = listTrainingCentersSQLRepository;
             _mapper = mapper;
         }
 
@@ -31,19 +29,13 @@ namespace Application.Requests.TrainingCenters
                     request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
                 TrainingCenter newtrainingCenter = _mapper.Map<TrainingCenter>(request.TrainingCenterCreateVM);
-                await _repository.PostTrainingCenterCreateAsync(newtrainingCenter);
+                _repository.PostTrainingCenterCreate(newtrainingCenter);
                 await _repository.SaveChangesAsync(cancellationToken);
 
-                EntityEntry<ListTrainingCenter> listTrainingCenter = await _listTrainingCentersSQLRepository.Create(newtrainingCenter.ID, request.TrainingCenterCreateVM.CompanyContactID);
-                if (listTrainingCenter != null)
-                    await _repository.SaveChangesAsync(cancellationToken);
+                return request.Controller.LocalRedirect(request.ReturnUrl);
+            }
 
-                TrainingCenterEditViewModel newTrainingCenterVM = _mapper.Map<TrainingCenterEditViewModel>(newtrainingCenter);
-
-                return request.Controller.RedirectToAction(request.NameOfDetailsAction, new { id = newTrainingCenterVM.EncryptedID, returnUrl = request.ReturnUrl });
-            };
-
-            return request.Controller.View();
+            return request.Controller.View(request.TrainingCenterCreateVM);
         }
     }
 }

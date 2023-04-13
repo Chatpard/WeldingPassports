@@ -39,7 +39,7 @@ namespace Application.Requests.TrainingCenters
             TrainingCenterEditViewModel vm = await _repository.GetTrainingCenterEditAsync(request.EncryptedID);
             //Todo: CompanySelectList unused Companies
             vm.CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned:true, CompanyID:vm.CompanyID);
-            vm.CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactSelectList(vm.EncryptedID, vm.CompanyContactID);
+            vm.CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactTrainingCenterSelectList(vm.EncryptedID);
 
             return request.Controller.View(vm);
         }

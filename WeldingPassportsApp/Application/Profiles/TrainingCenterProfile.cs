@@ -23,18 +23,35 @@ namespace Application.Profiles
                 .ForMember(index => index.EncryptedId, options => options.MapFrom(trainingCenter =>
                     _protector.Protect(Convert.ToString(trainingCenter.ID))))
                 .ForMember(index => index.CompanyName, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.Company.CompanyName))
+                    trainingCenter.Company != null ?
+                        trainingCenter.Company.CompanyName
+                        : null))
                 .ForMember(index => index.BusinessAddressPostalCode, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.Company.Address.BusinessAddressPostalCode))
+                    trainingCenter.Company != null ?
+                        trainingCenter.Company.Address != null ?
+                            trainingCenter.Company.Address.BusinessAddressPostalCode
+                            : null
+                        : null))
                 .ForMember(index => index.BusinessAddressCity, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.Company.Address.BusinessAddressCity))
+                    trainingCenter.Company != null ?
+                        trainingCenter.Company.Address != null ? 
+                            trainingCenter.Company.Address.BusinessAddressCity
+                            : null
+                        : null))
                 .ForMember(index => index.Contact, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.ListTrainingCenter.CompanyContact.Contact.FirstName + " " +
-                    trainingCenter.ListTrainingCenter.CompanyContact.Contact.LastName))
+                    trainingCenter.CompanyContact != null ? 
+                        trainingCenter.CompanyContact.Contact != null ? 
+                            trainingCenter.CompanyContact.Contact.FirstName + " " + trainingCenter.CompanyContact.Contact.LastName 
+                            : null
+                        : null))
                 .ForMember(index => index.Email, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.ListTrainingCenter.CompanyContact.Email))
+                    trainingCenter.CompanyContact != null ?
+                        trainingCenter.CompanyContact.Email
+                        : null))
                 .ForMember(index => index.MobilePhone, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.ListTrainingCenter.CompanyContact.MobilePhone));
+                    trainingCenter.CompanyContact != null ?
+                        trainingCenter.CompanyContact.MobilePhone
+                        : null));
 
             CreateMap<TrainingCenter, TrainingCenterDetailsViewModel>()
                 .ForMember(vm => vm.EncryptedID, options => options.MapFrom(trainingCenter =>
@@ -62,19 +79,19 @@ namespace Application.Profiles
                     trainingCenter.Company.Address.BusinessAddressCountry))
                 // Training Center Contact Information
                 .ForMember(vm => vm.FirstName, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.ListTrainingCenter.CompanyContact.Contact.FirstName))
+                    trainingCenter.CompanyContact.Contact.FirstName))
                 .ForMember(vm => vm.LastName, options => options.MapFrom(trainingCenter =>
-                        trainingCenter.ListTrainingCenter.CompanyContact.Contact.LastName))
+                        trainingCenter.CompanyContact.Contact.LastName))
                 .ForMember(vm => vm.Birthday, options => options.MapFrom(trainingCenter =>
-                        trainingCenter.ListTrainingCenter.CompanyContact.Contact.Birthday))
+                        trainingCenter.CompanyContact.Contact.Birthday))
                 .ForMember(vm => vm.Email, options => options.MapFrom(trainingCenter =>
-                        trainingCenter.ListTrainingCenter.CompanyContact.Email))
+                        trainingCenter.CompanyContact.Email))
                 .ForMember(vm => vm.JobTitle, options => options.MapFrom(trainingCenter =>
-                        trainingCenter.ListTrainingCenter.CompanyContact.JobTitle))
+                        trainingCenter.CompanyContact.JobTitle))
                 .ForMember(vm => vm.BusinessPhone, options => options.MapFrom(trainingCenter =>
-                        trainingCenter.ListTrainingCenter.CompanyContact.BusinessPhone))
+                        trainingCenter.CompanyContact.BusinessPhone))
                 .ForMember(vm => vm.MobilePhone, options => options.MapFrom(trainingCenter =>
-                        trainingCenter.ListTrainingCenter.CompanyContact.MobilePhone))
+                        trainingCenter.CompanyContact.MobilePhone))
                 // Business Address
                 .ForMember(vm => vm.BusinessAddress, options => options.MapFrom(trainingCenter =>
                     trainingCenter.Company.Address.BusinessAddress))
@@ -86,10 +103,8 @@ namespace Application.Profiles
                     trainingCenter.Company.Address.BusinessAddressCountry));
 
             CreateMap<TrainingCenter, TrainingCenterEditViewModel>()
-                .ForMember(vm => vm.EncryptedID, options => options.MapFrom(trainingCenter =>
-                    _protector.Protect(Convert.ToString(trainingCenter.ID))))
-                .ForMember(vm => vm.CompanyContactID, options => options.MapFrom(trainingCenter =>
-                    trainingCenter.ListTrainingCenter.CompanyContactID));
+                .ForMember(vm => vm.EncryptedID, options => options.MapFrom(trainingCentre =>
+                    _protector.Protect(Convert.ToString(trainingCentre.ID))));
 
             CreateMap<TrainingCenterEditViewModel, TrainingCenter>()
                 .ForMember(trainingCenter => trainingCenter.ID, options => options.MapFrom(vm =>

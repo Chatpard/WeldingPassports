@@ -13,52 +13,44 @@
         <form asp-controller="@typeof(PEPassportsController).GetNameOfController()"
               asp-action="@nameof(PEPassportsController.Edit)" asp-route-returnUrl="@returnUrl" method="post">
             <input hidden asp-for="EncryptedID" />
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="AVNumber" class="col-sm-2 col-form-label"></label>
                 <div class="col-sm-10">
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span id="LetterSpan" class="input-group-text">@Model.Letter</span>
-                        </div>
-                        <div class="input-group-prepend">
-                            <input asp-for="Letter" class="form-control" readonly hidden />
-                        </div>
-                        <input asp-for="AVNumber" asp-format="{0:D5}" class="form-control" placeholder="AV number" readonly>
+                        <span id="LetterSpan" class="input-group-text">@Model.Letter</span>
+                        <input asp-for="Letter" class="form-control" readonly hidden />
+                        <input asp-for="AVNumber" asp-format="{0:D5}" class="form-control" placeholder="AV number" />
                     </div>
                     <span asp-validation-for="AVNumber" class="text-danger"></span>
-                </div>"
+                </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="TrainingCenterID" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10 input-group">
-                    <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList" onchange="GetTrainingCenterLetterByTrainingCenterID(this)">
-                        <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
-                    </select>
-                    <div class="input-group-append">
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <select asp-for="TrainingCenterID" class="form-control" asp-items="@Model.TrainingCenterSelectList" onchange="GetTrainingCenterLetterByTrainingCenterID(this)">
+                            <option value="" selected disabled hidden>@Localizer["Choose training center"]</option>
+                        </select>
                         <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
-                    </div>
-                    <div class="input-group-append">
-                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label asp-for="PEWelderID" class="col-sm-2 col-form-label"></label>
-                <div class="col-sm-10 input-group">
-                    <select asp-for="PEWelderID" class="form-control" asp-items="@Model.PEWelderSelectList">
-                        <option value="" selected disabled hidden>@Localizer["Choose PE Welder"]</option>
-                    </select>
-                    <div class="input-group-append">
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <select asp-for="PEWelderID" class="form-control" asp-items="@Model.PEWelderSelectList">
+                            <option value="" selected disabled hidden>@Localizer["Choose PE Welder"]</option>
+                        </select>
                         <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
-                    </div>
-                    <div class="input-group-append">
-                        <input class="btn btn-primary reset" type="button" value="@Localizer["Clear"]" />
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" />
                     </div>
                 </div>
                 <span asp-validation-for="PEWelderID" class="text-danger"></span>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary" style="width:auto">@Localizer["Save"]</button>
                     <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
@@ -76,5 +68,4 @@
     <script src="~/js/PEPassports/GetTrainingCenterLetterByTrainingCenterID.js"></script>
     <script src="~/js/PEPassports/GetPEPassportMaxAVNumber.js"></script>
     <script src="~/js/Welders/GetWeldersNotFromTrainingCenterID.js"></script>
-    <script src="~/js/ResetSelect.js"></script>
 }

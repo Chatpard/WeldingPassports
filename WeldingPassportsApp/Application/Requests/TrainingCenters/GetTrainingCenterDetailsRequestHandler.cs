@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repositories.SQL;
 using Application.Requests.TrainingCenters;
+using Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ namespace Application.Requests.TrainingCenters
 
             request.Controller.ViewBag.CurrentUrl = request.Controller.Request.GetEncodedPathAndQuery();
 
-            var vm = await _repository.GetTrainingCenterDetailsAsync(request.EncryptedID);
+            TrainingCenterDetailsViewModel vm = await _repository.GetTrainingCenterDetailsAsync(request.EncryptedID);
 
             return request.Controller.View(vm);
         }

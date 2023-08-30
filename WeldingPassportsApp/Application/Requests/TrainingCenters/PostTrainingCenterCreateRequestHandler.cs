@@ -13,20 +13,25 @@ namespace Application.Requests.TrainingCenters
     class PostTrainingCenterCreateRequestHandler : IRequestHandler<PostTrainingCenterCreateRequest, ActionResult>
     {
         private readonly ITrainingCentersSQLRepository _repository;
+        private readonly ICompaniesSQLRepository _companiesSQLRepository;
+        private readonly ICompanyContactsSQLRepository _companyContactsSQLRepository;
         private readonly IMapper _mapper;
 
-        public PostTrainingCenterCreateRequestHandler(ITrainingCentersSQLRepository repository, IMapper mapper)
+        public PostTrainingCenterCreateRequestHandler(ITrainingCentersSQLRepository repository, ICompaniesSQLRepository companiesSQLRepository, ICompanyContactsSQLRepository companyContactsSQLRepository, IMapper mapper)
         {
             _repository = repository;
+            _companiesSQLRepository=companiesSQLRepository;
+            _companyContactsSQLRepository=companyContactsSQLRepository;
             _mapper = mapper;
         }
 
         public async Task<ActionResult> Handle(PostTrainingCenterCreateRequest request, CancellationToken cancellationToken)
         {
+            if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
+                request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
+
             if (request.Controller.ModelState.IsValid)
             {
-                if (request.Controller.Url.IsLocalUrl(request.ReturnUrl))
-                    request.Controller.ViewBag.ReturnUrl = request.ReturnUrl;
 
                 TrainingCenter newtrainingCenter = _mapper.Map<TrainingCenter>(request.TrainingCenterCreateVM);
                 _repository.PostTrainingCenterCreate(newtrainingCenter);
@@ -34,6 +39,9 @@ namespace Application.Requests.TrainingCenters
 
                 return request.Controller.LocalRedirect(request.ReturnUrl);
             }
+
+            request.TrainingCenterCreateVM.CompanySelectList = _companiesSQLRepository.CompanySelectList(unasigned: true);
+            request.TrainingCenterCreateVM.CompanyContactSelectList = _companyContactsSQLRepository.CompanyContactTrainingCenterSelectList();
 
             return request.Controller.View(request.TrainingCenterCreateVM);
         }

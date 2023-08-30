@@ -26,7 +26,7 @@ namespace Domain.Models
         // Navigation Properties
         public Address Address { get; set; }
         public ExamCenter ExamCenter { get; set; }
-        public TrainingCenter TrainingCenter { get; set; }
+        public TrainingCenter TrainingCenter { get; set; } 
         public ICollection<CompanyContact> CompanyContacts { get; set; }
         public ICollection<Registration> Registrations { get; set; }
     }

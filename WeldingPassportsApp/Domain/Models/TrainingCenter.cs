@@ -21,7 +21,7 @@ namespace Domain.Models
         public bool IsActive { get; set; }
 
         // Navigation Properties
-        public Company Company { get; set; }
+        public Company Company { get; set; } = null!;
 
         public CompanyContact CompanyContact { get; set; }
 

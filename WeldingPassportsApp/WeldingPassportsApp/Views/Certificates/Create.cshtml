@@ -14,14 +14,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Certificates overwrite</h5>
-                <button class="btn-close" type="button" data-dismiss="modal" aria-label="Close"></button>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>@Localizer["This opperation will overright a previous certificate. Please, confirm."]</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-danger" type="button" data-dismiss="modal" onclick="OnSave()">Save</button>
-                <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -133,7 +133,7 @@
         <label asp-for="ExpiryDate" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-10">
             <div class="input-group">
-                <input asp-for="ExpiryDate" class="form-control" placeholder="Expiry Date" onchange="OnChangeExpiryDate()" min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.ExpiryDate?.ToString("yyyy-MM-dd")" readonly>
+                <input asp-for="ExpiryDate" class="form-control" placeholder="Expiry Date" onchange="OnChangeExpiryDate()" min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.ExpiryDate?.ToString("yyyy-MM-dd")" disabled>
                 <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" disabled onclick="OnClickClear($('#ExpiryDate'))" />
             </div>
             <span asp-validation-for="ExpiryDate" class="text-danger"></span>

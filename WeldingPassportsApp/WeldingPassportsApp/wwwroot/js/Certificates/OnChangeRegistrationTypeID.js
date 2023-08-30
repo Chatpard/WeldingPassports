@@ -6,8 +6,8 @@ window.OnChangeRegistrationTypeID = () => {
 
     ProcessID.ToggleDisable(
         $("#ProcessID"),
-        $("#ProcessIDClearButton"),
         $("#ProcessID-error"),
+        $("#ProcessIDClearButton"),
         $("#PEPassportID"),
         $("#RegistrationTypeID")
     );
@@ -21,8 +21,8 @@ window.OnChangeRegistrationTypeID = () => {
     );
     ExpiryDate.ToggleDisable(
         $("#ExpiryDate"),
-        $("#ExpiryDateClearButton"),
         $("#ExpiryDate-error"),
+        $("#ExpiryDateClearButton"),
         $("#RegistrationTypeID"),
         $("#HasPassed")
     );

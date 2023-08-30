@@ -2,9 +2,9 @@
     $("#PEPassportID").removeAttr("disabled");
     $("#ProcessID").removeAttr("disabled");
     $("#RegistrationTypeID").removeAttr("disabled");
-    $("#ExpiryDate").removeAttr("readonly");
+    $("#ExpiryDate").removeAttr("disabled");
     $("#HasPassed").removeAttr("disabled");
     $("#RevokedByCompanyContactID").removeAttr("disabled");
-    $("#RevokeDate").removeAttr("readonly");
+    $("#RevokeDate").removeAttr("disabled");
     $("#RevokeComment").removeAttr("disabled");
 }

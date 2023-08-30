@@ -35,7 +35,7 @@
                         @if(userCanCreateTrainingCenters){
                             <a id="TrainingCenterSelect" asp-controller="@typeof(TrainingCentersController).GetNameOfController()" asp-action="@nameof(TrainingCentersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
                         }
-                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" />
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#TrainingCenterID'))" />
                     </div>
                     <span asp-validation-for="TrainingCenterID" class="text-danger"></span>
                 </div>
@@ -51,7 +51,7 @@
                         {
                             <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Create)" asp-route-returnUrl="@currentUrl" class="btn btn-primary" type="button">@Localizer["Create"]</a>
                         }
-                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" />
+                        <input class="btn btn-primary" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#PEWelderID'))" />
                     </div>
                     <span asp-validation-for="PEWelderID" class="text-danger"></span>
                 </div>
@@ -62,14 +62,14 @@
                     <a href="@returnUrl" class="btn btn-primary" style="width:auto">@Localizer["Cancel"]</a>
                 </div>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            </div>
+            </div> 
         </form>
     </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
+    <script src="~/js/OnClickClear.js"></script>
     <script src="~/js/SetTrainingCenterSelectSingle.js"></script>
     <script src="~/js/PEPassports/GetTrainingCenterLetterByTrainingCenterID.js"></script>
     <script src="~/js/PEPassports/GetPEPassportMaxAVNumber.js"></script>

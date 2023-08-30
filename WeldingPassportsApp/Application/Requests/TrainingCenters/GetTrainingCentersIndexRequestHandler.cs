@@ -37,6 +37,7 @@ namespace Application.Requests.TrainingCenters
             request.Controller.ViewData["Contact"] = request.SortOrder == "Contact_desc" ? "Contact_asc" : "Contact_desc";
             request.Controller.ViewData["Email"] = request.SortOrder == "Email_desc" ? "Email_asc" : "Email_desc";
             request.Controller.ViewData["MobilePhone"] = request.SortOrder == "MobilePhone_desc" ? "MobilePhone_asc" : "MobilePhone_desc";
+            request.Controller.ViewData["IsActive"] = request.SortOrder == "IsActive_desc" ? "IsActive_asc" : "IsActive_desc";
 
             if (request.SearchString != null)
                 request.PageNumber = 1;

@@ -72,7 +72,7 @@
             <div class="col-sm-10">
                 <div class="input-group">
                     <span id="Letter" class="input-group-text">@Model.Letter</span>
-                    <input asp-for="AVNumber" asp-format="{0:D5}" class="form-control" placeholder="AV number" readonly>
+                    <input asp-for="AVNumber" asp-format="{0:D5}" class="form-control" placeholder="AV number" disabled>
                 </div>
                 <span asp-validation-for="AVNumber" class="text-danger"></span>
             </div>
@@ -80,14 +80,14 @@
         <div class="form-group row mb-3">
             <label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="FirstName" class="form-control" placeholder="First Name" readonly>
+                <input asp-for="FirstName" class="form-control" placeholder="First Name" disabled>
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group row mb-3">
             <label asp-for="LastName" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="LastName" class="form-control" placeholder="Last Name" readonly>
+                <input asp-for="LastName" class="form-control" placeholder="Last Name" disabled>
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
@@ -209,7 +209,7 @@
                     }
                     else
                     {
-                        <input asp-for="ExpiryDate" class="form-control" placeholder="Expiry Date" onchange="OnChangeExpiryDate(@($"{(userCanEditCertificates?"true":"false")}"))" min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.MaxExpiryDate?.ToString("yyyy-MM-dd")" readonly>
+                        <input asp-for="ExpiryDate" class="form-control" placeholder="Expiry Date" onchange="OnChangeExpiryDate(@($"{(userCanEditCertificates?"true":"false")}"))" min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.MaxExpiryDate?.ToString("yyyy-MM-dd")" disabled>
                         <input class="btn btn-primary" id="ExpiryDateClearButton" type="button" value="@Localizer["Clear"]" onclick="OnClickClear($('#ExpiryDate'))" disabled />
                     }
                 </div>
@@ -292,7 +292,7 @@
                     }
                     else
                     {
-                        <input asp-for="RevokeDate" class="form-control" data-val="false" data-val-required=@Localizer["Revoke Date needs to between "]@Model.ExamDate?.ToString("dd-MM-yyyy")@Localizer[" and "]@Model.MaxExpiryDate?.ToString("dd-MM-yyyy") min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.MaxExpiryDate?.ToString("yyyy-MM-dd")" readonly>
+                        <input asp-for="RevokeDate" class="form-control" data-val="false" data-val-required=@Localizer["Revoke Date needs to between "]@Model.ExamDate?.ToString("dd-MM-yyyy")@Localizer[" and "]@Model.MaxExpiryDate?.ToString("dd-MM-yyyy") min="@Model.ExamDate?.ToString("yyyy-MM-dd")" max="@Model.MaxExpiryDate?.ToString("yyyy-MM-dd")" disabled>
                     }
                     <span asp-validation-for="RevokeDate" class="text-danger"></span>
                 </div>

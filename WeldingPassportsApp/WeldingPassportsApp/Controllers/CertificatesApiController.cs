@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace WeldingPassportsApp.Controllers
 {
-    [AllowAnonymous]
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]

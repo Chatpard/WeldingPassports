@@ -17,7 +17,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -3764,7 +3764,8 @@ namespace Infrastructure.Migrations
                             ID = 4,
                             CompanyID = 13,
                             ExaminationID = 3,
-                            ExpiryDate = new DateTime(2022, 8, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ExpiryDate = new DateTime(2022, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HasPassed = true,
                             PEPassportID = 3,
                             PreviousRegistrationID = 3,
                             ProcessID = 1,

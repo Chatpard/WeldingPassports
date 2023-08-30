@@ -5,13 +5,13 @@
         revokeDate.removeAttr("data-val");
 
         revokeDateError.remove();
-        revokeDate.prop("readonly", true);
+        revokeDate.prop("disabled", true);
         revokeDate.val(null);
     }
     else {
         revokeDate.rules("add", { required: true });
         revokeDate.attr("data-val", true);
 
-        revokeDate.removeAttr("readonly");
+        revokeDate.removeAttr("disabled");
     }
 }

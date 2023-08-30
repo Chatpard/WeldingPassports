@@ -1,19 +1,19 @@
-﻿export function ToggleDisable(expiryDate, expiryDateClearButton, expiryDateError, registrationTypeID, hasPassed) {
+﻿export function ToggleDisable(expiryDate, expiryDateError, expiryDateClearButton, registrationTypeID, hasPassed) {
     if (typeof hasPassed.val() === "undefined") {
         hasPassed = $("<select></select>");
     }
     if (registrationTypeID.val() == null) {
         expiryDate.val(null);
-        expiryDate.prop("readonly", true);
+        expiryDate.prop("disabled", true);
         expiryDateClearButton.prop("disabled", true);
     }
     else {
         if (hasPassed.val() == "" || hasPassed.val() == null) {
-            expiryDate.removeAttr("readonly");
+            expiryDate.removeAttr("disabled");
             expiryDateClearButton.removeAttr("disabled");
         }
         else {
-            expiryDate.prop("readonly", true);
+            expiryDate.prop("disabled", true);
             expiryDateClearButton.prop("disabled", true);
         }
     }

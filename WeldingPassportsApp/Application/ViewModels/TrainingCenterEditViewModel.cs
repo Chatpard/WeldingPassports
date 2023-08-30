@@ -16,7 +16,7 @@ namespace Application.ViewModels
         public SelectList CompanySelectList { get; set; }
 
         [Display(Name = "Contact Name")]
-        public int CompanyContactID { get; set; }
+        public int? CompanyContactID { get; set; }
 
         public SelectList CompanyContactSelectList { get; set; }
         

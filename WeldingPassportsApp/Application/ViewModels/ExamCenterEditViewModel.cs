@@ -7,9 +7,8 @@ namespace Application.ViewModels
     {
         public string EncryptedID { get; set; }
 
-        [Required]
         [Display(Name = "Company")]
-        public int? CompanyID { get; set; }
+        public int CompanyID { get; set; }
 
         public SelectList CompanySelectList { get; set; }
 

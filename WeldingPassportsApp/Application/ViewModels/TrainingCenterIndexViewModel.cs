@@ -6,6 +6,8 @@ namespace Application.ViewModels
     {
         public string EncryptedId { get; set; }
 
+        public bool IsActive { get; set; }
+
         [Display(Name = "Company Letter")]
         public char Letter { get; set; }
 

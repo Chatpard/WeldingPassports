@@ -48,7 +48,7 @@
         <tr>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
-                   asp-route-sortOrder="@ViewData["CompanyName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["CompanyName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().CompanyName)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "CompanyName_desc")
                     {
@@ -62,7 +62,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
-                   asp-route-sortOrder="@ViewData["BusinessAddressPostalCode"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["BusinessAddressPostalCode"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(t => t.FirstOrDefault().BusinessAddressPostalCode)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "BusinessAddressPostalCode_desc")
                     {
@@ -76,7 +76,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
-                   asp-route-sortOrder="@ViewData["BusinessAddressCity"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["BusinessAddressCity"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(t => t.FirstOrDefault().BusinessAddressCity)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "BusinessAddressCity_desc")
                     {
@@ -90,7 +90,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
-                   asp-route-sortOrder="@ViewData["Contact"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["Contact"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(t => t.FirstOrDefault().Contact)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "Contact_desc")
                     {
@@ -104,7 +104,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
-                   asp-route-sortOrder="@ViewData["Email"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["Email"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(t => t.FirstOrDefault().Email)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "Email_desc")
                     {
@@ -118,7 +118,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
-                   asp-route-sortOrder="@ViewData["MobilePhone"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["MobilePhone"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(t => t.FirstOrDefault().MobilePhone)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "MobilePhone_desc")
                     {
@@ -132,7 +132,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(ExamCentersController).GetNameOfController()" asp-action="@nameof(ExamCentersController.Index)"
-                   asp-route-sortOrder="@ViewData["IsActive"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["IsActive"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().IsActive)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "IsActive_desc")
                     {

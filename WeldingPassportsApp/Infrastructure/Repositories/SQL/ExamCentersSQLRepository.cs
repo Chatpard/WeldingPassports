@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -182,6 +185,32 @@ namespace Infrastructure.Repositories.SQL
             return examCentersQuery;
         }
 
+        private bool HasDependencies(EntityEntry entityEntry)
+        {
+            var entityType = _context.Model.FindEntityType(typeof(ExamCenter));
+            var collectionNavigations = entityType.GetNavigations()
+                .Where(nav => nav.IsCollection)
+                .Concat<INavigationBase>(entityType.GetSkipNavigations());
+
+            foreach(INavigationBase collectionNavigation in collectionNavigations)
+            {
+                var property = entityEntry.GetType().GetProperty(collectionNavigation.PropertyInfo.Name);
+                if (property.GetValue(entityEntry) is IEnumerable<object> collection && collection.Any())
+                    return true;
+            }
+
+            var referenceNavigations = entityType.GetNavigations()
+                .Where(nav => !nav.IsOnDependent);
+
+            foreach(INavigation referenceNavigation in referenceNavigations)
+            {
+                var property = entityEntry.GetType().GetProperty(referenceNavigation.PropertyInfo.Name);
+                if (property.GetValue(entityEntry) is IEnumerable<object> collection && collection.Any())
+                    return true;
+            }
+
+            return false;
+        }
 
     }
 }

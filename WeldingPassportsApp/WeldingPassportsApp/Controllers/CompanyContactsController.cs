@@ -137,7 +137,7 @@ namespace WeldingPassportsApp.Controllers
                     return RedirectToAction(nameof(AddressesController.Edit), typeof(AddressesController).GetNameOfController(), new { id = companyContactEditViewModel.AddressID, returnUrl = currentUrl });
 
                 default:
-                    return await Edit(companyContactEditViewModel, returnUrl);
+                    return await Edit(companyContactEditViewModel, returnUrl, currentUrl);
             }
         }
 
@@ -162,11 +162,11 @@ namespace WeldingPassportsApp.Controllers
                 TempData[nameof(viewData.AddressID)] = viewData.AddressID;
         }
 
-        private async Task<IActionResult> Edit(CompanyContactEditViewModel companyContactEditViewModel, string returnUrl)
+        private async Task<IActionResult> Edit(CompanyContactEditViewModel companyContactEditViewModel, string returnUrl, string currentUrl)
         {
             try
             {
-                var request = new PostCompanyContactEditRequest(companyContactEditViewModel, nameof(Details), returnUrl, this);
+                var request = new PostCompanyContactEditRequest(companyContactEditViewModel, nameof(Details), returnUrl, currentUrl, this);
                 return await _mediator.Send(request);
             }
             catch (Exception e)

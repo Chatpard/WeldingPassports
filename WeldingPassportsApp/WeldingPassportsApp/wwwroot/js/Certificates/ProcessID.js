@@ -1,5 +1,5 @@
 ﻿//todo: implement ajax ProcessSelectList
-export function ToggleDisable(processID, processIDClearButton, processIDError, pePassportID, registrationTypeID) {
+export function ToggleDisable(processID, processIDError, processIDClearButton, pePassportID, registrationTypeID) {
     if(pePassportID.val() == null) {
         processID.prop("disabled", true);
         processIDClearButton.prop("disabled", true);

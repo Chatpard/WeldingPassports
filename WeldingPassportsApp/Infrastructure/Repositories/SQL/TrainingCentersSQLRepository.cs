@@ -189,6 +189,12 @@ namespace Infrastructure.Repositories.SQL
                 case "MobilePhone_asc":
                     trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.MobilePhone);
                     return trainingCentersQuery;
+                case "IsActive_desc":
+                    trainingCentersQuery = trainingCentersQuery.OrderByDescending(trainingCenter => trainingCenter.IsActive);
+                    return trainingCentersQuery;
+                case "IsActive_asc":
+                    trainingCentersQuery = trainingCentersQuery.OrderBy(trainingCenter => trainingCenter.IsActive);
+                    return trainingCentersQuery;
 
                 default:
                     throw new InvalidOperationException("SortOrder nout found.");

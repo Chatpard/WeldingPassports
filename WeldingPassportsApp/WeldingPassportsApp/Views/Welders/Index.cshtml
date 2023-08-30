@@ -40,7 +40,7 @@
         <tr>
             <th>
                 <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Index)"
-                   asp-route-sortOrder="@ViewData["FirstNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["FirstNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().FirstName)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "FirstName_desc")
                     {
@@ -54,7 +54,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Index)"
-                   asp-route-sortOrder="@ViewData["LastNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["LastNameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().LastName)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "LastName_desc")
                     {
@@ -68,7 +68,7 @@
             </th>
             <th>
                 <a asp-controller="@typeof(WeldersController).GetNameOfController()" asp-action="@nameof(WeldersController.Index)"
-                   asp-route-sortOrder="@ViewData["AVNumberSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                   asp-route-sortOrder="@ViewData["AVNumberSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" style="text-decoration:none">
                     @Html.DisplayNameFor(p => p.FirstOrDefault().AVNumber)
                     @if (Convert.ToString(ViewData["CurrentSort"]) == "AVNumber_desc")
                     {

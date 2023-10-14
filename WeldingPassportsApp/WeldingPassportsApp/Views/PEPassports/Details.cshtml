@@ -88,7 +88,7 @@
     <tbody>
         @foreach (var certification in Model.Certifications)
         {
-            <tr class="@certification.Color">
+            <tr class="@certification.Color" data-toggle="tooltip" title="@Localizer[certification.Tooltip ?? String.Empty]">
                 <td>
                     @Html.DisplayFor(modelItem => certification.ExpiryDate)
                 </td>

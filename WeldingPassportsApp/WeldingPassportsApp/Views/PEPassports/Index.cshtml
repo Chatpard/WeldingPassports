@@ -114,8 +114,8 @@
     <tbody>
         @foreach (var passport in Model)
         {
-        <tr class="@passport.Color">
-            <td>
+            <tr class="@passport.Color" data-toggle="tooltip" title="@Localizer[passport.Tooltip ?? String.Empty]">
+                <td>
                 @Html.DisplayFor(vm => passport.Letter)
                 @Html.DisplayFor(vm => passport.AVNumber)
             </td>

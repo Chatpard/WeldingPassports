@@ -86,7 +86,7 @@
     <tbody>
         @foreach (var welder in Model)
         {
-            <tr class="@welder.Color">
+            <tr class="@welder.Color" data-toggle="tooltip" title="@Localizer[welder.Tooltip ?? String.Empty]">
                 <td>
                     @Html.DisplayFor(vm => welder.FirstName)
                 </td>

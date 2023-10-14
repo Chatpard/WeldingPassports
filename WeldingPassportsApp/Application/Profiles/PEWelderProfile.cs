@@ -31,7 +31,9 @@ namespace Application.Profiles
                 .ForMember(index => index.AVNumber, options => options.MapFrom(group =>
                     group.Registration.PEPassport == null ? null : (int?) group.Registration.PEPassport.AVNumber))
                 .ForMember(index => index.Color, options => options.MapFrom(group =>
-                    group.UIColor.Color));
+                    group.UIColor.Color))
+                .ForMember(index => index.Tooltip, options => options.MapFrom(group =>
+                    group.UIColor.Tooltip));
 
             CreateMap<PEPassportRegistrationUIColorGroup, PEWelderDetailsPEPassportsIndexViewModel>()
                 .ForMember(index => index.EncryptedID, options => options.MapFrom(group =>
@@ -45,7 +47,9 @@ namespace Application.Profiles
                 .ForMember(index => index.ExpiryDate, options => options.MapFrom(group =>
                     group.Registration == null ? null : group.Registration.ExpiryDate))
                 .ForMember(index => index.Color, options => options.MapFrom(group =>
-                    group.UIColor.Color));
+                    group.UIColor.Color))
+                .ForMember(index => index.Tooltip, options => options.MapFrom(group =>
+                    group.UIColor.Tooltip));
 
             CreateMap<PEWelderCreateViewModel, PEWelder>();
 

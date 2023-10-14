@@ -69,6 +69,8 @@ namespace Application.ViewModels
         public bool IsRevoked { get; set; }
         
         public string Color { get; set; }
+
+        public string Tooltip { get; set; }
         
         public bool HasNextOrRevoked { get; set; }
     }

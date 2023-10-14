@@ -24,5 +24,7 @@ namespace Application.ViewModels
         public int? AVNumber { get; set; }
 
         public string Color { get; set; }
+
+        public string Tooltip { get; set; }
     }
 }

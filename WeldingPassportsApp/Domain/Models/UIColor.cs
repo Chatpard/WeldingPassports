@@ -16,5 +16,8 @@ namespace Domain.Models
 
         [Column(TypeName = "varchar(64)")]
         public string Color { get; set; }
+
+        [Column(TypeName = "varchar(64)")]
+        public string Tooltip { get; set; }
     }
 }

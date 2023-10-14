@@ -36,6 +36,8 @@ namespace Application.Profiles
                     group.Registration.ExpiryDate))
                 .ForMember(index => index.Color, options => options.MapFrom(group =>
                     group.UIColor.Color))
+                .ForMember(index => index.Tooltip, options => options.MapFrom(group =>
+                    group.UIColor.Tooltip))
             .ReverseMap();
 
             CreateMap<PEPassportPEWelderRegistrationUIColorsGroup, PEPassportDetailsViewModel>()
@@ -133,6 +135,8 @@ namespace Application.Profiles
                     group.Registration.Revoke != null))
                 .ForMember(vm => vm.Color, options => options.MapFrom(group =>
                     group.UIColor.Color))
+                .ForMember(index => index.Tooltip, options => options.MapFrom(group =>
+                    group.UIColor.Tooltip))
                 .ForMember(vm => vm.HasNextOrRevoked, options => options.MapFrom(group =>
                     group.HasNextOrRevoked));
         }

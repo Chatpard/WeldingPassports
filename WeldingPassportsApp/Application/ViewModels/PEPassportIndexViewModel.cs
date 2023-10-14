@@ -47,5 +47,7 @@ namespace Application.ViewModels
             }
         }
         public string Color { get; set; }
+
+        public string Tooltip { get; set; }
     }
 }

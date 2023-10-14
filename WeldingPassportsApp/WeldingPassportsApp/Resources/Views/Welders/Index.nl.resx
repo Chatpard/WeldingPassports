@@ -144,4 +144,16 @@
   <data name="Find Welder:" xml:space="preserve">
     <value>Zoek Lasser:</value>
   </data>
+  <data name="Valid" xml:space="preserve">
+    <value>Geldig</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expiré</value>
+  </data>
+  <data name="Revoked" xml:space="preserve">
+    <value>Abrogé</value>
+  </data>
+  <data name="Validity EOL" xml:space="preserve">
+    <value>Geldigheid EOL</value>
+  </data>
 </root>

@@ -261,7 +261,7 @@ namespace Infrastructure.Repositories.SQL
             Contact contact = companyContact?.Contact;
             string userId = companyContact?.AppUserId;
 
-            if (userId == null)
+            if (userId != null)
             {
                 _context.Remove(new CompanyContact { ID = decryptedID });
 

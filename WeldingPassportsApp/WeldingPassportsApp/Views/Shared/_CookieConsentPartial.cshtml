@@ -15,9 +15,7 @@
         <a asp-area="" asp-controller="@typeof(HomeController).GetNameOfController()" asp-action="@nameof(HomeController.Privacy)">
             @Localizer["Learn More"]
         </a>.
-        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">@Localizer["Accept"]</span>
-        </button>
+        <button type="button" class="accept-policy btn-close" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString"></button>
     </div>
     <script>
         (function () {

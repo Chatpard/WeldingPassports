@@ -68,7 +68,7 @@ namespace Application.Requests.Account
                     new CookieOptions
                     {
                         Expires = DateTime.Now.AddMinutes(30),
-                        IsEssential = true
+                        IsEssential = true,
                     }
                 );
 

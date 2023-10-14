@@ -149,6 +149,7 @@ namespace Infrastructure.Repositories.SQL
 
         public UserToApprove EncryptUserToApproveID(UserToApprove userToApprove)
         {
+            ArgumentNullException.ThrowIfNull(userToApprove);
             userToApprove.EncryptedId = _protector.Protect(userToApprove.ID.ToString());
 
             return userToApprove;

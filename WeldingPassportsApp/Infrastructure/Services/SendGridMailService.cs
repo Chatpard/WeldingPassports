@@ -21,11 +21,15 @@ namespace Infrastructure.Services
         public async Task SendEmailAsync(string toEmail, string subject, string content)
         {
             var apiKey = _config["SendGridAPIKey"];
+            ArgumentException.ThrowIfNullOrEmpty(apiKey, nameof(apiKey));
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress(_config["SendGridEmailFrom"], _config["SendGridNameFrom"]);
+            ArgumentException.ThrowIfNullOrEmpty(_config["SendGridMailFrom"]);
+            ArgumentException.ThrowIfNullOrEmpty(_config["SendGridNameFrom"]);
+            //Note: Do not use key "SendGridEmailFrom". It reserved to return the SendGrid account Email.
+            var from = new EmailAddress(_config["SendGridMailFrom"], _config["SendGridNameFrom"]);
             var to = new EmailAddress(toEmail);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, content, content);
-            await client.SendEmailAsync(msg);
+            var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace WeldingPassportsApp
                             new Uri($"https://{builtConfig["KeyVaultName"]}.vault.azure.net/"),
                             new DefaultAzureCredential());
                         config.AddAzureKeyVault(secretClient, new KeyVaultSecretManager());
+                        //config.AddAzureAppConfiguration(builtConfig["ConnectionStrings:AppConfig"]);
                     }
                 })
                 .ConfigureWebHostDefaults(webBuilder =>

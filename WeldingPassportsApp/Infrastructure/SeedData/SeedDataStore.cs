@@ -59,7 +59,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 1, // Training
                     ProcessID = 1, // Electro
                     CompanyID = 12, // Hydrogaz
-                    ExpiryDate = new DateTime(2022, 6, 5),
+                    ExpiryDate = new DateTime(2024, 6, 5),
                     HasPassed = true
                 },
                 new Registration()
@@ -71,7 +71,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 1, // Training
                     ProcessID = 2, // Butt
                     CompanyID = 19, // Verschueren
-                    ExpiryDate = new DateTime(2022, 6, 5),
+                    ExpiryDate = new DateTime(2024, 6, 5),
                     HasPassed = false
                 },
                 new Registration()
@@ -83,7 +83,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 1, // Training 
                     ProcessID = 1, // Electro
                     CompanyID = 13, // Fabricom
-                    ExpiryDate = new DateTime(2021, 8, 20),
+                    ExpiryDate = new DateTime(2023, 8, 20),
                     HasPassed = true
                 },
                 new Registration()
@@ -95,7 +95,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 1, // Training
                     ProcessID = 1, // Electro
                     CompanyID = 13, // Fabricom
-                    ExpiryDate = new DateTime(2022, 10, 20),
+                    ExpiryDate = new DateTime(2024, 10, 20),
                     HasPassed = true
                 },
                 new Registration()
@@ -107,7 +107,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 1, // Training
                     ProcessID = 2, // Butt
                     CompanyID = 21, // Fluvius
-                    ExpiryDate = new DateTime(2021, 8, 20),
+                    ExpiryDate = new DateTime(2023, 8, 20),
                     HasPassed = true,
                 },
                 new Registration()
@@ -119,7 +119,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 1, // Training
                     ProcessID = 2, // Butt
                     CompanyID = 21, // Fluvius
-                    ExpiryDate = new DateTime(2022, 10, 20),
+                    ExpiryDate = new DateTime(2024, 10, 20),
                     HasPassed = true, // TBC
                 },
                 new Registration()
@@ -131,7 +131,7 @@ namespace Infrastructure.SeedData
                     RegistrationTypeID = 1, // Training
                     ProcessID = 1, // Electro
                     CompanyID = 23, // Dalcom
-                    ExpiryDate = new DateTime(2022, 10, 20),
+                    ExpiryDate = new DateTime(2024, 10, 20),
                     HasPassed = null, // TBC
                 }
             };
@@ -146,56 +146,56 @@ namespace Infrastructure.SeedData
                     ID = 1,
                     TrainingCenterID = 1, // V
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2021, 6, 5)
+                    ExamDate = new DateTime(2023, 6, 5)
                 },
                 new Examination()
                 {
                     ID = 2,
                     TrainingCenterID = 3, // T
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2020, 8, 20)
+                    ExamDate = new DateTime(2022, 8, 20)
                 },
                 new Examination()
                 {
                     ID = 3,
                     TrainingCenterID = 3, // T
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2021, 8, 15)
+                    ExamDate = new DateTime(2023, 8, 15)
                 },
                 new Examination()
                 {
                     ID = 4,
                     TrainingCenterID = 2, // Z
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2021, 11, 15)
+                    ExamDate = new DateTime(2023, 11, 15)
                 },
                 new Examination()
                 {
                     ID = 5,
                     TrainingCenterID = 6, // N
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2022, 3, 4)
+                    ExamDate = new DateTime(2024, 3, 4)
                 },
                 new Examination()
                 {
                     ID = 6,
                     TrainingCenterID = 4, // S
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2022, 8, 22)
+                    ExamDate = new DateTime(2024, 8, 22)
                 },
                 new Examination()
                 {
                     ID = 7,
                     TrainingCenterID = 8, // L
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2022, 11, 15)
+                    ExamDate = new DateTime(2024, 11, 15)
                 },
                 new Examination()
                 {
                     ID = 8,
                     TrainingCenterID = 5, // K
                     ExamCenterID = 1,
-                    ExamDate = new DateTime(2023, 1, 26)
+                    ExamDate = new DateTime(2025, 1, 26)
                 }
             };
         }
@@ -1067,56 +1067,64 @@ namespace Infrastructure.SeedData
                     ID = 1,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
                     HasPassed = false,
-                    Color = null
+                    Color = null,
+                    Tooltip = null
                 },
                 new UIColor()
                 {
                     ID = 2,
                     ExtendableStatus = ExtendableStatus.NotYetExtendable,
                     HasPassed = true,
-                    Color = "table-success"
+                    Color = "table-success",
+                    Tooltip = "Valid"
                 },
                 new UIColor()
                 {
                     ID = 3,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = false,
-                    Color = null
+                    Color = null,
+                    Tooltip = null
                 },
                 new UIColor()
                 {
                     ID = 4,
                     ExtendableStatus = ExtendableStatus.Extendable,
                     HasPassed = true,
-                    Color = "table-warning"
+                    Color = "table-warning",
+                    Tooltip = "Validity EOL"
                 },
                 new UIColor()
                 {
                     ID = 5,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = false,
-                    Color = null
+                    Color = null,
+                    Tooltip = null
                 },
                 new UIColor()
                 {
                     ID = 6,
                     ExtendableStatus = ExtendableStatus.NoMoreExtendable,
                     HasPassed = true,
-                    Color = null
+                    Color = null,
+                    Tooltip = "Expired"
                 },
                 new UIColor()
                 {
                     ID = 7,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = false,
-                    Color = "table-danger"
+                    Color = "table-danger",
+                    Tooltip = "Revoked"
                 },
                 new UIColor()
                 {
                     ID = 8,
                     ExtendableStatus = ExtendableStatus.Revoked,
                     HasPassed = true,
-                    Color = "table-danger"
+                    Color = "table-danger",
+                    Tooltip = "Revoked"
                 }
             };
         }
